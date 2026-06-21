@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ملخص لعملي الفيزيولوجيا - جامعة إدلب - السنة التحضيرية 2026%</title>
+    <title>ملخص لعملي الفيزيولوجيا - جامعة إدلب - السنة التحضيرية 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -19,18 +19,12 @@
         .formula-box { border-right: 5px solid #3b82f6; background: #eff6ff; }
         .alert-box { border-right: 5px solid #f59e0b; background: #fffbeb; }
         
-        /* تنسيق الأزرار الجانبية والعلوية */
-        .sidebar-btn { transition: all 0.2s ease; border-bottom: 3px solid transparent; }
-        @media (min-width: 768px) {
-            .sidebar-btn { border-bottom: none; border-right: 4px solid transparent; }
-        }
+        /* تنسيق الأزرار الجانبية */
+        .sidebar-btn { transition: all 0.2s ease; border-right: 4px solid transparent; }
         .sidebar-btn:hover { background-color: #f8fafc; }
-        .sidebar-btn.active-tab { background-color: #ecfdf5; color: #065f46; font-weight: bold; border-bottom-color: #059669; }
-        @media (min-width: 768px) {
-            .sidebar-btn.active-tab { border-right-color: #059669; border-bottom-color: transparent; }
-        }
+        .sidebar-btn.active-tab { background-color: #ecfdf5; color: #065f46; font-weight: bold; border-right-color: #059669; }
         
-        /* إخفاء شريط التمرير الافتراضي لشريط التبويبات على الجوال لشكل أنظف */
+        /* إخفاء شريط التمرير الافتراضي */
         .scrollbar-none::-webkit-scrollbar { display: none; }
         .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -52,9 +46,9 @@
                 <h1 class="text-lg md:text-2xl font-extrabold tracking-wide flex items-center gap-1 md:gap-2">
                     <span>🔬</span> ملخص لعملي الفيزيولوجيا - جامعة إدلب - السنة التحضيرية 2026
                 </h1>
-                <p class="text-emerald-100 text-xs mt-0.5">تفريغ المهم  للأرقام والقوانين والملاحظات الامتحانية</p>
+                <p class="text-emerald-100 text-xs md:text-sm mt-0.5">تفريغ المهم للأرقام والقوانين والملاحظات الامتحانية</p>
             </div>
-            <a href="index.html" class="bg-white text-emerald-900 px-3 py-1.5 md:px-4 md:py-2 rounded-lg font-bold shadow hover:bg-emerald-50 transition flex items-center gap-1 text-xs md:text-sm">
+            <a href="index.html" class="bg-white text-emerald-900 px-3 py-1.5 md:px-4 md:py-2 rounded-lg font-bold shadow hover:bg-emerald-50 transition flex items-center gap-1 text-xs md:text-sm whitespace-nowrap">
                 <span>🏠</span> الرئيسية
             </a>
         </div>
@@ -62,29 +56,52 @@
 
     <div class="flex flex-col md:flex-row flex-1 overflow-hidden">
         
-        <nav class="w-full md:w-64 bg-white shadow-md md:shadow-xl z-10 flex-shrink-0 border-b md:border-b-0 md:border-l border-slate-200 overflow-x-auto md:overflow-y-auto scrollbar-none">
-            <div class="p-4 border-b border-slate-100 bg-slate-50 hidden md:block">
+        <!-- القائمة المنسدلة للموبايل (تظهر فقط على الشاشات الصغيرة) -->
+        <div class="block md:hidden bg-white border-b border-slate-200 p-4 shadow-sm z-10 flex-shrink-0">
+            <label for="mobile-tab-select" class="block text-sm font-bold text-slate-700 mb-2">اختر الجلسة للبدء:</label>
+            <div class="relative">
+                <select id="mobile-tab-select" onchange="openTabFromSelect(this.value)" class="block w-full appearance-none bg-slate-50 border border-slate-300 text-emerald-800 py-3 px-4 pr-8 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 font-bold text-sm shadow-sm">
+                    <option value="tab1">1. الدم والخصائص</option>
+                    <option value="tab2">2. مكداس الدم (الهيماتوكريت)</option>
+                    <option value="tab3">3. عد الكريات الحمراء</option>
+                    <option value="tab4">4. عد الكريات البيضاء</option>
+                    <option value="tab5">5. العد التفريقي (اللطاخة)</option>
+                    <option value="tab6">6. الزمر الدموية (ABO & Rh)</option>
+                    <option value="tab7">7. زمن التخثر والنزف</option>
+                    <option value="tab8">8. أصوات القلب وبؤر الإصغاء</option>
+                </select>
+                <!-- سهم القائمة المنسدلة (جهة اليسار لأن الموقع عربي RTL) -->
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-4 text-emerald-600">
+                    <svg class="fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- القائمة الجانبية للشاشات الكبيرة (الآيباد واللابتوب) -->
+        <nav class="hidden md:block w-64 bg-white shadow-xl z-10 flex-shrink-0 border-l border-slate-200 overflow-y-auto scrollbar-none">
+            <div class="p-4 border-b border-slate-100 bg-slate-50">
                 <h2 class="text-slate-500 font-bold text-sm uppercase tracking-wider text-center">الجلسات العملية</h2>
             </div>
-            <ul class="flex flex-row md:flex-col py-1 md:py-2" id="tabs-menu">
-                <li class="flex-shrink-0"><button onclick="openTab(event, 'tab1')" class="sidebar-btn active-tab w-full text-center md:text-right px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm focus:outline-none whitespace-nowrap">1. الدم والخصائص</button></li>
-                <li class="flex-shrink-0"><button onclick="openTab(event, 'tab2')" class="sidebar-btn w-full text-center md:text-right px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm focus:outline-none whitespace-nowrap">2. مكداس الدم (الهيماتوكريت)</button></li>
-                <li class="flex-shrink-0"><button onclick="openTab(event, 'tab3')" class="sidebar-btn w-full text-center md:text-right px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm focus:outline-none whitespace-nowrap">3. عد الكريات الحمراء</button></li>
-                <li class="flex-shrink-0"><button onclick="openTab(event, 'tab4')" class="sidebar-btn w-full text-center md:text-right px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm focus:outline-none whitespace-nowrap">4. عد الكريات البيضاء</button></li>
-                <li class="flex-shrink-0"><button onclick="openTab(event, 'tab5')" class="sidebar-btn w-full text-center md:text-right px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm focus:outline-none whitespace-nowrap">5. العد التفريقي (اللطاخة)</button></li>
-                <li class="flex-shrink-0"><button onclick="openTab(event, 'tab6')" class="sidebar-btn w-full text-center md:text-right px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm focus:outline-none whitespace-nowrap">6. الزمر الدموية (ABO & Rh)</button></li>
-                <li class="flex-shrink-0"><button onclick="openTab(event, 'tab7')" class="sidebar-btn w-full text-center md:text-right px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm focus:outline-none whitespace-nowrap">7. زمن التخثر والنزف</button></li>
-                <li class="flex-shrink-0"><button onclick="openTab(event, 'tab8')" class="sidebar-btn w-full text-center md:text-right px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm focus:outline-none whitespace-nowrap">8. أصوات القلب وبؤر الإصغاء</button></li>
+            <ul class="flex flex-col py-2" id="tabs-menu">
+                <li><button onclick="openTab(event, 'tab1')" class="sidebar-btn active-tab w-full text-right px-6 py-4 text-sm focus:outline-none">1. الدم والخصائص</button></li>
+                <li><button onclick="openTab(event, 'tab2')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">2. مكداس الدم (الهيماتوكريت)</button></li>
+                <li><button onclick="openTab(event, 'tab3')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">3. عد الكريات الحمراء</button></li>
+                <li><button onclick="openTab(event, 'tab4')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">4. عد الكريات البيضاء</button></li>
+                <li><button onclick="openTab(event, 'tab5')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">5. العد التفريقي (اللطاخة)</button></li>
+                <li><button onclick="openTab(event, 'tab6')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">6. الزمر الدموية (ABO & Rh)</button></li>
+                <li><button onclick="openTab(event, 'tab7')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">7. زمن التخثر والنزف</button></li>
+                <li><button onclick="openTab(event, 'tab8')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">8. أصوات القلب وبؤر الإصغاء</button></li>
             </ul>
         </nav>
 
         <main class="flex-1 overflow-y-auto bg-slate-50 p-4 md:p-6 relative">
             <div class="max-w-4xl mx-auto pb-20">
 
+                <!-- ================= TAB 1: الدم ================= -->
                 <div id="tab1" class="tab-content active bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
                     <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 1: الدم (Blood) ومكوناته</h2>
                     
-                    <div class="grid md:grid-cols-2 gap-4 md:grid-cols-2 md:gap-6 mb-6">
+                    <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-6">
                         <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
                             <h3 class="font-bold text-emerald-700 mb-2">1. تعريف الدم وخصائصه</h3>
                             <ul class="list-disc list-inside space-y-1 text-sm text-slate-700">
@@ -96,51 +113,51 @@
                         <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
                             <h3 class="font-bold text-emerald-700 mb-2">2. أنواع الدم المستخدم للتحاليل</h3>
                             <ul class="list-disc list-inside space-y-1 text-sm text-slate-700">
-                                <li><strong>دم الشرايين:</strong> (يؤخذ من الكعبري/العضدي) يستخدم <strong>فقط لفحص غازات الدم</strong>.</li>
+                                <li><strong>دم الشرايين:</strong> (كعبري/عضدي) يستخدم <strong>فقط لفحص غازات الدم</strong>.</li>
                                 <li><strong>دم الوريد:</strong> لجميع التحاليل الدموية والبيوكيميائية.</li>
-                                <li><strong>الدم الشعري:</strong> تركيبه يطابق الشرياني (يؤخذ من الأصابع/شحمة الأذن/كعب القدم للرضع).</li>
+                                <li><strong>الدم الشعري:</strong> تركيبه يطابق الشرياني (يؤخذ من الأصابع/شحمة الأذن/كعب القدم للرضع). تهمل أول قطرتين دائماً لاحتوائهما على سوائل نسيجية.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm mb-6">
-                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشة امتحانية (المقارنة الجوهرية): البلازما vs المصل</h3>
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشة امتحانية: البلازما vs المصل</h3>
                         <div class="overflow-x-auto">
                             <table class="w-full text-xs md:text-sm text-right border-collapse bg-white min-w-[500px]">
                                 <tr><th class="p-2 border">وجه المقارنة</th><th class="p-2 border bg-red-50 text-red-900">المصورة (Plasma)</th><th class="p-2 border bg-blue-50 text-blue-900">المصل (Serum)</th></tr>
                                 <tr><td class="p-2 border font-bold">طريقة الحصول</td><td class="p-2 border">أنبوب <strong>يحتوي مانع تخثر</strong> + تثفيل</td><td class="p-2 border">أنبوب <strong>لا يحوي مانع تخثر</strong> (يترك بالهواء 10-20 دقيقة) + تثفيل</td></tr>
-                                <tr><td class="p-2 border font-bold">الطبقات المتشكلة</td><td class="p-2 border">بلازما (55%) باللأعلى + طبقة رقيقة (Buffy coat) + كريات مترسبة (45%)</td><td class="p-2 border">مصل (بالأعلى) + علقة / خثرة (بالأسفل)</td></tr>
-                                <tr><td class="p-2 border font-bold">مولد الليفين (الفيبرينوجين)</td><td class="p-2 border font-bold text-green-600">يحتوي عليه (موجود)</td><td class="p-2 border font-bold text-red-600">لا يحتوي عليه (استهلك لتشكيل الخثرة)</td></tr>
-                                <tr><td class="p-2 border font-bold">المحتويات المشتركة</td><td class="p-2 border" colspan="2">مواد سكرية، بروتينية، شحمية، أملاح، أنزيمات، فيتامينات، هرمونات.</td></tr>
+                                <tr><td class="p-2 border font-bold">الطبقات المتشكلة</td><td class="p-2 border">بلازما (55%) باللأعلى + طبقة رقيقة (Buffy coat) + كريات (45%)</td><td class="p-2 border">مصل (بالأعلى) + علقة / خثرة (بالأسفل)</td></tr>
+                                <tr><td class="p-2 border font-bold">مولد الليفين (الفيبرينوجين)</td><td class="p-2 border font-bold text-green-600">موجود</td><td class="p-2 border font-bold text-red-600">غير موجود (استهلك لتشكيل الخثرة)</td></tr>
                             </table>
                         </div>
-                        <p class="text-xs text-red-800 mt-2 font-bold">استنتاج امتحاني: المصل = البلازما منزوعة منها عوامل التخثر.</p>
+                        <p class="text-xs md:text-sm text-red-800 mt-2 font-bold">المصل = البلازما منزوعة منها عوامل التخثر (مثل الفيبرينوجين والعاملين الخامس والثامن).</p>
                     </div>
 
                     <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">3. الأنابيب المخبرية (مهم جداً جداً للأتمتة)</h3>
                     <div class="overflow-x-auto mb-6">
                         <table class="w-full text-xs md:text-sm text-right border-collapse border border-slate-300 min-w-[600px]">
-                            <tr class="bg-slate-100"><th class="p-3 border">لون الأنبوب</th><th class="p-3 border">محتوى الأنبوب (مانع التخثر)</th><th class="p-3 border">الاستخدام السريري (التحاليل)</th></tr>
+                            <tr class="bg-slate-100"><th class="p-3 border">لون الأنبوب</th><th class="p-3 border">المحتوى (مانع التخثر)</th><th class="p-3 border">الاستخدام السريري (التحاليل)</th></tr>
                             <tr><td class="p-3 border font-bold text-red-600">الأحمر</td><td class="p-3 border">لا يحوي مانع تخثر</td><td class="p-3 border" rowspan="2">كيمياء الدم، هرمونات، وظائف كلى/كبد، دهون، درقية، CRP، فيروسات، أملاح، أنزيمات القلب.</td></tr>
-                            <tr><td class="p-3 border font-bold text-yellow-500">الأصفر</td><td class="p-3 border">لا يحوي مانع تخثر + <strong>يحوي جل يفصل المصل عن الخثرة</strong></td></tr>
-                            <tr><td class="p-3 border font-bold text-green-600">الأخضر</td><td class="p-3 border"><strong>ليثيوم هيبارين</strong> (أفضل مضاد لكنه غالي الثمن)</td><td class="p-3 border">الوراثة الخلوية، غازات الدم، <strong>أنزيم (G6PDH)</strong>.</td></tr>
-                            <tr><td class="p-3 border font-bold text-purple-600">البنفسجي</td><td class="p-3 border"><strong>EDTA</strong> (يحافظ على شكل الكريات الحمراء والبيضاء)</td><td class="p-3 border">صورة الدم (CBC)، الزمر الدموية، التوافق للنقل، السكر التراكمي.</td></tr>
-                            <tr><td class="p-3 border font-bold text-blue-600">الأزرق</td><td class="p-3 border">سترات الصوديوم</td><td class="p-3 border">قياس عوامل التجلط.</td></tr>
-                            <tr><td class="p-3 border font-bold text-gray-500">الرمادي</td><td class="p-3 border">أوكسالات الصوديوم أو فلورايد البوتاسيوم</td><td class="p-3 border text-red-600 font-bold">قياس غلوكوز الدم.</td></tr>
+                            <tr><td class="p-3 border font-bold text-yellow-500">الأصفر</td><td class="p-3 border">لا يحوي مانع تخثر + <strong>يحوي جل لفصل المصل</strong></td></tr>
+                            <tr><td class="p-3 border font-bold text-green-600">الأخضر</td><td class="p-3 border"><strong>ليثيوم هيبارين</strong> (أفضل مضاد لكنه غالي)</td><td class="p-3 border">الوراثة الخلوية، غازات الدم، <strong>أنزيم (G6PDH)</strong>.</td></tr>
+                            <tr><td class="p-3 border font-bold text-purple-600">البنفسجي</td><td class="p-3 border"><strong>EDTA</strong> (يحافظ على المورفولوجيا)</td><td class="p-3 border">صورة الدم (CBC)، الزمر الدموية، التوافق للنقل، السكر التراكمي.</td></tr>
+                            <tr><td class="p-3 border font-bold text-blue-600">الأزرق</td><td class="p-3 border">سترات الصوديوم</td><td class="p-3 border">قياس عوامل التجلط (PT, PTT).</td></tr>
+                            <tr><td class="p-3 border font-bold text-gray-500">الرمادي</td><td class="p-3 border">أوكسالات الصوديوم أو فلورايد البوتاسيوم</td><td class="p-3 border text-red-600 font-bold">قياس غلوكوز الدم (السكر).</td></tr>
                             <tr><td class="p-3 border font-bold text-black">الأسود</td><td class="p-3 border">بفر سترات الصوديوم</td><td class="p-3 border text-blue-600 font-bold">تحليل سرعة التثفل (ESR).</td></tr>
                         </table>
                     </div>
                     
                     <div class="alert-box p-4 rounded mb-6 text-xs md:text-sm">
-                        <strong class="text-amber-800">⚠️ تنبيهات الموانع (سؤال أتمتة مؤكد):</strong><br>
-                        - لا نستخدم أنابيب تحوي أملاح (Na/K) كالأزرق والرمادي إذا كان التحليل لقياس شوارد الصوديوم والبوتاسيوم (لأنه يعطي خطأ إيجابي كبير). البديل: الهيبارين أو أنبوب فارغ.<br>
-                        - لا نستخدم أوكسالات الصوديوم عند تحليل <strong>الكالسيوم</strong> (لأنه يزيل الكالسيوم ويرسبه على شكل أوكسالات الكالسيوم).
+                        <strong class="text-amber-800">⚠️ تنبيهات امتحانية هامة عن الأنابيب:</strong><br>
+                        - لا نستخدم أنابيب تحوي أملاح (Na/K) كالأزرق والرمادي لقياس شوارد الصوديوم والبوتاسيوم (لأنه يعطي خطأ إيجابي). نستخدم الهيبارين أو الأنبوب الفارغ.<br>
+                        - لا نستخدم أوكسالات الصوديوم عند تحليل <strong>الكالسيوم</strong> (لأنه يرسب الكالسيوم).<br>
+                        - <strong>موانع التخثر في الزجاج تسحب شوارد الكالسيوم (Ca++) من الدم لتعطيل سلسلة التخثر.</strong>
                     </div>
 
                     <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">4. خطوات سحب الدم وجهاز كشف الأوردة</h3>
                     <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-700 bg-slate-50 p-4 rounded border border-slate-200">
                         <li><strong>الدم الشعري:</strong> تهمل أول قطرتين.</li>
-                        <li><strong>الدم الوريدي (الأوردة):</strong> المرفقي الناصف (الأفضل)، الكافلي (الرأسي)، البازلي (القاعدي)، الأوردة السنعية الظهرانية.</li>
+                        <li><strong>الدم الوريدي (الأوردة الشائعة):</strong> المرفقي الناصف (الأفضل)، الكافلي (الرأسي)، البازلي (القاعدي)، الأوردة السنعية الظهرانية.</li>
                         <li><strong>الضاغطة (Tourniquet):</strong> تلف ببعد <strong>7 إلى 10 سم</strong> عن مكان السحب.</li>
                         <li><strong>المحقنة:</strong> النهاية المشطوفة للأعلى. زاوية الدخول <strong>30 - 45 درجة</strong>.</li>
                         <li><strong>ملاحظة هامة:</strong> السحب السريع للدم يؤدي إلى <span class="text-red-600 font-bold">تكسر الكريات الحمراء وتحلل الدم</span>. بعد الانتهاء، تضغط قطنة 2-3 دقائق <span class="underline">مع عدم ثني اليد</span>. ويفرغ الدم بهدوء على جدار الأنبوب.</li>
@@ -148,18 +165,19 @@
                     </ul>
                 </div>
 
+                <!-- ================= TAB 2: مكداس الدم ================= -->
                 <div id="tab2" class="tab-content bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
-                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 2: الكسر الحجمي للكريات الحمراء (مكداس الدم - PCV)</h2>
+                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 2: مكداس الدم (Hematocrit - PCV)</h2>
 
                     <div class="formula-box p-4 md:p-5 rounded-xl shadow-sm mb-6">
-                        <h3 class="text-base md:text-lg font-bold text-blue-800 mb-2">📌 التعريف والنسبة الطبيعية والمعادلة</h3>
-                        <p class="text-xs md:text-sm mb-2"><strong>التعريف:</strong> هو نسبة حجم المكونات الخلوية (والتي 99% منها كريات حمراء) إلى الحجم الكلي للدم.</p>
+                        <h3 class="text-base md:text-lg font-bold text-blue-800 mb-2">📌 النسبة الطبيعية والمعادلة</h3>
+                        <p class="text-xs md:text-sm mb-2"><strong>التعريف:</strong> نسبة حجم المكونات الخلوية (الكريات الحمراء تمثل 99% منها) إلى الحجم الكلي للدم.</p>
                         <ul class="list-disc list-inside space-y-1 text-xs md:text-sm text-slate-700 mb-3">
-                            <li><strong>عند الذكور:</strong> 45 ± 5 (أي 40% - 50%). ونسبة المصورة عندهم 55%. (أعلى بسبب التستوستيرون المنبه للإنتاج).</li>
-                            <li><strong>عند الإناث:</strong> 40 ± 5 (أي 35% - 45%). ونسبة المصورة عندهن 60%. (أقل بسبب الفقدان الشهري).</li>
+                            <li><strong>الذكور:</strong> 45 ± 5 (أي 40% - 50%). (أعلى بسبب هرمون التستوستيرون المنبه لتكون الحمر).</li>
+                            <li><strong>الإناث:</strong> 40 ± 5 (أي 35% - 45%). (أقل بسبب الفقدان الشهري).</li>
                         </ul>
                         <div class="bg-white p-3 border border-blue-200 rounded text-center font-bold text-xs md:text-sm">
-                            الهيماتوكريت (%) = (ارتفاع المكونات الخلوية ضمن الأنبوب ÷ الارتفاع الإجمالي للعينة) × 100
+                            الهيماتوكريت (%) = (ارتفاع المكونات الخلوية ÷ الارتفاع الإجمالي للدم في الأنبوب) × 100
                         </div>
                     </div>
 
@@ -167,34 +185,35 @@
                         <div class="bg-red-50 p-4 rounded-lg border border-red-200">
                             <h3 class="font-bold text-red-800 mb-2 text-sm md:text-base">📈 أسباب زيادة الهيماتوكريت</h3>
                             <ul class="list-disc list-inside text-xs md:text-sm space-y-1">
-                                <li><strong>زيادة عدد الكريات:</strong> مثل البوليسيثيميا (كثرة الحمر) حيث ينتج نقي العظم كميات هائلة فيصبح الدم لزجاً.</li>
-                                <li><strong>نقص حجم المصورة:</strong> مثل <strong>التجفاف</strong> (إسهال، تعرق). وهي <span class="underline">زيادة كاذبة</span> لأن الخلايا لم تزدد بل السائل قل.</li>
+                                <li><strong>زيادة حقيقية (عدد الكريات):</strong> البوليسيثيميا (كثرة الحمر).</li>
+                                <li><strong>زيادة نسبية كاذبة (نقص المصورة):</strong> <strong>التجفاف</strong> (إسهال، تعرق شديد، حروق). السائل قل فتبدو نسبة الكريات مرتفعة.</li>
                             </ul>
                         </div>
                         <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
                             <h3 class="font-bold text-blue-800 mb-2 text-sm md:text-base">📉 أسباب نقص الهيماتوكريت</h3>
                             <ul class="list-disc list-inside text-xs md:text-sm space-y-1">
-                                <li><strong>نقص الكريات:</strong> مثل أمراض فقر الدم (الأنيميا).</li>
-                                <li><strong>زيادة حجم المصورة:</strong> مثل <strong>تميه الدم</strong> (كالحمل السليم، يزداد حجم البلازما أكثر من الخلايا فيتمدد الدم وتبدو النسبة قليلة).</li>
+                                <li><strong>نقص حقيقي (نقص الكريات):</strong> فقر الدم بأنواعه والنزف.</li>
+                                <li><strong>نقص نسبي كاذب (زيادة المصورة):</strong> <strong>الحمل السليم</strong> (يزداد حجم البلازما أكثر من الكريات فيتمدد الدم).</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm">
-                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشات خطوات العمل والأدوات</h3>
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشات طريقة العمل والمثفلة</h3>
                         <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-800">
-                            <li><strong>الأنبوب الشعري:</strong> يجب أن يكون <strong>مبطناً بالهيبارين</strong> لمنع التخثر.</li>
-                            <li><strong>الخاصة الشعرية:</strong> ظاهرة فيزيائية تسمح بصعود السائل بالأنابيب الضيقة. يجب ملء <strong>70%</strong> من طول الأنبوب.</li>
-                            <li><strong>في المثفلة (الطرد المركزي):</strong> يوضع الطرف <strong>المسدود بالمعجون نحو الخارج</strong> (لمنع تطاير الدم بسبب القوة النابذة).</li>
-                            <li><strong>موازنة الأنابيب:</strong> يجب استخدام عدد مزدوج لمنع ارتجاج الجهاز وانكسار الأنابيب.</li>
-                            <li><strong>مدة التثفيل:</strong> من <strong>3 إلى 5 دقائق</strong>.</li>
-                            <li><strong>القراءة:</strong> بجهاز <strong>هاكسلي</strong>. خط الصفر يفصل بين المعجون وبداية الخلايا.</li>
+                            <li>نستخدم أنبوباً شعرياً <strong>مبطناً بالهيبارين</strong> (دليله شريط أحمر) لمنع تخثر الدم داخله.</li>
+                            <li>يمتلئ الأنبوب حتى <strong>70%</strong> منه بالدم بالخاصة الشعرية. يسد طرفه بالمعجون.</li>
+                            <li><strong>في الطرد المركزي (المثفلة):</strong> يوضع الطرف <strong>المسدود بالمعجون نحو الخارج</strong> لمقاومة القوة النابذة.</li>
+                            <li>يجب وضع عدد مزدوج من الأنابيب بشكل متقابل <strong>للموازنة</strong> وتجنب كسرها.</li>
+                            <li>سرعة التثفيل 10,000-12,000 دورة/دقيقة لمدة <strong>3 إلى 5 دقائق</strong>.</li>
+                            <li>تقرأ النتيجة بمسطرة <strong>جهاز هاكسلي</strong>. نضع الحد الفاصل بين المعجون والدم على خط الصفر، ونقرأ عند مستوى نهاية البلازما من الأعلى.</li>
                         </ul>
                     </div>
                 </div>
 
+                <!-- ================= TAB 3: عد الكريات الحمراء ================= -->
                 <div id="tab3" class="tab-content bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
-                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 3: عد الكريات الحمراء (Erythrocyte Count)</h2>
+                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 3: عد الكريات الحمراء (RBC Count)</h2>
 
                     <div class="grid md:grid-cols-2 gap-4 mb-6">
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
@@ -202,52 +221,63 @@
                             <ul class="list-disc list-inside text-xs md:text-sm space-y-1">
                                 <li><strong>الرجال:</strong> 4.5 إلى 6.5 مليون كرية / مم³.</li>
                                 <li><strong>النساء:</strong> 3.8 إلى 5.8 مليون كرية / مم³.</li>
-                                <li><strong>أسباب الزيادة:</strong> نقص الأكسجة، أمراض القلب وتليف الرئتين، العيش بالمرتفعات.</li>
-                                <li><strong>أسباب النقص:</strong> فقر الدم، التليف الكبدي، الحمل، نقص B12 والفوليك.</li>
+                                <li><strong>أسباب الزيادة:</strong> نقص الأكسجة، أمراض القلب والرئتين المزمنة، العيش في المرتفعات (تحفيز الإريثروبويتين من الكلى).</li>
+                                <li><strong>أسباب النقص:</strong> فقر الدم، التليف الكبدي، نقص B12 وحمض الفوليك.</li>
                             </ul>
                         </div>
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
-                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🔬 الأدوات والمحاليل</h3>
-                            <ul class="list-disc list-inside text-xs md:text-sm space-y-1">
-                                <li><strong>الأجهزة الحديثة:</strong> Coulter Counter و Auto Cytometer.</li>
-                                <li><strong>الميكروبيت:</strong> ماصة (5-50 ميكرون) للدم، وماصة (100-1000) للمحلول.</li>
-                                <li><strong>محلول هايمز (متعادل التواتر):</strong> يحافظ على الكريات من الانكماش والانفجار.</li>
-                            </ul>
+                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🔬 محلول التمديد (هايمز)</h3>
+                            <p class="text-xs md:text-sm mb-2 text-slate-700">محلول <strong>هايمز (Hayem's)</strong> هو محلول <strong>متعادل التواتر</strong> (Isotonic) لكي لا تنكمش الكريات أو تنفجر.</p>
+                            <div class="bg-white p-2 border border-slate-300 rounded text-xs">
+                                <strong>التركيب الكيميائي:</strong><br>
+                                0.05 غ كلوريد الزئبق.<br>
+                                2.5 غ كبريتات الصوديوم.<br>
+                                0.5 غ كلوريد الصوديوم.<br>
+                                100 مل ماء مقطر.<br>
+                                <em>(البديل: السيروم الملحي النظامي 0.9%).</em>
+                            </div>
                         </div>
                     </div>
 
                     <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm mb-6">
-                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشات شريحة نيو باور (Neubauer) وحسابات التمديد</h3>
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشات شريحة العد (نيوباور Neubauer)</h3>
                         <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-800">
-                            <li><strong>أبعاد الشريحة:</strong> ترتفع المصطبتان عن شبكة العد بمقدار <strong>0.1 ملم</strong>.</li>
-                            <li><strong>الشبكة:</strong> 9 مربعات كبرى. نعد الكريات الحمراء في <strong>المربع الأوسط الكبير فقط</strong>.</li>
-                            <li><strong>المربع الأوسط:</strong> ينقسم لـ 25 مربع متوسط. نعد في <strong>5 مربعات متوسطة فقط</strong> (الأركان الأربعة + المركز).</li>
-                            <li><strong>خطوات التمديد:</strong> نسحب <strong>20 ميكرون دم</strong> ونمزجها مع <strong>3980 ميكرون</strong> من محلول هايمز.</li>
-                            <li><strong>نسبة التمديد:</strong> 1 إلى 200. وتترك الشريحة 3 دقائق قبل العد لتستقر الكريات.</li>
-                            <li><strong>العدسات:</strong> الفعلي يتم بالعدسة <strong>40x</strong>.</li>
-                            <li><strong>قاعدة منع التكرار:</strong> نعد الكريات التي تلامس <strong>الضلع العلوي والأيمن فقط</strong>.</li>
+                            <li><strong>عمق الحجرة:</strong> المصطبتان الجانبيتان ترتفعان <strong>0.1 ملم</strong> عن شبكة العد.</li>
+                            <li><strong>أين نعد الكريات الحمراء؟</strong> في <strong>المربع الأوسط الكبير فقط</strong> (مساحته 1 ملم مربع).</li>
+                            <li>المربع الأوسط ينقسم لـ 25 مربع متوسط. نعد في <strong>5 مربعات متوسطة فقط</strong> (الأربعة في الزوايا + المربع المركزي).</li>
+                            <li><strong>خطوات التمديد:</strong> نسحب <strong>20 ميكرون دم</strong> (يمسح الميكروبيت من الخارج بمنديل) ونمزجها مع <strong>3980 ميكرون</strong> من محلول هايمز.</li>
+                            <li><strong>نسبة التمديد:</strong> 1 إلى 200.</li>
+                            <li><strong>التحضير:</strong> نضع 20 ميكرون من المزيج بزاوية 45 درجة تحت الساترة، <strong>وتترك الشريحة 3 دقائق</strong> قبل العد لتستقر الكريات.</li>
+                            <li><strong>العدسات:</strong> نبدأ بـ 4x ثم 10x لتحديد المربع، و<strong>العد الفعلي يتم بالعدسة 40x (الجافة)</strong>.</li>
+                            <li><strong>قاعدة منع التكرار (قاعدة L):</strong> نعد الكريات التي بالداخل، والتي تلامس <strong>الضلع العلوي والأيمن فقط</strong>. الكريات التي تلامس الضلع السفلي والأيسر لا تُعد.</li>
                         </ul>
                     </div>
 
                     <div class="formula-box p-4 md:p-5 rounded-xl shadow-sm">
-                        <h3 class="text-base md:text-lg font-bold text-blue-800 mb-3">🧮 القوانين الرياضية للمشعرات الدموية</h3>
+                        <h3 class="text-base md:text-lg font-bold text-blue-800 mb-3">🧮 القوانين الرياضية (حفظ بصم)</h3>
                         <div class="space-y-4 text-xs md:text-sm">
                             <div class="bg-white p-3 border border-blue-200 rounded">
-                                <p class="font-bold text-blue-900 border-b pb-1 mb-2">1. معامل العد الثابت (10,000):</p>
-                                <p>النتيجة: 5 × 200 × 10 = 10,000. (نضرب مجموع الكريات بالمربعات الخمسة بهذا الرقم).</p>
+                                <p class="font-bold text-blue-900 border-b pb-1 mb-2">1. استنتاج معامل العد الثابت للكريات الحمراء (10,000):</p>
+                                <p>المعامل = معامل المساحة (×5 لأننا عدينا الخمس) × معامل التمديد (×200) × معامل العمق (×10).<br>
+                                <strong>النتيجة: 5 × 200 × 10 = 10,000.</strong> (نضرب مجموع الكريات بالمربعات الخمسة في 10,000).</p>
                             </div>
                             <div class="bg-white p-3 border border-blue-200 rounded">
-                                <p class="font-bold text-blue-900 border-b pb-1 mb-2">2. حجم الكرية الوسطي (MCV): [80 - 98 فيمتوليتر]</p>
-                                <p>MCV = (الهيماتوكريت × 10) ÷ عدد الكريات الحمراء (بالمليون)</p>
+                                <p class="font-bold text-blue-900 border-b pb-1 mb-2">2. حجم الكرية الوسطي (MCV): [الطبيعي: 80 - 98 فيمتوليتر]</p>
+                                <p class="text-center font-bold text-slate-700 bg-slate-50 p-2 rounded">MCV = (الهيماتوكريت × 10) ÷ عدد الكريات الحمراء (بالمليون)</p>
                             </div>
                             <div class="bg-white p-3 border border-blue-200 rounded">
-                                <p class="font-bold text-blue-900 border-b pb-1 mb-2">3. متوسط كمية الهيموغلوبين (MCH): [27 - 32 بيكو غرام]</p>
-                                <p>MCH = (كمية الهيموغلوبين الكلية × 10) ÷ عدد الكريات الحمراء (بالمليون)</p>
+                                <p class="font-bold text-blue-900 border-b pb-1 mb-2">3. متوسط كمية الهيموغلوبين بالكرية (MCH): [الطبيعي: 27 - 32 بيكو غرام]</p>
+                                <p class="text-center font-bold text-slate-700 bg-slate-50 p-2 rounded">MCH = (كمية الهيموغلوبين الكلية × 10) ÷ عدد الكريات الحمراء (بالمليون)</p>
+                            </div>
+                            <div class="bg-white p-3 border border-blue-200 rounded">
+                                <p class="font-bold text-blue-900 border-b pb-1 mb-2">4. تقدير الهيموغلوبين بدلالة الهيماتوكريت: [الطبيعي: 12 - 17 غ/100مل]</p>
+                                <p class="text-center font-bold text-slate-700 bg-slate-50 p-2 rounded">كمية الهيموغلوبين = الهيماتوكريت ÷ 3.1</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- ================= TAB 4: عد الكريات البيضاء ================= -->
                 <div id="tab4" class="tab-content bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
                     <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 4: عد الكريات البيضاء (WBC Count)</h2>
 
@@ -255,214 +285,315 @@
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
                             <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🧪 محلول التمديد (حمض الخليك + جيمزا)</h3>
                             <ul class="list-disc list-inside text-xs md:text-sm space-y-2">
-                                <li><strong>دور حمض الخليك (Acetic Acid):</strong> يعمل على <strong>تحليل وتخريب كريات الدم الحمراء</strong> بالكامل حتى لا تعيق الرؤية.</li>
-                                <li><strong>دور صبغة جيمزا:</strong> تقوم بتلوين <strong>أنوية</strong> الكريات البيضاء بلون بنفسجي/أزرق داكن لتسهيل عدها.</li>
+                                <li><strong>طريقة التحضير:</strong> 1 سم³ حمض خليك + 49 سم³ ماء مقطر + نقطة صبغة جيمزا. (أو محلول تورك Turk's).</li>
+                                <li><strong>دور حمض الخليك (Acetic Acid):</strong> يعمل على <strong>تحليل وتخريب كريات الدم الحمراء</strong> بالكامل حتى لا تعيق الرؤية (لأن البيضاء قليلة جداً مقارنة بها).</li>
+                                <li><strong>دور صبغة جيمزا:</strong> تلوين <strong>أنوية</strong> الكريات البيضاء بلون بنفسجي/أزرق داكن لتسهيل تمييزها.</li>
                             </ul>
                         </div>
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
                             <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">📈 القيم الطبيعية والأسباب</h3>
                             <ul class="list-disc list-inside text-xs md:text-sm space-y-2">
-                                <li><strong>العدد الطبيعي:</strong> من 6 إلى 11 ألف / مم³.</li>
-                                <li><strong>أسباب الزيادة:</strong> فيزيولوجية (الحمل). مرضية (سرطان الدم اللوكيميا، الالتهابات الجرثومية).</li>
-                                <li><strong>أسباب النقصان:</strong> الإصابات الفيروسية، فشل النخاع العظمي.</li>
+                                <li><strong>العدد الطبيعي:</strong> من 6,000 إلى 11,000 كرية / مم³.</li>
+                                <li><strong>زيادة فيزيولوجية:</strong> الجهد، الانفعال، الحمل والولادة.</li>
+                                <li><strong>زيادة مرضية (Leukocytosis):</strong> الالتهابات الجرثومية، الخراجات، سرطان الدم (اللوكيميا).</li>
+                                <li><strong>نقص مرضية (Leukopenia):</strong> الإصابات الفيروسية، التيفوئيد، فشل النخاع العظمي، العلاج الكيميائي.</li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm">
-                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشات خطوات العمل والحسابات (البيضاء)</h3>
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشات شريحة نيوباور (الكريات البيضاء)</h3>
                         <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-800">
-                            <li><strong>التمديد:</strong> نسحب 10 ميكرون دم + 190 ميكرون سائل ممدد. نسبة التمديد <strong>1 إلى 20</strong>.</li>
-                            <li><strong>أماكن العد:</strong> العد يتم في <strong>المربعات الأربعة الطرفية (الزوايا)</strong> فقط في شريحة نيوباور.</li>
-                            <li><strong>التكبير المستخدم:</strong> نستخدم التكبير <strong>(10x)</strong> للعد (عكس الحمراء 40x).</li>
+                            <li><strong>التمديد:</strong> نسحب 10 ميكرون دم + 190 ميكرون سائل ممدد. نسبة التمديد هنا <strong>1 إلى 20</strong>.</li>
+                            <li><strong>أين نعد الكريات البيضاء؟</strong> العد يتم في <strong>المربعات الأربعة الطرفية (الزوايا)</strong> فقط في شريحة نيوباور. الترتيب: علوي أيمن ثم أيسر، سفلي أيمن ثم أيسر.</li>
+                            <li><strong>التكبير المستخدم:</strong> نستخدم العدسة <strong>(10x)</strong> للعد (لأن الخلايا واضحة ومتباعدة، على عكس الحمراء 40x).</li>
                             <li><strong>المعامل الثابت (50) وكيف ظهر؟</strong> <br>
-                            <strong>النتيجة: (20 × 10) ÷ 4 = 50.</strong> (نضرب مجموع المربعات الأربعة بـ 50).</li>
+                            المعامل = (معامل التمديد × معامل العمق) ÷ معامل المساحة.<br>
+                            <strong>النتيجة: (20 × 10) ÷ 4 = 50.</strong> (نضرب مجموع الكريات في المربعات الأربعة بـ 50).</li>
                         </ul>
                     </div>
                 </div>
 
+                <!-- ================= TAB 5: اللطاخة ================= -->
                 <div id="tab5" class="tab-content bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
-                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 5: العد التفريقي (Differential WBC Count) واللطاخة</h2>
+                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 5: اللطاخة الدموية والعد التفريقي</h2>
 
                     <div class="bg-slate-50 p-4 md:p-5 rounded-xl border border-slate-200 mb-6">
-                        <h3 class="text-lg md:text-xl font-bold text-emerald-700 mb-3">🩸 خطوات تحضير اللطاخة الدموية (Blood Smear)</h3>
+                        <h3 class="text-lg md:text-xl font-bold text-emerald-700 mb-3">🩸 خطوات تحضير اللطاخة المثالية (Blood Smear)</h3>
                         <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-700">
-                            <li><strong>الشروط:</strong> زجاجة نظيفة بلا شحوم، والدم طازج (أو <strong>EDTA فقط</strong> لأنه يحافظ على المورفولوجيا).</li>
-                            <li><strong>المد:</strong> نضع الشريحة الفاردة بزاوية <strong>45 درجة</strong>، نسحب للخلف ثم ندفع للأمام لتشكل مسحة تنتهي كـ <strong>"لسان الطير"</strong>.</li>
-                            <li><strong>التثبيت والتلوين:</strong> التثبيت بـ <strong>الكحول الميتيلي</strong> والتلوين بملون <strong>جيمزا أو رايت</strong>.</li>
-                            <li><strong>ساحة العد المثالية:</strong> منطقة نهاية المسحة <strong>(منطقة الذيل النحيفة - Monolayer)</strong>.</li>
+                            <li><strong>الشروط:</strong> زجاجة نظيفة بلا شحوم أو ألياف (تسبب فجوات بالفيلم). الدم طازج دون مانع تخثر (أو <strong>EDTA فقط</strong> لأنه يحافظ على المورفولوجيا، الهيبارين يغير التلون).</li>
+                            <li><strong>المد:</strong> قطرة دم 5-10 ميكرولتر. نضع الشريحة الفاردة بزاوية <strong>45 درجة</strong> ونلامس القطرة. نسحب الشريحة الفاردة للأمام بحركة واحدة متصلة لتشكيل مسحة تنتهي كـ <strong>"لسان الطير"</strong>.</li>
+                            <li><strong>أقسام اللطاخة:</strong> الرأس (سميك جداً)، الجسم (متوسط)، <strong>الذيل (رقيق جداً - Monolayer) وهو المكان المثالي للعد والمراقبة لتوزع الخلايا إفرادياً.</strong></li>
+                            <li><strong>التثبيت:</strong> بـ <strong>الكحول الميتيلي المطلق (Methanol)</strong> لمنع تحلل الكريات.</li>
+                            <li><strong>التلوين:</strong> بملونات الرومانوفسكي (جيمزا، رايت، أو ليشمان) وتترك 30 دقيقة، ثم تغسل بتيار ماء خفيف وتجفف <strong>عمودياً</strong> بالهواء.</li>
                         </ul>
                     </div>
 
                     <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm mb-6">
-                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشة التقييم المجهري والانحرافات</h3>
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشة التكبير المجهري والانحرافات المرضية</h3>
                         <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-800">
-                            <li><strong>تكبير 40x (الجافة):</strong> <strong>الأفضل لتقدير حجم الكرية الحمراء وكثافة الهيموغلوبين والشكل.</strong></li>
-                            <li><strong>تكبير 100x (الزيتية):</strong> تستخدم <strong>للضرورة القصوى</strong> (تمييز خلية شاذة وفحص الفصوص).</li>
-                            <li><strong>انحراف الصيغة لليسار (Shift to the Left):</strong> خلايا فتية حزامية = دليل استجابة <strong>لالتهاب جرثومي عنيف</strong>.</li>
-                            <li><strong>انحراف الصيغة لليمين (Shift to the Right):</strong> خلايا هرمة مقسمة لفصوص كثيرة = مؤشر على <strong>فقر دم خبيث (نقص B12)</strong>.</li>
+                            <li><strong>العدسة 10x:</strong> لتقييم جودة المد والتلوين، والبحث عن منطقة الذيل.</li>
+                            <li><strong>العدسة 40x (الجافة):</strong> هي <strong>الأفضل لتقدير حجم الكرية الحمراء وكثافة الهيموغلوبين والشكل</strong>، والأكثر استخداماً لتصنيف فقر الدم.</li>
+                            <li><strong>العدسة 100x (الزيتية الغاطسة):</strong> تستخدم <strong>حصراً للضرورة القصوى</strong> (لتمييز شكل النواة الدقيق، عدد الفصوص، والحبيبات السيتوبلازمية لخلية شاذة).</li>
+                            <li><strong>انحراف الصيغة لليسار (Shift to the Left):</strong> زيادة الكريات الفتية غير الناضجة (خلايا حزامية/أرومية Band cells) = مؤشر <strong>لالتهاب جرثومي حاد وعنيف</strong>.</li>
+                            <li><strong>انحراف الصيغة لليمين (Shift to the Right):</strong> خلايا هرمة زائدة الفصوص (Hypersegmented، أكثر من 5-6 فصوص) = مؤشر <strong>لفقر دم خبيث (نقص B12 أو الفوليك)</strong>.</li>
+                            <li><strong>مورفولوجيا الحمر:</strong> تدرس الحجم (Micro/Macro)، الشكل (منجلية، بيضوية، دمعة)، الأجسام الاحتوائية (بابيزيا، ملاريا).</li>
                         </ul>
                     </div>
 
-                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">🧬 التصنيف الذهبي للكريات البيضاء (حفظ بصم للأتمتة)</h3>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">🧬 التصنيف التفريقي للكريات البيضاء (الجدول الذهبي)</h3>
                     <div class="overflow-x-auto">
                         <table class="w-full text-xs md:text-sm text-right border-collapse border border-slate-300 min-w-[650px]">
-                            <tr class="bg-slate-800 text-white"><th class="p-3 border">الخلية</th><th class="p-3 border">النسبة</th><th class="p-3 border">المظهر المجهري والنواة</th><th class="p-3 border">الوظيفة السريرية</th></tr>
-                            <tr><td colspan="4" class="p-2 bg-slate-200 font-bold text-center">أولاً: الكريات المحببة (Granulocytes)</td></tr>
+                            <tr class="bg-slate-800 text-white"><th class="p-3 border w-[15%]">الخلية</th><th class="p-3 border w-[10%]">النسبة</th><th class="p-3 border w-[45%]">المظهر المجهري وتفاصيل النواة</th><th class="p-3 border w-[30%]">الدلالة السريرية (متى ترتفع؟)</th></tr>
+                            
+                            <tr><td colspan="4" class="p-2 bg-slate-200 font-bold text-center">أولاً: الكريات المحببة (Granulocytes) - تنشأ من النقي</td></tr>
                             <tr class="bg-white">
                                 <td class="p-3 border font-bold text-blue-800">العدلات (Neutrophils)</td>
                                 <td class="p-3 border font-bold">40 - 70%</td>
-                                <td class="p-3 border">النواة مقسمة (2-5 فصوص). حبيبات السيتوبلازم متعادلة تأخذ لوناً <strong>وردي أو رمادي باهت</strong>.</td>
-                                <td class="p-3 border">خط الدفاع الأول اللانوعي <strong>ضد الجراثيم</strong> (تصل للأذية خلال <strong>26 دقيقة</strong>).</td>
+                                <td class="p-3 border">النواة مقسمة (2-5 فصوص) متصلة بخيوط رفيعة. حبيبات السيتوبلازم ناعمة جداً متعادلة تأخذ لوناً <strong>وردي أو رمادي باهت</strong>.</td>
+                                <td class="p-3 border">الدفاع الأول <strong>ضد الجراثيم (البكتيريا) والتقيح</strong>. سريعة تصل للإنتان خلال 26 دقيقة.</td>
                             </tr>
                             <tr class="bg-slate-50">
-                                <td class="p-3 border font-bold text-indigo-800">الأسسات (Basophils)</td>
+                                <td class="p-3 border font-bold text-indigo-800">الأسسات/القعدات (Basophils)</td>
                                 <td class="p-3 border font-bold">0.5 - 1%</td>
-                                <td class="p-3 border">حبيبات <strong>خشنة وضخمة داكنة اللون تغطي النواة وتخفي معالمها</strong> بنفسجي غامق.</td>
-                                <td class="p-3 border">تفاعلات الحساسية المفرطة. غنية بـ <strong>الهيستامين والهيبارين</strong>.</td>
+                                <td class="p-3 border">حبيبات <strong>خشنة وكبيرة جداً داكنة اللون تغطي النواة وتخفي معالمها</strong>، لونها بنفسجي غامق/أسود نافرة.</td>
+                                <td class="p-3 border">تفاعلات الحساسية المفرطة والتأق. تفرز <strong>الهيستامين والهيبارين</strong>.</td>
                             </tr>
                             <tr class="bg-white">
                                 <td class="p-3 border font-bold text-red-800">الحمضات (Eosinophils)</td>
                                 <td class="p-3 border font-bold">1 - 5%</td>
-                                <td class="p-3 border">النواة فصين فقط <strong>(النواة النظارة)</strong>. حبيبات تظهر <strong>أحمر برتقالي فاتح لامع</strong>.</td>
-                                <td class="p-3 border">مكافحة الإصابات <strong>الطفيلية (الديدان)</strong> وتثبيط الحساسية الربوية.</td>
+                                <td class="p-3 border">النواة غالباً من فصين فقط <strong>(النواة النظارة)</strong>. حبيبات السيتوبلازم منتظمة وكبيرة وتأخذ صبغة الإيوسين لتظهر بلون <strong>أحمر برتقالي فاتح لامع</strong>.</td>
+                                <td class="p-3 border">مكافحة <strong>الطفيليات والديدان المعوية</strong> وتثبيط الحساسية الربوية.</td>
                             </tr>
-                            <tr><td colspan="4" class="p-2 bg-slate-200 font-bold text-center">ثانياً: الكريات غير المحببة (Agranulocytes)</td></tr>
+
+                            <tr><td colspan="4" class="p-2 bg-slate-200 font-bold text-center">ثانياً: الكريات غير المحببة (Agranulocytes) - تنشأ من العقد اللمفاوية والنقي</td></tr>
                             <tr class="bg-slate-50">
                                 <td class="p-3 border font-bold text-green-800">اللمفاويات (Lymphocytes)</td>
                                 <td class="p-3 border font-bold">20 - 40%</td>
-                                <td class="p-3 border"><strong>أصغر الكريات البيضاء</strong>. نواتها ضخمة مستديرة تشغل <strong>75-90%</strong> من الخلية.</td>
-                                <td class="p-3 border">حجر الأساس في <strong>المناعة النوعية المكتسبة</strong> (خلايا B للأضداد، وخلايا T).</td>
+                                <td class="p-3 border"><strong>أصغر الكريات البيضاء</strong> (بحجم الكرية الحمراء). نواتها ضخمة دائرية تشغل <strong>75-90%</strong> من الخلية، تاركة هالة هلالية رفيعة من السيتوبلازم الأزرق الفاتح.</td>
+                                <td class="p-3 border">أساس المناعة الخلوية والخلطية (B و T)، ترتفع في <strong>الإصابات الفيروسية</strong> (الأنفلونزا، الحصبة).</td>
                             </tr>
                             <tr class="bg-white">
                                 <td class="p-3 border font-bold text-purple-800">الوحيدات (Monocytes)</td>
                                 <td class="p-3 border font-bold">2 - 8%</td>
-                                <td class="p-3 border"><strong>أكبر خلايا الدم إطلاقاً</strong>. نواتها تشبه <strong>الكلية أو الحذوة</strong>. رمادي كالججاج المغبش.</td>
-                                <td class="p-3 border">البلعمة الكبرى، تتحول في الأنسجة إلى <strong>بالعات كبرى (Macrophages)</strong>.</td>
+                                <td class="p-3 border"><strong>أكبر خلايا الدم إطلاقاً</strong> (3 أضعاف الحمراء). نواتها غير منتظمة تشبه <strong>الكلية أو الحذوة</strong>. السيتوبلازم رمادي كـ <strong>الزجاج المغبش</strong> ويحوي فجوات.</td>
+                                <td class="p-3 border">البلعمة الكبرى، ترتفع في <strong>الالتهابات المزمنة</strong>. تتحول بالأنسجة لبالعات كبرى (Macrophages) وخلايا عارضة للمستضد.</td>
                             </tr>
                         </table>
                     </div>
                 </div>
 
+                <!-- ================= TAB 6: الزمر الدموية ================= -->
                 <div id="tab6" class="tab-content bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
-                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 6: تحديد الزمر الدموية (Blood Typing)</h2>
+                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 6: تحديد الزمر الدموية (Blood Typing & Rh)</h2>
 
                     <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-6">
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
-                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🧬 أساسيات نظام ABO وخطورة التراص</h3>
+                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🧬 أساسيات نظام ABO وخطر التراص</h3>
                             <ul class="list-disc list-inside text-xs md:text-sm space-y-2 text-slate-700">
-                                <li><strong>المسترص (Antigen):</strong> يوجد على <strong>سطح الكرية الحمراء</strong> (A أو B).</li>
-                                <li><strong>الراصة (Antibody):</strong> يوجد في <strong>مصل/بلازما الدم</strong> (a أو b).</li>
-                                <li><strong>التراص (Agglutination):</strong> يتحلل الكريات ويتحول الهيموغلوبين إلى <span class="font-bold text-red-600">"حمض الهيماتين"</span> يسد الكبب الكلوية ويسبب فشل كلوي حاد.</li>
+                                <li><strong>المسترص (Antigen):</strong> مولد الضد، جزيئات بروتينية/سكرية توجد <strong>على غشاء الكرية الحمراء</strong> (A أو B).</li>
+                                <li><strong>الراصة (Antibody/Agglutinin):</strong> جسم مضاد يوجد في <strong>مصل الدم</strong> (Anti-a أو Anti-b).</li>
+                                <li><strong>القاعدة الذهبية:</strong> يستحيل أن يجتمع المسترص (A) مع الراصة (a) في نفس الشخص الطبيعي.</li>
+                                <li><strong>خطر التراص:</strong> التقاء الدم الخاطئ يؤدي لتراص الكريات، فتسد الشعيرات. ثم تتحلل لتحرر الهيموغلوبين الذي يتحول في الأنابيب الكلوية إلى <span class="font-bold text-red-600">"حمض الهيماتين"</span> السام الذي يسد الكبب ويسبب <strong>فشلاً كلوياً حاداً ووفاة</strong>.</li>
                             </ul>
                         </div>
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
-                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">📊 نسب شيوع الزمر ومكوناتها</h3>
+                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">📊 جدول الزمر الدموية ونسب شيوعها</h3>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-xs md:text-sm text-center border-collapse bg-white min-w-[300px]">
-                                    <tr class="bg-slate-200"><th class="border p-1">الزمرة</th><th class="border p-1">المسترص</th><th class="border p-1">الراصة</th><th class="border p-1">الشيوع</th></tr>
-                                    <tr><td class="border p-1 font-bold text-red-600">O</td><td class="border p-1">لا يوجد</td><td class="border p-1">a + b</td><td class="border p-1 font-bold">46%</td></tr>
-                                    <tr><td class="border p-1 font-bold text-blue-600">A</td><td class="border p-1">A</td><td class="border p-1">b</td><td class="border p-1">42%</td></tr>
-                                    <tr><td class="border p-1 font-bold text-green-600">B</td><td class="border p-1">B</td><td class="border p-1">a</td><td class="border p-1">9%</td></tr>
+                                    <tr class="bg-slate-200"><th class="border p-1">الزمرة</th><th class="border p-1">المسترص (على الكرية)</th><th class="border p-1">الراصة (بالمصل)</th><th class="border p-1">الشيوع</th></tr>
+                                    <tr><td class="border p-1 font-bold text-red-600">O</td><td class="border p-1">لا يوجد</td><td class="border p-1">Anti-a + Anti-b</td><td class="border p-1 font-bold">46%</td></tr>
+                                    <tr><td class="border p-1 font-bold text-blue-600">A</td><td class="border p-1">A</td><td class="border p-1">Anti-b</td><td class="border p-1">42%</td></tr>
+                                    <tr><td class="border p-1 font-bold text-green-600">B</td><td class="border p-1">B</td><td class="border p-1">Anti-a</td><td class="border p-1">9%</td></tr>
                                     <tr><td class="border p-1 font-bold text-purple-600">AB</td><td class="border p-1">A + B</td><td class="border p-1">لا يوجد</td><td class="border p-1">3%</td></tr>
                                 </table>
                             </div>
                         </div>
                     </div>
 
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">🧪 قراءة نتائج فحص الزمر الدموية (مهم جداً للعملي)</h3>
+                    <p class="text-xs md:text-sm text-slate-700 mb-3">نضع قطرات من الدم على شريحة ونضيف الأمصال المرجعية. ننتظر 10 دقائق ثم نقرأ. <strong>التراص (التكتل) يعني أن المصل وجد المسترص الذي يبحث عنه.</strong></p>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-xs md:text-sm text-center border-collapse border border-slate-300 bg-white min-w-[500px]">
+                            <tr class="bg-slate-800 text-white"><th class="p-2 border">تفاعل مع (Anti-A) الأزرق</th><th class="p-2 border">تفاعل مع (Anti-B) الأصفر</th><th class="p-2 border font-bold text-yellow-300">الزمرة الناتجة</th></tr>
+                            <tr><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-blue-600 text-lg">A</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-green-600 text-lg">B</td></tr>
+                            <tr><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-purple-600 text-lg">AB</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-red-600 text-lg">O</td></tr>
+                        </table>
+                        <p class="text-xs text-red-600 font-bold mt-2">* قطرة الشاهد (Control): نقطة دم مع قطرة محلول ملحي، يجب ألا تتراص. إذا تراصت، فالفحص باطل وهناك خطأ.</p>
+                    </div>
+
                     <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm mb-6">
-                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشة نقل الدم وعامل الريزوس (Rh) والحمل</h3>
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-3">🎯 نكشة نقل الدم (قاعدة التمدد) وجدول التوافق</h3>
+                        <p class="text-xs md:text-sm text-slate-800 mb-3">
+                            <strong>قاعدة التمدد:</strong> يُهمل تأثير الراصات الموجودة في دم المُعطي لأنها <strong>تتمدد بشكل كبير جداً</strong> في حجم بلازما الآخذ بحيث لا تستطيع رص دم الآخذ. لذا نركز فقط على (مسترص المعطي) ضد (راصة الآخذ).
+                        </p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs md:text-sm text-center border-collapse border border-slate-300 bg-white min-w-[500px]">
+                                <tr class="bg-slate-200"><th class="p-1 border w-1/4">زمرة المريض (الآخذ)</th><th class="p-1 border">الزمر التي يمكن أن يستقبل منها الدم بأمان</th></tr>
+                                <tr><td class="p-1 border font-bold">AB+ (الآخذ العام المطلق)</td><td class="p-1 border font-bold text-green-700">يأخذ من جميع الزمر (O-, O+, A-, A+, B-, B+, AB-, AB+)</td></tr>
+                                <tr><td class="p-1 border font-bold">AB-</td><td class="p-1 border">يأخذ من الزمر السالبة فقط (O-, A-, B-, AB-)</td></tr>
+                                <tr><td class="p-1 border font-bold">A+</td><td class="p-1 border">يأخذ من (A+, A-, O+, O-)</td></tr>
+                                <tr><td class="p-1 border font-bold">A-</td><td class="p-1 border">يأخذ من (A-, O-)</td></tr>
+                                <tr><td class="p-1 border font-bold">B+</td><td class="p-1 border">يأخذ من (B+, B-, O+, O-)</td></tr>
+                                <tr><td class="p-1 border font-bold">B-</td><td class="p-1 border">يأخذ من (B-, O-)</td></tr>
+                                <tr><td class="p-1 border font-bold">O+</td><td class="p-1 border">يأخذ من (O+, O-)</td></tr>
+                                <tr><td class="p-1 border font-bold">O- (المعطي العام المطلق)</td><td class="p-1 border font-bold text-red-600 bg-red-50">يأخذ من (O-) فقط!</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 border border-slate-200 rounded">
+                        <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">⚠️ عامل الريزوس والداء الانحلالي للوليد (HDN)</h3>
                         <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-800">
-                            <li><strong>نقل الدم:</strong> O معطي عام، AB آخذ عام. يُهمل تأثير راصات دم المُعطي لأنها <strong>تتمدد بشكل كبير جداً</strong> في بلازما الآخذ.</li>
-                            <li><strong>عامل Rh:</strong> زمرة موجبة 85%، سالبة 15%.</li>
-                            <li><strong class="text-red-800">الداء الانحلالي للوليد (الحمل):</strong> تحدث فقط إذا كانت الأم (Rh-) والأب (Rh+) والجنين (Rh+).
-                                <ul class="list-circle list-inside ml-4 md:ml-6 mt-1 text-slate-600">
-                                    <li><strong>الحمل الأول:</strong> سليم. عند الولادة يتسرب دم الجنين لدم الأم، فيشكل جسمها ذاكرة مناعية (Anti-D).</li>
-                                    <li><strong>الحمل الثاني:</strong> يعبر الـ (Anti-D) وهو من نوع <strong>IgG</strong> المشيمة لدم الجنين فيرص دمه ويموت.</li>
-                                    <li><strong>الوقاية:</strong> حقنة (Anti-D) للأم خلال <strong>48 ساعة</strong> بعد الولادة الأولى.</li>
+                            <li><strong>عامل الريزوس (Rh):</strong> وجود المسترص D يعني Rh+ (85%)، عدم وجوده يعني Rh- (15%).</li>
+                            <li><strong>نقل دم Rh+ لشخص Rh- لأول مرة:</strong> لا يحدث تراص فوري لأن راصات Anti-D غير موجودة طبيعياً وتتشكل ببطء وتُحفظ بالذاكرة المناعية. <strong>النقل للمرة الثانية:</strong> يحدث التراص والوفاة.</li>
+                            <li><strong class="text-red-800">الداء الانحلالي للوليد (Erythroblastosis fetalis):</strong>
+                                <ul class="list-circle list-inside ml-4 md:ml-6 mt-1 text-slate-700">
+                                    <li><strong>الشرط الحصري للمرض:</strong> أن تكون <strong>الأم (Rh-)</strong> و<strong>الأب (Rh+)</strong> والجنين <strong>(Rh+)</strong>.</li>
+                                    <li><strong>الحمل الأول:</strong> سليم عادة. عند الولادة وانفصال المشيمة، يتسرب دم الجنين لدم الأم فيبدأ جسمها بصناعة أجسام مضادة (Anti-D). <span class="text-blue-800 text-xs">(لا يختلط دم الأم والجنين أثناء الحمل لأن الحاجز المشيمي لا يمرر الكريات)</span>.</li>
+                                    <li><strong>الحمل الثاني (إذا كان الجنين Rh+):</strong> الأجسام المضادة (Anti-D) عند الأم هي من نوع <strong>IgG صغير الحجم</strong>، فيعبر المشيمة لدم الجنين، يرص دمه، ويسبب انحلالاً شديداً وموتاً (إجهاض).</li>
+                                    <li><strong>الوقاية:</strong> إعطاء الأم حقنة الغلوبيولين المناعي (Anti-D) خلال <strong>48 ساعة</strong> بعد الولادة الأولى أو الإجهاض، لترص وتدمر كريات الجنين المتسربة لدم الأم قبل أن يتعرف عليها جهازها المناعي.</li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                 </div>
 
+                <!-- ================= TAB 7: التخثر ================= -->
                 <div id="tab7" class="tab-content bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
                     <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 7: تحديد زمن التخثر والنزف (Coagulation & Bleeding Time)</h2>
 
                     <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm mb-6">
-                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-2">🎯 نكشة التفريق الجوهري</h3>
-                        <p class="text-xs md:text-sm text-slate-800">
-                            <strong>زمن التخثر (Coagulation Time):</strong> يقيم كفاءة <strong>عوامل التخثر البروتينية</strong> في البلازما.<br>
-                            <strong>زمن النزف (Bleeding Time):</strong> يقيم كفاءة <strong>الصفيحات الدموية وسلامة جدار الوعاء الدموي</strong> (الزمن الطبيعي 1-3 دقائق). نحدث وخزة ونمسح الدم بورق نشاف كل 30 ثانية.
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-2">🎯 نكشة التفريق الجوهري والمهم جداً</h3>
+                        <p class="text-xs md:text-sm text-slate-800 mb-3">
+                            <strong>1. زمن النزف (Bleeding Time):</strong> هو الوقت اللازم لتوقف خروج الدم تماماً من جرح صغير محدود. يقيم كفاءة <strong>الصفيحات الدموية وسلامة جدار الوعاء الدموي</strong> (قدرتها على تكوين السدادة). الزمن الطبيعي <strong>1 إلى 3 دقائق</strong>. (الطريقة: وخز ومسح الدم بورق نشاف كل 30 ثانية دون عصر الإصبع).<br><br>
+                            <strong>2. زمن التخثر (Coagulation Time):</strong> يقيم كفاءة <strong>عوامل التخثر البروتينية في البلازما</strong> (تحول الدم لهلام ثم خثرة).
                         </p>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-6">
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
-                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🔗 مراحل التخثر (3 مراحل)</h3>
+                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🔗 مراحل التخثر الأساسية الثلاثة</h3>
                             <ul class="list-decimal list-inside space-y-1 text-xs md:text-sm text-slate-700">
-                                <li>تكوين الثرمبوبلاستين النسيجي (من تخرب الخلايا).</li>
-                                <li>تحول البروثرومبين إلى <strong>ثرومبين</strong> بواسطة الثرمبوبلاستين + <strong>شوارد الكالسيوم Ca</strong>.</li>
-                                <li>تحول <strong>مولد الليفين</strong> إلى <strong>ليفين</strong> غير منحل بواسطة الثرومبين يشكل شبكة الخثرة.</li>
+                                <li>تكوين <strong>الثرمبوبلاستين</strong> النسيجي والبلازمي (عند أذية الوعاء وتخرب الصفيحات).</li>
+                                <li>تحول البروثرومبين (طليعة الخثرين) إلى <strong>الثرومبين (الخثرين) الفعال</strong> بمساعدة الثرمبوبلاستين و <strong>شوارد الكالسيوم Ca++</strong>.</li>
+                                <li>تحول <strong>مولد الليفين (الفيبرينوجين) المنحل</strong> إلى <strong>ليفين (فيبرين) غير منحل</strong> بفعل الثرومبين. تتشكل شبكة (خيوط طويلة) تحبس الكريات لتكوين الخثرة التي تنكمش لاحقاً لتفرز المصل.</li>
                             </ul>
                         </div>
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
-                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🛡️ موانع التخثر وانحلال الخثرة</h3>
+                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🛡️ موانع التخثر الطبيعية ومذيبات الخثرة</h3>
                             <ul class="list-disc list-inside space-y-1 text-xs md:text-sm text-slate-700">
-                                <li><strong>مضادات التخثر الطبيعية:</strong> مضاد الثرومبين (Anti-thrombin) والهيبارين.</li>
-                                <li><strong>حل الخثرة لاحقاً:</strong> بواسطة <strong>البلازمين</strong> الذي يتكون من (مولد البلازمين) الموجود بالدم.</li>
+                                <li>سلامة ونعومة البطانة الوعائية وسرعة الجريان الدموي.</li>
+                                <li><strong>في البلازما:</strong> مضاد الثرومبين (Anti-thrombin) والهيبارين الطبيعي.</li>
+                                <li><strong>إذابة الخثرة لاحقاً:</strong> يتم عبر <strong>البلازمين (الفبرينوليسين)</strong> الذي ينشأ من طليعته (مولد البلازمين) الموجود في الدم ليزيل الخثرة بعد التئام الجرح.</li>
                             </ul>
                         </div>
                     </div>
 
-                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">🧬 عوامل التخثر الـ 13 (عشق الأتمتة)</h3>
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">🧬 عوامل التخثر الـ 13 (محط أسئلة الأتمتة الدقيقة)</h3>
                     <div class="overflow-x-auto mb-4">
-                        <table class="w-full text-xs md:text-sm text-right border-collapse border border-slate-300 bg-white min-w-[550px]">
-                            <tr class="bg-slate-200"><th class="p-2 border w-12 text-center">رقم</th><th class="p-2 border">الاسم</th><th class="p-2 border">المعلومة الامتحانية الأهم</th></tr>
-                            <tr><td class="p-2 border font-bold text-center">I</td><td class="p-2 border">مولد الليفين (Fibrinogen)</td><td class="p-2 border">يُصنع بالكبد. منحل، يتحول لليفين غير منحل.</td></tr>
-                            <tr><td class="p-2 border font-bold text-center">II</td><td class="p-2 border">طليعة الثرومبين (Prothrombin)</td><td class="p-2 border">يُصنع بالكبد <strong>بوجود فيتامين K</strong>.</td></tr>
-                            <tr><td class="p-2 border font-bold text-center">III</td><td class="p-2 border">الثرومبوبلاستين النسيجي</td><td class="p-2 border">يتكون من تخرب الأنسجة والصفيحات.</td></tr>
-                            <tr><td class="p-2 border font-bold text-center text-red-600">IV</td><td class="p-2 border font-bold text-red-600">شوارد الكالسيوم (Ca)</td><td class="p-2 border font-bold text-red-600">ضرورية جداً <strong>في جميع مراحل التخثر</strong>.</td></tr>
-                            <tr><td class="p-2 border font-bold text-center">V</td><td class="p-2 border">طليعة العامل المعجل</td><td class="p-2 border"><strong>يُفقد بحفظ الدم لمدة يوم أو يومين.</strong></td></tr>
-                            <tr><td class="p-2 border font-bold text-center text-red-600">VIII</td><td class="p-2 border font-bold text-red-600">المضاد للناعور A</td><td class="p-2 border font-bold text-red-600">نقصه يسبب الناعور A (هيموفيليا).</td></tr>
-                            <tr><td class="p-2 border font-bold text-center">IX</td><td class="p-2 border">عامل كريستماس</td><td class="p-2 border">يُصنع <strong>بوجود فيتامين K</strong>. نقصه يسبب الناعور B.</td></tr>
-                            <tr><td class="p-2 border font-bold text-center">X</td><td class="p-2 border">عامل ستيوارت (Stuart)</td><td class="p-2 border">يُصنع بالكبد <strong>بوجود فيتامين K</strong>.</td></tr>
-                            <tr><td class="p-2 border font-bold text-center text-blue-600">XII</td><td class="p-2 border font-bold text-blue-600">عامل هاجمان (Hageman)</td><td class="p-2 border font-bold text-blue-600"><strong>من يبدأ سلسلة التجلط</strong> فور ملامسة الدم للزجاج.</td></tr>
+                        <table class="w-full text-xs md:text-sm text-right border-collapse border border-slate-300 bg-white min-w-[600px]">
+                            <tr class="bg-slate-200"><th class="p-2 border w-12 text-center">رقم</th><th class="p-2 border">الاسم</th><th class="p-2 border">المعلومة الامتحانية الأهم / أسباب نقصانه</th></tr>
+                            <tr><td class="p-2 border font-bold text-center">I</td><td class="p-2 border font-bold">مولد الليفين (Fibrinogen)</td><td class="p-2 border">يُصنع بالكبد. بروتين منحل، يتحول لليفين شبكي غير منحل.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center">II</td><td class="p-2 border font-bold">طليعة الثرومبين (Prothrombin)</td><td class="p-2 border">يُصنع بالكبد <strong>بوجود فيتامين K حصراً</strong>.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center">III</td><td class="p-2 border">الثرومبوبلاستين النسيجي</td><td class="p-2 border">يتكون من تخرب خلايا الأنسجة والصفيحات.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center text-red-600 text-lg">IV</td><td class="p-2 border font-bold text-red-600">شوارد الكالسيوم (Ca++)</td><td class="p-2 border font-bold text-red-600 bg-red-50">ضرورية جداً <strong>في جميع مراحل التخثر بدون استثناء</strong> (تمثل 60% من كالسيوم الدم).</td></tr>
+                            <tr><td class="p-2 border font-bold text-center">V</td><td class="p-2 border">طليعة العامل المعجل (Proaccelerine)</td><td class="p-2 border text-red-600 font-bold">يُفقد ويفسد بحفظ الدم لمدة يوم أو يومين في بنوك الدم.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center text-gray-400">VI</td><td class="p-2 border text-gray-400">العامل السادس (مُلغى)</td><td class="p-2 border text-gray-500">سُمي ملغياً لأنه تبين علمياً أنه ليس عاملاً مستقلاً، بل هو العامل الخامس وهو مُفَعَّل.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center">VII</td><td class="p-2 border">طليعة العامل القالب (Proconvertin)</td><td class="p-2 border">يُصنع بالكبد <strong>بوجود فيتامين K</strong>.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center text-purple-700">VIII</td><td class="p-2 border font-bold text-purple-700">الغلوبيولين المضاد للناعور A</td><td class="p-2 border font-bold text-purple-700 bg-purple-50">نقصه الوراثي يسبب مرض <strong>الناعور A (هيموفيليا)</strong>. له دور بتحرير الثرومبوبلاستين الصفيحي.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center">IX</td><td class="p-2 border">عامل كريستماس (مضاد الناعور B)</td><td class="p-2 border">يُصنع <strong>بوجود فيتامين K</strong>. نقصه يسبب الناعور B.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center">X</td><td class="p-2 border">عامل ستيوارت (Stuart)</td><td class="p-2 border">يُصنع بالكبد <strong>بوجود فيتامين K</strong>. نقطة التقاء السبل لتنشيط البروثرومبين.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center">XI</td><td class="p-2 border">طليعة الثرومبوبلاستين البلازمي</td><td class="p-2 border">ينشط عند التماس مع جسم غريب مع العامل 12.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center text-blue-700">XII</td><td class="p-2 border font-bold text-blue-700">عامل هاجمان (Hageman)</td><td class="p-2 border font-bold text-blue-700 bg-blue-50"><strong>هو من يبدأ ويقدح سلسلة التجلط</strong> فور ملامسة الدم للزجاج الخارجي.</td></tr>
+                            <tr><td class="p-2 border font-bold text-center">XIII</td><td class="p-2 border">العامل المثبت لليفين</td><td class="p-2 border">طليعة أنزيم، يقوي شبكة الليفين لتصبح قاسية وثابتة تحت تأثير الخثرين.</td></tr>
                         </table>
                     </div>
-                    <div class="p-3 bg-amber-50 text-amber-900 border border-amber-200 rounded text-xs md:text-sm font-bold text-center mb-6">
-                        🔑 مفتاح حفظ عوامل فيتامين K التي تُصنع بالكبد: اجمعها في الرقم (1972) أي العوامل (10، 9، 7، 2).
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="p-3 bg-amber-50 text-amber-900 border border-amber-200 rounded text-xs md:text-sm font-bold text-center">
+                            🔑 مفتاح حفظ عوامل التخثر التي تُصنع بالكبد بوساطة (فيتامين K): <br>
+                            اجمعها في الرقم (1972) ⬅️ تعني العوامل: (10، 9، 7، 2).
+                        </div>
+                        <div class="p-3 bg-red-50 text-red-900 border border-red-200 rounded text-xs md:text-sm">
+                            <strong class="text-red-700">⚠️ مرض الناعور (Haemophilia):</strong> مرض وراثي مرتبط بمورثات الجنس (الصبغي X)، ينتقل من الإناث الحاملات للمرض ويصيب الذكور. يسبب ميلاً للنزف الشديد وزيادة زمن التخثر.
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 border border-slate-200 rounded mb-6">
+                        <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🧪 طرق قياس زمن التخثر والعلاقة العكسية</h3>
+                        <p class="text-xs md:text-sm mb-2 font-bold text-red-600">قاعدة ذهبية: يوجد علاقة عكسية بين مساحة سطح التماس للدم مع الزجاج وبين زمن التخثر (كلما زاد السطح، نشط العامل 12 أسرع، وقل الزمن).</p>
+                        <ul class="list-disc list-inside text-xs md:text-sm text-slate-700 space-y-2">
+                            <li><strong>1. طريقة الأنابيب الشعرية (الزمن: 2 إلى 3 دقائق):</strong> سطح تماس الدم مع الأنبوب الزجاجي الضيق كبير جداً فالتخثر سريع. يُملأ الأنبوب ويغلق ويُدفأ باليد لدقيقتين، ثم نكسر جزءاً من الأنبوب كل 30 ثانية بحثاً عن ظهور "خيط الفبرين".</li>
+                            <li><strong>2. طريقة الشريحة الزجاجية (الزمن: 8 إلى 12 دقيقة):</strong> سطح التماس قليل، لذا يأخذ التخثر وقتاً أطول. نضع قطرة (سقوط حر دون عصر الكابيلار) ونمرر إبرة أفقياً كل 30 ثانية حتى تتماسك القطرة.</li>
+                            <li><strong>تأثير الحرارة:</strong> إجراء التجربة بدرجة حرارة الغرفة (أقل من 37 مئوية) يؤدي إلى <strong>تأخر التخثر</strong> (زيادة الزمن) لأن أنزيمات التخثر تحتاج الدرجة المثلى 37 لعملها.</li>
+                        </ul>
                     </div>
                 </div>
 
+                <!-- ================= TAB 8: أصوات القلب ================= -->
                 <div id="tab8" class="tab-content bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
-                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 8: أصوات القلب (Heart Sounds) وبؤر الإصغاء</h2>
+                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 8: أصوات القلب وبؤر الإصغاء (Heart Sounds)</h2>
 
                     <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm mb-6">
-                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-2">🎯 القاعدة الذهبية في أصوات القلب</h3>
-                        <p class="text-xs md:text-sm text-slate-800">
-                            أصوات القلب تصدر حصراً بسبب <strong>انغلاق الدسامات</strong> لمنع عودة الدم بالاتجاه المعاكس، <strong>وليس بسبب انفتاحها أبدًا!</strong> الفاصل الزمني بين الصوت الأول والثاني <strong>أقصر</strong> من الفاصل بين الثاني والأول.
-                        </p>
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-2">🎯 القواعد الذهبية لأصوات القلب</h3>
+                        <ul class="list-disc list-inside space-y-1 text-xs md:text-sm text-slate-800">
+                            <li>أصوات القلب تصدر حصراً وتحديداً بسبب <strong>انغلاق الدسامات</strong> لمنع عودة الدم بالاتجاه المعاكس لاختلاف الضغط، <strong>وليس بسبب انفتاحها أبدًا!</strong> (الانفتاح صامت).</li>
+                            <li>الفاصل الزمني بين الصوت الأول والثاني <strong>أقصر</strong> من الفاصل الزمني بين الصوت الثاني والأول الذي يليه. (لأن فترة الانقباض أقصر بكثير من فترة الانبساط).</li>
+                        </ul>
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-6">
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
-                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">🫀 أصوات القلب الأربعة</h3>
+                            <h3 class="font-bold text-emerald-700 mb-3 text-sm md:text-base">🫀 أصوات القلب الأربعة</h3>
                             <ul class="space-y-3 text-xs md:text-sm text-slate-700">
-                                <li><strong>الصوت الأول (S1):</strong> انغلاق <strong>التاجي ومثلث الشرف</strong>. غليظ وطويل (Lub)، مدته <strong>0.12 ثانية</strong>.</li>
-                                <li><strong>الصوت الثاني (S2):</strong> انغلاق <strong>الأبهري والرئوي</strong>. حاد وقصير (Dub)، مدته <strong>0.08 ثانية</strong>.</li>
-                                <li><em class="text-xs text-red-600 font-bold">S3 و S4 لا يُسمعان طبيعياً للبالغين، سماعهما دليل مرضي.</em></li>
+                                <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الأول (S1):</strong> ناتج عن الانغلاق المفاجئ <strong>للدسامين التاجي (المترالي) ومثلث الشرف</strong>. يشير لبداية <strong>الانقباض البطيني</strong>. هو صوت غليظ، منخفض النغمة، وطويل (Lub)، مدته <strong>0.12 ثانية</strong>.</li>
+                                <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الثاني (S2):</strong> ناتج عن الانغلاق المفاجئ <strong>للدسامين الأبهري والرئوي (السينية)</strong>. يشير لبداية <strong>الانبساط البطيني</strong>. صوت حاد، عالي النغمة، وقصير (Dub)، مدته <strong>0.08 ثانية</strong>.</li>
+                                <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الثالث (S3):</strong> اهتزاز جدار البطين لاندفاع الدم السريع من الأذينة إليه أثناء ارتخاء البطين وانفتاح التاجي.</li>
+                                <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الرابع (S4):</strong> اهتزاز ناتج عن انقباض الأذينتين وضخ الدم للبطين. <br><em class="text-xs text-red-600 font-bold block mt-1">S3 و S4 لا يُسمعان طبيعياً في البالغين الأصحاء بالسماعة العادية، سماعهما دليل مرضي (ما عدا الرياضيين والأطفال).</em></li>
                             </ul>
                         </div>
 
                         <div class="bg-slate-50 p-4 border border-slate-200 rounded">
-                            <h3 class="font-bold text-emerald-700 mb-2 text-sm md:text-base">📍 بؤر الإصغاء (أين نسمعها؟)</h3>
+                            <h3 class="font-bold text-emerald-700 mb-3 text-sm md:text-base">📍 بؤر الإصغاء السريرية (أين نسمع الأصوات بوضوح؟)</h3>
                             <ul class="space-y-3 text-xs md:text-sm text-slate-700">
-                                <li><strong>المنطقة التاجية (M):</strong> الورب <strong>الخامس الأيسر</strong> تمثل <strong>ذروة القلب (Apex)</strong>. يُسمع <strong>الأول</strong> أوضح.</li>
-                                <li><strong>منطقة مثلث الشرف (T):</strong> <strong>نهاية عظم القص</strong> للجهة اليسرى.</li>
-                                <li><strong>المنطقة الأبهرية (A):</strong> الورب <strong>الثاني الأيمن</strong> جانب القص. يُسمع <strong>الثاني</strong> أوضح.</li>
-                                <li><strong>المنطقة الرئوية (P):</strong> الورب <strong>الثاني الأيسر</strong> جانب القص.</li>
+                                <li><span class="font-bold text-blue-700">1. المنطقة التاجية (Mitral):</span> في <strong>الورب الخامس الأيسر</strong> (الفراغ بين الضلع 5 و 6 على الخط المنصف للترقوة). تمثل <strong>ذروة القلب (Apex)</strong>. يُسمع فيها <strong>الصوت الأول</strong> بأعلى وضوح. في حال إصابة الدسام تُسمع نفخات قلبية (Murmurs).</li>
+                                <li><span class="font-bold text-blue-700">2. منطقة مثلث الشرف (Tricuspid):</span> عند <strong>نهاية عظم القص</strong> للجهة اليسرى. يُسمع فيها <strong>الصوت الأول</strong> بوضوح.</li>
+                                <li><span class="font-bold text-red-700">3. المنطقة الأبهرية (Aortic):</span> في <strong>الورب الثاني الأيمن</strong> بجوار حافة القص اليمنى. يُسمع فيها <strong>الصوت الثاني</strong> بوضوح.</li>
+                                <li><span class="font-bold text-red-700">4. المنطقة الرئوية (Pulmonary):</span> في <strong>الورب الثاني الأيسر</strong> بجوار حافة القص اليسرى. يُسمع فيها <strong>الصوت الثاني</strong> بوضوح.</li>
                             </ul>
+                            <div class="mt-4 text-xs bg-yellow-50 p-3 border border-yellow-300 rounded font-bold text-yellow-900">
+                                <strong>تكتيك سريري: كيف نفرق بين الصوت الأول والثاني إذا تسارع القلب؟</strong><br>
+                                نجس الشريان السباتي (في العنق أسفل زاوية الفك بـ 2-5 سم). الصوت المتزامن مع الشعور بالنبضة تحت إصبعنا هو <strong>الصوت الأول</strong> (الموجة النبضية تستغرق 1/15 من الثانية للوصول للعنق). والذي يليه هو الثاني.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 border border-slate-200 rounded">
+                        <h3 class="font-bold text-emerald-700 mb-3 text-sm md:text-base">⚡ العوامل المؤثرة على معدل النبض (أسئلة حالات سريرية)</h3>
+                        <div class="grid md:grid-cols-2 gap-4 text-xs md:text-sm text-slate-700">
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>التنفس العميق/القسري (اللانظمية الجيبية):</strong> <strong>تسارع</strong> أثناء الشهيق، <strong>تباطؤ</strong> أثناء الزفير (لاختلاف تنبيه العصب المبهم Vagus nerve بالتغيرات التنفسية).</li>
+                                <li><strong>الأدوية (الجهاز المستقل):</strong> حقن <strong>الأدرينالين والنور أدرينالين</strong> يسرّع القلب. حقن <strong>الأستيل كولين</strong> يبطئ القلب. إعطاء <strong>الأتروبين</strong> يلغي عمل المبهم (الأستيل كولين) فيؤدي لـ <strong>تسارع القلب</strong>.</li>
+                                <li><strong>تأثير الألم:</strong> الألم العادي السطحي (مستقبلات الألم) يسبب <strong>تسارع وارتفاع ضغط شرياني</strong>. الألم <strong>الشديد جداً (الباطني القوي)</strong> يسبب <strong>تباطؤ وانخفاض ضغط وقد يصل للغيبوبة</strong> (بسبب تأثيره الصادم على المركز المحرك الوعائي وعلى النواة الظهرية للمبهم).</li>
+                                <li><strong>الانفعال والجهد العضلي:</strong> يؤديان لـ <strong>التسارع</strong> لتلبية حاجة العضلات للأكسجين. أما الصدمة النفسية الشديدة تؤدي لـ <strong>تباطؤ</strong>.</li>
+                                <li><strong>الحرارة والدرق:</strong> ارتفاع حرارة الجسم وفرط نشاط الدرق يؤديان لـ <strong>التسارع</strong>.</li>
+                            </ul>
+                            <div class="overflow-x-auto mt-2 md:mt-0">
+                                <table class="w-full text-center border-collapse text-xs bg-white border border-slate-200 min-w-[200px]">
+                                    <tr class="bg-slate-200"><th class="border p-2">العمر / الحالة</th><th class="border p-2">معدل النبض (ضربة/دقيقة)</th></tr>
+                                    <tr><td class="border p-1">الجنين</td><td class="border p-1 font-bold text-red-600">140 - 160</td></tr>
+                                    <tr><td class="border p-1">عند الولادة</td><td class="border p-1">130 - 140</td></tr>
+                                    <tr><td class="border p-1">طفل 1 سنة</td><td class="border p-1">100 - 130</td></tr>
+                                    <tr><td class="border p-1">طفل 5 سنوات</td><td class="border p-1">~ 100</td></tr>
+                                    <tr><td class="border p-1">طفل 10 سنوات</td><td class="border p-1">~ 80</td></tr>
+                                    <tr><td class="border p-1">رجل بالغ</td><td class="border p-1 font-bold">70</td></tr>
+                                    <tr><td class="border p-1">امرأة بالغة</td><td class="border p-1 font-bold">80</td></tr>
+                                    <tr><td class="border p-1">كبار السن</td><td class="border p-1">60</td></tr>
+                                    <tr><td class="border p-1 font-bold text-emerald-700 bg-emerald-50">الرياضيون</td><td class="border p-1 font-bold text-emerald-700 bg-emerald-50">50 (بسبب ضخامة العضلة الفيزيولوجية)</td></tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -472,29 +603,49 @@
     </div>
 
     <script>
+        // دالة لفتح التبويبات من القائمة الجانبية (لشاشات الآيباد واللابتوب)
         function openTab(evt, tabId) {
             var i, tabcontent, tablinks;
             
-            // Hide all contents
+            // إخفاء جميع محتويات التبويبات
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
                 tabcontent[i].classList.remove("active");
             }
             
-            // Remove active class from all buttons
+            // إزالة التفعيل عن جميع أزرار القائمة الجانبية
             tablinks = document.getElementsByClassName("sidebar-btn");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active-tab");
             }
             
-            // Show current tab and add active class
+            // إظهار التبويب المطلوب
             document.getElementById(tabId).style.display = "block";
             document.getElementById(tabId).classList.add("active");
-            evt.currentTarget.classList.add("active-tab");
             
-            // Scroll to top
+            // تفعيل الزر الذي تم النقر عليه (إذا تم استدعاء الدالة من زر)
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.classList.add("active-tab");
+            } else {
+                // إذا تم استدعاؤها من القائمة المنسدلة للموبايل، نبحث عن الزر المقابل ونفعله
+                var activeBtn = document.querySelector(`button[onclick*="${tabId}"]`);
+                if(activeBtn) activeBtn.classList.add("active-tab");
+            }
+
+            // مزامنة التحديد مع القائمة المنسدلة للموبايل حتى يبقى محدثاً
+            var mobileSelect = document.getElementById("mobile-tab-select");
+            if (mobileSelect && mobileSelect.value !== tabId) {
+                mobileSelect.value = tabId;
+            }
+            
+            // الصعود لأعلى الصفحة لتسهيل القراءة
             document.querySelector('main').scrollTop = 0;
+        }
+
+        // دالة خاصة تعمل عند اختيار خيار من القائمة المنسدلة في الموبايل
+        function openTabFromSelect(tabId) {
+            openTab(null, tabId);
         }
     </script>
 
