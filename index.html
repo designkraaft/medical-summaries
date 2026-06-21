@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملخصات الطبية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            /* لون خلفية مريح للعين (سيبيا/خشبي فاتح) */
+            background-color: #f4ecd8; 
+            color: #2c2c2c;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            color: #5c4033;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7a5c4d;
+            font-size: 1.2em;
+        }
+
+        /* شبكة لعرض المواد بشكل احترافي */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* تصميم بطاقات المواد */
+        .card {
+            background-color: #fffaf0;
+            border: 1px solid #e0d4c3;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #4a3b2c;
+            font-size: 1.4em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-color: #f0e2cc;
+            color: #2c2c2c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>الملخصات الطبية</h1>
+            <p>اختر المادة للوصول إلى الملخصات والمراجعات</p>
+        </div>
+
+        <div class="grid">
+            <a href="history-of-medicine.html" class="card">تاريخ الطب</a>
+            <a href="anatomy.html" class="card">التشريح</a>
+            <a href="physiology.html" class="card">الفيزيولوجيا</a>
+            <a href="genetics.html" class="card">الوراثة</a>
+            <a href="medical-statistics.html" class="card">الإحصاء الطبي</a>
+            <a href="english-1.html" class="card">أنجليزي 1</a>
+            <a href="english-2.html" class="card">إنجليزي 2</a>
+            <a href="cell-biology.html" class="card">بيولوجيا الخلية</a>
+        </div>
+    </div>
+
+</body>
+</html>
