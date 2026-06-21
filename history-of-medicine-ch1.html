@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملخص الشامل - تاريخ العلوم الطبية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f3f4f6; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .highlight { color: #dc2626; font-weight: bold; }
+        .keyword { color: #2563eb; font-weight: bold; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Table styling */
+        th { background-color: #e2e8f0; color: #1e293b; text-align: right; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        tr:hover { background-color: #f1f5f9; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased h-screen flex flex-col overflow-hidden">
+
+    <header class="bg-gradient-to-l from-blue-800 to-indigo-900 text-white shadow-lg z-10 relative">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-extrabold tracking-wide">الموسوعة الشاملة لتاريخ الطب (نسخة الأتمتة)</h1>
+                <p class="text-sm text-blue-200 mt-1">مصمم خصيصاً لتغطية 100% من المعلومات للامتحان النهائي</p>
+            </div>
+            <div class="hidden md:block bg-white text-indigo-900 px-4 py-2 rounded-full font-bold shadow">
+                لا غنى عن هذا الملخص
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <nav class="w-64 bg-white shadow-xl overflow-y-auto z-10 flex-shrink-0">
+            <div class="p-4 border-b border-gray-100">
+                <h2 class="text-gray-500 font-bold text-sm uppercase tracking-wider">الحضارات والمواضيع</h2>
+            </div>
+            <ul id="tabs-menu" class="flex flex-col py-2">
+                <!-- Tab Buttons Generated via JS -->
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 p-6 md:p-8 relative">
+            <div id="content-container" class="max-w-5xl mx-auto pb-20">
+                
+                <section id="tab-intro" class="tab-content active bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">مقدمة في تاريخ الطب</h2>
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-start"><span class="text-green-500 ml-2 mt-1">✔</span> <div>الإنسان البدائي خلط بين <span class="highlight">الشفاء بالدواء</span> و <span class="highlight">الشفاء بالسحر</span>.</div></li>
+                        <li class="flex items-start"><span class="text-green-500 ml-2 mt-1">✔</span> <div>عزا الإنسان الأمراض لأسباب غيبية: (غضب الأرواح، الموتى، الآلهة)، ولجأ للرقى والتعاويذ، مما يعد <b>أول ظهور للطب النفسي</b>.</div></li>
+                        <li class="flex items-start"><span class="text-green-500 ml-2 mt-1">✔</span> <div><b>النساء:</b> هن <span class="highlight">أول من تعاطى الطب والصيدلة وفن التوليد</span> (بسبب أعمال الزراعة والفلاحة).</div></li>
+                        <li class="flex items-start"><span class="text-green-500 ml-2 mt-1">✔</span> <div><b>محاسبة الطبيب:</b> بعض قبائل أفريقيا كانت تعطي الطبيب "سم التجربة" عند وفاة مريضه؛ إن نجا فهو بريء.</div></li>
+                        <li class="flex items-start"><span class="text-green-500 ml-2 mt-1">✔</span> <div><b>استقلال الصيدلة:</b> بدأ تخصص الصيدلة ينفصل عن الطب في <span class="keyword">القرن الثامن في بغداد</span> (تحت اسم الكيمياء).</div></li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-bold mt-8 mb-4 text-gray-700">آلهة الطب في الحضارات:</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right border-collapse rounded-lg overflow-hidden shadow-sm border border-gray-200">
+                            <thead><tr><th class="p-3 border-b border-gray-300">الحضارة</th><th class="p-3 border-b border-gray-300">إله الطب</th></tr></thead>
+                            <tbody>
+                                <tr><td class="p-3 border-b border-gray-100 font-bold">مصر القديمة</td><td class="p-3 border-b border-gray-100 text-blue-600">توت، إيزيس، أمحوتب</td></tr>
+                                <tr><td class="p-3 border-b border-gray-100 font-bold">بابل</td><td class="p-3 border-b border-gray-100 text-blue-600">نينازو</td></tr>
+                                <tr><td class="p-3 border-b border-gray-100 font-bold">اليونان</td><td class="p-3 border-b border-gray-100 text-blue-600">إسكولابيوس</td></tr>
+                                <tr><td class="p-3 border-b border-gray-100 font-bold">الصين</td><td class="p-3 border-b border-gray-100 text-blue-600">شين نونغ</td></tr>
+                                <tr><td class="p-3 font-bold">فارس</td><td class="p-3 text-blue-600">مازدا</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="tab-meso" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">بلاد ما بين النهرين (السومريون، البابليون، الآشوريون)</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                            <h3 class="font-bold text-blue-800 mb-2">أرقام واكتشافات هامة</h3>
+                            <ul class="list-disc list-inside text-sm space-y-2">
+                                <li>ظهور الإنسان: منذ <b>120 ألف سنة</b>.</li>
+                                <li>أقدم هياكل (بين كركوك والسليمانية): <b>60 ألف سنة</b>.</li>
+                                <li><b>هنري رولنصن:</b> اكتشف صخرة بهستون (1835م) وترجم المسمارية للإنكليزية (1846م).</li>
+                                <li><b>مكتبة آشور بانيبال:</b> تحوي ألواح مسمارية من عام 2000 ق.م.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                            <h3 class="font-bold text-amber-800 mb-2">تصنيف الأطباء (مهم جداً)</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><span class="highlight">العرّاف (بارو):</span> الإنذار والتشخيص ومعرفة أسباب المصائب.</li>
+                                <li><span class="highlight">الراقي (إشيبو):</span> طرد الشياطين من المريض والمكان.</li>
+                                <li><span class="highlight">الآسي (إسو):</span> الطبيب الحقيقي (أدوية وعمليات جراحية)، ويلجأ أحياناً للسحر.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-6 mb-3 text-indigo-800">1. السومريون</h3>
+                    <ul class="space-y-2 mb-6 bg-gray-50 p-4 rounded-lg">
+                        <li>- <b>أقدم وصفة صيدلانية/كتاب طبي في التاريخ:</b> اكتشفها د. صموئيل كريمر (1954م).</li>
+                        <li>- الوثيقة (رقم طيني) وجدت في خرائب <span class="keyword">مدينة نفر</span>.</li>
+                        <li>- <b>ميزة الوثيقة السومرية:</b> <span class="highlight">لا تحتوي على أي تعاويذ أو رقى سحرية إطلاقاً</span>.</li>
+                        <li>- <b>الكيمياء السومرية:</b> عرفوا (التنقية قبل السحق)، صنعوا الصابون (قلى + شحم)، وعرفوا ملح الطعام وملح البارود (نترات البوتاسيوم)، وعملية التبلور الجزئي.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold mt-6 mb-3 text-indigo-800">2. البابليون</h3>
+                    <ul class="space-y-2 mb-6 bg-gray-50 p-4 rounded-lg">
+                        <li>- أول سجل معروف لممارسة العطارة (المداواة بالنبات).</li>
+                        <li>- <span class="keyword">شريعة حمورابي:</span> نظمت أجور الأطباء وعقوباتهم (مثال: قطع يدي الجراح إذا مات النبيل، وتعويض العبد بعبد آخر).</li>
+                        <li>- المدارس ملحقة بالمعابد. هنالك حيوانات تجربة (بشرية) في قصر الملك لتذوق الدواء.</li>
+                        <li>- <b>طريقة تدوين الأدوية (4 أعمدة):</b> 1. اسم النبات، 2. اسم المرض، 3. التحضير، 4. الإرشادات والاستعمال.</li>
+                        <li>- <b>مصادر الأدوية البابلية:</b> 250 عقار نباتي، 180 حيواني، 120 معدني.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold mt-6 mb-3 text-indigo-800">3. الآشوريون</h3>
+                    <p class="bg-gray-50 p-4 rounded-lg text-sm">تعددت الأشكال الدوائية: محاليل، منقوعات، حقن شرجية، تحاميل شرجية ومهبلية، <span class="highlight">زرق الأدوية داخل الإحليل بأنبوب خاص</span>، نشوقات للأنف.</p>
+                </section>
+
+                <section id="tab-egypt" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">مصر القديمة</h2>
+                    
+                    <div class="mb-6 flex gap-4 items-center bg-blue-50 p-4 rounded-lg">
+                        <div class="text-4xl">🪨</div>
+                        <div>
+                            <h3 class="font-bold">حجر رشيد (1799م)</h3>
+                            <p class="text-sm">فك رموزه شامبليون (1824م). كتب بـ 3 لغات: الهيروغليفية، الديموطيقية، اليونانية.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">أشهر الأطباء (موضع سؤال مؤكد):</h3>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                        <li class="bg-white border border-gray-200 p-3 rounded shadow-sm"><b>تحوت:</b> أول من دون أسرار الشفاء (كتاب المعبود).</li>
+                        <li class="bg-white border border-gray-200 p-3 rounded shadow-sm"><b>أتوتيس (بن منيا):</b> أول من ألف كتاباً في <span class="highlight">الجراحة</span>.</li>
+                        <li class="bg-white border border-gray-200 p-3 rounded shadow-sm"><b>أمحوتب:</b> إله الطب (الطبيب الطيب)، أقاموا له بيوت الحياة (مدارس للطب).</li>
+                        <li class="bg-white border border-gray-200 p-3 rounded shadow-sm"><b>إيزيس:</b> طب النساء والأطفال (أول من أسس لرعاية الأمومة).</li>
+                    </ul>
+
+                    <h3 class="text-xl font-bold mb-4 text-white bg-indigo-600 p-2 rounded inline-block">جدول البرديات الطبية (أقدم دساتير الأدوية)</h3>
+                    <div class="overflow-x-auto mb-8">
+                        <table class="w-full text-right border-collapse rounded-lg overflow-hidden shadow border border-gray-300 text-sm">
+                            <thead>
+                                <tr class="bg-indigo-100">
+                                    <th class="p-3 border">البردية</th><th class="p-3 border">التاريخ / الاكتشاف</th><th class="p-3 border">المحتوى / الميزة</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="p-3 border font-bold">كاهون</td><td class="p-3 border">القرن 19 ق.م</td><td class="p-3 border">أقدم مخطوطة (غير كاملة)، طب بيطري، أمراض نساء.</td></tr>
+                                <tr><td class="p-3 border font-bold">أدوين سميث</td><td class="p-3 border">القرن 17 ق.م (شراها 1862)</td><td class="p-3 border"><span class="highlight">أول كتاب جراحي في العالم</span> (48 حالة). خالية من السحر.</td></tr>
+                                <tr><td class="p-3 border font-bold">هيرست</td><td class="p-3 border">القرن 16 ق.م (1901)</td><td class="p-3 border">زمن أمنوفيس 1. تعتمد على زيت الزيتون، العسل، السحر.</td></tr>
+                                <tr><td class="p-3 border font-bold">لندن</td><td class="p-3 border">القرن 14 ق.م (1860)</td><td class="p-3 border">تعتمد على مزاولة السحر.</td></tr>
+                                <tr><td class="p-3 border font-bold">برلين</td><td class="p-3 border">القرن 16 ق.م (1901)</td><td class="p-3 border">درسها إيزوس. تحوي أعضاء الإنسان وتعاويذ الولادة.</td></tr>
+                                <tr><td class="p-3 border font-bold">شستر بيتي</td><td class="p-3 border">القرن 13 ق.م</td><td class="p-3 border">معالجة <span class="highlight">أمراض الشرج والمستقيم</span>.</td></tr>
+                                <tr><td class="p-3 border font-bold text-red-600">إيبرس (الأهم)</td><td class="p-3 border">القرن 6 ق.م (اكتشفها إيبرس 1858)</td><td class="p-3 border">الأضخم (2289 سطر). 700 دواء. تشخيص الفتق الإربي. <span class="highlight">مركزية القلب والدورة الدموية</span>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                            <h4 class="font-bold mb-2">مفاهيم طبية وإنجازات مصرية:</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li><b>الشرج:</b> عضو رئيسي للفحص (اعتقاداً بمرور البراز للدم).</li>
+                                <li><b>التخصص:</b> وجد أطباء عيون، بطن، نساء (مسمى الطبيب: سينو Sinu).</li>
+                                <li>أول من قام بعملية <span class="keyword">الختان</span>.</li>
+                                <li>أول من صنع <span class="keyword">طرفاً بديلاً</span> (قدم صناعية).</li>
+                                <li>الجيش الفرعوني أول من <span class="keyword">حلق الشعر تلافياً للقمل</span>.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                            <h4 class="font-bold mb-2">العقاقير والأوزان:</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li><b>الأوزان:</b> القدت (9 غرام)، الدبن (10 قدت).</li>
+                                <li><b>الحجوم:</b> الرو (15 سم مكعب - ملعقة كبيرة).</li>
+                                <li>استعملوا <span class="highlight">الخبز المتعفن</span> لجروح. والإثمد (كحل).</li>
+                                <li>علاج الأسنان بحشوها بـ(كربونات النحاس+صمغ).</li>
+                                <li>أملاح النحاس لصبغ الجفن وعلاج الحثر (التراخوما).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-china" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">الصين القديمة</h2>
+                    
+                    <h3 class="text-xl font-bold mb-4">الأباطرة الثلاثة الأسطوريين (مؤسسي الطب):</h3>
+                    <div class="grid gap-4 mb-6">
+                        <div class="p-4 border border-blue-200 rounded bg-blue-50">
+                            <span class="font-bold text-lg text-blue-800">1. فوهي (2900 ق.م)</span> - صاحب <b>نظرية باكوا</b> (مسارات اليانغ والين).
+                        </div>
+                        <div class="p-4 border border-green-200 rounded bg-green-50">
+                            <span class="font-bold text-lg text-green-800">2. الإمبراطور الأحمر شين-نونغ (2800 ق.م)</span> 
+                            - إله الصيدلة. وضع كتاب <b>(بن تساو - كتاب الأعشاب)</b> يحوي 365 عقاراً.
+                            - اكتشف <b>الإفدرا</b> (معرق ومنشط) و <b>الجنسنغ</b> (إعادة الشباب).
+                            - قسم العقاقير لـ 3 طبقات: عليا (120 - إكسير الحياة)، وسطى (120 - حفظ الصحة)، دنيا (125 - معالجة الأمراض).
+                        </div>
+                        <div class="p-4 border border-yellow-200 rounded bg-yellow-50">
+                            <span class="font-bold text-lg text-yellow-800">3. الإمبراطور الأصفر يو-هيونغ (2600 ق.م)</span> 
+                            - وضع <b>(قانون الطب)</b> دونه لاحقاً الطبيب وانك بنك في القرن 8م. خصص باباً للإبر.
+                            - له كتاب <b>(رسائل الإمبراطور الأصفر لصبية ساذجة)</b> حول الجنس.
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-4 mt-8">الفلسفة والتشخيص</h3>
+                    
+                    <div class="flex flex-col md:flex-row gap-6 mb-6">
+                        <div class="flex-1 bg-white p-4 border rounded shadow-sm">
+                            <h4 class="font-bold text-center mb-3 bg-gray-200 py-1 rounded">نظرية الين واليانغ (365 نقطة تقاطع)</h4>
+                            <table class="w-full text-center border">
+                                <tr class="bg-gray-100"><th class="p-2 border">يانغ (Yang)</th><th class="p-2 border">ين (Yin)</th></tr>
+                                <tr><td class="p-2 border">موجبة، حرارة، قوة، رجولة</td><td class="p-2 border">سالبة، برودة، ليونة، أنوثة</td></tr>
+                                <tr><td class="p-2 border text-orange-600 font-bold">الشمس، ذهب، نحاس</td><td class="p-2 border text-blue-600 font-bold">القمر، فضة</td></tr>
+                            </table>
+                        </div>
+                        
+                        <div class="flex-1 bg-red-50 p-4 border border-red-200 rounded shadow-sm">
+                            <h4 class="font-bold text-red-800 mb-2">الطبيب المعجزة: بيان قو (تاي يورين)</h4>
+                            <p class="text-sm leading-relaxed mb-2">
+                                توفي 500 ق.م. <span class="highlight">اكتشف النبض في التشخيص لأول مرة بالعالم</span>.
+                                عالج ولي عهد (غو) وأخرجه من غيبوبة بالإبر، فلقب بـ "الطبيب الروحاني".
+                            </p>
+                        </div>
+                    </div>
+
+                    <ul class="list-disc list-inside bg-gray-50 p-4 rounded text-sm space-y-2">
+                        <li><b>تقسيم العقاقير طعمياً:</b> حلو (للعضلات)، مالح (للأوعية)، مر (للجسم). فضلوا الأدوية المفردة.</li>
+                        <li><b>اكتشافات:</b> الإشن البحرية (للجحوظ)، ورق الصفصاف (للرثية)، أزهار التوت (لضغط الدم).</li>
+                        <li>الحضارة الصينية اخترعت: البارود، الحبر الصيني، الورق.</li>
+                    </ul>
+                </section>
+
+                <section id="tab-india" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">الهند القديمة</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-100">
+                            <h3 class="font-bold text-indigo-800 mb-3 text-lg">الكتب المقدسة</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><span class="keyword font-bold">الفيداس (Vedas):</span> العلم/المعرفة. أناشيد، صلوات، سحر تنسب للإله براهما (جاء بها الآريون 1500 ق.م).</li>
+                                <li><span class="keyword font-bold">أيورفيداس:</span> علم الحياة. التداوي بالنبات (مستمر لليوم).</li>
+                            </ul>
+                        </div>
+                        <div class="bg-emerald-50 p-5 rounded-lg border border-emerald-100">
+                            <h3 class="font-bold text-emerald-800 mb-3 text-lg">أشهر الأطباء الهنود</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><span class="font-bold">تشاركا:</span> (القرن 1 م) - قائمته ضمت 500 دواء.</li>
+                                <li><span class="font-bold">سوسروتا:</span> (القرن 4 م) - مجموعته (سامهيتا) تحوي 700 عقار.</li>
+                                <li><span class="font-bold">فاغباتا</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-3 border-r-4 border-indigo-500 pr-2">معلومات امتحانية هامة:</h3>
+                    <ul class="space-y-3 bg-gray-50 p-4 rounded-lg">
+                        <li class="flex items-center"><span class="mr-2">🔹</span> <b>علاج لدغ الأفاعي:</b> المص + لبخة غضار + جذور <span class="highlight">الراولفيا الثعبانية</span>.</li>
+                        <li class="flex items-center"><span class="mr-2">🔹</span> <b>المشافي:</b> أنشئت في عهد <span class="keyword">الملك آزوكا</span> (القرن 3 ق.م). وفي سيلان (قرن 5 ق.م).</li>
+                        <li class="flex items-center"><span class="mr-2">🔹</span> <b>اللقاح:</b> مارسوا التلقيح ضد <span class="highlight">الجدري</span> (أخذ قيح وزرقه أو كشطه).</li>
+                        <li class="flex items-center"><span class="mr-2">🔹</span> <b>الأخلاط الهندية (العناصر الأربعة):</b> الهواء، الماء، البلغم، الدم.</li>
+                        <li class="flex items-center"><span class="mr-2">🔹</span> <b>اليوغا:</b> الطب الهندي يمتاز بفرع روحي فلسفي (اليوغا).</li>
+                        <li class="flex items-center"><span class="mr-2">🔹</span> <b>أخلاق الطبيب:</b> مكانة للملك (يمينه)، يجتنب الخمر، يكتم السر، <b>يخفي عن المريض مرضه العضال</b>.</li>
+                        <li class="flex items-center"><span class="mr-2">🔹</span> هارون الرشيد استدعى أطباء هنود لتنظيم مستشفيات بغداد.</li>
+                        <li class="flex items-center"><span class="mr-2">🔹</span> الهنود أول من صنع الزجاج والحلي الذهبية وبرعوا بالكيمياء.</li>
+                    </ul>
+                </section>
+
+                <section id="tab-persia" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">بلاد فارس</h2>
+                    
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-6">
+                        <p class="mb-4">الكتاب المقدس للفرس هو <span class="highlight font-bold text-xl">الأفستا</span> (أنزله الإله آهوردا مازدا على زرادشت - الديانة المازدانية).</p>
+                        
+                        <h4 class="font-bold text-indigo-700 mb-2">أقسام الطب حسب الأفستا:</h4>
+                        <ol class="list-decimal list-inside mb-4 space-y-1 pr-4">
+                            <li>طب العزائم والرقى.</li>
+                            <li>طب المداواة بالنباتات.</li>
+                            <li>الطب الجراحي.</li>
+                        </ol>
+
+                        <h4 class="font-bold text-indigo-700 mb-2">نباتات فارسية هامة:</h4>
+                        <ul class="list-disc list-inside space-y-2 text-sm pr-4">
+                            <li><span class="font-bold text-red-600">الهوما:</span> النبات الطبي الوحيد المذكور بالأفستا. شجرة ذهبية عصارتها تعيد الشباب. (بحث روسي حديث: شراب مسكر من الإفدرا+حليب+شعير).</li>
+                            <li><span class="font-bold text-blue-600">بقلة الملك (الشاه ترج):</span> ذكره ابن سينا.</li>
+                            <li>نقلوا شجرة الليمون في العهد الأخميني.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-blue-900 text-white p-5 rounded-lg">
+                        <h3 class="text-xl font-bold mb-2">مدرسة جنديسابور</h3>
+                        <p class="text-sm">في القرن 3 م، استولى الساسانيون. أشهر ملوكهم <b>سابور الأول</b> أنشأ بيمارستان ومدرسة <b>جنديسابور</b> الطبية التي صهرت الثقافات (يونانية، هندية، فارسية). نقل الرهبان النساطرة العلوم اليونانية إليها.</p>
+                    </div>
+                </section>
+
+                <section id="tab-greece" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">اليونان (الإغريق)</h2>
+                    
+                    <p class="mb-4 bg-yellow-50 border-r-4 border-yellow-400 p-3 text-sm">
+                        تأثروا بالمصريين والبابليين. <span class="font-bold">إسكليبيوس (صقلاب)</span>: إله العلاج الإغريقي، تلميذ هرمس المصري. رمزه الأفعى الملتفة على صولجان (شعار الطب اليوم).
+                    </p>
+
+                    <div class="space-y-6">
+                        <!-- Pre-Hippocrates -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <h3 class="bg-gray-100 p-3 font-bold text-lg">1. قبل أبقراط</h3>
+                            <div class="p-4 space-y-4">
+                                <div>
+                                    <h4 class="font-bold text-blue-700">فيثاغورس</h4>
+                                    <p class="text-sm">صاحب مقولة (العقل السليم بالجسم السليم). نصح بالعسل والزيتون. أسس مدرسة <b>العقل العالمي</b> (ملابس بيضاء، موسيقى ورقص صباحاً). زوجته "تيان" أول طبيبة تدرس صحة النساء/الأطفال. عالج بالموسيقى واستعمل الكي والبتر.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-blue-700">هوميروس</h4>
+                                    <p class="text-sm">الألياذة والأوديسة تذكر أمراضاً كجنون رفاق عولس والسوداء والطاعون (حصار طروادة). ذكر نبات <b>القنطوريون</b> (نسبة للطبيب شيرون معلم صقلاب). دواء البواسير الصقلابي: (جلد أفعى منقوع بخل، عسل ورد...الخ).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hippocrates -->
+                        <div class="border border-indigo-300 rounded-lg overflow-hidden shadow-sm">
+                            <h3 class="bg-indigo-600 text-white p-3 font-bold text-lg">2. زمن أبقراط (القرن 5 ق.م)</h3>
+                            <div class="p-4 bg-indigo-50">
+                                <ul class="list-disc list-inside space-y-2 text-sm">
+                                    <li>تشكلت مدرستان: <b>كوس</b> (اهتمت بالمرض وأسبابه) و <b>كنيدوس</b> (اهتمت بأمراض أجهزة محددة - أطبائها كتيسيان وأوريفون).</li>
+                                    <li><b>أبقراط الكوسي:</b> (أبقراط الخامس). أخرج الطب من السرية للعلن. صاغ قسم أبقراط.</li>
+                                    <li><b>المجموعة الأبقراطية:</b> 30 كتاباً (حسب ابن أبي أصيبعة).</li>
+                                    <li><b>نظريته الأخلاط الـ 4:</b> الدم، الصفراء، البلغم، السوداء (المرض فساد أحدها).</li>
+                                    <li><b>آراؤه:</b> الطبيعة تشفي، الحرارة رد فعل دفاعي، الحمية رأس كل دواء. استعمل 230 عقاراً.</li>
+                                    <li><b>ياتريون:</b> أول مستوصف/مشفى.</li>
+                                    <li>سكن حمص، وأسس <b>أول مدرسة طب نظامية بدمشق</b> (النيرب/الصالحية) له 12 تلميذاً.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Post-Hippocrates -->
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <h3 class="bg-gray-100 p-3 font-bold text-lg">3. بعد أبقراط (الفلاسفة)</h3>
+                            <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div class="bg-white p-3 rounded shadow-sm border border-gray-100"><b>أفلاطون:</b> لكل مرض مدة، حذر من المسهلات.</div>
+                                <div class="bg-white p-3 rounded shadow-sm border border-gray-100"><b>أرسطو:</b> جامع أعشاب. أول من زين الكتب بالرسوم.</div>
+                                <div class="bg-white p-3 rounded shadow-sm border border-gray-100"><b>تيوفراست:</b> الأب لعلم النبات. 200 مجلد (تاريخ النبات). ذكر عصير الخشخاش مسكناً.</div>
+                                <div class="bg-white p-3 rounded shadow-sm border border-gray-100"><b>ديوقليس الكاريستي:</b> أهم طبيب بعد أبقراط. أول كتاب أعشاب باليونانية. عالج بالحلبة.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-alexandria" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">البطالمة في الإسكندرية</h2>
+                    
+                    <p class="mb-4 text-sm text-gray-700">أسسها الإسكندر 323 ق.م. بطليموس سوتر حكم مصر. نقلوا علماء هليوبوليس (عين شمس). أول من أسس المتحف هو <b>ستراتون</b> (تلميذ تيوفراست). الجامعة ضمت 14 ألف طالب.</p>
+
+                    <div class="bg-purple-50 p-4 border border-purple-200 rounded-lg mb-6">
+                        <h3 class="font-bold text-purple-800 mb-2">إنجازات الإسكندرية:</h3>
+                        <ul class="list-disc list-inside space-y-1 text-sm">
+                            <li>تشريح علني للمجرمين المعدومين.</li>
+                            <li>العالم الشاعر <b>نياكور</b>: ألف قصيدتين (العقاقير والسموم، وقصيدة الترياق).</li>
+                            <li>ظهور <b>علم السيمياء</b> لأول مرة (تحويل المعادن لذهب، واختراع أدوات مخبرية كالمعوجة والهاون).</li>
+                            <li><span class="highlight">الترياق:</span> دواء أساسه الأفيون.</li>
+                            <li>احتراق المكتبة: أمر يوليوس قيصر بحرق سفنه فامتدت النار للمكتبة.</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">المدارس الطبية الـ 4 في الإسكندرية:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 border rounded shadow-sm">
+                            <span class="font-bold text-lg text-red-600 block mb-1">1. مدرسة هيروفيلوس</span>
+                            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">التجربة</span><br>
+                            أبو التشريح. أول من درس دقات القلب. سمّى الاثني عشري (طوله 12 قيراط). عرف المبيضين وفرق بين الوريد والشريان.
+                        </div>
+                        <div class="p-4 border rounded shadow-sm">
+                            <span class="font-bold text-lg text-blue-600 block mb-1">2. مدرسة إيرازيسترات</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">القياس</span><br>
+                            أبو الفسيولوجيا. رائد الطب الوقائي.
+                        </div>
+                        <div class="p-4 border rounded shadow-sm">
+                            <span class="font-bold text-lg text-green-600 block mb-1">3. التجريبيون</span>
+                            أسسها (فيلبينوس القوسي وسيرافيون الإسكندري). ابتعدوا عن الفلسفة للتجربة.
+                        </div>
+                        <div class="p-4 border rounded shadow-sm">
+                            <span class="font-bold text-lg text-yellow-600 block mb-1">4. أصحاب الحيل</span>
+                            أبرز أطبائها (تسالوس الترالي).
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-roman" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">العصر الروماني والبيزنطي</h2>
+                    
+                    <p class="bg-gray-100 p-3 rounded mb-6 text-sm">سقطت أثينا بيد الرومان 146 ق.م. اعتمد الرومان على الأطباء اليونانيين (رغم أنهم رقيق). اهتم الرومان بـ <b>الطب الوقائي</b> (الحمامات) والجراحة الحربية. <span class="highlight">العملية القيصرية</span> أجريت لأم يوليوس قيصر.</p>
+
+                    <h3 class="text-2xl font-bold mb-4 text-indigo-800">أشهر أطباء روما:</h3>
+                    
+                    <!-- Flashcard style for MCQ study -->
+                    <div class="space-y-4">
+                        <div class="border border-gray-300 rounded p-4 hover:shadow-md transition">
+                            <h4 class="font-bold text-lg text-red-600">إسكليبياد (124-40 ق.م)</h4>
+                            <p class="text-sm">"شيشرون الأطباء". عالج بالتدليك والخمر. أنعش رجلاً أصيب بـ(الموت الكاذب).</p>
+                        </div>
+                        
+                        <div class="border border-gray-300 rounded p-4 hover:shadow-md transition">
+                            <h4 class="font-bold text-lg text-red-600">سلزيوس (31 ق.م - 14 م)</h4>
+                            <p class="text-sm">عاصر ظهور المسيحية. له كتاب "كتاب الأدوية".</p>
+                        </div>
+
+                        <div class="border border-indigo-400 rounded p-4 bg-indigo-50 shadow-sm">
+                            <h4 class="font-bold text-xl text-indigo-800 mb-2">ديسقوريدس (القرن 1 م)</h4>
+                            <p class="text-sm leading-relaxed">
+                                جراح بالجيش. وضع كتاب <span class="highlight font-bold">المادة الطبية</span> (5 أجزاء، 958 عقار منها 500 نباتي).
+                                أصبح المرجع لـ 16 قرناً. ركز على الأدوية ذات التأثير المتشابه. اعتنى الأمويون بالأندلس (عبد الرحمن 3) بترجمته.
+                            </p>
+                        </div>
+
+                        <div class="border border-blue-400 rounded p-4 bg-blue-50 shadow-sm">
+                            <h4 class="font-bold text-xl text-blue-800 mb-2">جالينوس (ولد 131 م ببرغام)</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>لم يعتنق المسيحية (وثني). قاعدته: <b>الطبيعة حكيمة لا تخطئ</b>.</li>
+                                <li>أسس <b>الصيدلة الجالينوسية</b> (تحضير آلي للدواء).</li>
+                                <li>أوجد صيغة <span class="highlight">الكريم البارد</span>.</li>
+                                <li>صنف الأدوية في <b>4 درجات من الشدة</b>.</li>
+                                <li>نصح بزيادة سعر الدواء للأغنياء بمواد عديمة الفائدة ليقبلوه!</li>
+                            </ul>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                            <div class="bg-gray-50 border p-3 rounded">
+                                <span class="font-bold text-green-700">دميان وكوسما:</span> توأمان سوريان مسيحيان. كوسما طبيب (نبات باسمه)، دميان صيدلاني (أدوية زينة). قديسان راعيان للصيدلة والطب.
+                            </div>
+                            <div class="bg-gray-50 border p-3 rounded">
+                                <span class="font-bold text-green-700">مارسيلوس:</span> من بوردو. ألف قوائم مترادفات النبات. <b>بامفيلوس</b>: تسميات بـ 4 لغات.
+                            </div>
+                            <div class="bg-gray-50 border p-3 rounded">
+                                <span class="font-bold text-green-700">سورانوس:</span> أول من نصح بالمس المهبلي وقثطرة المثانة للولادة، وكرسي الولادة.
+                            </div>
+                            <div class="bg-gray-50 border p-3 rounded">
+                                <span class="font-bold text-green-700">أرشيجن الآبامي:</span> سوري، ربط العروق، كوى بالنار للنزف، منظار الرحم، بتر ثدي السرطان.
+                            </div>
+                            <div class="bg-gray-50 border p-3 rounded md:col-span-2">
+                                <span class="font-bold text-green-700">روفوس ديفوز:</span> أول من شرح القردة، قسم الأعصاب لحسية ومحركة، عرف التصالب البصري، وضع أصول المشاهدة الطبية.
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold mt-8 mb-4 border-t pt-4">العهد البيزنطي والمسيحية</h3>
+                    <ul class="list-disc list-inside text-sm space-y-2">
+                        <li>ظهور معجزات الشفاء للسيد المسيح أثر بالطب.</li>
+                        <li><b>قسطنطين 1:</b> إمبراطور 306م، نقل العاصمة لبيزنطة واعترف بالمسيحية.</li>
+                        <li>مدارس فكرية: <b>أنطاكية</b> و <b>أورفة (الرها)</b> ترجمة يوناني لسرياني.</li>
+                        <li><b>النساطرة واليعاقبة:</b> ساهموا بالترجمة. النساطرة أسسوا جنديسابور الفارسية. السريانية حلقة وصل بين اليونانية والعربية.</li>
+                    </ul>
+                </section>
+
+                <section id="tab-details" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-red-700 mb-6 border-b-2 border-red-100 pb-3">نكشات وتفاصيل دقيقة (مهمة للـ 100%)</h2>
+                    
+                    <div class="bg-red-50 border-r-4 border-red-500 p-4 mb-6 rounded-l-lg">
+                        <p class="text-sm text-red-800 font-bold">هذا القسم مخصص للجزئيات الصغيرة جداً والمخبأة بين السطور في الكتاب الأصلي لضمان شمولية الملخص بنسبة 100% لأسئلة الأتمتة الصعبة.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-gray-200 p-4 rounded bg-gray-50 hover:shadow-md transition">
+                            <h4 class="font-bold text-indigo-700 mb-2 border-b pb-1">مقدمة</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>غريزة الحيوانات: لاحظ الإنسان أن <b>الكلاب</b> تأكل الأعشاب لتشفى، وأن <b>القطط</b> تأكل النعناع لطرد الغازات.</li>
+                                <li>الحامل تلعق <b>الأحجار الكلسية</b> لتشكيل عظام الجنين.</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-gray-200 p-4 rounded bg-gray-50 hover:shadow-md transition">
+                            <h4 class="font-bold text-indigo-700 mb-2 border-b pb-1">بلاد الرافدين</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li><b>مدينة لكش:</b> وجد فيها منحوتة لدورق عليه أفعيان تلتفان (2000 ق.م).</li>
+                                <li><b>رسائل ماري:</b> أثبتت أن العلاج اعتمد على الأعشاب والزيوت.</li>
+                                <li><b>أبعاد الوثيقة السومرية (كريمر):</b> طولها <b>15.9 سم</b> وعرضها <b>9.5 سم</b> (مكتوبة بقلم قصب نهايته كالإسفين).</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-gray-200 p-4 rounded bg-gray-50 hover:shadow-md transition">
+                            <h4 class="font-bold text-indigo-700 mb-2 border-b pb-1">مصر القديمة</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li>مستلزمات التجميل: يحتوي <b>متحف ليدن</b> على صندوق زينة للسيدات المصريات.</li>
+                                <li>عالم الآثار الألماني <b>إيبرس</b> كان يعمل في جامعة <b>لايبزيغ</b>.</li>
+                                <li>مواد التحنيط بدقة: (الحنة، البصل، الصمغ، خيار شمبر، المر، اللبان، نشارة الخشب، الكتان، نبيذ البلح، النطرون).</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-gray-200 p-4 rounded bg-gray-50 hover:shadow-md transition">
+                            <h4 class="font-bold text-indigo-700 mb-2 border-b pb-1">الصين والهند</h4>
+                            <ul class="list-disc list-inside text-sm space-y-1">
+                                <li><b>وانك بنك:</b> هو الطبيب الذي دوّن كتاب (قانون الطب) للإمبراطور الأصفر في القرن 8 م.</li>
+                                <li>مجيء الإسكندر المكدوني للهند كان في <b>النصف الأول من القرن 4 ق.م</b>.</li>
+                                <li>العناصر الأربعة في الهند: (هواء، ماء، بلغم، دم).</li>
+                            </ul>
+                        </div>
+
+                        <div class="border border-gray-200 p-4 rounded bg-gray-50 hover:shadow-md transition md:col-span-2">
+                            <h4 class="font-bold text-indigo-700 mb-2 border-b pb-1">الرومان واليونان</h4>
+                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm list-disc list-inside">
+                                <li><b>توسيديز، بلوتارك، بلين:</b> مؤرخون ذكروا معلومات عن الطب القديم.</li>
+                                <li><b>حاكم أثينا سولون:</b> صرح بأن نجاح العلاج لا يعتمد دائماً على الدواء بل اللمس.</li>
+                                <li><b>أندروماك:</b> طبيب الإمبراطور <b>نيرون</b>، استعمل تركيبة فيها عشرات الأعشاب (ترياق) للسموم.</li>
+                                <li><b>كاتو:</b> حاكم روما، اشتهر بوضع <b>أوراق الكرنب</b> على الجروح.</li>
+                                <li><b>بليني الأكبر:</b> مارس تجارة الأدوية، تلاه (مارسيلوس) بـ 3 عقود.</li>
+                                <li><b>أطباء الجمهورية:</b> هو اللقب الذي أطلق على خريجي المعاهد الذين سمح لهم بممارسة الطب في روما قانونياً.</li>
+                                <li><b>بامفيلوس:</b> وضع تسميات النبات بـ 4 لغات (يونانية، لاتينية، عبرية، مصرية).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-comparisons" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">جداول المقارنات الذهبية</h2>
+                    
+                    <h3 class="text-xl font-bold mb-3 text-indigo-700 bg-indigo-50 p-2 rounded">1. تصنيف الأطباء في بابل</h3>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-right border-collapse rounded-lg overflow-hidden shadow-sm border border-gray-200">
+                            <tr class="bg-indigo-100"><th class="p-2 border">الطبيب</th><th class="p-2 border">الاسم البابلي</th><th class="p-2 border">الوظيفة</th></tr>
+                            <tr><td class="p-2 border font-bold">العرّاف</td><td class="p-2 border text-blue-600">بارو (Baru)</td><td class="p-2 border">الإنذار، التشخيص، معرفة أسباب المصائب.</td></tr>
+                            <tr class="bg-gray-50"><td class="p-2 border font-bold">الراقي</td><td class="p-2 border text-blue-600">إشيبو (Ashipu)</td><td class="p-2 border">طرد الشياطين من المريض والمكان.</td></tr>
+                            <tr><td class="p-2 border font-bold">الآسي</td><td class="p-2 border text-blue-600">إسو (Asu)</td><td class="p-2 border">الطبيب الحقيقي، الجرّاح، يعطي الأدوية.</td></tr>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-3 text-indigo-700 bg-indigo-50 p-2 rounded">2. المدارس الطبية في الإسكندرية</h3>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-right border-collapse rounded-lg overflow-hidden shadow-sm border border-gray-200 text-sm">
+                            <tr class="bg-indigo-100"><th class="p-2 border">المدرسة / المؤسس</th><th class="p-2 border">المنهج / اللقب</th><th class="p-2 border">أهم الإنجازات</th></tr>
+                            <tr><td class="p-2 border font-bold">هيروفيلوس</td><td class="p-2 border text-red-600 font-bold">التجربة (أبو التشريح)</td><td class="p-2 border">درس دقات القلب بالشرايين، سمى الاثني عشري، عرف المبيضين، فرق بين الوريد والشريان.</td></tr>
+                            <tr class="bg-gray-50"><td class="p-2 border font-bold">إيرازيسترات</td><td class="p-2 border text-blue-600 font-bold">القياس (أبو الفسيولوجيا)</td><td class="p-2 border">رائد الطب الوقائي، إلمام عظيم بالأعضاء.</td></tr>
+                            <tr><td class="p-2 border font-bold">التجريبيون (فيلبينوس وسيرافيون)</td><td class="p-2 border text-green-600 font-bold">التجربة فقط</td><td class="p-2 border">ابتعدوا عن المناقشات الفلسفية المنطقية واعتمدوا التجربة البحتة.</td></tr>
+                            <tr class="bg-gray-50"><td class="p-2 border font-bold">أصحاب الحيل (تسالوس الترالي)</td><td class="p-2 border text-yellow-600 font-bold">الاعتماد على الحيل</td><td class="p-2 border">تأسيس منهج يعتمد على الحيل الطبية.</td></tr>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-3 text-indigo-700 bg-indigo-50 p-2 rounded">3. المدارس اليونانية (زمن أبقراط)</h3>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-center border-collapse rounded-lg overflow-hidden shadow-sm border border-gray-200">
+                            <tr class="bg-indigo-100"><th class="p-2 border">مدرسة كوس (Cos)</th><th class="p-2 border">مدرسة كنيدوس (Cnidus)</th></tr>
+                            <tr><td class="p-2 border">اهتمت بالمرض وأسبابه وطرق علاجه (الطب العام)</td><td class="p-2 border">اهتمت بأمراض أجهزة محددة في الجسم (تخصص)</td></tr>
+                            <tr class="bg-gray-50"><td class="p-2 border">أبرز أطبائها: أبقراط</td><td class="p-2 border">أبرز أطبائها: كتيسيان وأوريفون</td></tr>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-3 text-indigo-700 bg-indigo-50 p-2 rounded">4. طبقات الأدوية عند الصين (كتاب بن تساو)</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-center border-collapse rounded-lg overflow-hidden shadow-sm border border-gray-200">
+                            <tr class="bg-indigo-100"><th class="p-2 border">الطبقة</th><th class="p-2 border">العدد</th><th class="p-2 border">الاستخدام</th></tr>
+                            <tr><td class="p-2 border font-bold text-green-700">العليا</td><td class="p-2 border">120 عقار</td><td class="p-2 border">إكسير الحياة (دواء شافي وواقي من السموم)</td></tr>
+                            <tr class="bg-gray-50"><td class="p-2 border font-bold text-blue-700">الوسطى</td><td class="p-2 border">120 عقار</td><td class="p-2 border">حفظ الصحة</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-700">الدنيا</td><td class="p-2 border">125 عقار</td><td class="p-2 border">معالجة الأمراض</td></tr>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="tab-firsts" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-amber-600 mb-6 border-b-2 border-amber-100 pb-3">أوائل واكتشافات (مهم جداً)</h2>
+                    <ul class="space-y-3 bg-amber-50 p-5 rounded-lg border border-amber-200">
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول من تعاطى الطب والصيدلة:</b> النساء (بسبب الزراعة والتوليد).</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول ظهور للطب النفسي:</b> الإنسان البدائي (بسبب إيمانه بالرقى والتعاويذ).</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أقدم وصفة طبية (بدون سحر) ودستور أدوية:</b> السومريون (اكتشفها كريمر).</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول كتاب جراحي في العالم:</b> بردية أدوين سميث (مصر).</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول من قام بعملية الختان وصنع طرف صناعي:</b> المصريون القدماء.</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول من حلق الشعر تلافياً للقمل:</b> الجيش الفرعوني.</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول من استخدم النبض في التشخيص:</b> الطبيب الصيني بيان قو.</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول من أسس مستوصف/مشفى (ياتريون):</b> اليونانيون (زمن أبقراط).</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول مدرسة طب نظامية بدمشق:</b> أسسها أبقراط في منطقة (النيرب/الصالحية).</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول من شرح جسم الإنسان علناً:</b> أطباء الإسكندرية (هيروفيلوس).</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول من زين الكتب بالرسوم:</b> الفيلسوف أرسطو.</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول ظهور لعلم السيمياء (الكيمياء القديمة):</b> مدرسة الإسكندرية.</div></li>
+                        <li class="flex items-start"><span class="mr-2 text-xl">🥇</span> <div><b>أول من نصح بالمس المهبلي وقثطرة المثانة:</b> الطبيب الروماني سورانوس.</div></li>
+                    </ul>
+                </section>
+
+                <section id="tab-meanings" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-teal-700 mb-6 border-b-2 border-teal-100 pb-3">مصطلحات ومعاني (معجم الأتمتة)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">سينو (Sinu)</span><span class="w-2/3">الكاهن / الطبيب في مصر القديمة.</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">بيوت الحياة</span><span class="w-2/3">مدارس الطب الملحقة بالمعابد في مصر (أقاموها لأمحوتب).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">بن تساو</span><span class="w-2/3">كتاب الأعشاب الصيني (تأليف شين-نونغ).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">اليانغ (Yang)</span><span class="w-2/3">القوة الموجبة (حرارة، شمس، ذكر، ذهب).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">الين (Yin)</span><span class="w-2/3">القوة السالبة (برودة، قمر، أنثى، فضة).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">الفيداس</span><span class="w-2/3">العلم / المعرفة (الكتاب المقدس الهندي).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">أيورفيداس</span><span class="w-2/3">علم الحياة (التداوي بالنبات في الهند).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">سامهيتا</span><span class="w-2/3">المجموعة الطبية للطبيب الهندي سوسروتا (تحوي 700 عقار).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">الأفستا</span><span class="w-2/3">الكتاب المقدس لدى الفرس (أنزله الإله مازدا).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">ياتريون</span><span class="w-2/3">أول مستوصف / مشفى في اليونان.</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">الترياق</span><span class="w-2/3">دواء أساسه الأفيون وعشرات الأعشاب مضاد للسموم (الإسكندرية وروما).</span></div>
+                        <div class="flex border-b border-gray-200 pb-2"><span class="w-1/3 font-bold text-teal-800">الصيدلة الجالينوسية</span><span class="w-2/3">علم تحضير الأدوية بطرق آلية وميكانيكية (نسبة لجالينوس).</span></div>
+                    </div>
+                </section>
+
+                <section id="tab-review" class="tab-content bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                    <h2 class="text-3xl font-bold text-indigo-900 mb-6 border-b-2 border-indigo-100 pb-3">المراجعة السريعة للأتمتة (من هو؟)</h2>
+                    
+                    <p class="mb-4 text-gray-600">اضغط على السؤال لإظهار الجواب الصحيح:</p>
+
+                    <div class="space-y-3" id="quiz-container">
+                        <!-- JS generated quizzes will go here -->
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Data for Tabs
+        const tabs = [
+            { id: 'intro', icon: '📝', title: 'مقدمة وآلهة الطب' },
+            { id: 'meso', icon: '🏺', title: 'بلاد الرافدين' },
+            { id: 'egypt', icon: '👁️', title: 'مصر القديمة' },
+            { id: 'china', icon: '☯️', title: 'الصين القديمة' },
+            { id: 'india', icon: '🧘', title: 'الهند القديمة' },
+            { id: 'persia', icon: '🔥', title: 'فارس (إيران)' },
+            { id: 'greece', icon: '🏛️', title: 'اليونان (أبقراط)' },
+            { id: 'alexandria', icon: '📜', title: 'الإسكندرية' },
+            { id: 'roman', icon: '⚔️', title: 'الرومان وبيزنطة' },
+            { id: 'details', icon: '🔍', title: 'تفاصيل ونكشات' },
+            { id: 'comparisons', icon: '⚖️', title: 'جداول المقارنات' },
+            { id: 'firsts', icon: '🥇', title: 'أوائل واكتشافات' },
+            { id: 'meanings', icon: '📖', title: 'معاني ومصطلحات' },
+            { id: 'review', icon: '🎯', title: 'مراجعة الأتمتة' }
+        ];
+
+        // Generate Sidebar Menu
+        const tabsMenu = document.getElementById('tabs-menu');
+        tabs.forEach((tab, index) => {
+            const li = document.createElement('li');
+            const isActive = index === 0 ? 'bg-indigo-50 border-r-4 border-indigo-600 text-indigo-800 font-bold' : 'text-gray-600 hover:bg-gray-50 border-r-4 border-transparent';
+            li.innerHTML = `
+                <button onclick="switchTab('${tab.id}', this)" class="w-full text-right px-6 py-3 flex items-center transition-all duration-200 ${isActive} focus:outline-none">
+                    <span class="text-xl ml-3">${tab.icon}</span>
+                    <span>${tab.title}</span>
+                </button>
+            `;
+            tabsMenu.appendChild(li);
+        });
+
+        // Tab Switching Logic
+        function switchTab(tabId, btnElement) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Reset button styles
+            document.querySelectorAll('#tabs-menu button').forEach(btn => {
+                btn.className = "w-full text-right px-6 py-3 flex items-center transition-all duration-200 text-gray-600 hover:bg-gray-50 border-r-4 border-transparent focus:outline-none";
+            });
+            
+            // Show selected tab
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            // Highlight selected button
+            btnElement.className = "w-full text-right px-6 py-3 flex items-center transition-all duration-200 bg-indigo-50 border-r-4 border-indigo-600 text-indigo-800 font-bold focus:outline-none";
+            
+            // Scroll to top
+            document.querySelector('main').scrollTop = 0;
+        }
+
+        // Generate Quiz Questions
+        const quizData = [
+            { q: "من هو الإله المصري الذي يعد الطبيب الطيب وأقيمت له بيوت الحياة؟", a: "أمحوتب" },
+            { q: "بردية فرعونية تعتبر أقدم كتاب جراحي في العالم؟", a: "بردية أدوين سميث" },
+            { q: "أضخم بردية تحوي 700 دواء واهتمت بالقلب والدورة الدموية؟", a: "بردية إيبرس" },
+            { q: "أين اكتشفت أقدم وصفة طبية سومرية لا تحوي سحراً؟", a: "مدينة نفر (اكتشفها صموئيل كريمر)" },
+            { q: "طبيب صيني اكتشف النبض في التشخيص وأنعش الأمير بالإبر؟", a: "بيان قو (الطبيب الروحاني)" },
+            { q: "إمبراطور صيني اكتشف الإفدرا والجنسنغ ووضع كتاب بن تساو؟", a: "الإمبراطور الأحمر (شين - نونغ)" },
+            { q: "النبات الفارسي الوحيد المذكور في كتاب الأفستا كإكسير للشباب؟", a: "نبات الهوما" },
+            { q: "مؤسس مدرسة جنديسابور الطبية الفارسية؟", a: "الملك الساساني سابور الأول" },
+            { q: "مؤسس أول مدرسة نظامية للطب بدمشق (النيرب)؟", a: "أبقراط" },
+            { q: "العالم اليوناني الذي لقب بأبي علم النبات؟", a: "تيوفراست" },
+            { q: "طبيب مدرسة الإسكندرية الملقب بأبي التشريح؟", a: "هيروفيلوس" },
+            { q: "طبيب روماني وضع كتاب (المادة الطبية) الذي بقي مرجعاً 16 قرناً؟", a: "ديسقوريدس" },
+            { q: "الطبيب الذي اخترع الكريم البارد وأسس الصيدلة الآلية؟", a: "جالينوس" },
+            { q: "توأمان سوريان أصبحا قديسين راعيين للطب والصيدلة؟", a: "كوسما (طبيب) ودميان (صيدلاني)" },
+            { q: "طبيب سوري ربط العروق وبتر الأثداء المصابة بالسرطان؟", a: "أرشيجن الآبامي" }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        quizData.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = "border border-indigo-200 bg-indigo-50 rounded-lg overflow-hidden cursor-pointer transition-shadow hover:shadow-md";
+            div.innerHTML = `
+                <div class="p-4 font-bold text-indigo-900 flex justify-between items-center" onclick="toggleAnswer(${index})">
+                    <span>${index + 1}. ${item.q}</span>
+                    <span class="text-indigo-400 text-xl transform transition-transform" id="icon-${index}">+</span>
+                </div>
+                <div class="px-4 pb-4 text-green-700 font-bold hidden" id="answer-${index}">
+                    👈 الجواب: ${item.a}
+                </div>
+            `;
+            quizContainer.appendChild(div);
+        });
+
+        function toggleAnswer(index) {
+            const answerDiv = document.getElementById(`answer-${index}`);
+            const icon = document.getElementById(`icon-${index}`);
+            if (answerDiv.classList.contains('hidden')) {
+                answerDiv.classList.remove('hidden');
+                icon.textContent = '-';
+            } else {
+                answerDiv.classList.add('hidden');
+                icon.textContent = '+';
+            }
+        }
+    </script>
+</body>
+</html>
