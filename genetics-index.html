@@ -10,7 +10,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
         body {
-            /* لون خلفية مريح للعين (سيبيا/خشبي فاتح) */
+            /* لون خلفية مريح للعين */
             background-color: #f4ecd8; 
             color: #2c2c2c;
             font-family: 'Tajawal', sans-serif;
@@ -58,36 +58,48 @@
         /* شبكة لعرض الفصول بشكل احترافي */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
         }
 
-        /* تصميم بطاقات الفصول */
-        .chapter-card {
+        /* التنسيق الجديد لبطاقات الفصول (مع الأزرار المنصفة) */
+        .chapter-card-wrapper {
             background-color: #fffaf0;
             border: 1px solid #e0d4c3;
             border-radius: 12px;
-            padding: 25px 20px;
             text-decoration: none;
             color: #4a3b2c;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            overflow: hidden;
         }
 
-        .chapter-card:hover {
+        .chapter-card-wrapper:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            background-color: #fdf5e6;
             border-color: #8b5e34;
         }
 
+        .chapter-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #e0d4c3;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+        }
+
+        .chapter-card-wrapper:hover .chapter-header {
+            background-color: #fdf5e6;
+        }
+
         .chapter-number {
+            display: block;
             font-size: 0.9em;
             color: #8b5e34;
             font-weight: bold;
+            margin-bottom: 5px;
         }
 
         .chapter-title {
@@ -95,18 +107,54 @@
             font-weight: bold;
             color: #2c2c2c;
         }
-        
-        /* بطاقات الفصول غير الجاهزة */
-        .chapter-card.disabled {
-            opacity: 0.7;
-            cursor: pointer;
+
+        /* تصميم الأزرار المنصفة (الملخص / الدورات) */
+        .split-btn-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .split-btn {
+            flex: 1;
+            text-align: center;
+            padding: 15px 10px;
+            text-decoration: none;
+            color: #5c4033;
+            font-weight: bold;
+            transition: background 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            background-color: #fffaf0;
+        }
+
+        .split-btn i {
+            font-size: 1.2em;
+        }
+
+        .split-btn:hover {
+            background-color: #f0e2cc;
+            color: #8b5e34;
+        }
+
+        /* خط فاصل بين الزرين */
+        .split-btn:first-child {
+            border-left: 1px solid #e0d4c3; 
         }
         
-        .chapter-card.disabled:hover {
+        /* بطاقات الفصول غير الجاهزة */
+        .chapter-card-wrapper.disabled {
+            opacity: 0.7;
+        }
+        
+        .chapter-card-wrapper.disabled:hover {
              transform: none;
              box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-             background-color: #fffaf0;
              border-color: #e0d4c3;
+        }
+        .chapter-card-wrapper.disabled:hover .chapter-header {
+            background-color: transparent;
         }
 
         /* تصميم الإشعار المنبثق (Toast) */
@@ -151,57 +199,165 @@
         </div>
 
         <div class="grid">
-            <!-- الفصل الأول: جاهز ومربوط -->
-            <a href="genetics-ch1.html" class="chapter-card">
-                <span class="chapter-number">الفصل الأول</span>
-                <span class="chapter-title">الوراثة المندلية</span>
-            </a>
+            <!-- ================= الفصل الأول: جاهز ================= -->
+            <div class="chapter-card-wrapper">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل الأول</span>
+                    <span class="chapter-title">الوراثة المندلية</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="genetics-ch1-summary.html" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="genetics-ch1-questions.html" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
 
-            <!-- بقية الفصول: قيد التجهيز -->
-            <a href="#" onclick="showToast(event, 'الفصل الثاني: الوراثة اللامندلية')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل الثاني</span>
-                <span class="chapter-title">الوراثة اللامندلية</span>
-            </a>
+            <!-- ================= الفصل الثاني ================= -->
+            <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل الثاني</span>
+                    <span class="chapter-title">الوراثة اللامندلية</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل الثاني')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل الثاني')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
             
-            <a href="#" onclick="showToast(event, 'الفصل الثالث: المادة الوراثية والصبغيات')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل الثالث</span>
-                <span class="chapter-title">المادة الوراثية والصبغيات</span>
-            </a>
+            <!-- ================= الفصل الثالث ================= -->
+            <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل الثالث</span>
+                    <span class="chapter-title">المادة الوراثية والصبغيات</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل الثالث')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل الثالث')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
 
-            <a href="#" onclick="showToast(event, 'الفصل الثامن: تقانات الهندسة الوراثية')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل الثامن</span>
-                <span class="chapter-title">تقانات الهندسة الوراثية</span>
-            </a>
+            <!-- ================= الفصل الثامن ================= -->
+            <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل الثامن</span>
+                    <span class="chapter-title">تقانات الهندسة الوراثية</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل الثامن')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل الثامن')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
             
-             <a href="#" onclick="showToast(event, 'الفصل التاسع: المجين البشري')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل التاسع</span>
-                <span class="chapter-title">المجين البشري</span>
-            </a>
+             <!-- ================= الفصل التاسع ================= -->
+             <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل التاسع</span>
+                    <span class="chapter-title">المجين البشري</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل التاسع')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل التاسع')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
 
-             <a href="#" onclick="showToast(event, 'الفصل العاشر: التشوهات الصبغية')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل العاشر</span>
-                <span class="chapter-title">التشوهات الصبغية</span>
-            </a>
+             <!-- ================= الفصل العاشر ================= -->
+             <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل العاشر</span>
+                    <span class="chapter-title">التشوهات الصبغية</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل العاشر')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل العاشر')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
             
-            <a href="#" onclick="showToast(event, 'الفصل الحادي عشر: الاستنصاح الوراثي')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل الحادي عشر</span>
-                <span class="chapter-title">الاستنصاح الوراثي</span>
-            </a>
+            <!-- ================= الفصل الحادي عشر ================= -->
+            <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل الحادي عشر</span>
+                    <span class="chapter-title">الاستنصاح الوراثي</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل الحادي عشر')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل الحادي عشر')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
 
-             <a href="#" onclick="showToast(event, 'الفصل الثالث عشر: علم الوراثة الدوائي')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل الثالث عشر</span>
-                <span class="chapter-title">علم الوراثة الدوائي</span>
-            </a>
+             <!-- ================= الفصل الثالث عشر ================= -->
+             <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل الثالث عشر</span>
+                    <span class="chapter-title">علم الوراثة الدوائي</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل الثالث عشر')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل الثالث عشر')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
 
-             <a href="#" onclick="showToast(event, 'الفصل الرابع عشر: علم الوراثة السرطانية')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل الرابع عشر</span>
-                <span class="chapter-title">علم الوراثة السرطانية</span>
-            </a>
+             <!-- ================= الفصل الرابع عشر ================= -->
+             <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل الرابع عشر</span>
+                    <span class="chapter-title">علم الوراثة السرطانية</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل الرابع عشر')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل الرابع عشر')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
             
-             <a href="#" onclick="showToast(event, 'الفصل السادس عشر: وراثيات الأمراض الشائعة')" class="chapter-card disabled">
-                <span class="chapter-number">الفصل السادس عشر</span>
-                <span class="chapter-title">وراثيات الأمراض الشائعة</span>
-            </a>
+             <!-- ================= الفصل السادس عشر ================= -->
+             <div class="chapter-card-wrapper disabled">
+                <div class="chapter-header">
+                    <span class="chapter-number">الفصل السادس عشر</span>
+                    <span class="chapter-title">وراثيات الأمراض الشائعة</span>
+                </div>
+                <div class="split-btn-container">
+                    <a href="#" onclick="showToast(event, 'ملخص الفصل السادس عشر')" class="split-btn">
+                        <i class="fa-solid fa-book-open"></i> الملخص
+                    </a>
+                    <a href="#" onclick="showToast(event, 'أسئلة دورات الفصل السادس عشر')" class="split-btn">
+                        <i class="fa-solid fa-list-check"></i> الدورات
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0d4c3;">
@@ -210,13 +366,13 @@
     </div>
 
     <!-- عنصر الإشعار المنبثق -->
-    <div id="toast">عذراً، هذا الفصل قيد التجهيز وسيتم رفعه قريباً! ⏳</div>
+    <div id="toast">عذراً، هذا القسم قيد التجهيز وسيتم رفعه قريباً! ⏳</div>
 
     <script>
-        function showToast(event, chapterName) {
+        function showToast(event, sectionName) {
             event.preventDefault(); 
             var toast = document.getElementById("toast");
-            toast.innerText = "عذراً، ملخص (" + chapterName + ") قيد التجهيز وسيتم رفعه قريباً! ⏳";
+            toast.innerText = "عذراً، (" + sectionName + ") قيد التجهيز وسيتم رفعه قريباً! ⏳";
             toast.className = "show";
             setTimeout(function(){ 
                 toast.className = toast.className.replace("show", ""); 
