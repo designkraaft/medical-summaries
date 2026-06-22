@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قسم الوراثة الطبية - منصة الطبي</title>
+    <!-- تضمين مكتبة FontAwesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            /* لون خلفية مريح للعين (سيبيا/خشبي فاتح) */
+            background-color: #f4ecd8; 
+            color: #2c2c2c;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #5c4033;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7a5c4d;
+            font-size: 1.2em;
+        }
+
+        /* زر العودة للصفحة الرئيسية */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #5c4033;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: #8b5e34;
+        }
+
+        /* شبكة لعرض الفصول بشكل احترافي */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* تصميم بطاقات الفصول */
+        .chapter-card {
+            background-color: #fffaf0;
+            border: 1px solid #e0d4c3;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-decoration: none;
+            color: #4a3b2c;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-color: #fdf5e6;
+            border-color: #8b5e34;
+        }
+
+        .chapter-number {
+            font-size: 0.9em;
+            color: #8b5e34;
+            font-weight: bold;
+        }
+
+        .chapter-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c2c2c;
+        }
+        
+        /* بطاقات الفصول غير الجاهزة */
+        .chapter-card.disabled {
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        
+        .chapter-card.disabled:hover {
+             transform: none;
+             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+             background-color: #fffaf0;
+             border-color: #e0d4c3;
+        }
+
+        /* تصميم الإشعار المنبثق (Toast) */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+            transition: opacity 0.4s, transform 0.4s;
+            font-size: 1.1em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- زر العودة -->
+        <a href="index.html" class="back-btn">
+            <i class="fa-solid fa-arrow-right"></i> العودة للمواد
+        </a>
+
+        <div class="header">
+            <h1>الوراثة الطبية</h1>
+            <p>اختر الفصل للوصول إلى الملخصات وأسئلة الدورات</p>
+        </div>
+
+        <div class="grid">
+            <!-- الفصل الأول: جاهز ومربوط -->
+            <a href="genetics-ch1.html" class="chapter-card">
+                <span class="chapter-number">الفصل الأول</span>
+                <span class="chapter-title">الوراثة المندلية</span>
+            </a>
+
+            <!-- بقية الفصول: قيد التجهيز -->
+            <a href="#" onclick="showToast(event, 'الفصل الثاني: الوراثة اللامندلية')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل الثاني</span>
+                <span class="chapter-title">الوراثة اللامندلية</span>
+            </a>
+            
+            <a href="#" onclick="showToast(event, 'الفصل الثالث: المادة الوراثية والصبغيات')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل الثالث</span>
+                <span class="chapter-title">المادة الوراثية والصبغيات</span>
+            </a>
+
+            <a href="#" onclick="showToast(event, 'الفصل الثامن: تقانات الهندسة الوراثية')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل الثامن</span>
+                <span class="chapter-title">تقانات الهندسة الوراثية</span>
+            </a>
+            
+             <a href="#" onclick="showToast(event, 'الفصل التاسع: المجين البشري')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل التاسع</span>
+                <span class="chapter-title">المجين البشري</span>
+            </a>
+
+             <a href="#" onclick="showToast(event, 'الفصل العاشر: التشوهات الصبغية')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل العاشر</span>
+                <span class="chapter-title">التشوهات الصبغية</span>
+            </a>
+            
+            <a href="#" onclick="showToast(event, 'الفصل الحادي عشر: الاستنصاح الوراثي')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل الحادي عشر</span>
+                <span class="chapter-title">الاستنصاح الوراثي</span>
+            </a>
+
+             <a href="#" onclick="showToast(event, 'الفصل الثالث عشر: علم الوراثة الدوائي')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل الثالث عشر</span>
+                <span class="chapter-title">علم الوراثة الدوائي</span>
+            </a>
+
+             <a href="#" onclick="showToast(event, 'الفصل الرابع عشر: علم الوراثة السرطانية')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل الرابع عشر</span>
+                <span class="chapter-title">علم الوراثة السرطانية</span>
+            </a>
+            
+             <a href="#" onclick="showToast(event, 'الفصل السادس عشر: وراثيات الأمراض الشائعة')" class="chapter-card disabled">
+                <span class="chapter-number">الفصل السادس عشر</span>
+                <span class="chapter-title">وراثيات الأمراض الشائعة</span>
+            </a>
+        </div>
+
+        <div style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0d4c3;">
+            <p style="color: #999; font-size: 1em;">مصمم خصيصاً لطلاب الطب | طالب في جامعة إدلب - 2026</p>
+        </div>
+    </div>
+
+    <!-- عنصر الإشعار المنبثق -->
+    <div id="toast">عذراً، هذا الفصل قيد التجهيز وسيتم رفعه قريباً! ⏳</div>
+
+    <script>
+        function showToast(event, chapterName) {
+            event.preventDefault(); 
+            var toast = document.getElementById("toast");
+            toast.innerText = "عذراً، ملخص (" + chapterName + ") قيد التجهيز وسيتم رفعه قريباً! ⏳";
+            toast.className = "show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
