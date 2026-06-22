@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أسئلة دورات الفصل الأول - منصة الطبي</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background-color: #f4ecd8; 
+            color: #2c2c2c;
+        }
+        
+        .primary-bg { background-color: #5c4033; }
+        .primary-text { color: #5c4033; }
+        .card-bg { background-color: #fffaf0; border-color: #e0d4c3; }
+        
+        .question-card {
+            transition: all 0.3s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 8px 25px rgba(92, 64, 51, 0.15);
+            border-color: #8b5e34;
+        }
+
+        .option-box {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .option-box:hover {
+            background-color: #fdf5e6;
+            border-color: #8b5e34;
+        }
+
+        .answer-box { 
+            display: none; 
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease-in-out;
+        }
+        .answer-box.active { 
+            display: block; 
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-[#5c4033] to-[#8b5e34] text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+                <h1 class="text-xl md:text-2xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-[#f0e2cc]"></i> أسئلة دورات الفصل الأول (الوراثة المندلية)
+                </h1>
+                <a href="genetics-index.html" class="text-sm font-bold bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-right"></i> العودة للفهرس
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        
+        <!-- رسالة توجيهية للطالب -->
+        <div class="bg-[#fdf5e6] border-r-4 border-[#8b5e34] p-5 rounded-xl flex gap-4 text-[#5c4033] mb-8 shadow-sm">
+            <i class="fa-solid fa-brain text-3xl mt-1"></i>
+            <div>
+                <h3 class="text-xl font-bold mb-2">كيف تدرس هذا القسم؟</h3>
+                <p class="text-lg leading-relaxed">اقرأ السؤال وحاول تحديد الإجابة في ذهنك أولاً. ثم اضغط على زر <strong>"إظهار الحل والتحليل"</strong> لترى كيف يفكر واضع الأسئلة، ولماذا تعتبر الخيارات الأخرى خاطئة. هذه الطريقة تضمن لك عدم النسيان!</p>
+            </div>
+        </div>
+
+        <div class="space-y-10">
+
+            <!-- ================= دورة 2025 ================= -->
+            <div>
+                <h3 class="text-2xl font-bold primary-text mb-5 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-[#8b5e34]"></i> أسئلة دورة 2025
+                </h3>
+                
+                <!-- س1 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">1. الانْتِفاذ (Penetrance) هو:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) قدرة جين ما على التعبير عن نفسها في النمط الظاهري</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">B) ظهور الجين في أفراد الجيل الأول كاملاً</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) انتقال جين ما بين الأجيال</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) اختلاف التعبير الجيني بين الأفراد</div>
+                    </div>
+                    <button onclick="toggleAnswer('q25_1')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q25_1" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: A</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-magnifying-glass"></i> تحليل السؤال:</strong> السؤال يختبر قدرتك على التمييز بين مصطلحين مربكين هما "الانتفاذ" و"التعبّر".</p>
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> تذكر دائماً أن الانتفاذ يعني "هل ستظهر الصفة أم لا؟"، أي أنه يمثل <strong>القدرة أو الاحتمالية</strong>. بينما التعبّر (Expressivity) يعني "كيف وبأي شدة ظهرت؟".</p>
+                            <p class="bg-white/60 p-2 rounded"><strong>لماذا الخيارات الأخرى خاطئة؟</strong> الخيار D يصف (التعبّر) وليس الانتفاذ. والخياران B و C هما تعريفات عامة للوراثة ولا علاقة لهما بالمصطلح.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س2 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">2. تتبع بيلة الفينيل كيتون (PKU) للوراثة:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) الجسدية السائدة</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">B) الجسدية المتنحية</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) المرتبطة بالصبغي X</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) المتقدرية</div>
+                    </div>
+                    <button onclick="toggleAnswer('q25_2')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q25_2" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: B</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-magnifying-glass"></i> تحليل السؤال:</strong> سؤال بصمي يعتمد على حفظ جداول الأمراض. بيلة الفينيل كيتون مرض ناتج عن نقص إنزيم.</p>
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> قاعدة ذهبية في الوراثة الطبية: "معظم الأمراض الناتجة عن <strong>عوز الإنزيمات</strong> تورث بصفة <strong>جسدية متنحية</strong>".</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= دورة 2024 ================= -->
+            <div>
+                <h3 class="text-2xl font-bold primary-text mb-5 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-[#8b5e34]"></i> أسئلة دورة 2024
+                </h3>
+                
+                <!-- س1 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">1. عند تلقيح جيل أول سائد هجين داخلياً، يكون عدد الأنماط الظاهرية:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">A) نمطاً وحيداً</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">B) نمطان</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">C) ثلاثة أنماط</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">D) أربعة أنماط</div>
+                    </div>
+                    <button onclick="toggleAnswer('q24_1')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q24_1" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: B</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-magnifying-glass"></i> تحليل السؤال:</strong> ترجمة السؤال لرموز: "جيل أول سائد هجين" يعني (Aa). "تلقيح داخلي" يعني (Aa × Aa).</p>
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> نتيجة تزاوج (Aa × Aa) هي: 1(AA) : 2(Aa) : 1(aa). <br>السؤال يطلب عدد <strong>الأنماط الظاهرية (الشكلية)</strong> وليس الجينية. الأفراد (AA و Aa) لهم نفس الشكل السائد، والفرد (aa) له شكل متنحي. إذاً لدينا <strong>شكلان فقط (نمطان ظاهريان)</strong> بنسبة 3:1.</p>
+                            <p class="bg-white/60 p-2 rounded text-red-800"><strong>فخ امتحاني:</strong> لو سأل عن عدد "الأنماط الجينية" لكان الجواب (C) ثلاثة أنماط.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س2 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">2. يدل مصطلح Homozygote dominant على:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) متماثل الألائل متنحي</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">B) متماثل الألائل سائد</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) متغاير الألائل سائد</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) متغاير الألائل متنحي</div>
+                    </div>
+                    <button onclick="toggleAnswer('q24_2')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q24_2" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: B</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> نترجم المصطلحات الطبية ببساطة:<br>
+                            - <strong>Homo</strong> = متماثل (نقي). (بينما Hetero = متغاير/هجين).<br>
+                            - <strong>Dominant</strong> = سائد. (بينما Recessive = متنحي).<br>
+                            بجمع الكلمتين نحصل على "متماثل الألائل سائد" (مثل النمط AA).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س3 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">3. من الاعتلالات الوراثية المرتبطة بالصبغي X عدا:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) متلازمة ليش-نيهان</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">B) متلازمة الصبغي الهش</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) نقص فوسفات الدم</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) داء ويلسون</div>
+                    </div>
+                    <button onclick="toggleAnswer('q24_3')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q24_3" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: D</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-magnifying-glass"></i> تحليل الخيارات:</strong> سؤال بصمي يعتمد على الاستبعاد.<br>
+                            - ليش نيهان والصبغي الهش = مرتبطة بـ X متنحية.<br>
+                            - نقص فوسفات الدم (الكساح) = مرتبطة بـ X سائدة.<br>
+                            - <strong>داء ويلسون (تراكم النحاس) = جسدية متنحية.</strong></p>
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> تذكر أن أمراض "التراكم" الأيضية (تراكم النحاس في ويلسون، تراكم الشحوم في تاي ساكس وغوشيه) غالباً تكون <strong>جسدية متنحية</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= دورة 2021 ================= -->
+            <div>
+                <h3 class="text-2xl font-bold primary-text mb-5 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-[#8b5e34]"></i> أسئلة دورة 2021
+                </h3>
+                
+                <!-- س1 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">1. أي من الاضطرابات التالية هو من الاضطرابات الجسدية السائدة لدى الإنسان:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) بيلة الفينيل كيتون</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box font-bold">B) الورم الليفي العصبي</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) متلازمة ليش-نيهان</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) الناعور A</div>
+                    </div>
+                    <button onclick="toggleAnswer('q21_1')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q21_1" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: B</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-magnifying-glass"></i> تحليل الخيارات:</strong><br>
+                            A) بيلة الفينيل كيتون (PKU): جسدي متنحي.<br>
+                            C و D) ليش نيهان والناعور: مرتبطان بالصبغي X متنحي.<br>
+                            B) الورم الليفي العصبي النمط 1: جسدي سائد، ويتميز بظهور بقع قهوة بالحليب.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س2 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">2. إذا تصالب AB/ab مع ab/ab، فإن عدد الأنماط الظاهرية الناتجة في حال وجود <span class="text-red-600 underline">ارتباط كامل</span> بين المورثتين A و B سيكون:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">A) 1</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">B) 2</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">C) 3</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">D) 4</div>
+                    </div>
+                    <button onclick="toggleAnswer('q21_2')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q21_2" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: B</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> مفتاح الحل هو عبارة <strong>"ارتباط كامل"</strong>. الارتباط الكامل يعني أن الجينات ملتصقة ببعضها ولا يحدث تعابر نهائياً.</p>
+                            <p>1. الفرد الأول (AB/ab): سيعطي نوعين فقط من الأعراس وهما (AB) و (ab).<br>
+                               2. الفرد الثاني (ab/ab): يعطي نوعاً واحداً فقط وهو (ab).<br>
+                               3. بالتزاوج نضرب الأعراس: (AB × ab) يعطي فرد <strong>AB/ab</strong>. و (ab × ab) يعطي فرد <strong>ab/ab</strong>.</p>
+                            <p class="bg-white/60 p-2 rounded">النتيجة: لدينا نمطان وراثيان، يترجمان إلى <strong>نمطين ظاهريين فقط (2)</strong> بنسبة 1:1.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= دورة 2020 ================= -->
+            <div>
+                <h3 class="text-2xl font-bold primary-text mb-5 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-[#8b5e34]"></i> أسئلة دورة 2020
+                </h3>
+                
+                <!-- س1 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">1. أي من الاضطرابات التالية هو من الاضطرابات المرتبطة بالصبغي X لدى الإنسان:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) التليف الكيسي</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">B) متلازمة ألبورت</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) داء الكلية متعددة الكيسات</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) داء هنتنغتون</div>
+                    </div>
+                    <button onclick="toggleAnswer('q20_1')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q20_1" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: B</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-magnifying-glass"></i> تحليل الخيارات:</strong><br>
+                            - داء هنتنغتون والكلية متعددة الكيسات: وراثة جسدية سائدة.<br>
+                            - التليف الكيسي: وراثة جسدية متنحية.<br>
+                            - <strong>متلازمة البورت:</strong> (عيب بكولاجين النمط الرابع) تورث بشكل رئيسي كصفة سائدة مرتبطة بالصبغي X.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س2 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">2. يبلغ عدد الأنماط الظاهرية الناجمة عن التزاوج ما بين نباتات تعطي بذور مدورة دائماً وأخرى تعطي بذور مجعدة دائماً (في الجيل الأول):</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">A) 1</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">B) 2</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">C) 3</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box text-center font-bold">D) 4</div>
+                    </div>
+                    <button onclick="toggleAnswer('q20_2')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q20_2" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: A</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> انتبه لعبارة "تعطي دائماً"، فهي تعني أنها سلالات نقية. مدورة نقية (RR) × مجعدة نقية (rr).<br>
+                            حسب قانون مندل، <strong>الجيل الأول (F1)</strong> سيكون بنسبة 100% هجيناً (Rr) ويحمل الصفة السائدة فقط (مدورة).<br>بما أن كل النباتات مدورة، فهذا يعني وجود <strong>نمط ظاهري واحد فقط (1)</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س3 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">3. يُدعى الشكل Ab/aB بـ:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) الطور المقرون Cis phase</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box font-bold">B) الطور المفروق Trans phase</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) الطور الثابت</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) الطور المتماثل</div>
+                    </div>
+                    <button onclick="toggleAnswer('q20_3')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q20_3" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: B</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-magnifying-glass"></i> كيف نميز بينهما؟</strong><br>
+                            - <strong>المقرون (Cis):</strong> الألائل السائدة تترافق معاً على نفس الصبغي (الأحرف الكبيرة معاً <code>AB/ab</code>).<br>
+                            - <strong>المفروق (Trans):</strong> أليل سائد يترافق مع أليل متنحي للصفة الأخرى (حرف كبير مع صغير <code>Ab/aB</code>).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= دورات 2019-2017 ================= -->
+            <div>
+                <h3 class="text-2xl font-bold primary-text mb-5 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-check text-[#8b5e34]"></i> دورات 2019 - 2017
+                </h3>
+                
+                <!-- س1 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">1. تتساوى نسبة الإصابة بين الذكور والإناث في الوراثة:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box font-bold">A) الجسدية السائدة</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">B) المرتبطة بالجنس المتنحية</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) المرتبطة بالجنس السائدة</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) المرتبطة بالصبغي X</div>
+                    </div>
+                    <button onclick="toggleAnswer('q_old_1')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q_old_1" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: A</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> أي وراثة يذكر فيها "مرتبطة بالجنس" أو "مرتبطة بـ X" تعني أن الجين يقع على صبغي الجنس، وبالتالي تختلف الإصابة بين الذكور (XY) والإناث (XX).<br>أما الوراثة <strong>"الجسدية"</strong> (سواء سائدة أو متنحية) فهي تتوزع على الصبغيات المشتركة التي يمتلك كلا الجنسين نفس العدد منها (22 شفع)، فتتساوى النسبة.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س2 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">2. تتميز شجرة النسب الحاوية على حالة وراثية مرتبطة بالصبغي X متنحية وفيها "الأم فقط مصابة" بـ:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) الإناث كلهن مصابات</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">B) تنكس في قشرة المخ</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box font-bold">C) الذكور كلهم مصابون</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) تناقص متدرج في الرؤية الليلية</div>
+                    </div>
+                    <button onclick="toggleAnswer('q_old_2')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q_old_2" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: C</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-brain"></i> تحليل العبارة:</strong> الأم مصابة بمرض (متنحي مرتبط بـ X). هذا يعني أنها تملك نسختين مريضتين (X*X*).<br>
+                            الابن الذكر (XY) يحصل على (Y) من الأب، ويحصل على صبغي (X) حصراً من الأم. وبما أن كلا صبغيي الأم مريضان، فكل ابن ذكر سيأخذ صبغياً مريضاً ويكون مصاباً حتماً (X*Y).<br>
+                            أما الإناث فسيأخذن صبغياً سليماً من الأب السليم، فيكنّ حاملات للمرض ولَسْنَ مصابات.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س3 -->
+                <div class="mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">3. الصحيح حول الوراثة الجسدية المتنحية:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box font-bold">A) أبوان سليمان ووجود ابن مصاب</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">B) أبوان مصابان ووجود أبناء سليمين</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) أبوان مصابان ووجود ابن سليم</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) تختلف نسبة المصابين بين الذكور والإناث</div>
+                    </div>
+                    <button onclick="toggleAnswer('q_old_3')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q_old_3" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: A</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-brain"></i> طريقة التفكير:</strong> <br>
+                            المرض المتنحي (aa) يحتاج أليلين، واحد من كل أب. إذا كان الأبوان (Aa) و (Aa)، فهما سليمين ظاهرياً (لأن الصفة السائدة غطت المتنحية)، ولكنهما يستطيعان إنجاب طفل (aa) مريض بنسبة 25%. هذه الميزة تميز الوراثة المتنحية عن السائدة (التي لا تتخطى الأجيال).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- س4 -->
+                <div class="mb-2 bg-white p-6 rounded-2xl border-2 border-gray-100 question-card">
+                    <h4 class="font-bold text-gray-900 text-xl mb-4">4. يُستخدم التصالب الاختباري لكل ما يلي عدا:</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">A) معرفة النمط الجيني للأفراد السائدة</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box font-bold">B) معرفة النمط الجيني للأفراد المتنحية</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">C) يتم التهجين مع فرد متنحي</div>
+                        <div class="p-3 rounded-lg border border-gray-200 bg-gray-50 option-box">D) لا داعي له في حالة السيادة غير التامة</div>
+                    </div>
+                    <button onclick="toggleAnswer('q_old_4')" class="font-bold text-[#5c4033] bg-[#f0e2cc] px-5 py-2.5 rounded-lg hover:bg-[#e0d4c3] transition"><i class="fa-solid fa-lightbulb"></i> إظهار الحل والتحليل</button>
+                    
+                    <div id="q_old_4" class="answer-box mt-5 p-5 bg-green-50 border border-green-200 rounded-xl">
+                        <p class="font-bold text-xl text-green-800 mb-3"><i class="fa-solid fa-check-circle"></i> الجواب الصحيح: B</p>
+                        <div class="space-y-3 text-green-900">
+                            <p><strong><i class="fa-solid fa-magnifying-glass"></i> لماذا الاستبعاد؟</strong> الأفراد الذين يظهرون صفة متنحية يكون نمطهم الجيني معروفاً دائماً وبشكل مؤكد (نقي دوماً مثل aa). نحن لا نحتاج لاختبارهم لمعرفة نمطهم الجيني. بل نختبر الأفراد أصحاب الصفة "السائدة" لشكنا فيهم (هل هم AA نقي أم Aa هجين؟).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- زر العودة لأسفل الشاشة -->
+        <div class="text-center mt-12 mb-4">
+            <a href="genetics-index.html" class="inline-flex items-center gap-3 bg-gradient-to-r from-[#5c4033] to-[#8b5e34] text-white px-8 py-3 rounded-full font-bold text-xl hover:shadow-lg transition-transform transform hover:-translate-y-1">
+                <i class="fa-solid fa-arrow-right"></i> العودة لقائمة فصول الوراثة
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#fdf5e6] text-gray-500 py-6 text-center mt-8 border-t border-[#e0d4c3]">
+        <div class="container mx-auto px-4">
+            <p class="font-bold text-[#8b5e34] text-lg mb-1">الملخصات الطبية - التحضيرية</p>
+            <p class="text-sm">مصمم خصيصاً لطلاب الطب | طالب في جامعة إدلب - 2026</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // دالة إظهار إجابات الأسئلة
+        function toggleAnswer(answerId) {
+            const answerBox = document.getElementById(answerId);
+            
+            if (answerBox.classList.contains('active')) {
+                answerBox.classList.remove('active');
+            } else {
+                answerBox.classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>
