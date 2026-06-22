@@ -4,146 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دليل التكرار المتباعد - طلاب الطب</title>
-    <!-- Tailwind CSS للتصميم -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js للمخطط البياني -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- FontAwesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Tajawal', sans-serif; }
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; }
         .bg-medical-50 { background-color: #f0fdfa; }
         .bg-medical-100 { background-color: #ccfbf1; }
         .text-medical-600 { color: #0d9488; }
         .text-medical-800 { color: #115e59; }
-        .border-medical-100 { border-color: #ccfbf1; }
+        .section-title { position: relative; padding-bottom: 15px; margin-bottom: 30px; }
+        .section-title::after { content: ''; position: absolute; bottom: 0; right: 0; width: 60px; height: 4px; background-color: #0d9488; border-radius: 2px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="text-slate-800">
 
     <!-- Header -->
-    <header class="bg-gradient-to-r from-teal-700 to-teal-900 text-white py-16 px-4 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-4">دليلك الشامل للدراسة بالتكرار المتباعد</h1>
-        <p class="text-xl md:text-2xl text-teal-100 max-w-3xl mx-auto">تعلم كيف تدرس بذكاء وليس بجهد، وتغلب على منحنى النسيان في المواد الطبية الكثيفة.</p>
+    <header class="bg-gradient-to-r from-teal-700 to-slate-900 text-white py-20 px-4 text-center relative overflow-hidden">
+        <div class="absolute top-0 right-0 opacity-10 transform translate-x-1/2 -translate-y-1/2">
+            <i class="fa-solid fa-brain" style="font-size: 20rem;"></i>
+        </div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">كيف تدرس الطب بذكاء؟ <br> <span class="text-teal-300">دليلك للتكرار المتباعد</span></h1>
+            <p class="text-xl md:text-2xl text-teal-50 max-w-3xl mx-auto leading-relaxed">تخلص من الإرهاق، وتغلب على النسيان. الدليل الشامل المخصص لطلاب الكليات الطبية في سوريا (من التحضيرية إلى التخرج).</p>
+        </div>
     </header>
 
-    <!-- Spaced Repetition Explanation -->
-    <section class="py-12 px-4 container mx-auto max-w-6xl">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 class="text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
-                    <i class="fa-solid fa-brain text-teal-600"></i> ما هو التكرار المتباعد؟
-                </h2>
-                <p class="text-lg text-slate-600 leading-relaxed mb-4">
-                    التكرار المتباعد (Spaced Repetition) هو تقنية دراسية تعتمد على مراجعة المعلومات في فترات زمنية متزايدة. بدلاً من حشو المعلومات ليلة الامتحان، تقوم بمراجعتها تماماً في اللحظة التي يوشك دماغك على نسيانها.
-                </p>
-                <div class="bg-teal-50 border border-teal-200 rounded-xl p-5 mt-6">
-                    <h4 class="font-bold text-teal-800 mb-2">لماذا هو ضروري لطالب الطب؟</h4>
-                    <p class="text-slate-700">حجم المعلومات في كلية الطب هائل. الطريقة التقليدية (القراءة المتكررة) غير فعالة وتستهلك وقتاً طويلاً. التكرار المتباعد ينقل المعلومات من الذاكرة قصيرة الأمد إلى الذاكرة طويلة الأمد بكفاءة عالية جداً.</p>
+    <!-- Detailed Explanation Section -->
+    <section class="py-16 px-4 container mx-auto max-w-6xl">
+        <div class="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 md:p-12 mb-12">
+            <h2 class="text-3xl font-bold text-slate-800 section-title">ما هو التناقض؟ (الفرق بين القراءة والتكرار)</h2>
+            <div class="text-lg text-slate-600 leading-relaxed space-y-6">
+                <p>كثيراً ما يسمع الطالب نصيحة: <strong class="text-red-500">"لا تكرر قراءة المحاضرة، فهذا يضيع وقتك!"</strong>، ثم يسمع نصيحة أخرى تقول: <strong class="text-teal-600">"السر في دراسة الطب هو التكرار المتباعد!"</strong>. هذا يبدو تناقضاً، أليس كذلك؟ إليك التوضيح المبسط:</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 mt-8">
+                    <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
+                        <h3 class="text-xl font-bold text-red-700 mb-3"><i class="fa-solid fa-xmark mr-2"></i> القراءة المتكررة السلبية (الخاطئة)</h3>
+                        <p class="text-sm">هي أن تفتح المحاضرة وتقرأها من البداية للنهاية، ثم تعيد قراءتها للمرة الثانية والثالثة في نفس اليوم. <br><br><strong>لماذا هي سيئة؟</strong> لأنها تخلق لديك "وهماً بالمعرفة". عينك تألف شكل الصفحة فتظن أنك حفظتها، ولكن في الامتحان، عندما يُطرح السؤال ولا ترى الصفحة أمامك، يتبخر كل شيء. كما أنها تستهلك ساعات طويلة جداً بلا فائدة حقيقية.</p>
+                    </div>
+                    
+                    <div class="bg-teal-50 p-6 rounded-2xl border border-teal-100">
+                        <h3 class="text-xl font-bold text-teal-700 mb-3"><i class="fa-solid fa-check mr-2"></i> التكرار المتباعد النشط (الصحيح)</h3>
+                        <p class="text-sm">هو أن تدرس المحاضرة بتركيز <strong class="underline">لمرة واحدة فقط</strong>، ثم تصنع منها أسئلة (بطاقات). وبعد يوم، تقوم باختبار نفسك بـ "تذكر" الإجابة من عقلك (وهذا هو الجهد النشط). ثم تعيد اختبار نفسك بعد 3 أيام، ثم بعد أسبوع.<br><br><strong>لماذا هو فعال؟</strong> لأنك تجبر الدماغ على "سحب" المعلومة من الذاكرة تماماً في اللحظة التي يوشك أن ينساها فيها. هذا الجهد هو ما يرسخ المعلومة للأبد ويجعلها عصية على النسيان.</p>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-800 section-title">انظر كيف تنهار الذاكرة!</h2>
+                <p class="text-lg text-slate-600 leading-relaxed mb-6">
+                    العالم "إبنغهاوس" أثبت أن دماغنا مبرمج على التخلص من المعلومات التي لا نستخدمها. الخط الأحمر في المخطط يمثل دراستك للمحاضرة ثم تركها ليلة الامتحان.. ستجد أنك نسيت 80% منها!
+                </p>
+                <p class="text-lg text-slate-600 leading-relaxed">
+                    أما الخط الأخضر المتقطع، فهو يمثل "التكرار المتباعد". كل مراجعة (اختبار للنفس) تعيد الذاكرة إلى 100%، وتجعل النسيان بعدها أبطأ بكثير.
+                </p>
+            </div>
             
-            <!-- الصندوق المرن الذي يحل مشكلة الآيباد والجوال -->
-            <div class="bg-white p-4 md:p-8 rounded-3xl shadow-xl border border-slate-100 relative h-72 md:h-96 w-full">
+            <!-- تم تعديل الارتفاع والـ padding لحل مشكلة الايباد وقص الرقم 100 -->
+            <div class="bg-white p-4 pt-8 pb-8 md:p-8 rounded-3xl shadow-xl border border-slate-100 relative h-80 w-full">
                 <canvas id="forgettingCurveChart"></canvas>
             </div>
         </div>
     </section>
 
-    <!-- Golden Tips Section -->
-    <section class="py-12 bg-medical-50">
-        <div class="container mx-auto px-4 max-w-5xl">
-            <div class="bg-white rounded-3xl p-8 shadow-sm border border-medical-100">
-                <h3 class="text-2xl font-bold text-medical-800 mb-6 flex items-center gap-3">
-                    <i class="fa-solid fa-star text-yellow-400"></i>
-                    قواعد ذهبية لتطبيق التكرار المتباعد بنجاح:
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-medical-100 text-medical-600 flex items-center justify-center shrink-0 font-bold">1</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-1">الاستذكار الفعال (Active Recall)</h4>
-                            <p class="text-sm text-slate-600">لا تكتفِ بإعادة قراءة المحاضرة. يجب أن تحاول استرجاع المعلومة من ذاكرتك (سؤال وجواب) قبل رؤية الإجابة لتجبر دماغك على العمل.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-medical-100 text-medical-600 flex items-center justify-center shrink-0 font-bold">2</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-1">قاعدة الـ 24 ساعة</h4>
-                            <p class="text-sm text-slate-600">أهم مراجعة هي التي تتم خلال 24 إلى 48 ساعة من أخذ المحاضرة. إذا تأخرت أكثر، ستبدأ من الصفر تقريباً في حفظها.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-medical-100 text-medical-600 flex items-center justify-center shrink-0 font-bold">3</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-1">المعلومة المفردة</h4>
-                            <p class="text-sm text-slate-600">عند صنع بطاقات (Flashcards)، اجعلها قصيرة جداً (معلومة واحدة لكل بطاقة). البطاقات الطويلة تشتت ذهنك.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-full bg-medical-100 text-medical-600 flex items-center justify-center shrink-0 font-bold">4</div>
-                        <div>
-                            <h4 class="font-bold text-slate-800 mb-1">الاستمرارية أهم من الكمية</h4>
-                            <p class="text-sm text-slate-600">مراجعة بطاقاتك لـ 30 دقيقة كل يوم بتركيز، أفضل وأثبت في الذاكرة من مراجعتها لـ 5 ساعات قبل الامتحان بيومين.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Subjects Breakdown -->
-    <section class="py-16 px-4 container mx-auto max-w-6xl">
-        <h2 class="text-3xl font-bold text-center text-teal-800 mb-12">كيف تدرس المواد الطبية المختلفة؟</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Comprehensive Subjects Breakdown -->
+    <section class="py-16 bg-slate-100 px-4">
+        <div class="container mx-auto max-w-7xl">
+            <h2 class="text-4xl font-extrabold text-center text-slate-800 mb-16">الدليل الشامل لدراسة جميع المواد الطبية</h2>
             
-            <!-- Anatomy -->
-            <div class="bg-white rounded-2xl shadow-md p-6 border-t-4 border-teal-500">
-                <div class="flex items-center gap-3 mb-4">
-                    <i class="fa-solid fa-bone text-2xl text-teal-600"></i>
-                    <h3 class="text-xl font-bold text-slate-800">التشريح (Anatomy)</h3>
-                </div>
-                <p class="text-sm text-slate-600 mb-4 h-16">تعتمد بشكل كبير جداً على الذاكرة البصرية التخيلية وحفظ المسميات والمجاورات.</p>
-                <div class="mb-3">
-                    <div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div>
-                    <div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-teal-500 h-2 rounded-full" style="width: 80%"></div></div>
-                </div>
-                <div class="bg-slate-50 p-3 mt-4 rounded-lg text-sm text-slate-700 border border-slate-100">
-                    <strong class="text-teal-700">السر:</strong> استخدم أطلس بكثرة واصنع بطاقات لإخفاء المسميات من الصور.
-                </div>
-            </div>
-
-            <!-- Physiology -->
-            <div class="bg-white rounded-2xl shadow-md p-6 border-t-4 border-blue-500">
-                <div class="flex items-center gap-3 mb-4">
-                    <i class="fa-solid fa-heart-pulse text-2xl text-blue-600"></i>
-                    <h3 class="text-xl font-bold text-slate-800">الفيزيولوجيا (Physiology)</h3>
-                </div>
-                <p class="text-sm text-slate-600 mb-4 h-16">أم الطب. تعتمد على الفهم العميق للآليات وكيف يعمل الجسم البشري الطبيعي.</p>
-                <div class="mb-3">
-                    <div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div>
-                    <div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 20%"></div></div>
-                </div>
-                <div class="bg-slate-50 p-3 mt-4 rounded-lg text-sm text-slate-700 border border-slate-100">
-                    <strong class="text-blue-700">السر:</strong> ارسم المخططات بيدك. التكرار المتباعد هنا يكون للمفاهيم الأساسية والأرقام.
+            <!-- 1. السنة التحضيرية -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-teal-800 border-b-2 border-teal-200 pb-3 mb-8 inline-block"><i class="fa-solid fa-seedling ml-2"></i>أولاً: مواد السنة التحضيرية الطبية</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Biology -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-green-500">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">بيولوجيا الخلية (Biology)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">تعتمد على فهم آليات عمل الخلية وحفظ دقيق للمصطلحات اللاتينية والإنزيمات.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-green-500 h-2 rounded-full" style="width: 50%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-green-700">السر:</strong> ربط وظيفة العضية باسمها، واستخدام الفلاش كاردز للمصطلحات.</div>
+                    </div>
+                    <!-- Physics -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-orange-500">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">الفيزياء الطبية (Physics)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">مادة فهم بحتة تعتمد على القوانين وتطبيقها على جسم الإنسان والمعدات الطبية.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-orange-500 h-2 rounded-full" style="width: 15%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-orange-700">السر:</strong> حل أكبر قدر ممكن من الدورات والمسائل، الحفظ هنا للقوانين فقط.</div>
+                    </div>
+                    <!-- Genetics -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-purple-400">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">الوراثة (Genetics)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">تجمع بين الفهم العميق لآليات النسخ والترجمة، وحفظ للأمراض الوراثية والجينات المسببة لها.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-purple-400 h-2 rounded-full" style="width: 40%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-purple-700">السر:</strong> ارسم شجرة العائلة بيدك، وافهم القاعدة قبل حفظ المرض.</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Pharmacology -->
-            <div class="bg-white rounded-2xl shadow-md p-6 border-t-4 border-purple-500">
-                <div class="flex items-center gap-3 mb-4">
-                    <i class="fa-solid fa-pills text-2xl text-purple-600"></i>
-                    <h3 class="text-xl font-bold text-slate-800">الأدوية (Pharmacology)</h3>
+            <!-- 2. العلوم الأساسية -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-teal-800 border-b-2 border-teal-200 pb-3 mb-8 inline-block"><i class="fa-solid fa-microscope ml-2"></i>ثانياً: العلوم الطبية الأساسية (Pre-clinical)</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Anatomy -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-red-500">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">التشريح (Anatomy)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">تعتمد كلياً على الذاكرة البصرية، التخيل ثلاثي الأبعاد، وحفظ المسميات والمجاورات والتروية.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-red-500 h-2 rounded-full" style="width: 85%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-red-700">السر:</strong> إياك ودراسة التشريح بدون أطلس! استخدم تطبيقات 3D واربط المعالم البارزة.</div>
+                    </div>
+                    <!-- Physiology -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-blue-500">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">الفيزيولوجيا (Physiology)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">أم الطب. تعتمد على الفهم العميق للآليات وكيف يعمل الجسم البشري خطوة بخطوة.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 20%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-blue-700">السر:</strong> ارسم المخططات البيانية (Flowcharts) بيدك. إذا فهمتها جيداً، لن تنساها.</div>
+                    </div>
+                    <!-- Pathology -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-rose-800">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">علم الأمراض (Pathology)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">الجسر بين النظري والسريري. دراسة كيف يتغير الجسم الطبيعي ليصبح مريضاً (مجهرياً وعيانياً).</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-rose-800 h-2 rounded-full" style="width: 60%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-rose-900">السر:</strong> افهم الآلية (Pathogenesis) أولاً، ثم احفظ الكلمات المفتاحية لشكل الخلايا تحت المجهر.</div>
+                    </div>
+                    <!-- Pharmacology -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-purple-600">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">الأدوية (Pharmacology)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">تجمع بين فهم آلية عمل الدواء، وحفظ بحت ومكثف للأسماء التجارية والعلمية والآثار الجانبية.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-purple-600 h-2 rounded-full" style="width: 70%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-purple-700">السر:</strong> هذه المادة هي الساحة الحقيقية لبرنامج Anki (التكرار المتباعد). لا يمكن تجاوزها بدونه.</div>
+                    </div>
+                    <!-- Microbiology -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-yellow-500">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">الأحياء الدقيقة (Microbiology)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">حفظ مكثف لعائلات البكتيريا والفيروسات، خصائصها، الأمراض التي تسببها، والصادات الحيوية لها.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-yellow-500 h-2 rounded-full" style="width: 80%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-yellow-700">السر:</strong> الجداول والمقارنات والخرائط الذهنية هي منقذك الوحيد لعدم خلط البكتيريا ببعضها.</div>
+                    </div>
+                    <!-- Biochemistry -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-cyan-500">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">الكيمياء الحيوية (Biochemistry)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">مسارات استقلابية معقدة، إنزيمات، وتفاعلات. مادة تحتاج لصبر في تتبع المخططات.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-cyan-500 h-2 rounded-full" style="width: 60%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-cyan-700">السر:</strong> لا تحفظ المخطط شكلياً. افهم ماذا يفعل كل إنزيم ولماذا، واربطه بالمرض الناتج عن نقصه.</div>
+                    </div>
                 </div>
-                <p class="text-sm text-slate-600 mb-4 h-16">تجمع بين فهم آلية العمل وحفظ بحت لأسماء الأدوية وآثارها الجانبية.</p>
-                <div class="mb-3">
-                    <div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم</span></div>
-                    <div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-purple-500 h-2 rounded-full" style="width: 65%"></div></div>
-                </div>
-                <div class="bg-slate-50 p-3 mt-4 rounded-lg text-sm text-slate-700 border border-slate-100">
-                    <strong class="text-purple-700">السر:</strong> لا يمكن إتقانها وتذكرها بدون التكرار المتباعد (مثل برنامج Anki).
+            </div>
+
+            <!-- 3. العلوم السريرية -->
+            <div>
+                <h3 class="text-2xl font-bold text-teal-800 border-b-2 border-teal-200 pb-3 mb-8 inline-block"><i class="fa-solid fa-user-doctor ml-2"></i>ثالثاً: العلوم السريرية (Clinical)</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Internal Medicine -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-indigo-600">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">الأمراض الباطنة (Internal Med)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">أضخم مادة طبية. تعتمد على ربط الأعراض (Symptoms) للوصول للتشخيص الصحيح ثم العلاج.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ</span><span>فهم وربط</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-indigo-600 h-2 rounded-full" style="width: 40%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-indigo-700">السر:</strong> ادرس بطريقة (Case Studies) الحالات السريرية بدلاً من السرد النظري، واربط الباثولوجيا بالأعراض.</div>
+                    </div>
+                    <!-- Surgery -->
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition p-6 border-t-4 border-emerald-600">
+                        <h4 class="text-xl font-bold text-slate-800 mb-2">الجراحة العامة (Surgery)</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16">تعتمد على التشريح السريري، استطبابات العمل الجراحي، الخطوات الأساسية، والاختلاطات.</p>
+                        <div class="mb-3"><div class="flex justify-between text-xs font-bold text-slate-500 mb-1"><span>حفظ خطوات</span><span>فهم سريري</span></div><div class="w-full bg-slate-200 rounded-full h-2"><div class="bg-emerald-600 h-2 rounded-full" style="width: 50%"></div></div></div>
+                        <div class="bg-slate-50 p-2 mt-3 rounded text-sm"><strong class="text-emerald-700">السر:</strong> ركز على "متى نلجأ للجراحة؟" وما هي المضاعفات وكيفية تدبير المريض قبل وبعد العمل.</div>
+                    </div>
                 </div>
             </div>
 
@@ -151,10 +177,10 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm">
-        <p class="mb-4">مصمم خصيصاً لطلاب الطب | طالب في جامعة إدلب - 2026</p>
-        <a href="index.html" class="inline-block bg-slate-800 hover:bg-slate-700 text-white font-bold py-2 px-6 rounded-full transition">
-            <i class="fa-solid fa-arrow-right ml-2"></i> العودة للصفحة الرئيسية
+    <footer class="bg-slate-900 text-slate-400 py-10 text-center text-sm">
+        <p class="mb-6 text-base">مصمم خصيصاً لطلاب الطب | طالب في جامعة إدلب - 2026</p>
+        <a href="index.html" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-full transition-all hover:-translate-y-1">
+            <i class="fa-solid fa-arrow-right"></i> العودة للصفحة الرئيسية للملخصات
         </a>
     </footer>
 
@@ -176,26 +202,43 @@
                         fill: true
                     },
                     {
-                        label: 'مع التكرار المتباعد',
+                        label: 'مع التكرار المتباعد النشط',
                         data: [100, 100, 95, 100, 95, 100],
                         borderColor: '#10b981',
                         borderWidth: 3,
                         borderDash: [5, 5],
                         tension: 0.3,
                         pointBackgroundColor: '#10b981',
-                        pointRadius: 5
+                        pointRadius: 6,
+                        pointHoverRadius: 8
                     }
                 ]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false, // هذه الخاصية هامة جداً لكي يعمل بمرونة
+                maintainAspectRatio: false,
+                layout: {
+                    padding: { top: 20 } // إضافة مساحة من الأعلى لكي لا يلتصق الرقم بالسقف
+                },
                 plugins: {
-                    title: { display: true, text: 'منحنى النسيان لإبنغهاوس', font: { family: 'Tajawal', size: 16 } },
-                    legend: { labels: { font: { family: 'Tajawal' } } }
+                    title: { display: true, text: 'منحنى النسيان لإبنغهاوس', font: { family: 'Tajawal', size: 18, weight: 'bold' }, padding: {bottom: 20} },
+                    legend: { labels: { font: { family: 'Tajawal', size: 14 } } }
                 },
                 scales: {
-                    y: { beginAtZero: true, max: 100, title: { display: true, text: 'نسبة التذكر (%)', font: { family: 'Tajawal' } } }
+                    y: { 
+                        beginAtZero: true, 
+                        max: 105, // تم رفع الحد الأقصى إلى 105 لمنع قص الرقم 100
+                        title: { display: true, text: 'نسبة تذكر المعلومة (%)', font: { family: 'Tajawal', size: 14 } },
+                        ticks: {
+                            callback: function(value) {
+                                if (value > 100) return ''; // إخفاء الرقم 105 من الظهور حتى يبدو المقياس طبيعياً للـ 100
+                                return value;
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: { font: { family: 'Tajawal', size: 13 } }
+                    }
                 }
             }
         });
