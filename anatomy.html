@@ -290,14 +290,15 @@
                     </div>
                     
                     <div class="card-actions">
-                        <button onclick="handleAction('الدورات', '${chapter.title}')" class="action-btn">
+                        <!-- التعديل هنا: تحويل الأزرار إلى روابط حقيقية تفتح الملفات مباشرة -->
+                        <a href="anatomy-ch${chapter.id}-quiz.html" class="action-btn" style="text-decoration: none;">
                             <i class="fa-solid fa-list-check"></i>
                             الدورات
-                        </button>
-                        <button onclick="handleAction('الملخص', '${chapter.title}')" class="action-btn">
+                        </a>
+                        <a href="anatomy-ch${chapter.id}-summary.html" class="action-btn" style="text-decoration: none;">
                             <i class="fa-solid fa-book-open"></i>
                             الملخص
-                        </button>
+                        </a>
                     </div>
                 `;
                 grid.appendChild(card);
