@@ -39,7 +39,6 @@
             font-size: 1.2em;
         }
 
-        /* تصميم الزر الجديد لدليل الدراسة */
         .guide-banner {
             text-align: center;
             margin-bottom: 50px;
@@ -67,14 +66,12 @@
             background: linear-gradient(135deg, #4a332a, #7a5c4d);
         }
 
-        /* شبكة لعرض المواد بشكل احترافي */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
 
-        /* تصميم بطاقات المواد */
         .card {
             background-color: #fffaf0;
             border: 1px solid #e0d4c3;
@@ -97,7 +94,6 @@
             color: #2c2c2c;
         }
 
-        /* تصميم الإشعار المنبثق (Toast) */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -132,7 +128,6 @@
             <p>اختر المادة للوصول إلى الملخصات والمراجعات</p>
         </div>
 
-        <!-- زر دليل الدراسة الجديد -->
         <div class="guide-banner">
             <a href="medical-study-guide.html" class="guide-btn">
                 🧠 دليلك الشامل للدراسة بالتكرار المتباعد
@@ -140,16 +135,13 @@
         </div>
 
         <div class="grid">
-            <!-- 
-                تم إرجاع الروابط الأصلية لمادتي تاريخ الطب والفيزيولوجيا
-                وتم إضافة رابط الوراثة الصحيح
-                بينما بقية المواد تظهر رسالة "قيد التجهيز"
-            -->
             <a href="history-of-medicine.html" class="card">تاريخ الطب</a>
-            <a href="#" onclick="showToast(event, 'التشريح')" class="card">التشريح</a>
+            
+            <!-- التعديل هنا: تفعيل زر التشريح وإضافة اللون الأزرق الطبي -->
+            <a href="anatomy.html" class="card" style="border-color: #2980b9; background-color: #f0f7f8; color: #1a5276;">التشريح</a>
+            
             <a href="physiology.html" class="card">الفيزيولوجيا</a>
             
-            <!-- التعديل هنا: تم تفعيل زر الوراثة ليوجه الزائر إلى صفحة genetics-index.html -->
             <a href="genetics-index.html" class="card" style="border-color: #8b5e34; background-color: #fdf5e6;">الوراثة</a>
             
             <a href="#" onclick="showToast(event, 'الإحصاء الطبي')" class="card">الإحصاء الطبي</a>
@@ -158,17 +150,14 @@
             <a href="#" onclick="showToast(event, 'بيولوجيا الخلية')" class="card">بيولوجيا الخلية</a>
         </div>
 
-        <!-- إضافة قسم الفوتر في أسفل الصفحة -->
         <div style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0d4c3;">
             <p style="color: #999; font-size: 1em;">مصمم خصيصاً لطلاب الطب | طالب في جامعة إدلب - 2026</p>
         </div>
     </div>
 
-    <!-- عنصر الإشعار المنبثق -->
     <div id="toast">عذراً، هذه المادة قيد التجهيز وسيتم رفعها قريباً! ⏳</div>
 
     <script>
-        // دالة إظهار الإشعار عند الضغط على مادة غير جاهزة
         function showToast(event, subjectName) {
             // منع المتصفح من الانتقال لصفحة أخرى أو الصعود لأعلى الصفحة
             event.preventDefault(); 
