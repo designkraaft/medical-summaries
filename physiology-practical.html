@@ -46,7 +46,7 @@
                 <h1 class="text-lg md:text-2xl font-extrabold tracking-wide flex items-center gap-1 md:gap-2">
                     <span>🔬</span> ملخص لعملي الفيزيولوجيا - جامعة إدلب - السنة التحضيرية 2026
                 </h1>
-                <p class="text-emerald-100 text-xs md:text-sm mt-0.5">تفريغ المهم للأرقام والقوانين والملاحظات الامتحانية</p>
+                <p class="text-emerald-100 text-xs md:text-sm mt-0.5">تفريغ المهم للأرقام والقوانين والملاحظات الامتحانية (شامل 9 جلسات)</p>
             </div>
             <a href="index.html" class="bg-white text-emerald-900 px-3 py-1.5 md:px-4 md:py-2 rounded-lg font-bold shadow hover:bg-emerald-50 transition flex items-center gap-1 text-xs md:text-sm whitespace-nowrap">
                 <span>🏠</span> الرئيسية
@@ -69,8 +69,9 @@
                     <option value="tab6">6. الزمر الدموية (ABO & Rh)</option>
                     <option value="tab7">7. زمن التخثر والنزف</option>
                     <option value="tab8">8. أصوات القلب وبؤر الإصغاء</option>
+                    <option value="tab9">9. قياس الضغط الدموي الشرياني</option>
                 </select>
-                <!-- سهم القائمة المنسدلة (جهة اليسار لأن الموقع عربي RTL) -->
+                <!-- سهم القائمة المنسدلة -->
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center px-4 text-emerald-600">
                     <svg class="fill-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                 </div>
@@ -91,6 +92,7 @@
                 <li><button onclick="openTab(event, 'tab6')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">6. الزمر الدموية (ABO & Rh)</button></li>
                 <li><button onclick="openTab(event, 'tab7')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">7. زمن التخثر والنزف</button></li>
                 <li><button onclick="openTab(event, 'tab8')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none">8. أصوات القلب وبؤر الإصغاء</button></li>
+                <li><button onclick="openTab(event, 'tab9')" class="sidebar-btn w-full text-right px-6 py-4 text-sm focus:outline-none text-emerald-700 font-bold">9. قياس الضغط الدموي الشرياني</button></li>
             </ul>
         </nav>
 
@@ -415,11 +417,11 @@
                     <p class="text-xs md:text-sm text-slate-700 mb-3">نضع قطرات من الدم على شريحة ونضيف الأمصال المرجعية. ننتظر 10 دقائق ثم نقرأ. <strong>التراص (التكتل) يعني أن المصل وجد المسترص الذي يبحث عنه.</strong></p>
                     <div class="overflow-x-auto mb-6">
                         <table class="w-full text-xs md:text-sm text-center border-collapse border border-slate-300 bg-white min-w-[500px]">
-                            <tr class="bg-slate-800 text-white"><th class="p-2 border">تفاعل مع (Anti-A) الأزرق</th><th class="p-2 border">تفاعل مع (Anti-B) الأصفر</th><th class="p-2 border font-bold text-yellow-300">الزمرة الناتجة</th></tr>
-                            <tr><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-blue-600 text-lg">A</td></tr>
-                            <tr><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-green-600 text-lg">B</td></tr>
-                            <tr><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-purple-600 text-lg">AB</td></tr>
-                            <tr><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-red-600 text-lg">O</td></tr>
+                            <tr class="bg-slate-800 text-white"><th class="p-2 border">تفاعل مع (Anti-A) الأزرق</th><th class="p-2 border">تفاعل مع (Anti-B) الأصفر</th><th class="p-2 border">تفاعل مع (Anti-D)</th><th class="p-2 border font-bold text-yellow-300">الزمرة الناتجة</th></tr>
+                            <tr><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-blue-600 text-lg">A+</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-green-600 text-lg">B-</td></tr>
+                            <tr><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-purple-600 text-lg">AB-</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-red-600">لا يوجد تراص (-)</td><td class="p-2 border font-bold text-green-600">يوجد تراص (+)</td><td class="p-2 border font-bold text-red-600 text-lg">O+</td></tr>
                         </table>
                         <p class="text-xs text-red-600 font-bold mt-2">* قطرة الشاهد (Control): نقطة دم مع قطرة محلول ملحي، يجب ألا تتراص. إذا تراصت، فالفحص باطل وهناك خطأ.</p>
                     </div>
@@ -517,7 +519,7 @@
                             اجمعها في الرقم (1972) ⬅️ تعني العوامل: (10، 9، 7، 2).
                         </div>
                         <div class="p-3 bg-red-50 text-red-900 border border-red-200 rounded text-xs md:text-sm">
-                            <strong class="text-red-700">⚠️ مرض الناعور (Haemophilia):</strong> مرض وراثي مرتبط بمورثات الجنس (الصبغي X)، ينتقل من الإناث الحاملات للمرض ويصيب الذكور. يسبب ميلاً للنزف الشديد وزيادة زمن التخثر.
+                            <strong class="text-red-700">⚠️ مرض الناعور (Haemophilia):</strong> مرض وراثي مرتبط بمورثات الجنس (الصبغي X)، ينتقل من الإناث الحاملات للمرض ويصيب الذكور. يسبب ميلاً للنزف الشديد وزيادة زمن التخثر. (الناعور A نقص العامل 8، الناعور B نقص العامل 9).
                         </div>
                     </div>
 
@@ -550,7 +552,7 @@
                             <ul class="space-y-3 text-xs md:text-sm text-slate-700">
                                 <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الأول (S1):</strong> ناتج عن الانغلاق المفاجئ <strong>للدسامين التاجي (المترالي) ومثلث الشرف</strong>. يشير لبداية <strong>الانقباض البطيني</strong>. هو صوت غليظ، منخفض النغمة، وطويل (Lub)، مدته <strong>0.12 ثانية</strong>.</li>
                                 <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الثاني (S2):</strong> ناتج عن الانغلاق المفاجئ <strong>للدسامين الأبهري والرئوي (السينية)</strong>. يشير لبداية <strong>الانبساط البطيني</strong>. صوت حاد، عالي النغمة، وقصير (Dub)، مدته <strong>0.08 ثانية</strong>.</li>
-                                <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الثالث (S3):</strong> اهتزاز جدار البطين لاندفاع الدم السريع من الأذينة إليه أثناء ارتخاء البطين وانفتاح التاجي.</li>
+                                <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الثالث (S3):</strong> اهتزاز جدار البطين لاندفاع الدم السريع من الأذينة إليه أثناء ارتخاء البطين وانفتاح التاجي وثلاثي الشرف.</li>
                                 <li class="bg-white p-2 border border-slate-100 rounded shadow-sm"><strong>الصوت الرابع (S4):</strong> اهتزاز ناتج عن انقباض الأذينتين وضخ الدم للبطين. <br><em class="text-xs text-red-600 font-bold block mt-1">S3 و S4 لا يُسمعان طبيعياً في البالغين الأصحاء بالسماعة العادية، سماعهما دليل مرضي (ما عدا الرياضيين والأطفال).</em></li>
                             </ul>
                         </div>
@@ -598,52 +600,159 @@
                     </div>
                 </div>
 
+                <!-- ================= TAB 9: الضغط الدموي ================= -->
+                <div id="tab9" class="tab-content bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-8">
+                    <h2 class="text-xl md:text-3xl font-bold text-emerald-800 mb-6 border-b-2 border-emerald-100 pb-3">الجلسة 9: قياس الضغط الدموي الشرياني</h2>
+
+                    <div class="formula-box p-4 md:p-5 rounded-xl shadow-sm mb-6">
+                        <h3 class="text-base md:text-lg font-bold text-blue-800 mb-2">📌 تعاريف أساسية وقوانين</h3>
+                        <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-800">
+                            <li><strong>الضغط الأعظمي (الانقباضي Systolic):</strong> أكبر ضغط على جدران الأوعية أثناء انقباض البطين الأيسر (حوالي 120 ملم زئبقي عند الشباب).</li>
+                            <li><strong>الضغط الأصغري (الانبساطي Diastolic):</strong> أقل ضغط على جدران الأوعية أثناء ارتخاء القلب (حوالي 80 ملم زئبقي).</li>
+                            <li><strong class="text-blue-700">ضغط النبض:</strong> هو الفرق بين الضغط الأعظمي والأصغري.</li>
+                            <li><strong class="text-blue-700">متوسط الضغط الدموي الشرياني:</strong> = الضغط الأصغري + (ثلث ضغط النبض).</li>
+                            <li><strong>نتاج القلب (CO):</strong> كمية الدم التي يضخها البطين في الدقيقة (5 إلى 5.5 لتر/د).</li>
+                            <li><strong>حجم الدفقة (SV):</strong> كمية الدم التي يضخها البطين خلال كل انقباضة واحدة.</li>
+                        </ul>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-6">
+                        <div class="bg-slate-50 p-4 border border-slate-200 rounded">
+                            <h3 class="font-bold text-emerald-700 mb-3 text-sm md:text-base">🌍 العوامل الخارجية (غير المباشرة) المؤثرة</h3>
+                            <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-700">
+                                <li><strong>العمر:</strong> الجنين (30/50)، الشباب (80/120)، المسنين (90/160). <br><span class="text-red-600 font-bold">كل سنة يزداد الضغط الأعظمي 1 ملم زئبقي.</span></li>
+                                <li><strong>الجنس:</strong> الذكر أعلى من الأنثى، ولكن <strong>بعد سن اليأس يصبح ضغط الأنثى أكبر</strong>. (الإناث يخزنّ الكوليسترول كمدخرات بسبب الهرمونات، الذكور لا يخزنونه فيترسب مسبباً تصلب وارتفاع ضغط).</li>
+                                <li><strong>العرق والوزن:</strong> العرق الأسود أعلى من الأبيض. والبدين أعلى من النحيف.</li>
+                                <li><strong>الوضعية والجاذبية:</strong> كل 1 سم ارتفاع/انخفاض عن مستوى القلب يعادل تغير <strong>0.77 ملم زئبقي</strong>. <br>أثناء الوقوف: ضغط الدماغ < الأبهر. شرايين الأطراف السفلية > الأبهر.</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 border border-slate-200 rounded">
+                            <h3 class="font-bold text-emerald-700 mb-3 text-sm md:text-base">🧬 العوامل الداخلية (المباشرة) المؤثرة</h3>
+                            <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-700">
+                                <li><strong>الحصيل القلبي (حجم الدفقة × التواتر):</strong> الجملة الودية تزيد الحصيل والضغط. الجملة نظيرة الودية تخفضه. زيادة العود الوريدي تزيد حجم الدفقة والضغط.</li>
+                                <li><strong>المقاومة المحيطية (تتعلق بقطر الشرينات):</strong>
+                                    <ul class="list-circle list-inside ml-4 mt-1 space-y-1">
+                                        <li><strong>عوامل عصبية (المركز المحرك الوعائي بالبصلة):</strong> ينظم الودي. نشاط المنطقة الرافعة يضيق الشرينات ويرفع الضغط ويثبط العصب المبهم.</li>
+                                        <li><strong>مستقبلات الضغط (Baroreceptors):</strong> (بالجيب السباتي والأبهري)، عند ارتفاع الضغط، تُنشّط المنطقة الخافضة وتثبط الودي فينخفض الضغط.</li>
+                                        <li><strong>عوامل خلطية:</strong> الأدرينالين البلازمي (يضيق الشرينات).</li>
+                                        <li><strong>تنظيم محلي:</strong> O2 و CO2 يؤثران على قطر الشرينات.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">🩺 طرق قياس الضغط الدموي</h3>
+                    <div class="grid md:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-white p-4 border border-slate-200 shadow-sm rounded">
+                            <h4 class="font-bold text-blue-800 mb-2">1. طريقة الجس (Palpation)</h4>
+                            <p class="text-xs md:text-sm text-slate-700 mb-2">نجس الشريان <strong>الكعبري (Radial)</strong>. نرفع الضغط حتى يزول النبض، ثم نخفضه ببطء.</p>
+                            <ul class="list-disc list-inside text-xs md:text-sm text-slate-700">
+                                <li>عودة النبض = الضغط <strong>الأعظمي (الانقباضي)</strong>.</li>
+                                <li><strong class="text-red-600">لا نستطيع تعيين الضغط الأصغري بهذه الطريقة أبداً.</strong></li>
+                                <li>القراءة هنا <strong>تقل بمقدار 5-10 ملم زئبقي</strong> عن طريقة الإصغاء.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 border border-slate-200 shadow-sm rounded">
+                            <h4 class="font-bold text-blue-800 mb-2">2. طريقة الإصغاء (Auscultation)</h4>
+                            <p class="text-xs md:text-sm text-slate-700 mb-2">السماعة فوق الشريان <strong>العضدي (Brachial)</strong> بالحفرة المرفقية.</p>
+                            <ul class="list-disc list-inside text-xs md:text-sm text-slate-700">
+                                <li>سماع أول صوت خفيف = الضغط الأعظمي (تذبذب قمة عمود الزئبق).</li>
+                                <li>سبب الصوت: تحول جريان الدم من <strong>انسيابي (Laminar) إلى مضطرب (Turbulence)</strong>.</li>
+                                <li>اختفاء الصوت فجأة = الضغط الأصغري (الانبساطي).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mcq-trick p-4 md:p-5 rounded-xl shadow-sm mb-6">
+                        <h3 class="text-base md:text-lg font-bold text-red-700 mb-2">🎯 نكشات الفجوة الصامتة وأخطاء القياس</h3>
+                        <ul class="list-disc list-inside space-y-2 text-xs md:text-sm text-slate-800">
+                            <li><strong>الفجوة الصامتة (Silent Gap):</strong> تحدث لمرضى ارتفاع الضغط وأمراض الأبهر. الضغط الأعظمي 210، تزول الأصوات بين 160-180 (هذه هي الفجوة)، ثم تعود وتختفي لاحقاً كأصغري. <span class="underline">لذلك يجب دائماً القياس بالجس أولاً تحسباً لوجودها.</span></li>
+                            <li><strong>أهمية الأصغري:</strong> الضغط الانبساطي (الأصغري) <strong>أكثر أهمية</strong> من الانقباضي لأنه يعكس حالة المقاومة الوعائية المحيطية.</li>
+                            <li><strong>قياس الطرف السفلي:</strong> الكم فوق الفخذ والسماعة على الشريان الفخذي. الضغط <strong>أعلى</strong> من الطرف العلوي بالوقوف (جاذبية) وبالاستلقاء (ثخانة الفخذ وامتداد الأبهر المباشر).</li>
+                            <li><strong class="text-red-600">قلس الأبهر (Regurgitation):</strong> إذا كان ضغط الشريان الفخذي <strong>أقل</strong> من العضدي، فهذا دليل على قصور (قلس) الدسام الأبهري.</li>
+                        </ul>
+                    </div>
+
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">⚠️ العوامل والأخطاء المؤثرة على قراءة جهاز الضغط</h3>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-xs md:text-sm text-right border-collapse border border-slate-300 bg-white min-w-[500px]">
+                            <tr class="bg-slate-200"><th class="p-2 border w-1/3">العامل / الخطأ التقني</th><th class="p-2 border w-1/3">التأثير على قراءة الضغط</th><th class="p-2 border w-1/3">السبب</th></tr>
+                            <tr><td class="p-2 border font-bold">كم الجهاز عريض جداً أو طويل</td><td class="p-2 border font-bold text-blue-600">ينخفض الضغط (قراءة كاذبة)</td><td class="p-2 border">توزع الضغط على مساحة أكبر.</td></tr>
+                            <tr><td class="p-2 border font-bold">كم الجهاز صغير أو قصير</td><td class="p-2 border font-bold text-red-600">يرتفع الضغط (قراءة كاذبة)</td><td class="p-2 border">تكدس الضغط.</td></tr>
+                            <tr><td class="p-2 border font-bold">الساعد أعلى من مستوى القلب</td><td class="p-2 border font-bold text-blue-600">ينخفض الضغط</td><td class="p-2 border">الجاذبية.</td></tr>
+                            <tr><td class="p-2 border font-bold">الساعد أخفض من مستوى القلب</td><td class="p-2 border font-bold text-red-600">يرتفع الضغط</td><td class="p-2 border">الجاذبية.</td></tr>
+                            <tr><td class="p-2 border font-bold">الساعد غير مثبتة (معلقة)</td><td class="p-2 border font-bold text-red-600">يرتفع الضغط</td><td class="p-2 border">تقلص متساوي الطول للحفاظ عليها مرتفعة.</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-800 bg-red-50">الضغط الزائد جداً على السماعة</td><td class="p-2 border font-bold text-red-800 bg-red-50">ينخفض الأصغري، ويرتفع الأعظمي</td><td class="p-2 border text-red-800 bg-red-50">تشويه الشريان تحت السماعة.</td></tr>
+                            <tr><td class="p-2 border font-bold">التنفس</td><td class="p-2 border">يرتفع بالشهيق، ينخفض بالزفير</td><td class="p-2 border">تغيرات الضغط داخل الصدر.</td></tr>
+                        </table>
+                    </div>
+                    
+                    <p class="text-xs md:text-sm text-slate-700 mb-4"><strong>عوامل أخرى:</strong> ظاهرة الرداء الأبيض (الخوف من الطبيب/المشفى يرفع الضغط). الأكل، التدخين، القهوة، الحركة (يرفعون الضغط لـ 30 دقيقة). التكلم أثناء القياس يرفع الضغط.</p>
+
+                    <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-3 border-r-4 border-emerald-500 pr-2">جدول القيم الطبيعية والمرتفعة للضغط</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs md:text-sm text-center border-collapse border border-slate-300 bg-white min-w-[400px]">
+                            <tr class="bg-emerald-100 text-emerald-900"><th class="p-2 border">نوع الحالة</th><th class="p-2 border">الضغط الانقباضي (مم زئبق)</th><th class="p-2 border">الضغط الانبساطي (مم زئبق)</th></tr>
+                            <tr><td class="p-2 border font-bold text-green-700">مثالية</td><td class="p-2 border">90 - 119</td><td class="p-2 border">60 - 79</td></tr>
+                            <tr><td class="p-2 border font-bold text-green-600">طبيعية</td><td class="p-2 border">120 - 129</td><td class="p-2 border">80 - 84</td></tr>
+                            <tr><td class="p-2 border font-bold text-yellow-600">طبيعية - عالية</td><td class="p-2 border">130 - 139</td><td class="p-2 border">85 - 89</td></tr>
+                            <tr><td class="p-2 border font-bold text-orange-500">عالية الدرجة 1</td><td class="p-2 border">140 - 159</td><td class="p-2 border">90 - 99</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-500">الدرجة 2</td><td class="p-2 border">160 - 179</td><td class="p-2 border">100 - 109</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-600">الدرجة 3</td><td class="p-2 border">180 - 209</td><td class="p-2 border">110 - 119</td></tr>
+                            <tr><td class="p-2 border font-bold text-red-800">الدرجة 4</td><td class="p-2 border">≥ 210</td><td class="p-2 border">≥ 120</td></tr>
+                            <tr class="bg-blue-50"><td class="p-2 border font-bold text-blue-800">انقباضية مفردة</td><td class="p-2 border font-bold">≥ 140 (مرتفع)</td><td class="p-2 border font-bold">< 90 (طبيعي)</td></tr>
+                        </table>
+                    </div>
+
+                </div>
+
             </div>
         </main>
     </div>
 
     <script>
-        // دالة لفتح التبويبات من القائمة الجانبية (لشاشات الآيباد واللابتوب)
         function openTab(evt, tabId) {
             var i, tabcontent, tablinks;
             
-            // إخفاء جميع محتويات التبويبات
+            // Hide all contents
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
                 tabcontent[i].style.display = "none";
                 tabcontent[i].classList.remove("active");
             }
             
-            // إزالة التفعيل عن جميع أزرار القائمة الجانبية
+            // Remove active class from all buttons
             tablinks = document.getElementsByClassName("sidebar-btn");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].classList.remove("active-tab");
             }
             
-            // إظهار التبويب المطلوب
+            // Show current tab
             document.getElementById(tabId).style.display = "block";
             document.getElementById(tabId).classList.add("active");
             
-            // تفعيل الزر الذي تم النقر عليه (إذا تم استدعاء الدالة من زر)
+            // Add active class to button if clicked (evt exists)
             if (evt && evt.currentTarget) {
                 evt.currentTarget.classList.add("active-tab");
             } else {
-                // إذا تم استدعاؤها من القائمة المنسدلة للموبايل، نبحث عن الزر المقابل ونفعله
+                // If called from select dropdown, find the matching button and activate it
                 var activeBtn = document.querySelector(`button[onclick*="${tabId}"]`);
                 if(activeBtn) activeBtn.classList.add("active-tab");
             }
 
-            // مزامنة التحديد مع القائمة المنسدلة للموبايل حتى يبقى محدثاً
+            // Sync select dropdown value
             var mobileSelect = document.getElementById("mobile-tab-select");
             if (mobileSelect && mobileSelect.value !== tabId) {
                 mobileSelect.value = tabId;
             }
             
-            // الصعود لأعلى الصفحة لتسهيل القراءة
+            // Scroll to top of main container when tab changes
             document.querySelector('main').scrollTop = 0;
         }
 
-        // دالة خاصة تعمل عند اختيار خيار من القائمة المنسدلة في الموبايل
+        // Helper function for the mobile select dropdown
         function openTabFromSelect(tabId) {
             openTab(null, tabId);
         }
