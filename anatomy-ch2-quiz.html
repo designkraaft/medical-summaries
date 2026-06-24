@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دورات التشريح - الفصل الثاني (شامل)</title>
+    <!-- تضمين مكتبة FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+
+        :root {
+            --bg-color: #f0f7f8; 
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-heading: #1a5276; 
+            --accent-color: #2980b9; 
+            --accent-light: #d6eaf8;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --tip-bg: #fef9e7;
+            --tip-border: #f1c40f;
+            --border-color: #d6eaf8;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            color: var(--text-heading);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover { color: var(--accent-color); }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-title h1 {
+            color: var(--text-heading);
+            font-size: 2.4em;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .header-title p {
+            color: #5d6d7e;
+            font-size: 1.1em;
+        }
+
+        .year-section {
+            margin-bottom: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .year-header {
+            background-color: var(--accent-light);
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--text-heading);
+            transition: background-color 0.3s;
+        }
+
+        .year-header:hover {
+            background-color: #c0def4;
+        }
+
+        .year-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .year-header.active i {
+            transform: rotate(180deg);
+        }
+
+        .year-content {
+            display: none;
+            padding: 25px;
+            background-color: var(--card-bg);
+        }
+
+        .question-card {
+            background: #fafdfd;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #e1ecf4;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(41, 128, 185, 0.08);
+        }
+
+        .q-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .q-number {
+            background-color: var(--accent-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 1em;
+        }
+
+        .q-text {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin: 0;
+            padding-top: 2px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-right: 45px; /* Alignment with text */
+        }
+
+        .option-btn {
+            background-color: #ffffff;
+            border: 2px solid var(--border-color);
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-align: right;
+            font-family: inherit;
+            font-size: 1.05em;
+            font-weight: 500;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: var(--accent-light);
+            border-color: var(--accent-color);
+        }
+
+        .option-btn:disabled { cursor: default; }
+
+        .option-btn.correct {
+            background-color: rgba(39, 174, 96, 0.1);
+            border-color: var(--success-color);
+            color: #1e8449;
+            font-weight: 700;
+        }
+
+        .option-btn.wrong {
+            background-color: rgba(192, 57, 43, 0.1);
+            border-color: var(--error-color);
+            color: #922b21;
+        }
+
+        .feedback-icon { font-size: 1.2em; display: none; }
+        .correct .feedback-icon { display: block; color: var(--success-color); }
+        .wrong .feedback-icon { display: block; color: var(--error-color); }
+
+        .tip-box {
+            margin-top: 15px;
+            margin-right: 45px;
+            background-color: var(--tip-bg);
+            border: 1px solid var(--tip-border);
+            border-right: 4px solid var(--tip-border);
+            padding: 12px 18px;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .tip-box h4 {
+            margin: 0 0 5px 0;
+            color: #b9770e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.05em;
+        }
+
+        .tip-box p {
+            margin: 0;
+            font-size: 1em;
+            color: #7d6608;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (min-width: 768px) {
+            .options-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="top-bar">
+            <a href="anatomy.html" class="back-link">
+                <i class="fa-solid fa-arrow-right"></i> العودة لفصول التشريح
+            </a>
+            <div style="font-weight: bold; color: var(--accent-color);">
+                <i class="fa-solid fa-layer-group"></i> بنك الدورات الشامل
+            </div>
+        </div>
+
+        <div class="header-title">
+            <h1>أسئلة دورات الفصل الثاني بالكامل</h1>
+            <p>تم تجميع جميع أسئلة الدورات (النظامية والتكميلية) الخاصة ببحث العظام والمفاصل ⚡</p>
+        </div>
+
+        <div id="quiz-container">
+            <!-- سيتم توليد الأقسام والأسئلة هنا بواسطة جافاسكريبت -->
+        </div>
+
+    </div>
+
+    <script>
+        // هيكل البيانات الضخم الذي يحتوي على كل الدورات مقسمة بحسب السنة
+        const examsData = [
+            {
+                year: "دورة 2025 النظامية",
+                questions: [
+                    { q: "يقع جسم القص مقابل الفقرات الصدرية:", options: ["الثانية والثالثة", "الثالثة والرابعة", "الثالثة والرابعة والخامسة", "من الخامسة حتى التاسعة"], correct: 3, tip: "جسم القص يمتد من T5 وحتى T9. (القبضة T3-T4)." },
+                    { q: "أي من البنى الآتية لا تشاهد على الوجه الأمامي للصخرة من العظم الصدغي:", options: ["البارزة المقوسة", "انطباع العصب ثلاثي التوائم", "فرجة العصب الصخري الكبير", "انطباع الجيب المستعرض"], correct: 3, tip: "انطباع الجيب المستعرض (Transverse sinus) يقع على الوجه (الداخلي/الخلفي) للصخرة والقذالي وليس الأمامي." },
+                    { q: "يتشكل الحد الأمامي للحفرة الجناحية الحنكية من العظم:", options: ["Maxilla (الفكي العلوي)", "Frontal", "Sphenoid", "Palatine"], correct: 0, tip: "الحفرة الجناحية الحنكية: أمامها الفكي العلوي (Maxilla)، خلفها الناتئ الجناحي للوتدي، وإنسيها العظم الحنكي." },
+                    { q: "أي من العضلات الآتية لا ترتكز على الحديبة الكبيرة للعضد:", options: ["العضلة تحت الكتفية", "العضلة تحت الشوكية", "العضلة فوق الشوكية", "العضلة المدورة الصغيرة"], correct: 0, tip: "العضلة تحت الكتفية (Subscapularis) ترتكز على الحديبة (الصغيرة). الباقي على الكبيرة." },
+                    { q: "الزاوية الخلفية العلوية من العظم الجداري هي الزاوية:", options: ["Frontal (الجبهية)", "Mastoid (الخشائية)", "Sphenoid (الوتدية)", "Occipital (القذالية)"], correct: 3, tip: "خلفي + علوي = قذالي (Occipital). (خلفي سفلي = خشائية، أمامي علوي = جبهية، أمامي سفلي = وتدية)." },
+                    { q: "تقع الثقبة التي يعبرها العصب تحت الحجاج في العظم:", options: ["Frontal", "Sphenoid", "Parietal", "Maxilla"], correct: 3, tip: "الثقبة تحت الحجاج (Infraorbital foramen) موجودة بوضوح على الوجه الأمامي للفكي العلوي (Maxilla)." },
+                    { q: "الصفيحة الأفقية لعظم الحنك:", options: ["منغرسة على الوجه الوحشي للصفيحة العمودية", "تشكل الثلثين الخلفيين من عظم الأنف", "تشكل الجدار الوحشي لجوف الأنف", "ترتكز على حافتها الخلفية العضلة الموترة للشراع"], correct: 3, tip: "الحافة الخلفية للصفيحة الأفقية حرة ويرتكز عليها شراع الحنك والعضلة الموترة لشراع الحنك." },
+                    { q: "تنشأ العضلة الذقنية اللسانية من:", options: ["أعلى الثقبة الذقنية", "الوجه اللساني لجسم الفك السفلي", "أسفل الثقبة الذقنية", "الوجه الجلدي لجسم الفك السفلي"], correct: 1, tip: "تنشأ من الشوكة الذقنية العلوية الموجودة على الوجه الداخلي (اللساني) لجسم الفك السفلي." },
+                    { q: "تتصل الصفيحة العمودية للعظم الغربالي في الأسفل مع:", options: ["Nasal notch", "Nasal bone", "Crista galli", "Vomer bone"], correct: 3, tip: "الصفيحة العمودية تشكل الجزء العلوي من وتيرة الأنف وتتمفصل في الأسفل مع الميكعة (Vomer)." },
+                    { q: "يقع التلم التصالبي في العظم:", options: ["Frontal", "Occipital", "Ethmoid", "Sphenoid"], correct: 3, tip: "التلم التصالبي (Chiasmatic groove) يقع أمام السرج التركي في العظم الوتدي (Sphenoid)." },
+                    { q: "البنية التي توجد على الوجه الخلفي لجسم الفخذ:", options: ["Linea alba", "Linea aspera (الخط الخشن)", "Greater trochanter", "Lesser trochanter"], correct: 1, tip: "الوجه الخلفي لجسم الفخذ يحوي الحافة الخشنة أو الخط الخشن (Linea aspera)." },
+                    { q: "توجد الحفرة المدورية (Trochanteric fossa) في:", options: ["السطح الأنسي للمدور الكبير", "السطح الوحشي للمدور الكبير", "السطح الأنسي للمدور الصغير", "السطح الوحشي للمدور الصغير"], correct: 0, tip: "الحفرة المدورية تقع دائماً على الوجه الأنسي (الداخلي) للمدور الكبير." },
+                    { q: "يتمفصل العظم القاربي (الزورقي) في رسغ اليد في الأسفل مع العظم:", options: ["Trapezoid (المنحرفي)", "Triquetrum", "Pisiformis", "Piriformis"], correct: 0, tip: "الزورقي (القاربي) يتمفصل في الأسفل (قاصياً) مع العظمين المربعي والمنحرفي (Trapezium & Trapezoid)." },
+                    { q: "تتمفصل النقرة الكعبرية مع:", options: ["الثلمة الكعبرية للزند", "الأحدوبة الكعبرية", "بكرة العضد", "رؤيس العضد"], correct: 3, tip: "النقرة (الحفرة) على رأس الكعبرة تتمفصل مع الرؤيس (Capitulum) الموجود على العضد." },
+                    { q: "النفق السدادي يتواجد على الثقبة السدادية في الجزء:", options: ["العلوي الخلفي", "السفلي الخلفي", "الأمامي العلوي", "الأمامي السفلي"], correct: 2, tip: "الزاوية (الأمامية العلوية) لا يسدها الغشاء السدادي وتترك ممراً يسمى النفق السدادي." },
+                    { q: "القسم من العجز الذي يتمفصل مع العظم الوركي هو:", options: ["Promontory", "Olfactory", "Pudendal", "Auricular surface"], correct: 3, tip: "السطح الصيواني (Auricular surface) على الجانبين يتمفصل مع السطح المشابه له في الحرقفة." }
+                ]
+            },
+            {
+                year: "دورة 2024 النظامية",
+                questions: [
+                    { q: "المشطي الأكبر والأقوى في القدم:", options: ["الثالث", "الأول", "الرابع", "الثاني"], correct: 1, tip: "المشط الأول (الخاص بالإبهام) هو الأقصر والأسمك والأقوى ليتحمل وزن الارتكاز والمشي." },
+                    { q: "يتمفصل العجز مع الورك عبر:", options: ["Auricular surface", "Promontory", "Sacral crest", "لا شيء مما سبق"], correct: 0, tip: "السطح المفصلي الذي يشبه صيوان الأذن (Auricular) هو نقطة التمفصل العجزي الحرقفي." },
+                    { q: "اختر الخطأ عن عظم الشظية (Fibula):", options: ["يرتكز على حافتها الأنسية الغشاء بين العظمين", "تتمفصل نهايتها السفلية مع العقب", "تحوي نهايتها العلوية ناتئ لقمي", "لا تساهم بتشكيل مفصل الركبة"], correct: 1, tip: "نهاية الشظية السفلية (الكعب الوحشي) تتمفصل مع (القعب - Talus) وليس العقب." },
+                    { q: "الخطأ عن الغشاء الزليلي:", options: ["يحوي أوعية وأعصاب", "يفرز سائل يغذي الغضروف المفصلي", "يفرز السائل لتسهيل حركة المفصل", "قد لا يوجد في بعض المفاصل الزليلية"], correct: 3, tip: "كل مفصل (زليلي) يجب حكماً أن يحتوي على محفظة مبطنة بـ (غشاء زليلي). لا يمكن أن يغيب." },
+                    { q: "الفقرة التي ليس لها جسم:", options: ["رقبية أولى (Atlas)", "عجزية ثالثة", "رقبية ثالثة", "رقبية ثانية"], correct: 0, tip: "الفهقة (Atlas) عبارة عن قوسين وكتلتين جانبيتين، وافتقدت جسمها لصالح سن المحور." },
+                    { q: "الخط الألوي الأمامي يتوضع على عظم:", options: ["Pubis", "Humeros", "Ilium (الحرقفة)", "Ischium"], correct: 2, tip: "الخطوط الألوية (الأمامي، الخلفي، السفلي) توجد حصراً على الوجه الخارجي لعظم الحرقفة." },
+                    { q: "الخاطئ عن العظم الوتدي:", options: ["التلم التصالبي أمام السرج التركي", "الوجه الخلفي مربعي ويتمفصل مع القذالي", "يتوضع الجيب الوتدي في جسم العظم", "يتوضع السرج خلف ظهر السرج"], correct: 3, tip: "ظهر السرج (Dorsum sellae) يقع في الخلف! السرج التركي يقع (أمام) ظهر السرج وليس خلفه." },
+                    { q: "نوع المفصل بين سن المحور والقوس الأمامية للفهقة:", options: ["Saddle", "Trochlear", "Ball and socket", "Pivot (صائري/محوري)"], correct: 3, tip: "حركة دوران الرأس (الرفض) تتم حول محور عمودي (السن)، لذا فهو مفصل محوري (Pivot)." },
+                    { q: "يشكل القسم الأكبر من الجدار الإنسي لجوف الحجاج التيه الغربالي بوجهه:", options: ["العلوي", "الوحشي", "الأنسي", "الأمامي"], correct: 1, tip: "تخيل الغربالي في المنتصف. وجهه (الوحشي) الخارجي يطل على الحجاج فيشكل جداره الإنسي." },
+                    { q: "نقطة العلام السريرية المهمة الموجودة على العظم الحرقفي (لتحديد الزائدة):", options: ["Posterior inferior iliac spine", "Posterior superior iliac spine", "Anterior inferior iliac spine", "Anterior superior iliac spine (ASIS)"], correct: 3, tip: "الشوكة الحرقفية الأمامية العلوية (ASIS) هي البارزة التي تجسها في الحوض لرسم خط ماك بورني." }
+                ]
+            },
+            {
+                year: "دورة 2023 النظامية",
+                questions: [
+                    { q: "يشكل الناتئ الجناحي للعظم الوتدي القسم الخلفي من جدار الأنف:", options: ["العلوي", "السفلي", "الأنسي", "الوحشي"], correct: 3, tip: "الصفيحة الإنسية للناتئ الجناحي تساهم في تشكيل القسم الخلفي من الجدار (الوحشي) لجوف الأنف." },
+                    { q: "يوجد على الوجه الخلفي لنهاية الفخذ العلوية:", options: ["Linea aspera", "Intertrochanteric line", "Intertrochanteric crest", "Gluteal tuberosity"], correct: 2, tip: "في الأمام (خط Line)، في الخلف (عرف Crest) ليكون أسمك ويتحمل الشد العضلي." },
+                    { q: "توافق الزاوية السفلية لعظم الكتف مستوى الضلع:", options: ["الثانية", "الخامسة", "السادسة", "السابعة"], correct: 3, tip: "علامة سطحية هامة: الزاوية العلوية للكتف تقابل الضلع 2، والزاوية السفلية تقابل الضلع 7." },
+                    { q: "يتمفصل رأس الضلع الرابع مع:", options: ["الوجيه المفصلي للفقرة الموافقة فقط", "عظم القص", "وجيهين مفصليين لفقرتين متجاورتين", "الحديبة المستعرضة"], correct: 2, tip: "الأضلاع النمطية (من 2 إلى 9) تتمفصل مع فقرتين: الموافقة لها، والتي تعلوها." },
+                    { q: "الخاطئ فيما يخص العضد:", options: ["تحوي نهايته العلوية ثلاث بوارز", "الحديبة الصغيرة إنسي الكبيرة", "ينفصل الرأس عن البارزتين بالعنق الجراحي", "يبدأ جسم العظم من العنق الجراحي"], correct: 2, tip: "العنق (التشريحي) هو الذي يفصل الرأس عن الحديبتين. أما العنق (الجراحي) فيفصل النهاية العلوية عن الجسم." },
+                    { q: "يوجد على النهاية السفلية لعظم الزند:", options: ["Coracoid process", "Coronoid process", "Head of ulnar", "Ulnar notch"], correct: 2, tip: "رأس الزند (Head of ulna) موجود في الأسفل عند الرسغ! عكس الكعبرة التي رأسها في الأعلى." },
+                    { q: "يتوضع على الوجه الأمامي لصخرة العظم الصدغي:", options: ["الصماخ السمعي الخارجي", "الحفرة الوداجية", "البارزة المقوسة", "الثقبة الشوكية"], correct: 2, tip: "البارزة المقوسة (Arcuate eminence) الناتجة عن القناة النصف دائرية العلوية واضحة على الوجه الأمامي للصخرة." },
+                    { q: "الثلمة الغربالية هي جزء من العظم:", options: ["الجداري", "الوتدي", "الجبهي", "الغربالي"], correct: 2, tip: "الخديعة في الاسم! الثلمة الغربالية موجودة في العظم (الجبهي) لتستقبل فيها العظم الغربالي." }
+                ]
+            },
+            {
+                year: "دورة 2022 النظامية",
+                questions: [
+                    { q: "من عظام رصغ القدم ويتمفصل مع الشظية:", options: ["العقب", "النردي", "القعب (Talus)", "الزورقي"], correct: 2, tip: "الكعب الوحشي للشظية يتمفصل مع العظم القعب (Talus) لتشكيل مفصل الكاحل." },
+                    { q: "يخرج العصب الفكي العلوي من القحف عبر:", options: ["Foramen rotundum (الثقبة المدورة)", "Foramen ovale", "Foramen spinosium", "Foramen lacenum"], correct: 0, tip: "تذكر الترتيب: فكي علوي (V2) ← ثقبة مدورة (Rotundum). فكي سفلي (V3) ← بيضية (Ovale)." },
+                    { q: "يتمفصل السطح الخلفي للرضفة مع:", options: ["عظم الظنبوب فقط", "عظما الفخذ والظنبوب", "عظما الظنبوب والشظية", "عظم الفخذ"], correct: 3, tip: "الرضفة (الداغصة) تنزلق فقط على السطح الرضفي لعظم الفخذ." },
+                    { q: "الإجابة الخاطئة المتعلقة بالنهاية السفلية للعضد:", options: ["اللقيمة الوحشية أقل ضخامة من الإنسية", "يشاهد الرؤيس في الخلف فقط", "تتوضع الحفرة المنقارية فوق البكرة", "تتوضع الحفرة الزجية فوق البكرة بالخلف"], correct: 1, tip: "الرؤيس (Capitulum) كروي ويشاهد من الأمام فقط، بينما البكرة تشاهد من الأمام والخلف." },
+                    { q: "الإجابة الخاطئة المتعلقة بالصفيحة العمودية للغربالي:", options: ["تتصل في الأمام والأعلى مع الأنفيين", "تتصل في الأسفل مع عظم الميكعة", "تساهم بتشكيل الجدار الوحشي لجوف الأنف", "تشكل الجزء العلوي من الوتيرة الأنفية"], correct: 2, tip: "الصفيحة العمودية تقع في المنتصف تماماً وتشكل الحاجز (الوتيرة)، ولا تساهم في الجدار الوحشي." },
+                    { q: "العظم الرابع من عظام الصف الأول لرسغ اليد (من الوحشي للإنسي) هو:", options: ["Scaphoid", "Lunate", "Trapezoid", "Pisiform (الحمصي)"], correct: 3, "tip": "الصف الأول: زورقي ← هلالي ← مثلثي ← حمصي. الحمصي هو الرابع والأكثر إنسية." },
+                    { q: "يوجد النفق السدادي على الثقبة السدادية في الجزء:", options: ["الأمامي السفلي", "الخلفي السفلي", "الخلفي العلوي", "الأمامي العلوي"], correct: 3, tip: "النفق يقع في الزاوية العلوية الأمامية (Anterosuperior) لمرور الأوعية والأعصاب السدادية." }
+                ]
+            },
+            {
+                year: "دورة 2021 النظامية",
+                questions: [
+                    { q: "الزاوية الأمامية السفلية للعظم الجداري تسمى الزاوية:", options: ["القذالية", "الجبهية", "الخشائية", "الوتدية"], correct: 3, tip: "أمامي سفلي = يجاور الجناح الكبير للوتدي (Sphenoid) وتسمى منطقة الجنيحي Pterion." },
+                    { q: "الفقرة التي تتميز بوجود ثقبة فقرية كبيرة ومثلثية الشكل:", options: ["Cervical (الرقبية)", "Lumbar", "Thoracic", "Sacral"], correct: 0, tip: "الفقرات الرقبية ثقبتها كبيرة لاستيعاب التوسع الرقبي للنخاع الشوكي." },
+                    { q: "ترتكز على الأحدوبة الزندية (Ulnar tuberosity) العضلة:", options: ["ذات الرأسين العضدية", "مثلثة الرؤوس العضدية", "الغرابية العضدية", "العضدية (Brachialis)"], correct: 3, tip: "العضلة العضدية ترتكز على الأحدوبة الزندية، بينما ذات الرأسين ترتكز على الأحدوبة الكعبرية." },
+                    { q: "يحد الناتئ الجناحي الحفرة الجناحية الحنكية من:", options: ["الأمام", "الأنسي", "الوحشي", "الخلف"], correct: 3, tip: "الناتئ الجناحي (Pterygoid process) يقع كجدار خلفي لهذه الحفرة العميقة." },
+                    { q: "الخاطئ عن العضد:", options: ["يساهم في تشكيل الزنار الكتفي", "مرتكز الغرابية العضدية على الانسي", "الثلم بين الحديبتين لمثلثة الرؤوس", "الثلم الكعبري في الخلف"], correct: 2, tip: "الثلم بين الحديبتين يمر فيه وتر العضلة (ذات الرأسين العضدية) وليس مثلثة الرؤوس!" },
+                    { q: "المفاصل المسطحة من أمثلتها:", options: ["مفصل الركبة", "الزندي الكعبري القريب", "الأخرمي الترقوي (Acromioclavicular)", "الزندي الكعبري البعيد"], correct: 2, tip: "المفصل الأخرمي الترقوي سطوحه مسطحة وتسمح بالانزلاق البسيط فقط." }
+                ]
+            },
+            {
+                year: "دورات 2017 - 2020",
+                questions: [
+                    { q: "أي من الأقسام القحفية التالية لا يساهم بتشكيل قبة القحف (سقف الجمجمة):", options: ["صدفة العظم القذالي", "العظم الجداري الأيمن", "صدفة العظم الجبهي", "القسم الأفقي (الحجاجي) للعظم الجبهي"], correct: 3, tip: "القسم الأفقي للجبهي يشكل (أرضية) القحف الأمامية و(سقف) الحجاج، ولا علاقة له بالقبة." },
+                    { q: "أي من المعالم الآتية يشاهد في النهاية السفلية لعظم العضد:", options: ["Greater tubercle", "Coronoid process", "Styloid process", "Radial fossa (الحفرة الكعبرية)"], correct: 3, tip: "الحفرة الكعبرية توجد في الأمام وفوق الرؤيس على النهاية السفلية للعضد لتستقبل رأس الكعبرة." },
+                    { q: "تأتي أهمية الضلع الأولى من علاقتها مع:", options: ["الشريان والوريد تحت الترقوة", "الشريان السباتي الخارجي", "العضلة الأخمعية الخلفية", "الشريان السباتي المشترك"], correct: 0, tip: "الضلع الأولى قصيرة ومسطحة ويمر فوقها حزمة هامة جداً: الوريد والشريان تحت الترقوة." },
+                    { q: "يقع الخط الألوي السفلي على:", options: ["الوجه الداخلي للحرقفة", "الفرع العلوي للعانة", "الوجه الخلفي للفخذ", "السطح الخارجي للحرقفة"], correct: 3, tip: "كل الخطوط الألوية (أمامي، خلفي، سفلي) توجد على الوجه الخارجي لعظم الحرقفة (Ilium)." },
+                    { q: "عظم الـ Calcaneum هو عظم:", options: ["القعب", "النردي", "الإسفيني", "العقب"], correct: 3, tip: "Calcaneum تعني العقب (كعب القدم)، وهو أضخم عظام الرصغ." },
+                    { q: "يدخل في تشكيل الحفرة القحفية الامامية:", options: ["المحدر", "القسم الصدفي من العظم الجبهي", "العظم القذالي", "الصفيحة الافقية (المصفوية) للعظم الغربالي"], correct: 3, tip: "الصفيحة المصفوية للغربالي تشكل سقف الأنف وتساهم في أرضية الحفرة القحفية الأمامية." },
+                    { q: "يتمفصل السطح السفلي الأمامي للفخذ مع:", options: ["Tibia (الظنبوب)", "Fibula (الشظية)", "Tarsal bones", "Patella (الرضفة)"], correct: 3, tip: "السطح الأمامي لمفصل الركبة (في الأسفل والأمام للفخذ) مخصص لاستقبال (الرضفة)." }
+                ]
+            }
+        ];
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            
+            examsData.forEach((exam, examIndex) => {
+                // إنشاء قسم الدورة
+                const section = document.createElement('div');
+                section.className = 'year-section';
+                
+                // رأس القسم (Accordion Header)
+                const header = document.createElement('div');
+                header.className = 'year-header';
+                header.innerHTML = `
+                    <span><i class="fa-regular fa-calendar-check" style="margin-left: 8px;"></i> ${exam.year}</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                `;
+                
+                // محتوى القسم (Questions Container)
+                const content = document.createElement('div');
+                content.className = 'year-content';
+
+                // توليد الأسئلة
+                exam.questions.forEach((item, qIndex) => {
+                    const card = document.createElement('div');
+                    card.className = 'question-card';
+                    
+                    let optionsHTML = '';
+                    item.options.forEach((opt, optIndex) => {
+                        const globalIndex = `${examIndex}-${qIndex}`;
+                        optionsHTML += `
+                            <button class="option-btn" onclick="checkAnswer(this, ${examIndex}, ${qIndex}, ${optIndex}, '${globalIndex}')">
+                                <span>${opt}</span>
+                                <i class="fa-solid fa-circle-check feedback-icon"></i>
+                                <i class="fa-solid fa-circle-xmark feedback-icon" style="display:none;"></i>
+                            </button>
+                        `;
+                    });
+
+                    card.innerHTML = `
+                        <div class="q-header">
+                            <div class="q-number">${qIndex + 1}</div>
+                            <h3 class="q-text">${item.q}</h3>
+                        </div>
+                        <div class="options-grid" id="options-${examIndex}-${qIndex}">
+                            ${optionsHTML}
+                        </div>
+                        <div class="tip-box" id="tip-${examIndex}-${qIndex}">
+                            <h4><i class="fa-solid fa-lightbulb"></i> سر الحل السريع</h4>
+                            <p>${item.tip}</p>
+                        </div>
+                    `;
+                    content.appendChild(card);
+                });
+
+                // تفعيل الطي والفتح
+                header.onclick = () => {
+                    const isOpen = content.style.display === 'block';
+                    // إغلاق الجميع أولاً (اختياري، لكن يفضل للترتيب)
+                    document.querySelectorAll('.year-content').forEach(c => c.style.display = 'none');
+                    document.querySelectorAll('.year-header').forEach(h => h.classList.remove('active'));
+                    
+                    if (!isOpen) {
+                        content.style.display = 'block';
+                        header.classList.add('active');
+                    }
+                };
+
+                section.appendChild(header);
+                section.appendChild(content);
+                container.appendChild(section);
+            });
+            
+            // فتح أول دورة افتراضياً
+            document.querySelector('.year-header').click();
+        }
+
+        function checkAnswer(btnElement, examIndex, qIndex, selectedOptionIndex, globalIndex) {
+            const questionData = examsData[examIndex].questions[qIndex];
+            const optionsContainer = document.getElementById(`options-${globalIndex}`);
+            const buttons = optionsContainer.querySelectorAll('.option-btn');
+            const tipBox = document.getElementById(`tip-${globalIndex}`);
+
+            // تعطيل الأزرار بعد الاختيار
+            buttons.forEach(btn => btn.disabled = true);
+
+            const isCorrect = (selectedOptionIndex === questionData.correct);
+
+            if (isCorrect) {
+                btnElement.classList.add('correct');
+            } else {
+                btnElement.classList.add('wrong');
+                btnElement.querySelector('.fa-circle-xmark').style.display = 'block';
+                btnElement.querySelector('.fa-circle-check').style.display = 'none';
+                
+                // إظهار الإجابة الصحيحة باللون الأخضر
+                buttons[questionData.correct].classList.add('correct');
+            }
+
+            // إظهار صندوق سر الحل
+            tipBox.style.display = 'block';
+        }
+
+        window.onload = renderQuiz;
+
+    </script>
+</body>
+</html>
