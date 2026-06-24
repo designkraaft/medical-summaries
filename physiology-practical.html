@@ -36,6 +36,93 @@
 
         th { background-color: #e2e8f0; color: #1e293b; }
         tr:nth-child(even) { background-color: #f8fafc; }
+
+        /* تنسيقات الطباعة (A4) */
+        @media print {
+            /* 1. ضبط هوامش الورقة الأساسية */
+            @page { size: A4; margin: 1.5cm; } 
+            
+            /* 2. فرض العرض الكامل ومنع التمدد الخارجي */
+            html, body { 
+                width: 100% !important;
+                height: auto !important; 
+                overflow: visible !important; 
+                background-color: #fff !important; 
+                font-size: 12pt !important; 
+                box-sizing: border-box !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            /* 3. إزالة قيود الشاشة وخصائص العرض المرن (Flex) التي تدمر الطباعة */
+            .h-screen, .overflow-hidden, .overflow-y-auto, .flex, .flex-1, .flex-col, .md\:flex-row {
+                display: block !important;
+                height: auto !important;
+                width: 100% !important;
+                overflow: visible !important;
+            }
+            
+            /* إخفاء عناصر الواجهة غير الضرورية للطباعة */
+            header, nav, .block.md\:hidden, #mobile-tab-select, .sidebar-btn, .print-btn { 
+                display: none !important; 
+            }
+            
+            /* 4. إظهار جميع الجلسات دفعة واحدة للطباعة */
+            .tab-content { 
+                display: block !important; 
+                opacity: 1 !important;
+                visibility: visible !important;
+                animation: none !important;
+                page-break-before: always; /* كل جلسة في صفحة جديدة */
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 5px !important;
+                margin-bottom: 2cm !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            
+            /* إلغاء الصفحة الجديدة للجلسة الأولى */
+            #tab1 { page-break-before: avoid !important; }
+
+            /* 5. الحل السحري لتداخل الصناديق: تحويل الشبكات (Grid) إلى صفوف طولية للطباعة */
+            .grid {
+                display: block !important;
+                width: 100% !important;
+            }
+            .grid > div {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin-bottom: 1.5rem !important;
+                page-break-inside: avoid !important;
+                box-sizing: border-box !important;
+            }
+
+            /* فرض خصائص الحجم للصناديق لمنع خروجها عن الهامش */
+            .formula-box, .mcq-trick, .alert-box, .bg-slate-50 {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* منع انقسام الجداول والنصوص المهمة بين صفحتين */
+            table, tr, td, th, h2, h3, li { 
+                page-break-inside: avoid !important; 
+            }
+
+            /* 6. فرض طباعة الألوان الخلفية */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            /* توسيع المحتوى الرئيسي ليملأ الصفحة */
+            main, .max-w-4xl { 
+                padding: 0 !important; 
+                margin: 0 !important; 
+                width: 100% !important; 
+                max-width: 100% !important; 
+                box-sizing: border-box !important;
+            }
+            .pb-20 { padding-bottom: 0 !important; }
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased h-screen flex flex-col overflow-hidden">
@@ -48,9 +135,14 @@
                 </h1>
                 <p class="text-emerald-100 text-xs md:text-sm mt-0.5">تفريغ المهم للأرقام والقوانين والملاحظات الامتحانية (شامل 9 جلسات)</p>
             </div>
-            <a href="index.html" class="bg-white text-emerald-900 px-3 py-1.5 md:px-4 md:py-2 rounded-lg font-bold shadow hover:bg-emerald-50 transition flex items-center gap-1 text-xs md:text-sm whitespace-nowrap">
-                <span>🏠</span> الرئيسية
-            </a>
+            <div class="flex items-center gap-2">
+                <button onclick="window.print()" class="print-btn bg-white/20 text-white border border-white/40 px-3 py-1.5 md:px-4 md:py-2 rounded-lg font-bold shadow hover:bg-white/30 transition flex items-center gap-1 text-xs md:text-sm whitespace-nowrap">
+                    <span>🖨️</span> طباعة الملخص
+                </button>
+                <a href="index.html" class="bg-white text-emerald-900 px-3 py-1.5 md:px-4 md:py-2 rounded-lg font-bold shadow hover:bg-emerald-50 transition flex items-center gap-1 text-xs md:text-sm whitespace-nowrap">
+                    <span>🏠</span> الرئيسية
+                </a>
+            </div>
         </div>
     </header>
 
