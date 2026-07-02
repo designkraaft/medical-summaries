@@ -3,312 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الفصل الأول: الوراثة المندلية - منصة الطبي</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    
+    <title>الملخص الامتحاني - الوراثة المندلية</title>
     <style>
-        body { 
-            font-family: 'Tajawal', sans-serif; 
-            background-color: #f4ecd8; 
-            color: #2c2c2c;
-        }
-        
-        .primary-bg { background-color: #5c4033; }
-        .primary-text { color: #5c4033; }
-        .card-bg { background-color: #fffaf0; border-color: #e0d4c3; }
-        
-        .study-card {
-            transition: all 0.3s ease;
-        }
-        .study-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(92, 64, 51, 0.1);
-            border-color: #8b5e34;
+        /* إعدادات المظهر المريح للعين (Sepia / Wood Theme) */
+        :root {
+            --bg-color: #f4ecd8;
+            --text-color: #3b2f2f;
+            --primary-color: #5c4033;
+            --secondary-color: #704214;
+            --accent-color: #d1bfae;
+            --exam-color: #8b0000;
+            --exam-bg: #f9e6e6;
+            --card-bg: #fdfbf7;
         }
 
-        .study-list li {
-            position: relative;
-            padding-right: 20px;
-            margin-bottom: 12px;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.8;
+            padding: 30px;
+            max-width: 1000px;
+            margin: auto;
+            font-size: 18px;
         }
-        .study-list li::before {
-            content: '■';
-            position: absolute;
-            right: 0;
-            color: #8b5e34;
-            font-size: 0.8em;
-            top: 6px;
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            border-bottom: 3px double var(--accent-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
         }
-        
-        /* التنسيق الخاص بقوائم الأمراض */
-        .disease-list li {
+
+        h2 {
+            color: var(--secondary-color);
+            border-right: 5px solid var(--secondary-color);
             padding-right: 15px;
-            margin-bottom: 8px;
-            line-height: 1.6;
+            background-color: var(--accent-color);
+            padding: 10px 15px 10px 0;
+            border-radius: 5px;
+            margin-top: 40px;
         }
-        .disease-list li::before {
-            content: '🔸';
-            position: absolute;
-            right: 0;
-            font-size: 0.8em;
-            top: 4px;
+
+        h3 {
+            color: var(--primary-color);
+        }
+
+        /* تنسيق أسئلة الدورات */
+        .exam-question {
+            background-color: var(--exam-bg);
+            border-right: 6px solid var(--exam-color);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            color: var(--exam-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .exam-question::before {
+            content: "💡 سؤال دورة: ";
+            margin-left: 10px;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* تنسيق الجداول لسهولة الحفظ */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid var(--accent-color);
+            text-align: right;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f7f1e3;
+        }
+
+        /* بطاقات المفاهيم */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .concept-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .term {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+
+        /* القوائم */
+        ul {
+            padding-right: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            background-color: rgba(209, 191, 174, 0.4);
+            padding: 2px 5px;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header نحيف -->
-    <header class="bg-gradient-to-r from-[#5c4033] to-[#8b5e34] text-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3">
-            <h1 class="text-xl md:text-2xl font-bold flex items-center justify-center md:justify-start gap-2">
-                <i class="fa-solid fa-microscope text-[#f0e2cc]"></i> الفصل الأول: الوراثة المندلية (الملخص الشامل)
-            </h1>
+    <h1>الملخص الامتحاني - الفصل الأول<br><span style="font-size: 0.7em; color: var(--secondary-color);">الوراثة المندلية (النقاط الذهبية)</span></h1>
+
+    <p style="text-align: center; font-size: 1.1em;">مصمم خصيصاً لأسئلة الأتمتة، مدمج بأسئلة الدورات (2017 - 2024)</p>
+
+    <h2>أولاً: تجارب ماندل والمفاهيم الأساسية</h2>
+    <p><strong>منهجية ماندل:</strong> استخدم نبات البازلاء، واعتمد على التأبير الذاتي (Self-pollination) لمنع التلوث الوراثي، واستخدم سلالات أو ذراري صافية (True-breeding) تعطي الصفة ذاتها دائماً [1، 2].</p>
+    
+    
+
+[Image of Mendelian genetics pea plant traits]
+
+
+    <div class="concept-grid">
+        <div class="concept-card">
+            <span class="term">النمط الظاهري (Phenotype):</span><br> هو ظهور الصفة المعينة والمظهر الخارجي للكائن (مثل: بذور مدورة، أو مجعدة).
         </div>
-    </header>
-
-    <main class="container mx-auto px-4 py-8 max-w-5xl">
-        
-        <div class="space-y-8">
-
-            <!-- 1 -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span> 
-                    السيادة، التنحي، والفصل (Mendel's Basics)
-                </h2>
-                <ul class="study-list text-lg text-gray-800">
-                    <li>اعتمد ماندل على نبات البازلاء لتجاربه، وقام بدراسة صفات مفردة (كشكل البذور ولونها، طول الجذع، لون الأزهار وموضعها، وشكل ولون القرن).</li>
-                    <li><strong>رموز الأجيال:</strong> يُرمز لجيل الآباء بـ P1، والجيل الأول بـ F1، والجيل الثاني بـ F2.</li>
-                    <li><strong>النمط الظاهري والنمط الجيني:</strong> النمط الظاهري (Phenotype) هو شكل الصفة الذي يظهر على الكائن الحي، بينما النمط الجيني (Genotype) هو التركيب الوراثي الداخلي.</li>
-                    <li><strong>الألائل (Alleles):</strong> الأليل السائد (Dominant) يُرمز له بحرف كبير (مثل R)، وتكفي جينة واحدة منه لظهور الصفة. الأليل المتنحي (Recessive) يُرمز له بحرف صغير (مثل r)، ولا يعبر عن نفسه إلا إذا كان متماثلاً (rr).</li>
-                    <li><strong>مسميات اللواقح:</strong> (RR) هو زيجوت متماثل الألائل سائد، و(rr) متماثل الألائل متنحي، و(Rr) زيجوت متغاير الألائل (هجين).</li>
-                    <li><strong>قانون الفصل:</strong> في الجيل الثاني F2 لتزاوج أبوين نقيين، تكون نسبة النمط الظاهري 3 سائد إلى 1 متنحي (3:1). أما نسبة النمط الجيني فتكون 1:2:1 (1 نقي سائد : 2 هجين : 1 نقي متنحي).</li>
-                </ul>
-            </div>
-
-            <!-- 2 -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span> 
-                    التصالب الاختباري (Test Cross)
-                </h2>
-                <ul class="study-list text-lg text-gray-800">
-                    <li>يُستخدم لمعرفة النمط الجيني لكائن يُظهر نمطاً ظاهرياً سائداً (هل هو متماثل الألائل نقي أم متغاير الألائل هجين).</li>
-                    <li>يتم بمزاوجة الفرد المدروس مع فرد يحمل الصفة المتنحية (لأن النمط الجيني للمتنحي معروف دائماً rr).</li>
-                    <li>إذا كانت جميع الأفراد الناتجة تحمل الصفة السائدة، يكون الفرد الأصل نقياً (True-breeding). أما إذا نتجت أفراد تحمل الصفة المتنحية، فيكون الفرد الأصل هجيناً (Non-true-breeding).</li>
-                    <li>السيادة ليست دائماً كاملة؛ إذ يمكن للألائل المتنحية في الزيجوت متغاير الألائل أن تُعدل من النمط الظاهري وتتطلب فحوصات كيميائية أو مجهرية لملاحظتها.</li>
-                </ul>
-            </div>
-
-            <!-- 3 -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span> 
-                    التفارز المستقل (Independent Assortment)
-                </h2>
-                <ul class="study-list text-lg text-gray-800">
-                    <li>يُعنى بوراثة صفتين معاً (تصالب ثنائي الجين)، مثل شكل ولون البذور (RrYy).</li>
-                    <li>توزع الألائل في الأعراس يتم بشكل عشوائي تماماً وباحتمالات متساوية.</li>
-                    <li>ينتج عن تزاوج أفراد الجيل الأول (RrYy × RrYy) نسبة نمط ظاهري ثابتة في الجيل الثاني وهي 9:3:3:1.</li>
-                    <li>يحصل التفارز المستقل فقط عندما تتوضع الجينات على صبغيات مختلفة (غير متماثلة).</li>
-                    <li>التزاوج المتصالب الرجعي (Backcross): تزاوج يعطي أنماطاً ظاهرية يتوافق كل منها مع أنماط جينية محددة سابقة.</li>
-                </ul>
-            </div>
-
-            <!-- 4 -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">4</span> 
-                    الارتباط الجيني (Genetic Linkage)
-                </h2>
-                <ul class="study-list text-lg text-gray-800">
-                    <li>يحدث عندما تتوضع جينتان مختلفتان على نفس الصبغي ولا تتفارزان بشكل مستقل.</li>
-                    <li>الارتباط الكامل: تنتقل الجينات المرتبطة كوحدة متكاملة إلى الأعراس دون تشكيل تراكيب جينية جديدة.</li>
-                    <li>الارتباط غير الكامل (التعابر): تحدث حادثة التعابر (Crossing over) بين شقي الصبغي اللامتآخيين خلال الانقسام الانتصافي، مما يخلق تراكيب جينية جديدة (أعراس مأشوبة).</li>
-                    <li>إذا كانت نسبة التراكيب الجينية الجديدة تتراوح بين 0% وأقل من 50%، فهذا يعني أن الجينات مرتبطة وتخضع للتعابر. أما نسبة 50% فتعني تفارزاً مستقلاً.</li>
-                    <li>الأطوار: الطور المقرون (cis phase) يكون فيه الأليلان السائدان معاً (AB/ab)، بينما الطور المفروق (trans phase) يكونان متعاكسين (Ab/aB).</li>
-                </ul>
-            </div>
-
-            <!-- 5 -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">5</span> 
-                    إنشاء الخرائط الجينية (Constructing Genetic Maps)
-                </h2>
-                <ul class="study-list text-lg text-gray-800">
-                    <li>المسافة الجينية بين الجينات تُقاس بوحدة تُسمى "سنتي مورغان" (Centimorgan - cM).</li>
-                    <li>1 سنتي مورغان = مسافة خريطة واحدة (1 mu) = نسبة تأشيب (تعابر) مقدارها 1%.</li>
-                    <li>كل 1 سنتي مورغان يعادل فيزيائياً حوالي مليون شفع من أسس الدنا (DNA).</li>
-                    <li>الترتيب الخطي للجينات يُستنتج من خلال جمع وطرح المسافات الجينية (نسب العبور) بينها.</li>
-                </ul>
-            </div>
-
-            <!-- 6 -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">6</span> 
-                    الألائل المتعددة (Multiple Alleles)
-                </h2>
-                <ul class="study-list text-lg text-gray-800">
-                    <li>الموقع الجيني الواحد يمكن أن يمتلك آلاف الألائل بسبب تغيرات النوكليوتيدات، ولكن تُصنف فقط الألائل التي تُحدث تغيراً ملحوظاً في النمط الظاهري.</li>
-                    <li>تُعطى الجينات البشرية رموزاً بأحرف كبيرة مائلة حسب نظام ISGN، مع إضافة (*) للدلالة على الأليل، وأرقام للتمييز.</li>
-                    <li>نظام الزمر الدموية ABO: تمتلك الجينة ثلاثة ألائل رئيسية: A و B (سائدان بسيادة مشتركة)، و O (متنحي).</li>
-                    <li>تنتج 4 أنماط ظاهرية (الزمر A, B, AB, O) من 6 أنماط جينية مختلفة.</li>
-                    <li>الاختلاف الجزيئي: الأليلان A و B يرمزان لإنزيم ناقلة الغليكوزيل الذي يضيف زمرة سكرية للمستضد H (الأليل O لا يرمز لبروتين يؤثر في هذا المستضد). الأليلان A و B يختلفان بـ 4 نوكليوتيدات، وينقص الأليل O زوج من النوكليوتيدات.</li>
-                </ul>
-            </div>
-
-            <!-- 7. الوراثة البشرية -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">7</span> 
-                    الوراثة البشرية (Human Genetics)
-                </h2>
-                <p class="text-lg text-gray-800 mb-4 font-bold">تختلف دراسة الوراثة البشرية عن الكائنات الأخرى بسبب صغر حجم العائلات، طول زمن الأجيال، والاعتبارات الأخلاقية التي تمنع إجراء زيجات تجريبية. لذلك، تُدرس عبر طريقين:</p>
-                <ul class="study-list text-lg text-gray-800 mb-6">
-                    <li>دراسات سكانية: تعتمد على تحليل بيانات أعداد كبيرة وتستغرق وقتاً طويلاً.</li>
-                    <li>دراسات العائلات (شجرة النسب Pedigree): أسهل وتُستخدم لدراسة الأمراض الوراثية. مصطلح Pedigree مشتق من الفرنسية "أقدام طائر الكركي".</li>
-                </ul>
-
-                <div class="bg-white border border-[#e0d4c3] rounded-xl p-5 mb-6">
-                    <h3 class="font-bold text-xl text-[#8b5e34] mb-3">رموز شجرة النسب الهامة للامتحان:</h3>
-                    <ul class="study-list text-lg text-gray-800">
-                        <li>الدائرة: أنثى. المربع: ذكر. المعين: جنس غير معروف.</li>
-                        <li>الرمز الممتلئ: شخص مصاب. الرمز الصغير: توفي في مرحلة مبكرة.</li>
-                        <li>الأرقام: اللاتينية (I, II) تشير لرقم الجيل، والعربية (1, 2) لترتيب الولادة من الأكبر للأصغر (يسار إلى يمين).</li>
-                        <li>الخطوط: خط أفقي مفرد (زواج)، خط مزدوج (زواج أقارب). خط مائل عبر الرمز (الموت أثناء الدراسة). السهم (الفرد الذي بدأت منه الدراسة).</li>
-                        <li>التوائم: خطان متشعبان بينهما خط أفقي (توأم زيجوت واحدة/متماثل)، خطان متشعبان بدون خط أفقي (توأم بيضتين/مختلف).</li>
-                    </ul>
-                </div>
-
-                <!-- 1.7 الوراثة الجسدية السائدة -->
-                <div class="bg-blue-50 border-r-4 border-blue-600 p-5 rounded-lg mb-6">
-                    <h4 class="font-bold text-xl text-blue-900 mb-2">1.7 الوراثة الجسدية السائدة (Autosomal Dominant)</h4>
-                    <p class="text-gray-800 mb-3 text-lg">يوجد نحو 200 حالة وراثية بشرية من هذا النمط.</p>
-                    <p class="font-bold text-blue-800 mb-2">ميزات شجرة النسب:</p>
-                    <ul class="disease-list text-gray-800 mb-4 text-lg">
-                        <li>الأفراد المصابون يظهرون في أجيال متعاقبة (لا تتخطى أجيالاً).</li>
-                        <li>إصابة الذكور والإناث متساوية.</li>
-                        <li>كل مصاب له والد مصاب بالضرورة.</li>
-                        <li>ولا ينجب الأبوان السليمان ولداً مصاباً.</li>
-                    </ul>
-                    <p class="font-bold text-blue-900 border-b border-blue-200 pb-1 mb-2 text-lg">أهم الأمراض (الجدول 1-3):</p>
-                    <ul class="disease-list text-gray-800 text-lg">
-                        <li><strong>داء هنتنغتون (1/10000):</strong> بدء متأخر، تنكس في قشرة المخ والعقد القاعدية، رقص (حركة لا إرادية)، خرف.</li>
-                        <li><strong>الورام الليفي العصبي النمط 1 (1/5000):</strong> أورام ليفية متعددة، بقع قهوة بالحليب.</li>
-                        <li><strong>التصلب الحدبي (1/5800):</strong> أورام عابية (Hamartomas) متعددة الأجهزة (دماغ، كلى، قلب، هيكل).</li>
-                        <li><strong>حثل التأتر العضلي (1/8000):</strong> تقلص وهزال عضلي، ساد (Cataract)، عيب بتوصيل نبضات القلب، قصور غدد تناسلية.</li>
-                        <li><strong>داء الكلية متعددة الكيسات (1/1000):</strong> كيسات كلية، تضخم الكلية، فرط ضغط.</li>
-                        <li><strong>متلازمة مارفان (1/10000):</strong> عنكبية الأصابع، تقلقل مفاصل، خلع عدسة العين، تمزق الأبهر، جنف.</li>
-                        <li><strong>متلازمة فاردينبيرغ (1/100000):</strong> شيب مبكر، اختلاف لون العينين، صمم.</li>
-                        <li><strong>تكون العظم الناقص (1/10000):</strong> عظام هشة، صمم، صلبة زرقاء.</li>
-                    </ul>
-                </div>
-
-                <!-- 2.7 الوراثة الجسدية المتنحية -->
-                <div class="bg-emerald-50 border-r-4 border-emerald-600 p-5 rounded-lg mb-6">
-                    <h4 class="font-bold text-xl text-emerald-900 mb-2">2.7 الوراثة الجسدية المتنحية (Autosomal Recessive)</h4>
-                    <p class="text-gray-800 mb-3 text-lg">تحدث بسبب عيب في أليلين (متماثل اللواقح).</p>
-                    <p class="font-bold text-emerald-800 mb-2">ميزات شجرة النسب:</p>
-                    <ul class="disease-list text-gray-800 mb-4 text-lg">
-                        <li>إصابة الذكور والإناث متساوية.</li>
-                        <li>الآباء غالباً سليمون ظاهرياً (حاملون للمرض).</li>
-                        <li>تزيد نسبة الإصابة في زواج الأقارب.</li>
-                        <li class="text-red-700"><strong>الوراثة السائدة الكاذبة:</strong> إذا كان الأليل المعيب عالي التكرار في المجتمع، قد يتزوج مصاب (متماثل ألائل) من شخص سليم ظاهرياً (متخالف ألائل)، فيظهر المرض بالنسل وكأنه وراثة سائدة.</li>
-                    </ul>
-                    <p class="font-bold text-emerald-900 border-b border-emerald-200 pb-1 mb-2 text-lg">أهم الأمراض (الجدول 1-4):</p>
-                    <ul class="disease-list text-gray-800 text-lg">
-                        <li><strong>تليف كيسي (1/2500):</strong> عيب بنقل الكلور في الأنسجة الظهارية، انسداد مسالك هوائية، قصور معثكلي، عقم.</li>
-                        <li><strong>سماك صفاحي (1/25000):</strong> حراشف كبيرة واحمرارات.</li>
-                        <li><strong>داء ويلسون (1/40000):</strong> تراكم النحاس بالكبد والدماغ.</li>
-                        <li><strong>داء غوشيه النمط 1 (1/50000):</strong> فرط نشاط الطحال، ضخامة كبد وطحال، هشاشة عظام.</li>
-                        <li><strong>رنح فريد رايخ (1/50000):</strong> يبدأ عند البلوغ، رنح، عسر تلفظ، ضمور عضلي.</li>
-                        <li><strong>بيلة الفينيل كيتون (1/10000):</strong> عوز إنزيم فنيل ألانين هيدروكسيلاز، تخلف عقلي.</li>
-                        <li><strong>الثلاسيمية بيتا (1/20000):</strong> فقر دم وخيم، تشوهات عظمية.</li>
-                        <li><strong>عوز ضد التريبسين ألفا واحد (1/3500):</strong> عسر تنفس، نفاخ، تشمع كبد.</li>
-                    </ul>
-                </div>
-
-                <!-- 3.7 الوراثة المرتبطة بالصبغي X -->
-                <div class="bg-purple-50 border-r-4 border-purple-600 p-5 rounded-lg mb-2">
-                    <h4 class="font-bold text-xl text-purple-900 mb-2">3.7 الوراثة المرتبطة بالصبغي X (X-Linked)</h4>
-                    <ul class="disease-list text-gray-800 mb-4 text-lg">
-                        <li>الذكر يمتلك (XY) والأنثى (XX). الجين المسؤول عن تشكيل الخصى هو (SRY) ويقع في الموقع Yp11.3.</li>
-                        <li><strong>المناطق الجسدية الكاذبة (Pseudoautosomal):</strong> شدف مشتركة بين X و Y يحدث فيها تشابك وتعابر لضمان هجرة الصبغيات بدقة أثناء الانقسام.</li>
-                        <li><strong>الجينات المقتصرة على الذكور (Holandric genes):</strong> تقع في القسم غير الجسدي الكاذب من الصبغي Y (حوالي 23 جيناً).</li>
-                        <li>الذكور يحتاجون لأليل واحد مرتبط بـ X ليظهر النمط الظاهري (لعدم وجود صبغي X آخر يغطيه).</li>
-                        <li><strong>الوراثة السائدة المرتبطة بـ X:</strong> الأب المصاب ينقل الصفة لجميع بناته (ولا ينقلها لأبنائه الذكور)، وتصيب الذكور والإناث.</li>
-                        <li><strong>الوراثة المتنحية المرتبطة بـ X:</strong> الأم الحاملة للصفة تنقلها لجميع أبنائها الذكور المصابين، بينما الأب لا ينقلها لأي من ذكوره.</li>
-                    </ul>
-                    <p class="font-bold text-purple-900 border-b border-purple-200 pb-1 mb-2 text-lg">أهم الأمراض (الجدول 1-5):</p>
-                    <ul class="disease-list text-gray-800 text-lg">
-                        <li><strong>حثل دوشين العضلي (1/3500 للذكور):</strong> ضعف عضلي متدرج، تنكس العضلات الهيكلية.</li>
-                        <li><strong>متلازمة الصبغي X الهش (1/1500 ذكور):</strong> تأخر عقلي، طول بالرأس وبروز بالفك، ضخامة خصيتين.</li>
-                        <li><strong>حثل الكظر وبيضاء الدماغ (1/20000 ذكور):</strong> خرف، شلل تشنجي، قصور قشرة الكظر.</li>
-                        <li><strong>الناعور A (1/5000 ذكور):</strong> عوز العامل الثامن (VIII) لتخثر الدم، نزف مفرط.</li>
-                        <li><strong>متلازمة ليش نيهان (1/10000 ذكور):</strong> عوز إنزيم HGPRT، تشنجات، تشويه ذاتي.</li>
-                        <li><strong>متلازمة البورت (1/5000 ذكور):</strong> عيب بكولاجين النمط الرابع، تنكس كلى، صمم.</li>
-                        <li><strong>عيوب الرؤية اللونية (8/100 ذكور، 1/100 إناث):</strong> عوز رؤية الأحمر/الأخضر.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 8 -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">8</span> 
-                    التأثيرات البيئية (Environmental Influences)
-                </h2>
-                <ul class="study-list text-lg text-gray-800">
-                    <li>النمط الظاهري يتحدد بالنمط الجيني ولكنه يتأثر بشدة بالبيئة (الحرارة، التغذية).</li>
-                    <li>أرنب الهيمالايا: لون الفراء يعتمد على الحرارة؛ الفراء الأبيض ينمو بدرجة حرارة 33 مئوية فما فوق، وإذا بردت المنطقة (أقل من 33 مئوية) ينمو فراء أسود.</li>
-                    <li>نبات Hydrangea: لون الزهرة أزرق في التربة الحامضية، ووردي في التربة القلوية.</li>
-                    <li>القاعدة: البيئة تُفعل النمط الجيني ولكنها لا تتجاوزه مطلقاً (لا تزيد المدى أبعد مما هو محدد جينياً).</li>
-                </ul>
-            </div>
-
-            <!-- 9 -->
-            <div class="card-bg border-2 rounded-2xl p-6 shadow-sm study-card">
-                <h2 class="text-2xl font-bold primary-text mb-4 border-b-2 border-[#e0d4c3] pb-2 flex items-center gap-2">
-                    <span class="bg-[#5c4033] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">9</span> 
-                    الانتفاذ (Penetrance) والتعبر (Expressivity)
-                </h2>
-                <p class="text-lg text-gray-800 mb-4">قد يملك أفراد نفس النمط الجيني ولكنهم لا يبدون نفس النمط الظاهري بسبب البيئة أو محيط الجينات.</p>
-                <ul class="study-list text-lg text-gray-800">
-                    <li><strong>الانتفاذ (Penetrance):</strong> هو مقدرة الجينة على التعبير عن نفسها (ظهور الصفة). (مثال: أفراد يحملون الجين السائد لزيادة عدد الأصابع ولكن لا يظهر لديهم الإصبع الزائد؛ هنا الجينة لم تُنفذ).</li>
-                    <li><strong>التعبر (Expressivity):</strong> هو الدرجة التي يظهر بها النمط الظاهري لجينة "نافذة". (مثال: ظهور الإصبع الزائد في يد واحدة فقط، أو في كلتا اليدين والقدمين).</li>
-                    <li><strong>الجينات تحت المميتة (Sublethal):</strong> هي جينات مميتة متنحية تصبح غير مميتة عندما يكون انتفاذها وتعبرها غير تامين.</li>
-                </ul>
-            </div>
-
+        <div class="concept-card">
+            <span class="term">النمط الجيني (Genotype):</span><br> هو التركيب الوراثي الضمني المخفي للكائن.
         </div>
-
-        <!-- زر العودة لأسفل الشاشة -->
-        <div class="text-center mt-12 mb-4">
-            <a href="genetics-index.html" class="inline-flex items-center gap-3 bg-gradient-to-r from-[#5c4033] to-[#8b5e34] text-white px-8 py-3 rounded-full font-bold text-xl hover:shadow-lg transition-transform transform hover:-translate-y-1">
-                <i class="fa-solid fa-arrow-right"></i> العودة لقائمة فصول الوراثة
-            </a>
+        <div class="concept-card">
+            <span class="term">الألائل (Alleles):</span><br> هي الأشكال المتبدلة للجين الواحد.
         </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-[#fdf5e6] text-gray-500 py-6 text-center mt-8 border-t border-[#e0d4c3]">
-        <div class="container mx-auto px-4">
-            <p class="font-bold text-[#8b5e34] text-lg mb-1">الملخصات الطبية - التحضيرية</p>
-            <p class="text-sm">مصمم خصيصاً لطلاب الطب | طالب في جامعة إدلب - 2026</p>
+        <div class="concept-card">
+            <span class="term">السيادة (Dominance):</span><br> بروز تعبير أليل ما (السائد) على أليل آخر (المتنحي) لدى الزيجوت متغايرة الألائل.
         </div>
-    </footer>
+        <div class="concept-card">
+            <span class="term">متغاير الألائل (Heterozygous):</span><br> كائن يحمل أليلين مختلفين (هجين)، أحدهما سائد والآخر متنحي (Aa).
+        </div>
+        <div class="concept-card">
+            <span class="term">متماثل الألائل (Homozygous):</span><br> كائن يحمل أليلين متماثلين (نقي)، قد يكون متماثل الألائل سائد (AA) أو متنحي (aa).
+            <div class="exam-question" style="font-size: 0.9em; margin-top: 10px;">(2024): يدل مصطلح Homozygote dominant على: (متماثل الألائل سائد).</div>
+        </div>
+    </div>
+
+    <h2>ثانياً: أنواع التصالبات وقواعد ماندل</h2>
+    
+    <h3>1. التصالب أحادي الخَلَّة (Monohybrid cross):</h3>
+    <p>هو دراسة انتقال خلة (صفة) مفردة فقط.</p>
+    <ul>
+        <li><span class="highlight">الجيل الأول (F1):</span> عند مصالبة نباتات تعطي دائماً بذوراً مدورة مع نباتات تعطي دائماً بذوراً مجعدة، فإن الجيل الأول يعطي نباتات بذورها مدورة (يظهر نمط ظاهري واحد فقط وهو السائد) [2، 3].</li>
+        <li><span class="highlight">الجيل الثاني (F2):</span> عند ترك نباتات الجيل الأول (F1 × F1) تتلقح ذاتياً، تعود الصفة المتنحية للظهور بنسبة 3 سائد إلى 1 متنحي (يظهر نمطان ظاهريان).</li>
+    </ul>
+    
+    
+
+    <div class="exam-question">(2017): عند تزاوج نباتات تعطي دوماً بذوراً مجعدة مع نباتات مدورة تكون نسبة المجعدة إلى المدورة في الجيل الثاني: (1:3).</div>
+    <div class="exam-question">(2024): عند تلقيح جيل أول سائد هجين داخلياً، يكون عدد الأنماط الظاهرية: (نمطان).</div>
+
+    <h3>2. التصالب الاختباري (Test Cross):</h3>
+    <p>يُستخدم لمعرفة النمط الوراثي (الجيني) المجهول لفرد يُبدي الصفة السائدة (هل هو نقي أم هجين؟)، ويتم ذلك حصراً بتهجينه مع فرد يحمل الصفة المتنحية.</p>
+
+    <h3>3. التصالب ثنائي الجين والتفارز المستقل (Independent Assortment):</h3>
+    <p>هو دراسة انتقال صفتين معاً. أثبت ماندل أن الجينات تتوزع بشكل مستقل عن بعضها لتشكل تراكيب جينية جديدة بنسبة ظاهرية <span class="highlight">(9:3:3:1)</span>.</p>
+    <p><strong>شرط الحدوث:</strong> يحدث التفارز المستقل حصراً عندما تتوضع الجينات على صبغيات مختلفة.</p>
+
+    <h2>ثالثاً: استثناءات الوراثة المندلية</h2>
+    
+    <h3>1. الارتباط الجيني (Genetic Linkage):</h3>
+    <p>إذا كانت الجينات المدروسة تتوضع على الصبغي نفسه، فإنها تميل للانتقال معاً ولا تتفارز بشكل مستقل.</p>
+    <ul>
+        <li><strong>الارتباط الكامل:</strong> لا تظهر أي تراكيب جينية جديدة لدى النسل (تراكيب جديدة بنسبة 0%).</li>
+        <li><strong>الارتباط غير الكامل (التعابر):</strong> تظهر تراكيب جينية جديدة بنسبة أقل من 50% بسبب حدوث التعابر (Crossing over) بين شقي الصبغي اللامتاخيين [6، 7].</li>
+    </ul>
+    
+    
+
+    <div class="exam-question">إذا حدث تصالب وكان الارتباط كاملاً 100% فإن نسبة التراكيب الجينية الجديدة هي: (0%).</div>
+    <div class="exam-question">(2019): يدل ظهور تراكيب جينية جديدة بنسبة 20% على أن: (الجينات غير مرتبطة كلياً) [24، 25].</div>
+
+    <div class="concept-grid">
+        <div class="concept-card"><strong>الطور المقرون (Cis phase):</strong> عندما يكون التركيب (AB/ab).</div>
+        <div class="concept-card"><strong>الطور المفروق (Trans phase):</strong> عندما يكون التركيب (Ab/aB).</div>
+    </div>
+
+    <h3>2. الانتفاذ (Penetrance) والتعبر (Expressivity):</h3>
+    <ul>
+        <li><strong>الانتفاذ:</strong> هو قدرة جين ما على التعبير عن نفسها في النمط الظاهري. مثال: أفراد يملكون النمط الجيني السائد لصفة العَنَش (زيادة الأصابع Polydactyly) ولكنهم لا يُظهرون الصفة ظاهرياً (الانتفاذ هنا غير تام).</li>
+        <li><strong>التعبر:</strong> التفاوت في درجات التعبير عن الجين النافذ (مثل ظهور إصبع زائدة في يد واحدة أو في اليدين معاً).</li>
+    </ul>
+
+    <h3>3. الروكبة (Epistasis):</h3>
+    <div class="exam-question">(2022): يدل مصطلح الروكبة على: (تفاعل الأليل A مع الأليل B) (أي تفاعل أليلات جينات مختلفة مع بعضها) [27، 28].</div>
+
+    <h2>رابعاً: الوراثة البشرية وأمراضها (أهم قسم امتحاني)</h2>
+    <p>تُدرس الوراثة عند البشر عبر "شجرة النسب" (Pedigree). إليك الجداول الحفظية المطلوبة حرفياً:</p>
+
+    
+
+    <h3>1. الأمراض الجسدية السائدة (Autosomal Dominant)</h3>
+    <p><strong>الميزة في شجرة النسب:</strong> ظهور المرض في كل الأجيال، وعدم وجود فرق بين الذكور والإناث.</p>
+    
+    <table>
+        <tr>
+            <th style="width: 30%;">اسم المرض</th>
+            <th>الأعراض والملاحظات</th>
+        </tr>
+        <tr>
+            <td><strong>داء هنتنغتون (Huntington disease)</strong></td>
+            <td>بدء متأخر، تنكس في قشرة المخ، حركات لا إرادية (رقص)، وخرف. <br>
+                <span class="exam-question" style="margin: 5px 0; padding: 5px; font-size: 0.9em;">(2018): ما يلي من أعراض داء هنتنغتون ما عدا: (تناقص متدرج في الرؤية الليلية) (هذا العرض يخص التهاب الشبكية).</span>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>فرط كوليسترول الدم (Hypercholesterolemia)</strong></td>
+            <td>ارتفاع الكوليسترول، بدء مبكر لمرض الشريان التاجي. <br>
+                <span class="exam-question" style="margin: 5px 0; padding: 5px; font-size: 0.9em;">(2017): وراثة فرط كوليسترول الدم: (جسدية سائدة).</span>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>متلازمة مارفان (Marfan syndrome)</strong></td>
+            <td>أصابع عنكبوتية، خلع عدسات العين، تمزق في الأبهر [8، 9].</td>
+        </tr>
+        <tr>
+            <td><strong>الورم الليفي العصبي النمط الأول</strong></td>
+            <td>بقع مضطبعة (قهوة بالحليب)، أورام ليفية عصبية.</td>
+        </tr>
+        <tr>
+            <td><strong>أمراض أخرى سائدة (للحفظ)</strong></td>
+            <td>التصلب الحدبي (متعدد الأورام العابية)، حثل التأتر العضلي (هزال وضعف عضلي متأخر، ساد)، داء الكلية متعددة الكيسات (فرط ضغط)، تكون العظم الناقص (متغاير جينياً، صلبة زرقاء، صمم)، متلازمة فاردينبيرغ (شيب مبكر، اختلاف لون العينين)، التهاب الشبكية الصباغي [8، 9].</td>
+        </tr>
+    </table>
+
+    <h3>2. الأمراض الجسدية المتنحية (Autosomal Recessive)</h3>
+    <p><strong>الميزة في شجرة النسب:</strong> خلوها من إصابة أحد الوالدين (يكونا سليمين حاملين للمرض)، ويكثر ظهورها في زواج الأقارب.</p>
+
+    <table>
+        <tr>
+            <th style="width: 30%;">اسم المرض</th>
+            <th>الأعراض والملاحظات</th>
+        </tr>
+        <tr>
+            <td><strong>بيلة الفينيل كيتون (Phenylketonuria)</strong></td>
+            <td>عوز في الإنزيم الكبدي (فينيل ألانين هيدروكسيلاز)، تراكم الفينيل ألانين، تخلف عقلي، ضرر دماغي. <br>
+                <span class="exam-question" style="margin: 5px 0; padding: 5px; font-size: 0.9em;">(2019): أي من الاضطرابات الآتية جسدية متنحية: (بيلة الفينيل كيتون).</span>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>التليف الكيسي (Cystic fibrosis)</strong></td>
+            <td>عيب في نقل الكلور في الأنسجة الظهارية، انسداد المسالك الهوائية، داء رئوي وخيم، قصور معثكلي (بنكرياسي)، عقم.</td>
+        </tr>
+        <tr>
+            <td><strong>تنكس ويلسون (Wilson disease)</strong></td>
+            <td>تراكم النحاس في الكبد والدماغ.</td>
+        </tr>
+        <tr>
+            <td><strong>أمراض أخرى متنحية (للحفظ)</strong></td>
+            <td>سماك صفاحي (حراشف كبيرة)، داء غوشيه النمط الأول (فرط نشاط الطحال، هشاشة عظام)، رنح فريدرايخ (عدم مقدرة على التنسيق الحركي، عسر التلفظ)، ضمور عضلي نخاعي المنشأ طفلي (تنكس القرن الأمامي للحبل الشوكي)، التلاسيمية بيتا (نفاد وخيم لكريات الدم الحمراء، ضخامة طحال)، عوز إنزيم الغالاكتوكيناز (ساد، تخلف عقلي خفيف)، عوز ضد التريبسين ألفا واحد (نفاخ رئوي، تشمع كبد) [10، 11، 12].</td>
+        </tr>
+    </table>
+
+    <h3>3. الوراثة المرتبطة بالصبغي (X-Linked) والصبغي Y</h3>
+    <ul>
+        <li>الذكور يُصابون دائماً لأنهم يملكون صبغي X واحداً (Y من الأب و X من الأم).</li>
+        <li>في الوراثة المتنحية المرتبطة بـ X، إذا كانت الأم مصابة، فإن جميع أبنائها الذكور مصابون حتماً [26، 27].</li>
+    </ul>
+
+    <div class="exam-question">(2017): من الأمراض ذات الوراثة المرتبطة بالصبغي X: (متلازمة آلبورت).</div>
+
+    <div class="concept-card" style="margin-top: 20px; border-top-color: var(--exam-color);">
+        <strong>ملاحظة (الصبغي Y):</strong> الجينات المحمولة على الصبغي Y (تنتقل من الأب للابن الذكر فقط) تدعى الجينات المقتصرة على الذكور (Holandric genes) وتتوضع في القسم غير الجسدي الكاذب من الصبغي Y.
+    </div>
 
 </body>
 </html>
