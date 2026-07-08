@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كلمات الوحدة الثانية - New English File Wordlist Upper Intermediate</title>
+<style>
+    /* ألوان مريحة للعين للقراءة (Sepia / Wood Tones) */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #F5EFE6; 
+        color: #3E2723; 
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        background-color: #FFFDF8;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(93, 64, 55, 0.1);
+        border: 1px solid #EADDCD;
+    }
+    .header-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    h1 {
+        color: #5D4037;
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.4;
+    }
+    .book-title {
+        display: block;
+        font-size: 16px;
+        color: #8D6E63;
+        margin-top: 5px;
+    }
+    .buttons-group {
+        display: flex;
+        gap: 10px;
+    }
+    h2 {
+        color: #FFF;
+        background-color: #795548; 
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 20px;
+        margin-top: 40px;
+        text-align: left;
+        direction: ltr;
+    }
+    
+    /* شريط البحث */
+    .search-box {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 2px solid #D7CCC8;
+        border-radius: 6px;
+        font-size: 16px;
+        background-color: #FAFAFA;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+    }
+    .search-box:focus {
+        outline: none;
+        border-color: #8D6E63;
+    }
+
+    .instruction-text {
+        color: #8D6E63;
+        font-size: 14px;
+        margin-bottom: 25px;
+        font-weight: bold;
+    }
+
+    /* الأزرار */
+    .btn {
+        background-color: #5D4037;
+        color: #FFF;
+        border: none;
+        padding: 12px 20px;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .btn:hover {
+        background-color: #3E2723;
+    }
+    .btn-toggle {
+        background-color: #8D6E63;
+    }
+    .btn-toggle:hover {
+        background-color: #6D4C41;
+    }
+
+    /* تنسيق الجداول */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        direction: ltr;
+        background-color: #FFF;
+        table-layout: fixed; /* لضمان توزيع الأعمدة بشكل متساوٍ وعدم تجاوز الحواف */
+    }
+    th, td {
+        border: 1px solid #D7CCC8;
+        padding: 12px;
+        text-align: left;
+        word-wrap: break-word; /* لكسر الكلمات الطويلة حتى لا تخرب الجدول */
+    }
+    th {
+        background-color: #EFEBE9;
+        color: #4E342E;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    tr:nth-child(even) {
+        background-color: #FAFAFA;
+    }
+    tr:hover {
+        background-color: #F5EFE6;
+    }
+    
+    /* تنسيق الخلايا العربية وإخفاء الترجمة */
+    td.arabic {
+        text-align: right;
+        direction: rtl;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        color: #BF360C; 
+        cursor: pointer; 
+        transition: all 0.3s ease;
+    }
+    
+    .hidden-translation {
+        color: transparent !important;
+        text-shadow: 0 0 10px #BF360C; 
+        background-color: #EFEBE9;
+        user-select: none; 
+    }
+    .hidden-translation:hover {
+        text-shadow: 0 0 6px #BF360C; 
+    }
+
+    .footer-credits {
+        text-align: center;
+        margin-top: 60px;
+        padding-top: 20px;
+        border-top: 1px solid #EADDCD;
+        color: #8D6E63;
+        font-size: 14px;
+    }
+
+    /* إعدادات الطباعة الدقيقة مقاس A4 */
+    @media print {
+        @page {
+            size: A4 portrait;
+            margin: 15mm; /* هوامش مثالية جداً من جميع الجهات */
+        }
+        * {
+            -webkit-print-color-adjust: exact !important; /* إجبار المتصفح على طباعة الألوان */
+            color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        body {
+            background-color: #FFF !important;
+            padding: 0;
+            margin: 0;
+            color: #000 !important;
+        }
+        .container {
+            box-shadow: none !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important; 
+        }
+        .no-print, .search-box, .header-controls, .instruction-text {
+            display: none !important;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000 !important;
+        }
+        h2 {
+            background-color: #D7CCC8 !important;
+            color: #000 !important;
+            border: 1px solid #000 !important;
+            page-break-after: avoid;
+            margin-top: 20px;
+            padding: 8px !important;
+        }
+        table {
+            border: 2px solid #000 !important;
+            width: 100% !important; 
+        }
+        th, td {
+            border: 1px solid #000 !important;
+            padding: 8px !important;
+            color: #000 !important;
+        }
+        th {
+            background-color: #EFEBE9 !important;
+        }
+        
+        .hidden-translation {
+            color: #000 !important;
+            text-shadow: none !important;
+            background-color: transparent !important;
+        }
+        td.arabic {
+            color: #000 !important;
+        }
+        tr {
+            page-break-inside: avoid !important; 
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-controls">
+        <h1>
+            كلمات الوحدة الثانية
+            <span class="book-title">من كتاب: New English File Wordlist Upper Intermediate</span>
+        </h1>
+        <div class="buttons-group">
+            <button class="btn btn-toggle" onclick="toggleAllTranslations()" id="toggleBtn">
+                👁️ إظهار جميع الترجمات
+            </button>
+            <button class="btn" onclick="window.print()">
+                🖨️ طباعة (A4)
+            </button>
+        </div>
+    </div>
+
+    <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث عن أي كلمة بالإنجليزية أو العربية..." onkeyup="filterTables()">
+    <div class="instruction-text">💡 تلميح: انقر على الترجمة المخفية لإظهارها، وانقر مرة أخرى لإخفائها.</div>
+
+    <!-- File 2 Vocabulary Bank Clothes -->
+    <h2>File 2 Vocabulary Bank Clothes</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="25%">Arabic Translation</th><th width="55%">Example Sentence</th></tr>
+      <tr><td>bow</td><td class="arabic">ربطة (عنق/شعر) / أنشوطة</td><td>I'm not sure I like the big velvet bow on the back of this dress.[cite: 1]</td></tr>
+      <tr><td>cardigan</td><td class="arabic">سترة صوفية (كارديغان)</td><td>Take a cardigan with you, it might get cold if the sun goes in.[cite: 1]</td></tr>
+      <tr><td>checked</td><td class="arabic">كارو / مربعات</td><td>Pete's wearing those awful checked trousers again.[cite: 1]</td></tr>
+      <tr><td>collar</td><td class="arabic">ياقة</td><td>It's a nice shirt, but the collar's too tight.[cite: 1]</td></tr>
+      <tr><td>cotton</td><td class="arabic">قطن / قطني</td><td>Wearing cotton clothes is the best way to keep cool in summer.[cite: 1]</td></tr>
+      <tr><td>denim</td><td class="arabic">قماش الدنيم (جينز)</td><td>Denim cloth, which originated in France, is very hard-wearing.[cite: 1]</td></tr>
+      <tr><td>dress up</td><td class="arabic">يتأنق</td><td>Do we have to dress up for dinner, or can I wear my jeans?[cite: 1]</td></tr>
+      <tr><td>dressed to kill</td><td class="arabic">متأنق لدرجة الإبهار</td><td>Susi's dressed to kill tonight-she'll certainly be noticed![cite: 1]</td></tr>
+      <tr><td>fit</td><td class="arabic">يناسب (المقاس)</td><td>I must be putting on weight, this shirt doesn't fit me any more.[cite: 1]</td></tr>
+      <tr><td>fits her like a glove</td><td class="arabic">يناسبها تماماً (كالقفاز)</td><td>That suit fits her like a glove, she had it especially made for her[cite: 1]</td></tr>
+      <tr><td>fur</td><td class="arabic">فرو</td><td>I would never wear a fur coat- fur belongs on animals, not people.[cite: 1]</td></tr>
+      <tr><td>get changed</td><td class="arabic">يغير ملابسه</td><td>I won't be long, I just need to get changed into some clean clothes.[cite: 1]</td></tr>
+      <tr><td>get dressed</td><td class="arabic">يرتدي ملابسه</td><td>Hurry up and get dressed, or you'll miss the school bus.[cite: 1]</td></tr>
+      <tr><td>get undressed</td><td class="arabic">يخلع ملابسه</td><td>I'll read a story after you've got undressed and are ready for bed.[cite: 1]</td></tr>
+      <tr><td>hang up</td><td class="arabic">يعلق (الملابس)</td><td>I wish you'd hang up your coat instead of leaving it on the chair.[cite: 1]</td></tr>
+      <tr><td>hooded</td><td class="arabic">ذو قبعة (قلنسوة)</td><td>You aren't allowed to wear hooded tops in some shopping centres.[cite: 1]</td></tr>
+      <tr><td>in your shoes</td><td class="arabic">في مكانك / في موقفك</td><td>That sounds like a difficult situation. 1 wouldn't like to be in your shoes.[cite: 1]</td></tr>
+      <tr><td>leather</td><td class="arabic">جلد</td><td>I only wear leather shoes, plastic ones make my feet hurt.[cite: 1]</td></tr>
+      <tr><td>linen</td><td class="arabic">كتان</td><td>George has bought a really expensive and stylish linen suit.[cite: 1]</td></tr>
+      <tr><td>long (short) sleeved</td><td class="arabic">ذو أكمام طويلة (قصيرة)</td><td>That's Henry over there, in the blue long-sleeved jumper.[cite: 1]</td></tr>
+      <tr><td>loose</td><td class="arabic">فضفاض</td><td>You should wear loose clothing when you go to the gym.[cite: 1]</td></tr>
+      <tr><td>lycra</td><td class="arabic">ليكرا (قماش مطاطي)</td><td>If he wants to be a serious cyclist, he'll need to buy some lycra shorts![cite: 1]</td></tr>
+      <tr><td>matches</td><td class="arabic">يطابق / يتناسق مع</td><td>Your bag matches your shoes they're exactly the same colour.[cite: 1]</td></tr>
+      <tr><td>materials</td><td class="arabic">مواد / أقمشة</td><td>Man-made materials are better quality than they were 20 years ago.[cite: 1]</td></tr>
+      <tr><td>nylon</td><td class="arabic">نايلون</td><td>I'm looking for a white nylon running vest.[cite: 1]</td></tr>
+      <tr><td>old-fashioned</td><td class="arabic">طراز قديم / موضة قديمة</td><td>That tie's very old- fashioned people don't wear wide ones any more.[cite: 1]</td></tr>
+      <tr><td>pattern</td><td class="arabic">نمط / نقش</td><td>I don't like the pattern on this carpet, the stripes are too narrow.[cite: 1]</td></tr>
+      <tr><td>patterned</td><td class="arabic">منقوش / مزخرف</td><td>If you're wearing a patterned shirt, you should wear a plain tie.[cite: 1]</td></tr>
+      <tr><td>plain</td><td class="arabic">سادة (بدون نقوش)</td><td>If you're wearing a patterned shirt, you should wear a plain tie.[cite: 1]</td></tr>
+      <tr><td>pull his socks up</td><td class="arabic">يبذل جهداً أكبر</td><td>He will have to pull his socks up if he wants to pass the exam.[cite: 1]</td></tr>
+      <tr><td>rucksack</td><td class="arabic">حقيبة ظهر</td><td>Have you got a good rucksack to take on your walking holiday?[cite: 1]</td></tr>
+      <tr><td>sandals</td><td class="arabic">صنادل</td><td>Don't forget to pack some sandals to wear on the beach.[cite: 1]</td></tr>
+      <tr><td>scarf</td><td class="arabic">وشاح</td><td>It's very cold and windy, put a scarf round your neck when you go out.[cite: 1]</td></tr>
+      <tr><td>scruffy</td><td class="arabic">رث / غير مهندم</td><td>He looks really scruffy-his clothes are old and he hasn't shaved.[cite: 1]</td></tr>
+      <tr><td>silk</td><td class="arabic">حرير</td><td>I love silk shirts. but I hate ironing them.[cite: 1]</td></tr>
+      <tr><td>sleeveless</td><td class="arabic">بدون أكمام</td><td>Joanna looked gorgeous in a sleeveless linen dress and matching jacket.[cite: 1]</td></tr>
+      <tr><td>slippers</td><td class="arabic">شباشب (خفاف)</td><td>[cite: 1]</td></tr>
+      <tr><td>smart</td><td class="arabic">أنيق / مرتب</td><td>Jeff always looks so smart in his army uniform![cite: 1]</td></tr>
+      <tr><td>spotted</td><td class="arabic">منقط</td><td>Only my brother could wear a spotted shirt with a striped jacket.[cite: 1]</td></tr>
+      <tr><td>stockings</td><td class="arabic">جوارب نسائية طويلة</td><td>Not many people wear stockings these days-tights are more popular.[cite: 1]</td></tr>
+      <tr><td>striped</td><td class="arabic">مخطط</td><td>Only my brother could wear a spotted shirt with a striped jacket.[cite: 1]</td></tr>
+      <tr><td>style</td><td class="arabic">نمط / أسلوب</td><td>The styles invented by young English people are often outrageous.[cite: 1]</td></tr>
+      <tr><td>stylish</td><td class="arabic">أنيق / مساير للموضة</td><td>George has bought a really expensive and stylish linen suit.[cite: 1]</td></tr>
+      <tr><td>suede</td><td class="arabic">جلد الغزال (سويدي)</td><td>I'm getting mum some new suede slippers for her birthday.[cite: 1]</td></tr>
+      <tr><td>suit (n)</td><td class="arabic">بدلة</td><td>George has bought a really expensive and stylish linen suit.[cite: 1]</td></tr>
+      <tr><td>suits (v)</td><td class="arabic">يلائم / يناسب (الشكل)</td><td>That skirt really suits you you look great in it.[cite: 1]</td></tr>
+      <tr><td>swimsuit</td><td class="arabic">ملابس السباحة</td><td>When I got to the pool, I realized I'd forgotten my swimsuit[cite: 1]</td></tr>
+      <tr><td>tight</td><td class="arabic">ضيق</td><td>These shoes are a bit tight, I should have bought the bigger size.[cite: 1]</td></tr>
+      <tr><td>trendy</td><td class="arabic">على الموضة</td><td>She's very trendy - she always wears the latest fashions.[cite: 1]</td></tr>
+      <tr><td>velvet</td><td class="arabic">مخمل / قطيفة</td><td>I'm not sure I like the big velvet bow on the back of this dress.[cite: 1]</td></tr>
+      <tr><td>vest</td><td class="arabic">سترة خفيفة / قميص داخلي</td><td>I'm looking for a white nylon running vest.[cite: 1]</td></tr>
+      <tr><td>V-neck</td><td class="arabic">فتحة رقبة على شكل V</td><td>Have you got a blue V-neck woollen jumper in a size 10?[cite: 1]</td></tr>
+      <tr><td>woollen</td><td class="arabic">صوفي</td><td>Have you got a blue V-neck woollen jumper in a size 10?[cite: 1]</td></tr>
+    </table>
+
+    <!-- 2A More words to learn -->
+    <h2>2A More words to learn</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="25%">Arabic Translation</th><th width="55%">Example Sentence</th></tr>
+      <tr><td>burst out laughing</td><td class="arabic">ينفجر ضاحكاً</td><td>We both looked at his clothes, and burst out laughing.[cite: 1]</td></tr>
+      <tr><td>characteristics</td><td class="arabic">خصائص / سمات</td><td>Politeness is one of the characteristics of Englishness.[cite: 1]</td></tr>
+      <tr><td>costume</td><td class="arabic">زي</td><td>Goths often wear black costumes.[cite: 1]</td></tr>
+      <tr><td>neurotic</td><td class="arabic">عصابي / متوتر</td><td>She's quite neurotic - always worrying.[cite: 1]</td></tr>
+      <tr><td>research</td><td class="arabic">بحث</td><td>In fact, the research showed the Spanish to be only averagely extrovert.[cite: 1]</td></tr>
+      <tr><td>slightly</td><td class="arabic">قليلاً</td><td>I found the article slightly boring.[cite: 1]</td></tr>
+      <tr><td>stereotype</td><td class="arabic">صورة نمطية</td><td>In many countries there are jokes based on national stereotypes.[cite: 1]</td></tr>
+      <tr><td>survey (n)</td><td class="arabic">استطلاع رأي</td><td>A worldwide survey has cast doubt on national stereotypes.[cite: 1]</td></tr>
+      <tr><td>take (yourself) seriously</td><td class="arabic">يأخذ (نفسه) بجدية</td><td>It is very important for the English not to take themselves too seriously.[cite: 1]</td></tr>
+      <tr><td>tribe</td><td class="arabic">قبيلة / عشيرة</td><td>Would a 'tribe' of young people be able to laugh at the way they dress?[cite: 1]</td></tr>
+    </table>
+
+    <!-- More words in 2A -->
+    <h2>More words in 2A</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="25%">Arabic Translation</th><th width="55%">Example Sentence</th></tr>
+      <tr><td>achieve</td><td class="arabic">يحقق / ينجز</td><td>We are very optimistic, we think we can achieve anything.[cite: 1]</td></tr>
+      <tr><td>afford</td><td class="arabic">يتحمل تكلفة</td><td>I can't afford to buy those, they are too expensive.[cite: 1]</td></tr>
+      <tr><td>alike</td><td class="arabic">متشابهون</td><td>We're all much more alike than we think we are![cite: 1]</td></tr>
+      <tr><td>anthropologist</td><td class="arabic">عالم أنثروبولوجيا</td><td>The anthropologist spent twelve years researching English culture.[cite: 1]</td></tr>
+      <tr><td>appreciate</td><td class="arabic">يقدر / يمتن لـ</td><td>We appreciate originality in dress even if we do not individually have it.[cite: 1]</td></tr>
+      <tr><td>beige</td><td class="arabic">بيج</td><td>That idiot spilt red wine on my beige linen suit![cite: 1]</td></tr>
+      <tr><td>cast doubt on</td><td class="arabic">يشكك في</td><td>A worldwide survey has cast doubt on national stereotypes.[cite: 1]</td></tr>
+      <tr><td>category</td><td class="arabic">فئة</td><td>Which category doe this CD go in rock, or pop?[cite: 1]</td></tr>
+      <tr><td>ceremonial</td><td class="arabic">احتفالي / رسمي</td><td>They make excellent high-class men's suits and ceremonial costume.[cite: 1]</td></tr>
+      <tr><td>compliment (v)</td><td class="arabic">يجامل / يمتدح</td><td>People often compliment us on our good manners.[cite: 1]</td></tr>
+      <tr><td>conspicuous</td><td class="arabic">بارز / ملفت للنظر</td><td>We wears highly conspicuous clothes - they're so bright.[cite: 1]</td></tr>
+      <tr><td>cope</td><td class="arabic">يتأقلم / يتعامل مع</td><td>Their business is unable to cope with the increased workload.[cite: 1]</td></tr>
+      <tr><td>current</td><td class="arabic">حالي</td><td>What are the current fashions?[cite: 1]</td></tr>
+      <tr><td>distant</td><td class="arabic">بعيد</td><td>He's very interested in the distant past, rather than trying to move on.[cite: 1]</td></tr>
+      <tr><td>dysfunctional</td><td class="arabic">مختل وظيفياً</td><td>Their family has problems too many dysfunctional relationships.[cite: 1]</td></tr>
+      <tr><td>eccentric</td><td class="arabic">غريب الأطوار</td><td>My great uncle is very eccentric.[cite: 1]</td></tr>
+      <tr><td>elderly</td><td class="arabic">مسن / كبار السن</td><td>The old and the elderly are best looked after in residential homes.[cite: 1]</td></tr>
+      <tr><td>emigration</td><td class="arabic">هجرة</td><td>Historically there has always been a lot of emigration.[cite: 1]</td></tr>
+      <tr><td>establish</td><td class="arabic">يؤسس / يثبت</td><td>A team of psychologists used personality tests to establish the data.[cite: 1]</td></tr>
+      <tr><td>generalize</td><td class="arabic">يعمم</td><td>It's difficult to generalize about young people - they are so different.[cite: 1]</td></tr>
+      <tr><td>hard-working</td><td class="arabic">مجتهد / كادح</td><td>We are also very hard-working-people here live to work.[cite: 1]</td></tr>
+      <tr><td>heritage</td><td class="arabic">تراث</td><td>As a nation we're very proud of our identity and our cultural heritage.[cite: 1]</td></tr>
+      <tr><td>high-class</td><td class="arabic">عالي المستوى / راقٍ</td><td>The tailor makes high-class men's suits and ceremonial costume.[cite: 1]</td></tr>
+      <tr><td>high-heeled</td><td class="arabic">ذو كعب عالي</td><td>I want to get some high-heeled shoes to wear with my new black dress.[cite: 1]</td></tr>
+      <tr><td>imitate</td><td class="arabic">يقلد</td><td>The styles invented by young people are often imitated by designers.[cite: 1]</td></tr>
+      <tr><td>inability</td><td class="arabic">عجز / عدم قدرة</td><td>Many English people have an inability to learn foreign languages.[cite: 1]</td></tr>
+      <tr><td>inaccurate</td><td class="arabic">غير دقيق</td><td>The information you gave was inaccurate and unhelpful.[cite: 1]</td></tr>
+      <tr><td>individualist</td><td class="arabic">فردي (يميل للاستقلالية)</td><td>I think we are strong individualists - we want as few rules as possible.[cite: 1]</td></tr>
+      <tr><td>Inherited</td><td class="arabic">موروث</td><td>Personally, I think I have inherited the typical optimism and drive.[cite: 1]</td></tr>
+      <tr><td>innovative</td><td class="arabic">مبتكر</td><td>MP3 players are examples of 'innovative technology'.[cite: 1]</td></tr>
+      <tr><td>inventive</td><td class="arabic">مبدع / مخترع</td><td>He's really inventive, he built a wind-up radio.[cite: 1]</td></tr>
+      <tr><td>linked</td><td class="arabic">مرتبط</td><td>The companies are closely linked.[cite: 1]</td></tr>
+      <tr><td>macabre</td><td class="arabic">مروع / مخيف</td><td>The Goths wear macabre black costumes.[cite: 1]</td></tr>
+      <tr><td>marginalized</td><td class="arabic">مهمش</td><td>Some communities feel marginalized by the rest of society.[cite: 1]</td></tr>
+      <tr><td>materialistic</td><td class="arabic">مادي</td><td>He's extremely materialistic, he's only interested in making money.[cite: 1]</td></tr>
+      <tr><td>measure (n)</td><td class="arabic">مقياس</td><td>The measure of success for most people here is money.[cite: 1]</td></tr>
+      <tr><td>melancholy</td><td class="arabic">كآبة / حزن</td><td>On the other hand, we do have a tendency to melancholy.[cite: 1]</td></tr>
+      <tr><td>multi-ethnic</td><td class="arabic">متعدد الأعراق</td><td>London has a very multi-ethnic population.[cite: 1]</td></tr>
+      <tr><td>nostalgic</td><td class="arabic">حنين للماضي</td><td>She's quite nostalgic - she often speaks about the past.[cite: 1]</td></tr>
+      <tr><td>outrageous</td><td class="arabic">فاضح / صادم</td><td>His dress sense is outrageous - I'm shocked by his appearance.[cite: 1]</td></tr>
+      <tr><td>pale</td><td class="arabic">شاحب / باهت</td><td>I got a pale grey suede jacket in the sale, it only cost £35.[cite: 1]</td></tr>
+      <tr><td>patriotic</td><td class="arabic">وطني</td><td>English people are very patriotic, especially during sporting events.[cite: 1]</td></tr>
+      <tr><td>range</td><td class="arabic">يتراوح</td><td>Our prices range from £30 to £80 for a pair of jeans.[cite: 1]</td></tr>
+      <tr><td>(no) regard (for)</td><td class="arabic">(بدون) اعتبار (لـ)</td><td>The Queen wears what she likes, with no regard for peoples' opinions.[cite: 1]</td></tr>
+      <tr><td>reputation</td><td class="arabic">سمعة</td><td>The English have an international reputation for dressing badly.[cite: 1]</td></tr>
+      <tr><td>reserved (adj)</td><td class="arabic">متحفظ</td><td>John is really reserved, he won't talk to strangers at all.[cite: 1]</td></tr>
+      <tr><td>(in many) respects</td><td class="arabic">(في العديد من) النواحي</td><td>I think I'm typical in many respects, I like the same as everyone else.[cite: 1]</td></tr>
+      <tr><td>scenery</td><td class="arabic">مشهد / مناظر طبيعية</td><td>The Highlands have some of the most beautiful scenery in the world.[cite: 1]</td></tr>
+      <tr><td>specific</td><td class="arabic">محدد</td><td>Can you be more specific about when you last saw him?[cite: 1]</td></tr>
+      <tr><td>street-fashion</td><td class="arabic">أزياء الشارع</td><td>Street fashion is mostly influenced by urban music.[cite: 1]</td></tr>
+      <tr><td>tendency</td><td class="arabic">ميل / نزعة</td><td>On the other hand, we do have a tendency to be melancholy.[cite: 1]</td></tr>
+      <tr><td>tolerant</td><td class="arabic">متسامح</td><td>I would say that we are very tolerant and open-minded.[cite: 1]</td></tr>
+      <tr><td>unwillingness</td><td class="arabic">عدم رغبة</td><td>She shows an unwillingness to learn foreign languages![cite: 1]</td></tr>
+      <tr><td>vampire</td><td class="arabic">مصاص دماء</td><td>Dracula is the most famous fictional vampire[cite: 1]</td></tr>
+      <tr><td>vice versa</td><td class="arabic">العكس صحيح</td><td>Do you think women pay more attention than men, or vice versa?[cite: 1]</td></tr>
+      <tr><td>weakness</td><td class="arabic">نقطة ضعف</td><td>His main weakness is that he won't share information.[cite: 1]</td></tr>
+    </table>
+
+    <!-- 2B More words to learn -->
+    <h2>2B More words to learn</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="25%">Arabic Translation</th><th width="55%">Example Sentence</th></tr>
+      <tr><td>be about to</td><td class="arabic">على وشك أن</td><td>I was totally convinced that we were about to die.[cite: 1]</td></tr>
+      <tr><td>cabin</td><td class="arabic">مقصورة</td><td>During the turbulence, bags flew around the cabin.[cite: 1]</td></tr>
+      <tr><td>cling (clung)</td><td class="arabic">يتشبث</td><td>Passengers desperately clung to their seats.[cite: 1]</td></tr>
+      <tr><td>miracle</td><td class="arabic">معجزة</td><td>It's a miracle that nobody was heard in the emergency landing.[cite: 1]</td></tr>
+      <tr><td>scream</td><td class="arabic">يصرخ</td><td>Suddenly one of the flight attendants screamed, 'We're going to crash!"[cite: 1]</td></tr>
+      <tr><td>shortage</td><td class="arabic">نقص</td><td>There is always a shortage of wheelchairs for people who need them.[cite: 1]</td></tr>
+      <tr><td>stagger</td><td class="arabic">يترنح</td><td>We all staggered off the plane in a state of shock.[cite: 1]</td></tr>
+      <tr><td>swan</td><td class="arabic">بجعة</td><td>A swan or any large bird can easily cause an accident to an aeroplane.[cite: 1]</td></tr>
+      <tr><td>turbulence</td><td class="arabic">مطبات هوائية</td><td>The passengers were relaxing when the plane hit some turbulence.[cite: 1]</td></tr>
+      <tr><td>wheelchair</td><td class="arabic">كرسي متحرك</td><td>There is always a shortage of wheelchairs for people who need them[cite: 1]</td></tr>
+    </table>
+
+    <!-- More words in 2B -->
+    <h2>More words in 2B</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="25%">Arabic Translation</th><th width="55%">Example Sentence</th></tr>
+      <tr><td>abort</td><td class="arabic">يُلغي / يُجهض (العملية)</td><td>If the pilot has a problem, he has very little time to abort the take off.[cite: 1]</td></tr>
+      <tr><td>accelerate</td><td class="arabic">يتسارع</td><td>There is a critical moment when the plane is accelerating.[cite: 1]</td></tr>
+      <tr><td>airline</td><td class="arabic">شركة طيران</td><td>There is a sensible drinking policy on all airlines.[cite: 1]</td></tr>
+      <tr><td>aisle</td><td class="arabic">ممر</td><td>You can usually ask for a window or aisle seat.[cite: 1]</td></tr>
+      <tr><td>anecdote</td><td class="arabic">حكاية / قصة طريفة</td><td>He told me an anecdote about his time as a pilot.[cite: 1]</td></tr>
+      <tr><td>anonymous</td><td class="arabic">مجهول</td><td>'Air Babylon' is a best selling book, written by an anonymous author.[cite: 1]</td></tr>
+      <tr><td>board</td><td class="arabic">يصعد على متن</td><td>Have you ever had a serious problem with a passenger on board?[cite: 1]</td></tr>
+      <tr><td>chaos</td><td class="arabic">فوضى</td><td>In the 30 minutes of chaos, passengers desperately clung to their seats.[cite: 1]</td></tr>
+      <tr><td>consequence</td><td class="arabic">نتيجة / عاقبة</td><td>We often use 'so'/ 'such'... ('that') to express a consequence.[cite: 1]</td></tr>
+      <tr><td>controllers</td><td class="arabic">مراقبون</td><td>It is important for pilots and controllers to have good clear English.[cite: 1]</td></tr>
+      <tr><td>convention</td><td class="arabic">اتفاقية / عرف</td><td>Most countries respect the convention and their pilots speak in English.[cite: 1]</td></tr>
+      <tr><td>co-pilot</td><td class="arabic">مساعد الطيار</td><td>It was the co-pilot who landed the aircraft, as the pilot was ill.[cite: 1]</td></tr>
+      <tr><td>courtesy</td><td class="arabic">مجاملة / فضل</td><td>We received a free flight courtesy of British Airways.[cite: 1]</td></tr>
+      <tr><td>crew</td><td class="arabic">طاقم</td><td>Most air crew enjoy their jobs - although passengers can be difficult.[cite: 1]</td></tr>
+      <tr><td>customs</td><td class="arabic">جمارك</td><td>The flight has landed, they're just waiting to go through customs now.[cite: 1]</td></tr>
+      <tr><td>cut-price</td><td class="arabic">مخفض السعر</td><td>'Ryanair' and 'Easyjet' were two of the first cut-price airlines.[cite: 1]</td></tr>
+      <tr><td>damage</td><td class="arabic">ضرر</td><td>In some cases birds can do some damage to engines.[cite: 1]</td></tr>
+      <tr><td>declare</td><td class="arabic">يُصرح (للجمارك)</td><td>The customs official asked, 'Do you have anything to declare?"[cite: 1]</td></tr>
+      <tr><td>delay</td><td class="arabic">تأخير</td><td>There was such a long delay because of fog.[cite: 1]</td></tr>
+      <tr><td>departures</td><td class="arabic">المغادرون</td><td>Passengers leave from Departures and arrive at Arrivals.[cite: 1]</td></tr>
+      <tr><td>distinctly</td><td class="arabic">بوضوح</td><td>distinctly I remember having met you before.[cite: 1]</td></tr>
+      <tr><td>events</td><td class="arabic">أحداث</td><td>Can you just go through the main events of the story again?[cite: 1]</td></tr>
+      <tr><td>exit</td><td class="arabic">مخرج</td><td>It's definitely worth listening to the information about emergency exits.[cite: 1]</td></tr>
+      <tr><td>force</td><td class="arabic">يُجبر / قوة</td><td>The company had to force their pilots to speak in English.[cite: 1]</td></tr>
+      <tr><td>fumes</td><td class="arabic">أبخرة / دخان</td><td>If there's a fire there will be smoke and fumes.[cite: 1]</td></tr>
+      <tr><td>imposing</td><td class="arabic">مهيب</td><td>He looked very imposing, nearly two metres tall and dressed in black.[cite: 1]</td></tr>
+      <tr><td>incapable</td><td class="arabic">غير قادر</td><td>I felt terrible-incapable of doing anything at all.[cite: 1]</td></tr>
+      <tr><td>incapacitated</td><td class="arabic">عاجز عن العمل</td><td>What would happen if a pilot and co-pilot were incapacitated?[cite: 1]</td></tr>
+      <tr><td>luggage</td><td class="arabic">أمتعة</td><td>Some airports are notorious for losing passengers luggage.[cite: 1]</td></tr>
+      <tr><td>major</td><td class="arabic">رئيسي</td><td>Birds are one of the major problems for any airport.[cite: 1]</td></tr>
+      <tr><td>martial</td><td class="arabic">قتالي</td><td>Steven Seagal is a martial arts expert.[cite: 1]</td></tr>
+      <tr><td>nap</td><td class="arabic">قيلولة</td><td>I'd been reading my book and my partner had been having a nap.[cite: 1]</td></tr>
+      <tr><td>navigation</td><td class="arabic">ملاحة</td><td>Basic navigation equipment is very dangerous in a plane.[cite: 1]</td></tr>
+      <tr><td>notorious</td><td class="arabic">سيء السمعة</td><td>Some airports are notorious for losing passengers luggage.[cite: 1]</td></tr>
+      <tr><td>poisoning</td><td class="arabic">تسمم</td><td>Once I was on a 13-hour flight and I got food poisoning after six hours.[cite: 1]</td></tr>
+      <tr><td>policy</td><td class="arabic">سياسة</td><td>There is a sensible drinking policy on all airlines.[cite: 1]</td></tr>
+      <tr><td>porter</td><td class="arabic">حمال</td><td>We had such heavy cases that we had to ask for a porter.[cite: 1]</td></tr>
+      <tr><td>reclaim</td><td class="arabic">استعادة (الأمتعة)</td><td>After you have arrived you go baggage reclaim to pick up your luggage.[cite: 1]</td></tr>
+      <tr><td>recover</td><td class="arabic">يتعافى</td><td>I slept so badly in the plane that it took me two days to recover.[cite: 1]</td></tr>
+      <tr><td>seatbelt</td><td class="arabic">حزام الأمان</td><td>Airlines recommend wearing your belt even if the seatbelt light is off.[cite: 1]</td></tr>
+      <tr><td>simulator</td><td class="arabic">جهاز محاكاة</td><td>Pilots have to practise on a simulator before flying.[cite: 1]</td></tr>
+      <tr><td>simultaneous</td><td class="arabic">متزامن</td><td>Check-in staff can talk to each other via simultaneous email.[cite: 1]</td></tr>
+      <tr><td>snacks</td><td class="arabic">وجبات خفيفة</td><td>A flight attendant brought us some hot snacks.[cite: 1]</td></tr>
+      <tr><td>Snore</td><td class="arabic">يشخر</td><td>And, as every flight attendant knows, a snoring plane is a happy plane.[cite: 1]</td></tr>
+      <tr><td>sprint</td><td class="arabic">يركض بسرعة (عدو)</td><td>I had to sprint to catch the train this morning.[cite: 1]</td></tr>
+      <tr><td>surviving</td><td class="arabic">النجاة</td><td>The chances of surviving if your plane crashed into the sea are not high.[cite: 1]</td></tr>
+      <tr><td>sword</td><td class="arabic">سيف</td><td>When he got on board he was carrying an enormous samurai sword.[cite: 1]</td></tr>
+      <tr><td>terminals</td><td class="arabic">محطات الركاب</td><td>Most big airports have several different buildings called terminals.[cite: 1]</td></tr>
+      <tr><td>thunderstorms</td><td class="arabic">عواصف رعدية</td><td>The wind often changes direction during thunderstorms and typhoons.[cite: 1]</td></tr>
+      <tr><td>transatlantic</td><td class="arabic">عبر المحيط الأطلسي</td><td>The transatlantic flight from London to Las Vegas takes over ten hours.[cite: 1]</td></tr>
+      <tr><td>transferred</td><td class="arabic">محول / منقول</td><td>A lot of transferred luggage got left behind at Heathrow.[cite: 1]</td></tr>
+      <tr><td>transported</td><td class="arabic">منقول</td><td>Passengers are transported to the plane by a bus.[cite: 1]</td></tr>
+      <tr><td>type (v)</td><td class="arabic">يكتب (على لوحة المفاتيح)</td><td>He took a really long time to type the letter.[cite: 1]</td></tr>
+      <tr><td>typhoons</td><td class="arabic">أعاصير (تيفون)</td><td>Thunderstorms and typhoons cause a lot of turbulence.[cite: 1]</td></tr>
+      <tr><td>vital</td><td class="arabic">حيوي / ضروري</td><td>It's vital for pilots and controllers to have good English.[cite: 1]</td></tr>
+      <tr><td>warning</td><td class="arabic">تحذير</td><td>There was no advance warning, so many people were not wearing belts.[cite: 1]</td></tr>
+      <tr><td>waste (n)</td><td class="arabic">هدر / مضيعة</td><td>He thought that studying was a waste of time.[cite: 1]</td></tr>
+      <tr><td>worth</td><td class="arabic">يستحق</td><td>Is it really worth passengers wearing seat belts?[cite: 1]</td></tr>
+    </table>
+
+    <!-- 2C More words to learn -->
+    <h2>2C More words to learn</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="25%">Arabic Translation</th><th width="55%">Example Sentence</th></tr>
+      <tr><td>beg</td><td class="arabic">يتوسل / يستجدي</td><td>She begged him anxiously to let her join him in New York.[cite: 1]</td></tr>
+      <tr><td>bounce (v)</td><td class="arabic">يرتد / يهدهد</td><td>Mommy bounced him on her knee and told him what a good boy he was.[cite: 1]</td></tr>
+      <tr><td>button</td><td class="arabic">زر</td><td>He pressed the black button to start the machine.[cite: 1]</td></tr>
+      <tr><td>frantic</td><td class="arabic">مسعور / مذعور</td><td>Dad'!' she shouted angrily. I've been frantic. You're late again."[cite: 1]</td></tr>
+      <tr><td>hopeless at</td><td class="arabic">فاشل في / يائس من</td><td>I'm hopeless at organizing, I bought a book to help me.[cite: 1]</td></tr>
+      <tr><td>housekeeper</td><td class="arabic">مدبرة منزل</td><td>'He always has dinner at six, 'the housekeeper told the maid.[cite: 1]</td></tr>
+      <tr><td>poodle</td><td class="arabic">كلب بودل</td><td>He bought a new dog, a poodle.[cite: 1]</td></tr>
+      <tr><td>tear (tore, tore)</td><td class="arabic">يمزق</td><td>He showed Little Brother how to tear the paper and open the boxes.[cite: 1]</td></tr>
+      <tr><td>trip over</td><td class="arabic">يتعثر بـ</td><td>She tripped over the dog that was lying on the floor.[cite: 1]</td></tr>
+      <tr><td>wrapped (up)</td><td class="arabic">مغلف / ملفوف</td><td>I wrapped up all the presents on Christmas Eve.[cite: 1]</td></tr>
+    </table>
+
+    <!-- More words in 2C -->
+    <h2>More words in 2C</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="25%">Arabic Translation</th><th width="55%">Example Sentence</th></tr>
+      <tr><td>anxiously</td><td class="arabic">بقلق / بلهفة</td><td>She begged him anxiously to let her join him in New York.[cite: 1]</td></tr>
+      <tr><td>apart</td><td class="arabic">إرباً / ممزق</td><td>She tore the wrapping paper apart as she quickly opened her present.[cite: 1]</td></tr>
+      <tr><td>applaud</td><td class="arabic">يصفق</td><td>At the end of the concert, everybody applauded.[cite: 1]</td></tr>
+      <tr><td>babbling</td><td class="arabic">ثرثرة (كالأطفال)</td><td>Jack was babbling baby talk and smiling his happy smile.[cite: 1]</td></tr>
+      <tr><td>blocks</td><td class="arabic">مكعبات (بناء)</td><td>He likes to build, he has lots and lots of wooden blocks.[cite: 1]</td></tr>
+      <tr><td>bomb</td><td class="arabic">قنبلة</td><td>My house looks as if it's been hit by a bomb.[cite: 1]</td></tr>
+      <tr><td>cracked</td><td class="arabic">متشقق / متصدع</td><td>The windshield cracked and popped out as the fire engine hit the wall.[cite: 1]</td></tr>
+      <tr><td>demanded</td><td class="arabic">طالب بـ / ألحّ</td><td>My 'God! How long has he been off?" Peter's mother demanded.[cite: 1]</td></tr>
+      <tr><td>firm</td><td class="arabic">حازم / ثابت</td><td>Peter felt his mother's firm grip on his shoulder.[cite: 1]</td></tr>
+      <tr><td>generation gap</td><td class="arabic">فجوة الأجيال</td><td>It isn't easy to bridge the generation gap between us.[cite: 1]</td></tr>
+      <tr><td>gipsy</td><td class="arabic">غجري</td><td>The gipsy had warned her that she had no future with this man.[cite: 1]</td></tr>
+      <tr><td>grab</td><td class="arabic">ينتزع / يمسك فجأة</td><td>She grabbed Peter's arm and spun him around.[cite: 1]</td></tr>
+      <tr><td>gradually</td><td class="arabic">تدريجياً</td><td>He gradually began to realise that she didn't love him at all.[cite: 1]</td></tr>
+      <tr><td>hard</td><td class="arabic">بجد / بقسوة</td><td>He works very hard - at least ten hours a dav.[cite: 1]</td></tr>
+      <tr><td>hardly</td><td class="arabic">بالكاد</td><td>Her French isn't very good, she can hardly say anything.[cite: 1]</td></tr>
+      <tr><td>hose</td><td class="arabic">خرطوم مياه</td><td>The fire engine had lights, a siren, and hoses just like the real thing.[cite: 1]</td></tr>
+      <tr><td>howl</td><td class="arabic">يعوي / يصرخ</td><td>Little BrotherTM started to cry, and soon he was howling.[cite: 1]</td></tr>
+      <tr><td>hug</td><td class="arabic">عناق</td><td>Peter was so excited that he ran up and gave Little Brother a big hug.[cite: 1]</td></tr>
+      <tr><td>immediately</td><td class="arabic">فوراً</td><td>She recognized the writing on the envelope immediately.[cite: 1]</td></tr>
+      <tr><td>increasingly</td><td class="arabic">على نحو متزايد</td><td>Since his wife's death his son had become increasingly difficult.[cite: 1]</td></tr>
+      <tr><td>incredibly</td><td class="arabic">بشكل لا يصدق</td><td>Have you seen this incredibly good looking man?[cite: 1]</td></tr>
+      <tr><td>insect</td><td class="arabic">حشرة</td><td>Andrew swatted a few insects with his newspaper.[cite: 1]</td></tr>
+      <tr><td>instead</td><td class="arabic">بدلاً من ذلك</td><td>She didn't thank me for helping. Instead, she gave Tony a gift.[cite: 1]</td></tr>
+      <tr><td>intentions</td><td class="arabic">نوايا</td><td>You always have good intentions, but you don't often do the work![cite: 1]</td></tr>
+      <tr><td>join</td><td class="arabic">ينضم</td><td>She begged him anxiously to let her join him in New York.[cite: 1]</td></tr>
+      <tr><td>lap</td><td class="arabic">حِجر (حضن)</td><td>Mommy picked up Little Brother and sat him in her lap.[cite: 1]</td></tr>
+      <tr><td>lifeless</td><td class="arabic">بلا حياة</td><td>Suddenly, Little Brother T was as lifeless as any ordinary doll.[cite: 1]</td></tr>
+      <tr><td>limp</td><td class="arabic">مرتخٍ / ضعيف</td><td>Suddenly, Little Brother™™ was limp on the floorlifeless.[cite: 1]</td></tr>
+      <tr><td>material</td><td class="arabic">مادة / قماش</td><td>What sort of material is your coat made from?[cite: 1]</td></tr>
+      <tr><td>packages</td><td class="arabic">طرود</td><td>The postman delivered two packages this morning.[cite: 1]</td></tr>
+      <tr><td>pat</td><td class="arabic">يربت (على)</td><td>He was patting the dog when it bit him.[cite: 1]</td></tr>
+      <tr><td>place (v)</td><td class="arabic">يضع</td><td>Peter placed the bricks carefully one on top of the other.[cite: 1]</td></tr>
+      <tr><td>Pleasure</td><td class="arabic">متعة / سرور</td><td>He's reading for this book for pleasure, not for study.[cite: 1]</td></tr>
+      <tr><td>pop (v)</td><td class="arabic">يفرقع</td><td>He popped the balloon with a pin.[cite: 1]</td></tr>
+      <tr><td>revenge</td><td class="arabic">انتقام</td><td>'Revenge is sweet, thought Jane as she cut up her husband's new suit.[cite: 1]</td></tr>
+      <tr><td>romance</td><td class="arabic">قصة غرامية</td><td>Holiday romances rarely last very long after the holiday is over.[cite: 1]</td></tr>
+      <tr><td>(in a) row</td><td class="arabic">على التوالي</td><td>Peter had wanted a Little Brother™™M for three Christmases in a row.[cite: 1]</td></tr>
+      <tr><td>scooped</td><td class="arabic">غرف / حمل بسرعة</td><td>Mommy scooped up Little BrotherTM and turned him on again.[cite: 1]</td></tr>
+      <tr><td>servant</td><td class="arabic">خادم</td><td>They have a housekeeper and three servants to look after them.[cite: 1]</td></tr>
+      <tr><td>siren</td><td class="arabic">صفارة إنذار</td><td>The fire engine had lights, a siren, and hoses just like the real thing.[cite: 1]</td></tr>
+      <tr><td>spanking</td><td class="arabic">ضرب على المؤخرة</td><td>He was given a spanking for breaking the toys.[cite: 1]</td></tr>
+      <tr><td>spin</td><td class="arabic">يدور / يدوّر</td><td>She grabbed his arm and spun him around.[cite: 1]</td></tr>
+      <tr><td>stack (v)</td><td class="arabic">يكدس / يجمع</td><td>Every time Peter had a few blocks stacked up, they fell over.[cite: 1]</td></tr>
+      <tr><td>surface</td><td class="arabic">سطح</td><td>Make sure you put the TV on a flat surface, so it doesn't fall off.[cite: 1]</td></tr>
+      <tr><td>swat</td><td class="arabic">يضرب (حشرة)</td><td>She swatted the mosquito that had been bothering us.[cite: 1]</td></tr>
+      <tr><td>threaten</td><td class="arabic">يهدد</td><td>Peter threatened to turn the TV off.[cite: 1]</td></tr>
+      <tr><td>toddle</td><td class="arabic">يترنح (في المشي كالطفل)</td><td>Peter let Little Brother T toddle over and knock down the tower.[cite: 1]</td></tr>
+      <tr><td>tottering</td><td class="arabic">مترنح</td><td>Little Brother took tottering baby steps toward Peter.[cite: 1]</td></tr>
+      <tr><td>tremble</td><td class="arabic">يرتجف</td><td>Little BrotherTM trembled and screeched louder than ever.[cite: 1]</td></tr>
+      <tr><td>unbelievably</td><td class="arabic">بشكل لا يصدق</td><td>She felt unbelievably happy as she stepped on board the 'Titanic'.[cite: 1]</td></tr>
+      <tr><td>wad (v)</td><td class="arabic">يكوّر (ورقة)</td><td>Peter wadded the paper into angry balls and threw them into the wagon.[cite: 1]</td></tr>
+      <tr><td>wagon</td><td class="arabic">عربة</td><td>My little boy likes to play with a wagon and wooden blocks.[cite: 1]</td></tr>
+      <tr><td>windshield</td><td class="arabic">زجاج أمامي</td><td>The windshield cracked in the crash.[cite: 1]</td></tr>
+      <tr><td>wrinkled</td><td class="arabic">مجعد / متغضن</td><td>His face wrinkled up as if he were about to cry.[cite: 1]</td></tr>
+      <tr><td>yell</td><td class="arabic">يصرخ</td><td>'I'll do it!' he yelled.[cite: 1]</td></tr>
+    </table>
+
+    <div class="footer-credits">
+        مصمم خصيصاً لطلاب الطب | خلدون الحمدو - جامعة العلوم الصحية - 2026
+    </div>
+</div>
+
+<script>
+    // تفعيل الإخفاء عند تحميل الصفحة
+    document.addEventListener("DOMContentLoaded", function() {
+        let arabicCells = document.querySelectorAll("td.arabic");
+        arabicCells.forEach(function(cell) {
+            // إضافة كلاس الإخفاء افتراضياً
+            cell.classList.add("hidden-translation");
+            cell.title = "انقر لإظهار/إخفاء الترجمة";
+            
+            // التبديل عند النقر
+            cell.addEventListener("click", function() {
+                this.classList.toggle("hidden-translation");
+            });
+        });
+    });
+
+    // وظيفة زر "إظهار/إخفاء الكل"
+    let allHidden = true;
+    function toggleAllTranslations() {
+        let arabicCells = document.querySelectorAll("td.arabic");
+        let btn = document.getElementById("toggleBtn");
+        
+        if (allHidden) {
+            arabicCells.forEach(cell => cell.classList.remove("hidden-translation"));
+            btn.innerHTML = "🙈 إخفاء جميع الترجمات";
+            allHidden = false;
+        } else {
+            arabicCells.forEach(cell => cell.classList.add("hidden-translation"));
+            btn.innerHTML = "👁️ إظهار جميع الترجمات";
+            allHidden = true;
+        }
+    }
+
+    // وظيفة البحث
+    function filterTables() {
+        let input = document.getElementById("searchInput");
+        let filter = input.value.toLowerCase();
+        let tables = document.querySelectorAll("table");
+
+        tables.forEach(table => {
+            let tr = table.getElementsByTagName("tr");
+            let tableHasVisibleRows = false;
+
+            for (let i = 1; i < tr.length; i++) {
+                let rowText = tr[i].innerText.toLowerCase();
+                if (rowText.indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    tableHasVisibleRows = true;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+            
+            let previousHeading = table.previousElementSibling;
+            if(previousHeading && previousHeading.tagName === "H2") {
+                if (tableHasVisibleRows || filter === "") {
+                    table.style.display = "";
+                    previousHeading.style.display = "";
+                } else {
+                    table.style.display = "none";
+                    previousHeading.style.display = "none";
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
