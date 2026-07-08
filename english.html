@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اللغة الإنجليزية - الملخصات الطبية</title>
+    <!-- تضمين مكتبة FontAwesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            /* لون خلفية مريح للعين (سيبيا/خشبي فاتح) */
+            background-color: #f4ecd8; 
+            color: #2c2c2c;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #5c4033;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7a5c4d;
+            font-size: 1.2em;
+        }
+
+        /* زر العودة للرئيسية */
+        .back-btn-container {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #e0d4c3;
+            color: #4a3b2c;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #d1c1ab;
+            color: #2c2c2c;
+        }
+
+        .section-title {
+            color: #4a3b2c;
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid #e0d4c3;
+            padding-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fffaf0;
+            border: 1px solid #e0d4c3;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: #4a3b2c;
+            font-size: 1.4em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-color: #f0e2cc;
+            color: #2c2c2c;
+        }
+
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+            transition: opacity 0.4s, transform 0.4s;
+            font-size: 1.1em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- زر العودة -->
+        <div class="back-btn-container">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </a>
+        </div>
+
+        <div class="header">
+            <h1>📚 اللغة الإنجليزية</h1>
+            <p>اختر الوحدة للوصول إلى كلمات المنهج والترجمات</p>
+        </div>
+
+        <!-- الفصل الأول -->
+        <h2 class="section-title">الفصل الأول (إنجليزي 1)</h2>
+        <div class="grid">
+            <!-- تم ربط الوحدة الأولى بالملف التفاعلي الذي أنشأناه -->
+            <a href="Unit1.html" class="card" style="border-color: #27ae60; background-color: #eafaf1; color: #1e8449;">الوحدة الأولى</a>
+            <a href="#" onclick="showToast(event, 'الوحدة الثانية')" class="card">الوحدة الثانية</a>
+            <a href="#" onclick="showToast(event, 'الوحدة الثالثة')" class="card">الوحدة الثالثة</a>
+        </div>
+
+        <!-- الفصل الثاني -->
+        <h2 class="section-title">الفصل الثاني (إنجليزي 2)</h2>
+        <div class="grid">
+            <a href="#" onclick="showToast(event, 'الوحدة الرابعة')" class="card">الوحدة الرابعة</a>
+            <a href="#" onclick="showToast(event, 'الوحدة الخامسة')" class="card">الوحدة الخامسة</a>
+            <a href="#" onclick="showToast(event, 'الوحدة السادسة')" class="card">الوحدة السادسة</a>
+        </div>
+
+        <div style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0d4c3;">
+            <p style="color: #999; font-size: 1em;">مصمم خصيصاً لطلاب الطب | خلدون الحمدو - جامعة العلوم الصحية - 2026</p>
+        </div>
+    </div>
+
+    <div id="toast">عذراً، هذه الوحدة قيد التجهيز وسيتم رفعها قريباً! ⏳</div>
+
+    <script>
+        function showToast(event, unitName) {
+            event.preventDefault(); 
+            var toast = document.getElementById("toast");
+            toast.innerText = "عذراً، كلمات (" + unitName + ") قيد التجهيز وسيتم رفعها قريباً! ⏳";
+            toast.className = "show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+        }
+    </script>
+
+</body>
+</html>
