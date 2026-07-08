@@ -4,13 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اللغة الإنجليزية - الملخصات الطبية</title>
-    <!-- تضمين مكتبة FontAwesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
         body {
-            /* لون خلفية مريح للعين (سيبيا/خشبي فاتح) */
             background-color: #f4ecd8; 
             color: #2c2c2c;
             font-family: 'Tajawal', sans-serif;
@@ -39,7 +37,6 @@
             font-size: 1.2em;
         }
 
-        /* زر العودة للرئيسية */
         .back-btn-container {
             text-align: right;
             margin-bottom: 20px;
@@ -78,57 +75,30 @@
         }
 
         .card {
-            background-color: #fffaf0;
-            border: 1px solid #e0d4c3;
+            background-color: #eafaf1; /* لون موحد للكل */
+            border: 1px solid #27ae60;
             border-radius: 12px;
             padding: 30px 20px;
             text-align: center;
             text-decoration: none;
-            color: #4a3b2c;
+            color: #1e8449;
             font-size: 1.4em;
             font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            cursor: pointer;
         }
 
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            background-color: #f0e2cc;
-            color: #2c2c2c;
-        }
-
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%) translateY(20px);
-            opacity: 0;
-            transition: opacity 0.4s, transform 0.4s;
-            font-size: 1.1em;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            background-color: #d4f1e0;
+            color: #145a32;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- زر العودة -->
         <div class="back-btn-container">
             <a href="index.html" class="back-btn">
                 <i class="fas fa-arrow-right"></i> العودة للرئيسية
@@ -140,41 +110,24 @@
             <p>اختر الوحدة للوصول إلى كلمات المنهج والترجمات</p>
         </div>
 
-        <!-- الفصل الأول -->
         <h2 class="section-title">الفصل الأول (إنجليزي 1)</h2>
         <div class="grid">
-            <!-- تم ربط الوحدة الأولى بالملف التفاعلي الذي أنشأناه -->
-            <a href="Unit1.html" class="card" style="border-color: #27ae60; background-color: #eafaf1; color: #1e8449;">الوحدة الأولى</a>
-            <a href="#" onclick="showToast(event, 'الوحدة الثانية')" class="card">الوحدة الثانية</a>
-            <a href="#" onclick="showToast(event, 'الوحدة الثالثة')" class="card">الوحدة الثالثة</a>
+            <a href="Unit1.html" class="card">الوحدة الأولى</a>
+            <a href="Unit2.html" class="card">الوحدة الثانية</a>
+            <a href="Unit3.html" class="card">الوحدة الثالثة</a>
         </div>
 
-        <!-- الفصل الثاني -->
         <h2 class="section-title">الفصل الثاني (إنجليزي 2)</h2>
         <div class="grid">
-            <a href="#" onclick="showToast(event, 'الوحدة الرابعة')" class="card">الوحدة الرابعة</a>
-            <a href="#" onclick="showToast(event, 'الوحدة الخامسة')" class="card">الوحدة الخامسة</a>
-            <a href="#" onclick="showToast(event, 'الوحدة السادسة')" class="card">الوحدة السادسة</a>
+            <a href="Unit4.html" class="card">الوحدة الرابعة</a>
+            <a href="Unit5.html" class="card">الوحدة الخامسة</a>
+            <a href="Unit6.html" class="card">الوحدة السادسة</a>
         </div>
 
         <div style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0d4c3;">
             <p style="color: #999; font-size: 1em;">مصمم خصيصاً لطلاب الطب | خلدون الحمدو - جامعة العلوم الصحية - 2026</p>
         </div>
     </div>
-
-    <div id="toast">عذراً، هذه الوحدة قيد التجهيز وسيتم رفعها قريباً! ⏳</div>
-
-    <script>
-        function showToast(event, unitName) {
-            event.preventDefault(); 
-            var toast = document.getElementById("toast");
-            toast.innerText = "عذراً، كلمات (" + unitName + ") قيد التجهيز وسيتم رفعها قريباً! ⏳";
-            toast.className = "show";
-            setTimeout(function(){ 
-                toast.className = toast.className.replace("show", ""); 
-            }, 3000);
-        }
-    </script>
 
 </body>
 </html>
