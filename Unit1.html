@@ -8,8 +8,8 @@
     /* ألوان مريحة للعين للقراءة (Sepia / Wood Tones) */
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #F5EFE6; /* لون ورق مريح */
-        color: #3E2723; /* لون بني داكن للنصوص */
+        background-color: #F5EFE6; 
+        color: #3E2723; 
         margin: 0;
         padding: 20px;
     }
@@ -28,14 +28,19 @@
         align-items: center;
         margin-bottom: 20px;
         flex-wrap: wrap;
+        gap: 10px;
     }
     h1 {
         color: #5D4037;
         margin: 0;
     }
+    .buttons-group {
+        display: flex;
+        gap: 10px;
+    }
     h2 {
         color: #FFF;
-        background-color: #795548; /* لون خشبي للعناوين */
+        background-color: #795548; 
         padding: 12px;
         border-radius: 5px;
         font-size: 20px;
@@ -48,25 +53,33 @@
     .search-box {
         width: 100%;
         padding: 15px;
-        margin-bottom: 25px;
+        margin-bottom: 10px;
         border: 2px solid #D7CCC8;
         border-radius: 6px;
         font-size: 16px;
         background-color: #FAFAFA;
         transition: border-color 0.3s;
+        box-sizing: border-box;
     }
     .search-box:focus {
         outline: none;
         border-color: #8D6E63;
     }
 
-    /* زر الطباعة */
-    .btn-print {
+    .instruction-text {
+        color: #8D6E63;
+        font-size: 14px;
+        margin-bottom: 25px;
+        font-weight: bold;
+    }
+
+    /* الأزرار */
+    .btn {
         background-color: #5D4037;
         color: #FFF;
         border: none;
-        padding: 12px 25px;
-        font-size: 16px;
+        padding: 12px 20px;
+        font-size: 15px;
         font-weight: bold;
         border-radius: 5px;
         cursor: pointer;
@@ -75,8 +88,14 @@
         align-items: center;
         gap: 8px;
     }
-    .btn-print:hover {
+    .btn:hover {
         background-color: #3E2723;
+    }
+    .btn-toggle {
+        background-color: #8D6E63;
+    }
+    .btn-toggle:hover {
+        background-color: #6D4C41;
     }
 
     /* تنسيق الجداول */
@@ -104,20 +123,34 @@
     tr:hover {
         background-color: #F5EFE6;
     }
+    
+    /* تنسيق الخلايا العربية وإخفاء الترجمة */
     td.arabic {
         text-align: right;
         direction: rtl;
         font-family: Arial, sans-serif;
         font-size: 18px;
         font-weight: bold;
-        color: #BF360C; /* لون مميز للترجمة */
+        color: #BF360C; 
+        cursor: pointer; /* تغيير شكل الماوس ليدل على أنها قابلة للنقر */
+        transition: all 0.3s ease;
+    }
+    
+    .hidden-translation {
+        color: transparent !important;
+        text-shadow: 0 0 10px #BF360C; /* جعل النص ضبابياً */
+        background-color: #EFEBE9;
+        user-select: none; /* منع تحديد النص لكشفه */
+    }
+    .hidden-translation:hover {
+        text-shadow: 0 0 6px #BF360C; /* تقليل الضبابية قليلاً عند التمرير */
     }
 
     /* إعدادات الطباعة مقاس A4 */
     @media print {
         @page {
             size: A4;
-            margin: 20mm; /* هوامش جيدة جداً */
+            margin: 20mm; 
         }
         body {
             background-color: #FFF;
@@ -131,8 +164,8 @@
             padding: 0;
             width: 100%;
         }
-        /* إخفاء العناصر غير المرغوبة في الطباعة */
-        .no-print, .search-box, .btn-print {
+        /* إخفاء الأزرار وشريط البحث عند الطباعة */
+        .no-print, .search-box, .header-controls, .instruction-text {
             display: none !important;
         }
         h2 {
@@ -153,11 +186,17 @@
             background-color: #DDD !important;
             -webkit-print-color-adjust: exact;
         }
+        /* إظهار جميع الترجمات المخفية إجبارياً على الورق */
+        .hidden-translation {
+            color: #000 !important;
+            text-shadow: none !important;
+            background-color: transparent !important;
+        }
         td.arabic {
-            color: #000 !important; /* أسود للطباعة */
+            color: #000 !important;
         }
         tr {
-            page-break-inside: avoid; /* منع انقسام الصف عبر صفحتين */
+            page-break-inside: avoid; 
         }
     }
 </style>
@@ -166,13 +205,19 @@
 
 <div class="container">
     <div class="header-controls">
-        <h1>كلمات الوحدة الأولى - الإنجليزية التحضيرية</h1>
-        <button class="btn-print" onclick="window.print()">
-            🖨️ طباعة (A4)
-        </button>
+        <h1>كلمات الوحدة الأولى</h1>
+        <div class="buttons-group">
+            <button class="btn btn-toggle" onclick="toggleAllTranslations()" id="toggleBtn">
+                👁️ إظهار جميع الترجمات
+            </button>
+            <button class="btn" onclick="window.print()">
+                🖨️ طباعة (A4)
+            </button>
+        </div>
     </div>
 
     <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث عن أي كلمة بالإنجليزية أو العربية..." onkeyup="filterTables()">
+    <div class="instruction-text">💡 تلميح: انقر على الترجمة المخفية لإظهارها، وانقر مرة أخرى لإخفائها.</div>
 
     <!-- 1A More words to learn -->
     <h2>1A More words to learn</h2>
@@ -510,7 +555,39 @@
 </div>
 
 <script>
-    // وظيفة للبحث داخل الجداول وتصفية الكلمات الحية
+    // تفعيل الإخفاء عند تحميل الصفحة
+    document.addEventListener("DOMContentLoaded", function() {
+        let arabicCells = document.querySelectorAll("td.arabic");
+        arabicCells.forEach(function(cell) {
+            // إضافة كلاس الإخفاء افتراضياً
+            cell.classList.add("hidden-translation");
+            cell.title = "انقر لإظهار/إخفاء الترجمة";
+            
+            // التبديل عند النقر
+            cell.addEventListener("click", function() {
+                this.classList.toggle("hidden-translation");
+            });
+        });
+    });
+
+    // وظيفة زر "إظهار/إخفاء الكل"
+    let allHidden = true;
+    function toggleAllTranslations() {
+        let arabicCells = document.querySelectorAll("td.arabic");
+        let btn = document.getElementById("toggleBtn");
+        
+        if (allHidden) {
+            arabicCells.forEach(cell => cell.classList.remove("hidden-translation"));
+            btn.innerHTML = "🙈 إخفاء جميع الترجمات";
+            allHidden = false;
+        } else {
+            arabicCells.forEach(cell => cell.classList.add("hidden-translation"));
+            btn.innerHTML = "👁️ إظهار جميع الترجمات";
+            allHidden = true;
+        }
+    }
+
+    // وظيفة البحث
     function filterTables() {
         let input = document.getElementById("searchInput");
         let filter = input.value.toLowerCase();
@@ -520,7 +597,6 @@
             let tr = table.getElementsByTagName("tr");
             let tableHasVisibleRows = false;
 
-            // البدء من 1 لتخطي صف العناوين (th)
             for (let i = 1; i < tr.length; i++) {
                 let rowText = tr[i].innerText.toLowerCase();
                 if (rowText.indexOf(filter) > -1) {
@@ -531,7 +607,6 @@
                 }
             }
             
-            // إخفاء الجدول بأكمله إذا لم يكن هناك أي نتائج بحث فيه
             let previousHeading = table.previousElementSibling;
             if(previousHeading && previousHeading.tagName === "H2") {
                 if (tableHasVisibleRows || filter === "") {
