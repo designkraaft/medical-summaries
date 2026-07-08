@@ -11,8 +11,8 @@
             --text-primary: #2d251e;
             --text-secondary: #70655b;
             --accent-primary: #4a3e3d;
-            --card-unstudied: #e07a5f; /* لون قرميدي مطفأ عصري ومريح */
-            --card-studied: #81b29a;   /* لون أخضر ميرمية هادئ ومريح للعين */
+            --card-unstudied: #e07a5f;
+            --card-studied: #81b29a;
             --border-subtle: #eae3da;
             --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.04);
             --shadow-md: 0 10px 30px rgba(45, 37, 30, 0.06);
@@ -29,9 +29,14 @@
             padding: 0;
             line-height: 1.6;
             -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.5s ease;
         }
 
-        /* شريط علوي عائم للتقدم والمؤقت */
+        /* تأثير الوميض عند انتهاء الوقت */
+        body.timer-ended {
+            background-color: #d4edda;
+        }
+
         .sticky-progress {
             position: sticky;
             top: 0;
@@ -76,7 +81,6 @@
             text-align: left;
         }
 
-        /* حاوية المحتوى الرئيسي */
         .main-layout {
             max-width: 900px;
             margin: 30px auto;
@@ -84,7 +88,6 @@
             box-sizing: border-box;
         }
 
-        /* الهيدر */
         .app-header {
             display: flex;
             justify-content: space-between;
@@ -117,7 +120,6 @@
             transform: translateY(-1px);
         }
 
-        /* لوحة التحكم والمؤقت */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -126,9 +128,7 @@
         }
 
         @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+            .dashboard-grid { grid-template-columns: 1fr; }
         }
 
         .panel-card {
@@ -147,9 +147,11 @@
             margin-top: 0;
             margin-bottom: 16px;
             letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* مظهر الحقولInputs */
         .inputs-group {
             display: flex;
             gap: 12px;
@@ -169,7 +171,7 @@
             font-weight: 500;
         }
 
-        .input-field input {
+        .input-field input, .timer-input {
             background: var(--bg-app);
             border: 1px solid var(--border-subtle);
             padding: 12px;
@@ -180,7 +182,7 @@
             transition: border 0.2s;
         }
 
-        .input-field input:focus {
+        .input-field input:focus, .timer-input:focus {
             border-color: var(--accent-primary);
         }
 
@@ -216,7 +218,49 @@
             cursor: pointer;
         }
 
-        /* المؤقت الزمني المطور */
+        /* أزرار التبديل للمؤقت */
+        .timer-modes {
+            display: flex;
+            background: var(--bg-app);
+            border-radius: var(--radius-sm);
+            padding: 4px;
+            margin-bottom: 15px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: var(--surface);
+            color: var(--accent-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timer-setup {
+            display: none;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .timer-setup.active {
+            display: flex;
+        }
+
+        .timer-input {
+            width: 100px;
+            padding: 8px 12px;
+        }
+
         .timer-display {
             font-size: 36px;
             font-weight: 300;
@@ -224,9 +268,14 @@
             text-align: center;
             margin: 10px 0 20px 0;
             letter-spacing: 1px;
+            transition: color 0.3s;
         }
 
-        /* مجموعات المهام والبطاقات */
+        .timer-display.ending {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
         .task-section {
             background: var(--surface);
             border: 1px solid var(--border-subtle);
@@ -271,7 +320,6 @@
             gap: 12px;
         }
 
-        /* البطاقات الحديثة */
         .card {
             background: var(--card-unstudied);
             color: var(--surface);
@@ -288,19 +336,9 @@
             box-shadow: 0 4px 10px rgba(224, 122, 95, 0.2);
         }
 
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(224, 122, 95, 0.35);
-        }
-
-        .card.studied {
-            background: var(--card-studied);
-            box-shadow: 0 4px 10px rgba(129, 178, 154, 0.2);
-        }
-
-        .card.studied:hover {
-            box-shadow: 0 6px 15px rgba(129, 178, 154, 0.35);
-        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(224, 122, 95, 0.35); }
+        .card.studied { background: var(--card-studied); box-shadow: 0 4px 10px rgba(129, 178, 154, 0.2); }
+        .card.studied:hover { box-shadow: 0 6px 15px rgba(129, 178, 154, 0.35); }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -346,7 +384,19 @@
 
         <div class="panel-card" style="display: flex; flex-direction: column; justify-content: space-between;">
             <p class="panel-title">مؤقت التركيز الفعال</p>
+            
+            <div class="timer-modes">
+                <button class="mode-btn active" id="modeUpBtn">تصاعدي (مفتوح)</button>
+                <button class="mode-btn" id="modeDownBtn">تنازلي (تحديد وقت)</button>
+            </div>
+
+            <div class="timer-setup" id="timerSetup">
+                <input type="number" id="setMinutes" class="timer-input" min="1" placeholder="دقائق (مثلاً 25)">
+                <button class="btn-primary" id="applyTimerBtn" style="flex: 1; padding: 8px;">ضبط الوقت</button>
+            </div>
+
             <div class="timer-display" id="timer">00:00:00</div>
+            
             <div class="action-buttons">
                 <button class="btn-primary" id="startTimerBtn" style="background:#5e504f;">بدء ▶</button>
                 <button class="btn-primary" id="pauseTimerBtn" style="background:#7a6c6b;">إيقاف ⏸</button>
@@ -359,6 +409,7 @@
 </div>
 
 <script>
+    // --- متغيرات البطاقات ---
     const startPageInput = document.getElementById('startPage');
     const endPageInput = document.getElementById('endPage');
     const generateBtn = document.getElementById('generateBtn');
@@ -367,108 +418,137 @@
     const progressBar = document.getElementById('progressBar');
     const progressText = document.getElementById('progressText');
 
+    // --- متغيرات المؤقت ---
     let timerInterval;
     let seconds = 0;
     let isRunning = false;
+    let isCountdown = false;
+    let startingSeconds = 0;
+
     const timerDisplay = document.getElementById('timer');
     const startTimerBtn = document.getElementById('startTimerBtn');
     const pauseTimerBtn = document.getElementById('pauseTimerBtn');
     const resetTimerBtn = document.getElementById('resetTimerBtn');
+    
+    const modeUpBtn = document.getElementById('modeUpBtn');
+    const modeDownBtn = document.getElementById('modeDownBtn');
+    const timerSetup = document.getElementById('timerSetup');
+    const setMinutesInput = document.getElementById('setMinutes');
+    const applyTimerBtn = document.getElementById('applyTimerBtn');
 
-    // توليد المجموعات الذكية (كل 10 بطاقات بمهمة منفصلة)
+    // --- وظائف البطاقات ---
     function generateWorkspace() {
         const start = parseInt(startPageInput.value);
         const end = parseInt(endPageInput.value);
-
         if (isNaN(start) || isNaN(end) || start <= 0 || end <= 0) {
-            alert("يرجى إدخال أرقام صفحات صحيحة!");
-            return;
+            alert("يرجى إدخال أرقام صفحات صحيحة!"); return;
         }
         if (start > end) {
-            alert("صفحة البداية لا يمكن أن تكون أكبر من صفحة النهاية!");
-            return;
+            alert("صفحة البداية لا يمكن أن تكون أكبر من صفحة النهاية!"); return;
         }
-
-        workspace.innerHTML = ''; // تفريغ مساحة العمل
-
+        workspace.innerHTML = '';
         let cardCount = 0;
-        let currentTaskSection = null;
-        let currentGrid = null;
-        let taskIndex = 1;
+        let currentTaskSection = null, currentGrid = null, taskIndex = 1;
 
         for (let i = start; i <= end; i++) {
-            // كل 10 بطاقات، أو عند أول بطاقة، ننشئ فاصل مهمة جديد ومميز
             if (cardCount % 10 === 0) {
                 currentTaskSection = document.createElement('div');
                 currentTaskSection.className = 'task-section';
-
+                
                 const taskHeader = document.createElement('div');
                 taskHeader.className = 'task-header';
-
+                
                 const taskTitle = document.createElement('h3');
                 taskTitle.className = 'task-title';
                 taskTitle.innerHTML = `🎯 المهمة الدراسية ${taskIndex}`;
-
+                
                 const taskBadge = document.createElement('span');
                 taskBadge.className = 'task-badge';
-                // حساب نهاية المهمة الفرعية الحالية
                 const taskEnd = Math.min(i + 9, end);
                 taskBadge.textContent = `الصفحات: ${i} - ${taskEnd}`;
-
+                
                 taskHeader.appendChild(taskTitle);
                 taskHeader.appendChild(taskBadge);
                 currentTaskSection.appendChild(taskHeader);
-
+                
                 currentGrid = document.createElement('div');
                 currentGrid.className = 'cards-grid';
                 currentTaskSection.appendChild(currentGrid);
-
                 workspace.appendChild(currentTaskSection);
                 taskIndex++;
             }
-
-            // إنشاء البطاقة الفرعية داخل الشبكة الحالية
             const card = document.createElement('div');
             card.className = 'card';
             card.textContent = i;
-
             card.addEventListener('click', function() {
                 this.classList.toggle('studied');
                 updateProgressBar();
             });
-
             currentGrid.appendChild(card);
             cardCount++;
         }
         updateProgressBar();
     }
 
-    // تحديث شريط التقدم العلوى تلقائياً
     function updateProgressBar() {
         const totalCards = document.querySelectorAll('.card').length;
         const studiedCards = document.querySelectorAll('.card.studied').length;
-
         if (totalCards === 0) {
-            progressBar.style.width = '0%';
-            progressText.textContent = 'تم إنجاز: 0%';
-            return;
+            progressBar.style.width = '0%'; progressText.textContent = 'تم إنجاز: 0%'; return;
         }
-
         const percentage = Math.round((studiedCards / totalCards) * 100);
         progressBar.style.width = `${percentage}%`;
         progressText.textContent = `تم إنجاز: ${percentage}%`;
     }
 
-    // إعادة ضبط لوحة التحكم بالكامل
     function resetApp() {
-        startPageInput.value = '';
-        endPageInput.value = '';
-        workspace.innerHTML = '';
-        updateProgressBar();
-        resetTimer();
+        startPageInput.value = ''; endPageInput.value = ''; workspace.innerHTML = '';
+        updateProgressBar(); resetTimer();
     }
 
-    // تشغيل وإدارة المؤقت
+    // --- وظائف المؤقت المطور ---
+    modeUpBtn.addEventListener('click', () => {
+        isCountdown = false;
+        modeUpBtn.classList.add('active');
+        modeDownBtn.classList.remove('active');
+        timerSetup.classList.remove('active');
+        resetTimer();
+    });
+
+    modeDownBtn.addEventListener('click', () => {
+        isCountdown = true;
+        modeDownBtn.classList.add('active');
+        modeUpBtn.classList.remove('active');
+        timerSetup.classList.add('active');
+        resetTimer();
+    });
+
+    applyTimerBtn.addEventListener('click', () => {
+        const mins = parseInt(setMinutesInput.value);
+        if (isNaN(mins) || mins <= 0) {
+            alert("يرجى إدخال عدد دقائق صحيح!"); return;
+        }
+        startingSeconds = mins * 60;
+        seconds = startingSeconds;
+        updateTimerDisplay();
+    });
+
+    function playAudioAlert() {
+        // توليد صوت تنبيه داخلي لضمان العمل بدون ملفات خارجية
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // نغمة واضحة
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        
+        oscillator.start();
+        setTimeout(() => oscillator.stop(), 500); // إيقاف بعد نصف ثانية
+    }
+
     function updateTimerDisplay() {
         let h = Math.floor(seconds / 3600);
         let m = Math.floor((seconds % 3600) / 60);
@@ -477,14 +557,44 @@
             (h < 10 ? "0" + h : h) + ":" + 
             (m < 10 ? "0" + m : m) + ":" + 
             (s < 10 ? "0" + s : s);
+
+        // تغيير لون العداد عند اقتراب الانتهاء (آخر 10 ثواني)
+        if (isCountdown && seconds > 0 && seconds <= 10) {
+            timerDisplay.classList.add('ending');
+        } else {
+            timerDisplay.classList.remove('ending');
+        }
     }
 
     function startTimer() {
         if (!isRunning) {
+            if (isCountdown && seconds === 0) {
+                alert("يرجى ضبط الوقت أولاً من خلال حقل الدقائق.");
+                return;
+            }
+            
+            document.body.classList.remove('timer-ended');
             isRunning = true;
+            
             timerInterval = setInterval(() => {
-                seconds++;
-                updateTimerDisplay();
+                if (isCountdown) {
+                    if (seconds > 0) {
+                        seconds--;
+                        updateTimerDisplay();
+                    }
+                    if (seconds === 0) {
+                        pauseTimer();
+                        playAudioAlert();
+                        document.body.classList.add('timer-ended');
+                        setTimeout(() => {
+                            alert("⏰ انتهى الوقت المخصص لجلسة الدراسة! خذ استراحة قصيرة وواصل إنجازك.");
+                            document.body.classList.remove('timer-ended');
+                        }, 300);
+                    }
+                } else {
+                    seconds++;
+                    updateTimerDisplay();
+                }
             }, 1000);
         }
     }
@@ -496,11 +606,17 @@
 
     function resetTimer() {
         pauseTimer();
-        seconds = 0;
+        document.body.classList.remove('timer-ended');
+        timerDisplay.classList.remove('ending');
+        if (isCountdown) {
+            seconds = startingSeconds;
+        } else {
+            seconds = 0;
+        }
         updateTimerDisplay();
     }
 
-    // ربط الأحداث بالأزرار
+    // ربط الأزرار
     generateBtn.addEventListener('click', generateWorkspace);
     resetBtn.addEventListener('click', resetApp);
     startTimerBtn.addEventListener('click', startTimer);
