@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الملخصات الطبية</title>
-    <!-- تضمين مكتبة FontAwesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
@@ -25,7 +24,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 30px; /* تم تقليل المسافة قليلاً لإفساح المجال للزر الجديد */
+            margin-bottom: 30px; 
         }
 
         .header h1 {
@@ -137,17 +136,17 @@
         <div class="grid">
             <a href="history-of-medicine.html" class="card">تاريخ الطب</a>
             
-            <!-- التعديل هنا: تفعيل زر التشريح وإضافة اللون الأزرق الطبي -->
             <a href="anatomy.html" class="card" style="border-color: #2980b9; background-color: #f0f7f8; color: #1a5276;">التشريح</a>
             
             <a href="physiology.html" class="card">الفيزيولوجيا</a>
             
             <a href="genetics-index.html" class="card" style="border-color: #8b5e34; background-color: #fdf5e6;">الوراثة</a>
             
-            <a href="#" onclick="showToast(event, 'الإحصاء الطبي')" class="card">الإحصاء الطبي</a>
-            <a href="#" onclick="showToast(event, 'أنجليزي 1')" class="card">أنجليزي 1</a>
-            <a href="#" onclick="showToast(event, 'إنجليزي 2')" class="card">إنجليزي 2</a>
-            <a href="#" onclick="showToast(event, 'بيولوجيا الخلية')" class="card">بيولوجيا الخلية</a>
+            <a href="biostatistics.html" class="card" style="border-color: #8e44ad; background-color: #f5eef8; color: #5b2c6f;">الإحصاء الطبي</a>
+            
+            <a href="english.html" class="card" style="border-color: #27ae60; background-color: #eafaf1; color: #1e8449;">اللغة الإنجليزية</a>
+            
+            <a href="cell-biology.html" class="card" style="border-color: #16a085; background-color: #e8f8f5; color: #0e6655;">بيولوجيا الخلية</a>
         </div>
 
         <div style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #e0d4c3;">
@@ -159,18 +158,10 @@
 
     <script>
         function showToast(event, subjectName) {
-            // منع المتصفح من الانتقال لصفحة أخرى أو الصعود لأعلى الصفحة
             event.preventDefault(); 
-            
             var toast = document.getElementById("toast");
-            
-            // تخصيص الرسالة باسم المادة
             toast.innerText = "عذراً، ملخصات مادة (" + subjectName + ") قيد التجهيز وسيتم رفعها قريباً! ⏳";
-            
-            // إظهار الإشعار
             toast.className = "show";
-            
-            // إخفاء الإشعار بعد 3 ثواني
             setTimeout(function(){ 
                 toast.className = toast.className.replace("show", ""); 
             }, 3000);
