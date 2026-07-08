@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كلمات الوحدة الأولى - الإنجليزية التحضيرية</title>
+<style>
+    /* ألوان مريحة للعين للقراءة (Sepia / Wood Tones) */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #F5EFE6; /* لون ورق مريح */
+        color: #3E2723; /* لون بني داكن للنصوص */
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 1100px;
+        margin: auto;
+        background-color: #FFFDF8;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(93, 64, 55, 0.1);
+        border: 1px solid #EADDCD;
+    }
+    .header-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    h1 {
+        color: #5D4037;
+        margin: 0;
+    }
+    h2 {
+        color: #FFF;
+        background-color: #795548; /* لون خشبي للعناوين */
+        padding: 12px;
+        border-radius: 5px;
+        font-size: 20px;
+        margin-top: 40px;
+        text-align: left;
+        direction: ltr;
+    }
+    
+    /* شريط البحث */
+    .search-box {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 25px;
+        border: 2px solid #D7CCC8;
+        border-radius: 6px;
+        font-size: 16px;
+        background-color: #FAFAFA;
+        transition: border-color 0.3s;
+    }
+    .search-box:focus {
+        outline: none;
+        border-color: #8D6E63;
+    }
+
+    /* زر الطباعة */
+    .btn-print {
+        background-color: #5D4037;
+        color: #FFF;
+        border: none;
+        padding: 12px 25px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .btn-print:hover {
+        background-color: #3E2723;
+    }
+
+    /* تنسيق الجداول */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        direction: ltr;
+        background-color: #FFF;
+    }
+    th, td {
+        border: 1px solid #D7CCC8;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #EFEBE9;
+        color: #4E342E;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    tr:nth-child(even) {
+        background-color: #FAFAFA;
+    }
+    tr:hover {
+        background-color: #F5EFE6;
+    }
+    td.arabic {
+        text-align: right;
+        direction: rtl;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        color: #BF360C; /* لون مميز للترجمة */
+    }
+
+    /* إعدادات الطباعة مقاس A4 */
+    @media print {
+        @page {
+            size: A4;
+            margin: 20mm; /* هوامش جيدة جداً */
+        }
+        body {
+            background-color: #FFF;
+            padding: 0;
+            margin: 0;
+            color: #000;
+        }
+        .container {
+            box-shadow: none;
+            border: none;
+            padding: 0;
+            width: 100%;
+        }
+        /* إخفاء العناصر غير المرغوبة في الطباعة */
+        .no-print, .search-box, .btn-print {
+            display: none !important;
+        }
+        h2 {
+            background-color: #EEE !important;
+            color: #000 !important;
+            border: 1px solid #000;
+            page-break-after: avoid;
+            -webkit-print-color-adjust: exact;
+        }
+        table {
+            border: 1px solid #000;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+        }
+        th {
+            background-color: #DDD !important;
+            -webkit-print-color-adjust: exact;
+        }
+        td.arabic {
+            color: #000 !important; /* أسود للطباعة */
+        }
+        tr {
+            page-break-inside: avoid; /* منع انقسام الصف عبر صفحتين */
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-controls">
+        <h1>كلمات الوحدة الأولى - الإنجليزية التحضيرية</h1>
+        <button class="btn-print" onclick="window.print()">
+            🖨️ طباعة (A4)
+        </button>
+    </div>
+
+    <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث عن أي كلمة بالإنجليزية أو العربية..." onkeyup="filterTables()">
+
+    <!-- 1A More words to learn -->
+    <h2>1A More words to learn</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="20%">Arabic Translation</th><th width="60%">Example Sentence</th></tr>
+      <tr><td>Badge</td><td class="arabic">شارة</td><td>He was wearing a badge with his name on it..</td></tr>
+      <tr><td>chat (v)</td><td class="arabic">يدردش / يتحدث</td><td>I chatted to other people while we waited.</td></tr>
+      <tr><td>embarrassing</td><td class="arabic">محرج</td><td>What has been your most embarrassing moment?</td></tr>
+      <tr><td>eyebrows</td><td class="arabic">حواجب</td><td>He raised his eyebrows in surprise.</td></tr>
+      <tr><td>funeral</td><td class="arabic">جنازة</td><td>What song do you want to be played at your funeral?</td></tr>
+      <tr><td>have a date</td><td class="arabic">لديه موعد غرامي</td><td>Jane had a date on Friday she went to a restaurant.</td></tr>
+      <tr><td>partner</td><td class="arabic">شريك</td><td>Speed-dating can help busy people to find a partner.</td></tr>
+      <tr><td>raise</td><td class="arabic">يرفع</td><td>He raised his eyebrows in surprise.</td></tr>
+      <tr><td>trust</td><td class="arabic">يثق</td><td>Don't trust the smile, trust the actions.</td></tr>
+    </table>
+
+    <!-- More words in 1A -->
+    <h2>More words in 1A</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="20%">Arabic Translation</th><th width="60%">Example Sentence</th></tr>
+      <tr><td>agony</td><td class="arabic">ألم شديد / معاناة</td><td>I had terrible toothache and I was in agony.</td></tr>
+      <tr><td>amused</td><td class="arabic">مستمتع / مبتهج</td><td>The baby giggles when he's amused.</td></tr>
+      <tr><td>Assertive</td><td class="arabic">حازم</td><td>My boss is assertive, she has a strong personality.</td></tr>
+      <tr><td>awkward</td><td class="arabic">محرج / غير مريح</td><td>The atmosphere was awful it was all very awkward.</td></tr>
+      <tr><td>banker</td><td class="arabic">مصرفي</td><td>The men included a chef, a banker, and a novelist.</td></tr>
+      <tr><td>bell</td><td class="arabic">جرس</td><td>A bell rings when it's time for class to start.</td></tr>
+      <tr><td>bubbly</td><td class="arabic">حيوي / مرح</td><td>At the speed dating event she seemed really bubbly.</td></tr>
+      <tr><td>complex (n)</td><td class="arabic">عقدة</td><td>I'm an egotistical maniac with an inferiority complex.</td></tr>
+      <tr><td>complicated</td><td class="arabic">معقد</td><td>Finding a partner is a complicated process.</td></tr>
+      <tr><td>courtship</td><td class="arabic">تودد / خطبة</td><td>They married after a year of courtship.</td></tr>
+      <tr><td>current</td><td class="arabic">حالي</td><td>She doesn't enjoy her current career.</td></tr>
+      <tr><td>deafening</td><td class="arabic">مصم للآذان</td><td>The music in the club was deafening.</td></tr>
+      <tr><td>discotheque</td><td class="arabic">مرقص / ديسكو</td><td>We went dancing at a local discotheque</td></tr>
+      <tr><td>double (v)</td><td class="arabic">يضاعف</td><td>The company doubled profits last year.</td></tr>
+      <tr><td>edit</td><td class="arabic">يحرر / يعدل</td><td>If you could edit your past, what would you change?</td></tr>
+      <tr><td>egotistical</td><td class="arabic">أناني / مغرور</td><td>I'm an egotistical maniac with an inferiority complex.</td></tr>
+      <tr><td>eliminate</td><td class="arabic">يزيل / يقصي</td><td>You can eliminate an option if it looks wrong.</td></tr>
+      <tr><td>event</td><td class="arabic">حدث / فعالية</td><td>The organizers of the event suggested a list of topics.</td></tr>
+      <tr><td>evolve</td><td class="arabic">يتطور</td><td>It is a ritual which has evolved over the centuries.</td></tr>
+      <tr><td>exchange</td><td class="arabic">يتبادل</td><td>We exchanged telephone numbers.</td></tr>
+      <tr><td>farewell</td><td class="arabic">وداع</td><td>The Commodores never did a farewell tour.</td></tr>
+      <tr><td>frenzied</td><td class="arabic">مسعور / هائج</td><td>The shark was frenzied attacking the surfer.</td></tr>
+      <tr><td>fresh</td><td class="arabic">طازج</td><td>He has food poisoning - those prawns weren't fresh.</td></tr>
+      <tr><td>grimace</td><td class="arabic">كشرة / تجهم</td><td>Her grimace showed she wasn't impressed.</td></tr>
+      <tr><td>guilty</td><td class="arabic">مذنب</td><td>Lionel feels guilty about not being there for his kids.</td></tr>
+      <tr><td>guy</td><td class="arabic">شاب / رجل</td><td>I went on one date with a guy who teaches Maths.</td></tr>
+      <tr><td>housekeeper</td><td class="arabic">مدبرة منزل</td><td>A housekeeper would improve the quality of my life.</td></tr>
+      <tr><td>imaginative</td><td class="arabic">واسع الخيال</td><td>I tried to think of imaginative questions to ask.</td></tr>
+      <tr><td>impression</td><td class="arabic">انطباع</td><td>I was worried I wouldn't give the right impression.</td></tr>
+      <tr><td>inferiority</td><td class="arabic">دونية</td><td>I'm an egotistical maniac with an inferiority complex.</td></tr>
+      <tr><td>injection</td><td class="arabic">حقنة</td><td>I'd been to the dentist, and I'd had an injection.</td></tr>
+      <tr><td>Labour</td><td class="arabic">حزب العمال</td><td>I work for the Labour party.</td></tr>
+      <tr><td>management consultant</td><td class="arabic">مستشار إداري</td><td>He's a management consultant in the City.</td></tr>
+      <tr><td>maniac</td><td class="arabic">مهووس</td><td>I'm an egotistical maniac with an inferiority complex.</td></tr>
+      <tr><td>match (n)</td><td class="arabic">تطابق / شريك مناسب</td><td>They are a perfect match - they share</td></tr>
+      <tr><td>overuse (v)</td><td class="arabic">يفرط في الاستخدام</td><td>What words or phrases do you most overuse?</td></tr>
+      <tr><td>participants</td><td class="arabic">مشاركون</td><td>According to the participants, the meeting was good.</td></tr>
+      <tr><td>posed</td><td class="arabic">تظاهر بـ / ادعى</td><td>Journalists posed as students to investigate the story.</td></tr>
+      <tr><td>possession</td><td class="arabic">ممتلكات</td><td>What's your most treasured possession?</td></tr>
+      <tr><td>pre-prepared</td><td class="arabic">مجهز مسبقاً</td><td>Have a list of pre-prepared questions ready.</td></tr>
+      <tr><td>pre-school (n)</td><td class="arabic">روضة أطفال / ما قبل المدرسة</td><td>I was terrified on my first day at pre-school.</td></tr>
+      <tr><td>proposed</td><td class="arabic">تقدم بطلب زواج</td><td>I proposed in Paris, then we got married the next day!</td></tr>
+      <tr><td>prospective</td><td class="arabic">محتمل / مستقبلي</td><td>She met some prospective partners speed-dating.</td></tr>
+      <tr><td>publishes</td><td class="arabic">ينشر</td><td>Every week The Guardian publishes a short story.</td></tr>
+      <tr><td>quick-fire</td><td class="arabic">سريع ومتلاحق</td><td>The politician was asked quick-fire questions.</td></tr>
+      <tr><td>ritual</td><td class="arabic">طقس / شعيرة</td><td>The ritual has evolved over many years.</td></tr>
+      <tr><td>scorecard</td><td class="arabic">بطاقة تسجيل النقاط</td><td>Put a tick in the 'yes' box on a scorecard.</td></tr>
+      <tr><td>shift (n)</td><td class="arabic">مناوبة</td><td>I had the breakfast shift-1 had to go in at five a.m.</td></tr>
+      <tr><td>smoothly</td><td class="arabic">بسلاسة</td><td>The conversation ran very smoothly.</td></tr>
+      <tr><td>solo</td><td class="arabic">منفرد</td><td>Lionel Richie was successful as a solo singer.</td></tr>
+      <tr><td>speeddating-</td><td class="arabic">المواعدة السريعة</td><td>In recent years speed-dating has become popular.</td></tr>
+      <tr><td>treasured</td><td class="arabic">ثمين / غالٍ</td><td>What's your most treasured possession?</td></tr>
+      <tr><td>tricks</td><td class="arabic">خدع / حيل</td><td>He plays tricks on his colleagues all the time.</td></tr>
+      <tr><td>type</td><td class="arabic">نوع</td><td>I'm sorry, your not my type.</td></tr>
+      <tr><td>unknown</td><td class="arabic">مجهول</td><td>Guess the meaning of an unknown word from context.</td></tr>
+      <tr><td>unmarried</td><td class="arabic">أعزب / غير متزوج</td><td>My aunt is unmarried.</td></tr>
+      <tr><td>watchful</td><td class="arabic">يقظ / منتبه</td><td>The supervisor has a watchful eye.</td></tr>
+    </table>
+
+    <!-- 1B Vocabulary Bank Personality -->
+    <h2>1B Vocabulary Bank Personality</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="20%">Arabic Translation</th><th width="60%">Example Sentence</th></tr>
+      <tr><td>adventurous</td><td class="arabic">مغامر</td><td>I'm not adventurous enough to try speed-dating!</td></tr>
+      <tr><td>arrogant</td><td class="arabic">متغطرس / مغرور</td><td>It's very arrogant to think vou're better than her.</td></tr>
+      <tr><td>as hard as nails</td><td class="arabic">صلب / قاسٍ جداً</td><td>You can't upset Anna, she's as hard as nails.</td></tr>
+      <tr><td>assertive</td><td class="arabic">حازم</td><td>I wish I was more assertive, not so afraid to speak.</td></tr>
+      <tr><td>bad-tempered</td><td class="arabic">سيء الطباع / حاد المزاج</td><td>It isn't you he's angry with, he's just bad-tempered.</td></tr>
+      <tr><td>calm</td><td class="arabic">هادئ</td><td>It's important to keep calm in an emergency.</td></tr>
+      <tr><td>cheerful</td><td class="arabic">مبتهج / مرح</td><td>I love visiting my gran, she's always so cheerful.</td></tr>
+      <tr><td>cold fish</td><td class="arabic">شخص بارد المشاعر</td><td>Joe's a bit of a cold fish: he seems rather unfriendly.</td></tr>
+      <tr><td>conscientious</td><td class="arabic">حي الضمير / مخلص بعمله</td><td>She'll do a good job, she's very conscientious.</td></tr>
+      <tr><td>easy-going</td><td class="arabic">متساهل / سهل المراس</td><td>She's quite easy-going - relaxed about most things.</td></tr>
+      <tr><td>eccentric</td><td class="arabic">غريب الأطوار</td><td>I had an eccentric aunt who used to sing opera.</td></tr>
+      <tr><td>forgetful</td><td class="arabic">كثير النسيان</td><td>Grandad can't help being forgetful, he's getting old.</td></tr>
+      <tr><td>funny</td><td class="arabic">مضحك</td><td>He thinks he's funny, but no one else can see the joke.</td></tr>
+      <tr><td>heart of gold</td><td class="arabic">قلب من ذهب (طيب جداً)</td><td>Janice has got a heart of gold, she helps everyone.</td></tr>
+      <tr><td>immature</td><td class="arabic">غير ناضج / صبياني</td><td>Grow up-stop being so immature.</td></tr>
+      <tr><td>impulsive</td><td class="arabic">متهور / مندفع</td><td>You're too impulsive, you should think before you act.</td></tr>
+      <tr><td>insecure</td><td class="arabic">غير واثق من نفسه</td><td>Hannah isn't a confident child, I think she's insecure.</td></tr>
+      <tr><td>insincere</td><td class="arabic">غير مخلص / منافق</td><td>Don't believe what Greg says, he's totally insincere.</td></tr>
+      <tr><td>loyal</td><td class="arabic">مخلص / وفي</td><td>Jenny's very loyal, she never says anything unkind.</td></tr>
+      <tr><td>moody</td><td class="arabic">متقلب المزاج</td><td>You're so moody - I never know what to expect.</td></tr>
+      <tr><td>open-minded</td><td class="arabic">متفتح الذهن</td><td>My dad accepts new ideas, he's quite open-minded.</td></tr>
+      <tr><td>optimistic</td><td class="arabic">متفائل</td><td>I'm quite optimistic about moving to London.</td></tr>
+      <tr><td>pain in the neck</td><td class="arabic">شخص مزعج جداً</td><td>She's a real pain in the neck she's so difficult.</td></tr>
+      <tr><td>pessimistic</td><td class="arabic">متشائم</td><td>I'm pessimistic. I always expect the worst.</td></tr>
+      <tr><td>possessive</td><td class="arabic">متملك</td><td>Don't be so possessive, she needs a bit of freedom.</td></tr>
+      <tr><td>reliable</td><td class="arabic">يمكن الاعتماد عليه / موثوق</td><td>Brian is very reliable he does what he says.</td></tr>
+      <tr><td>rely</td><td class="arabic">يعتمد على</td><td>I'm asking you because I know I can rely on you.</td></tr>
+      <tr><td>reserved</td><td class="arabic">متحفظ</td><td>She's not unfriendly, just a bit reserved, that's all.</td></tr>
+      <tr><td>self-confident</td><td class="arabic">واثق من نفسه</td><td>Being self-confident is a good thing.</td></tr>
+      <tr><td>sensible</td><td class="arabic">عاقل / حكيم</td><td>She's far too sensible to agree to that.</td></tr>
+      <tr><td>sensitive</td><td class="arabic">حساس</td><td>Don't mention his results, he's feeling a bit sensitive.</td></tr>
+      <tr><td>stubborn</td><td class="arabic">عنيد</td><td>They're both stubborn as each other.</td></tr>
+      <tr><td>vain</td><td class="arabic">مغرور بظهوره</td><td>Anna is so vain, she looks at herself in every mirror.</td></tr>
+      <tr><td>well-balanced</td><td class="arabic">متزن</td><td>It's important to be well-balanced.</td></tr>
+      <tr><td>wise</td><td class="arabic">حكيم</td><td>I need someone wise to advise me.</td></tr>
+    </table>
+
+    <!-- 1B More words to learn -->
+    <h2>1B More words to learn</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="20%">Arabic Translation</th><th width="60%">Example Sentence</th></tr>
+      <tr><td>childhood</td><td class="arabic">طفولة</td><td>I had a very happy childhood.</td></tr>
+      <tr><td>deduce</td><td class="arabic">يستنتج</td><td>A psychic can deduce a lot from your appearance.</td></tr>
+      <tr><td>handwriting</td><td class="arabic">خط اليد</td><td>Clear handwriting is really important.</td></tr>
+      <tr><td>illegible</td><td class="arabic">غير مقروء</td><td>His signature is illegible.</td></tr>
+      <tr><td>initials</td><td class="arabic">الحروف الأولى (من الاسم)</td><td>My signature contains my surname and initials.</td></tr>
+      <tr><td>psychic</td><td class="arabic">عراف / وسيط روحي</td><td>The psychic says I'll become very rich.</td></tr>
+      <tr><td>secretive</td><td class="arabic">كتوم</td><td>He's very secretive, he won't tell anyone.</td></tr>
+      <tr><td>sign (v)</td><td class="arabic">يوقع</td><td>Some people actually sign in capital letters.</td></tr>
+      <tr><td>signature</td><td class="arabic">توقيع</td><td>Put your signature here, please.</td></tr>
+      <tr><td>trick</td><td class="arabic">خدعة / حيلة</td><td>He uses all the tricks of the trade to make money</td></tr>
+    </table>
+
+    <!-- More words in 1B -->
+    <h2>More words in 1B</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="20%">Arabic Translation</th><th width="60%">Example Sentence</th></tr>
+      <tr><td>ability</td><td class="arabic">قدرة</td><td>A self-confident person feels sure about their ability.</td></tr>
+      <tr><td>academic</td><td class="arabic">أكاديمي</td><td>He enjoys academic life - studying is his dream.</td></tr>
+      <tr><td>adapt</td><td class="arabic">يتكيف</td><td>You need to adapt your way of life.</td></tr>
+      <tr><td>all-time</td><td class="arabic">على مر العصور / مطلق</td><td>'Yesterday' is an all-time favourite</td></tr>
+      <tr><td>ambition</td><td class="arabic">طموح</td><td>His greatest ambition is to be a world-class pianist.</td></tr>
+      <tr><td>unambitious</td><td class="arabic">غير طموح</td><td>I don't he'll get very far. He's totally unambitious.</td></tr>
+      <tr><td>angle</td><td class="arabic">زاوية</td><td>The angle of a signature is significant.</td></tr>
+      <tr><td>bad-mannered</td><td class="arabic">سيء الأدب / قليل الذوق</td><td>He's terribly bad-mannered-he never says please.</td></tr>
+      <tr><td>companion</td><td class="arabic">رفيق / جليس</td><td>The best companion is someone who doesn't speak.</td></tr>
+      <tr><td>confirm</td><td class="arabic">يؤكد</td><td>Statistics confirm that drinking is a serious problem.</td></tr>
+      <tr><td>conflict (n)</td><td class="arabic">صراع / خلاف</td><td>He doesn't argue, he tends to avoid conflict.</td></tr>
+      <tr><td>considerate</td><td class="arabic">مراعٍ لمشاعر الآخرين</td><td>I wish they were more considerate, they're so noisy</td></tr>
+      <tr><td>creative</td><td class="arabic">مبدع</td><td>Fiona's very creative, her drawings are beautiful.</td></tr>
+      <tr><td>descending</td><td class="arabic">تنازلي / هابط</td><td>Most signatures are horizontal, rising, or descending.</td></tr>
+      <tr><td>dyslexic</td><td class="arabic">مصاب بعسر القراءة</td><td>She's not good with words - she's dyslexic.</td></tr>
+      <tr><td>evidence</td><td class="arabic">دليل / إثبات</td><td>Rewriting evidence is a technique used by psychics.</td></tr>
+      <tr><td>faced (with)</td><td class="arabic">يواجه (بـ)</td><td>I have a tendency to give up when faced with stress.</td></tr>
+      <tr><td>flattering</td><td class="arabic">إطراء / تملق</td><td>All these compliments are so flattering.</td></tr>
+      <tr><td>genuine</td><td class="arabic">أصلي / حقيقي</td><td>That psychic isn't genuine, nothing she said was true.</td></tr>
+      <tr><td>graphology</td><td class="arabic">علم دراسة خط اليد</td><td>Do you think graphology is a serious science?</td></tr>
+      <tr><td>horizontal</td><td class="arabic">أفقي</td><td>There is a horizontal line across the page.</td></tr>
+      <tr><td>identify</td><td class="arabic">يحدد / يتعرف على</td><td>Psychics often identify' common medical problems.</td></tr>
+      <tr><td>imply</td><td class="arabic">يلمح إلى / يتضمن</td><td>A legible signature implies that you have clear ideas.</td></tr>
+      <tr><td>impressive</td><td class="arabic">مثير للإعجاب</td><td>Coming up with a few names is always impressive.</td></tr>
+      <tr><td>inherit</td><td class="arabic">يرث</td><td>She inherited the skill from her grandmother.</td></tr>
+      <tr><td>investigate</td><td class="arabic">يحقق</td><td>A detective investigates crimes.</td></tr>
+      <tr><td>judge (v)</td><td class="arabic">يحكم على</td><td>She is just very good at judging people's character.</td></tr>
+      <tr><td>lack</td><td class="arabic">يفتقر إلى</td><td>I lack self confidence - 1 need to practice more.</td></tr>
+      <tr><td>lecture</td><td class="arabic">محاضرة</td><td>I went to a lecture on Shakespeare.</td></tr>
+      <tr><td>legible</td><td class="arabic">مقروء</td><td>Her writing is very clear, its so legible.</td></tr>
+      <tr><td>low</td><td class="arabic">منخفض</td><td>Taxes are very low in Japan, around 5%.</td></tr>
+      <tr><td>major (adj)</td><td class="arabic">رئيسي / كبير</td><td>He lived to 100 without any major illnesses.</td></tr>
+      <tr><td>method</td><td class="arabic">طريقة / أسلوب</td><td>His teaching method is very unusual.</td></tr>
+      <tr><td>objective (n)</td><td class="arabic">هدف</td><td>I have clear study objectives.</td></tr>
+      <tr><td>overcome</td><td class="arabic">يتغلب على</td><td>Work hard, and overcome your money problems.</td></tr>
+      <tr><td>paranormal</td><td class="arabic">خارق للطبيعة</td><td>I don't believe in ghosts or paranormal acts</td></tr>
+      <tr><td>paraphrasing</td><td class="arabic">إعادة صياغة</td><td>If you don't know the word, try paraphrasing.</td></tr>
+      <tr><td>persona</td><td class="arabic">شخصية (يظهر بها أمام الناس)</td><td>He's very protective of his private persona.</td></tr>
+      <tr><td>powerful</td><td class="arabic">قوي</td><td>The accident had a powerful effect on me.</td></tr>
+      <tr><td>preferably</td><td class="arabic">من الأفضل / يستحسن</td><td>I'd like to meet someone new, preferably my age.</td></tr>
+      <tr><td>prominent</td><td class="arabic">بارز / مهم</td><td>He was a prominent member of the local community.</td></tr>
+      <tr><td>reflect</td><td class="arabic">يعكس</td><td>Your signature reflects how you are as a person.</td></tr>
+      <tr><td>represent</td><td class="arabic">يمثل</td><td>The lion represents bravery.</td></tr>
+      <tr><td>satisfied</td><td class="arabic">راضٍ / مقتنع</td><td>I'm satisfied with my life at the moment.</td></tr>
+      <tr><td>scar</td><td class="arabic">ندبة</td><td>He has a scar from his operation.</td></tr>
+      <tr><td>sceptical</td><td class="arabic">متشكك</td><td>I'm sceptical about psychics' claims.</td></tr>
+      <tr><td>self-esteem</td><td class="arabic">تقدير الذات</td><td>She has low self-esteem, she needs some help.</td></tr>
+      <tr><td>sincere</td><td class="arabic">مخلص / صادق</td><td>I believe he's being sincere when he says he loves me.</td></tr>
+      <tr><td>sociable</td><td class="arabic">اجتماعي</td><td>If you are sociable, you have more friends.</td></tr>
+      <tr><td>stable (adj)</td><td class="arabic">مستقر</td><td>She's an emotionally stable person not easily upset.</td></tr>
+      <tr><td>statement</td><td class="arabic">بيان / تصريح</td><td>The police released a statement after the robbery.</td></tr>
+      <tr><td>strategy</td><td class="arabic">استراتيجية</td><td>Sometimes waiting is the best strategy.</td></tr>
+      <tr><td>surgery</td><td class="arabic">جراحة</td><td>Plastic surgery repairs badly-damaged skin.</td></tr>
+      <tr><td>techniques</td><td class="arabic">تقنيات</td><td>I studied some of the techniques used by psychics.</td></tr>
+      <tr><td>temporary</td><td class="arabic">مؤقت</td><td>There was a temporary loss of sound.</td></tr>
+      <tr><td>tempted</td><td class="arabic">يغريه / يشعر بإغراء لـ</td><td>I'm tempted to have plastic surgery.</td></tr>
+      <tr><td>tend</td><td class="arabic">يميل إلى</td><td>I tend to listen to classical music in the evening.</td></tr>
+      <tr><td>tendency</td><td class="arabic">ميل / نزعة</td><td>He has a tendency to avoid answering questions.</td></tr>
+      <tr><td>tricks of the trade</td><td class="arabic">أسرار المهنة</td><td>The con-man used all the tricks of the trade.</td></tr>
+      <tr><td>unambitious</td><td class="arabic">غير طموح</td><td>He won't succeed, he's totally unambitious.</td></tr>
+      <tr><td>unsociable</td><td class="arabic">غير اجتماعي</td><td>Don't be so unsociable, come with us to the pub.</td></tr>
+    </table>
+
+    <!-- 1C Vocabulary Bank Illness and Treatment -->
+    <h2>1C Vocabulary Bank Illness and Treatment</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="20%">Arabic Translation</th><th width="60%">Example Sentence</th></tr>
+      <tr><td>A & E (Accident and Emergency)</td><td class="arabic">قسم الحوادث والطوارئ</td><td>You'd better go to A & E for an X-ray..</td></tr>
+      <tr><td>ache</td><td class="arabic">ألم / يؤلم</td><td>I've had stomach ache all day, and I've been sick.</td></tr>
+      <tr><td>allergic</td><td class="arabic">مصاب بالحساسية</td><td>Tom's allergic to nuts, they make him really ill.</td></tr>
+      <tr><td>ankle</td><td class="arabic">كاحل</td><td>Dave twisted his ankle playing football yesterday.</td></tr>
+      <tr><td>antibiotics</td><td class="arabic">مضادات حيوية</td><td>The doctor gave me some antibiotics for my sore ear.</td></tr>
+      <tr><td>asthma</td><td class="arabic">ربو</td><td>My asthma gets worse when I do exercise.</td></tr>
+      <tr><td>bandage</td><td class="arabic">ضمادة</td><td>I don't need a bandage, it's only a small cut.</td></tr>
+      <tr><td>be sick</td><td class="arabic">يتقيأ / يمرض</td><td>I feel awful, I think I'm going to be sick.</td></tr>
+      <tr><td>bleed</td><td class="arabic">ينزف</td><td>Press the cut firmly it won't bleed so much.</td></tr>
+      <tr><td>blister</td><td class="arabic">بثرة / فقاعة جلدية</td><td>I've got a blister on my heel from my new shoes.</td></tr>
+      <tr><td>bruise</td><td class="arabic">كدمة</td><td>Look at this bruise on my leg where I fell off my bike!</td></tr>
+      <tr><td>burnt</td><td class="arabic">محروق</td><td>She's burnt her hand on the oven.</td></tr>
+      <tr><td>catch cold</td><td class="arabic">يصاب بالبرد</td><td>You'll catch cold if you go out without a coat.</td></tr>
+      <tr><td>cough</td><td class="arabic">سعال / يسعل</td><td>If you didn't smoke, you wouldn't cough so much.</td></tr>
+      <tr><td>deep cut</td><td class="arabic">جرح عميق</td><td>That's quite a deep cut, I think it will need stitches.</td></tr>
+      <tr><td>diarrhoea</td><td class="arabic">إسهال</td><td>He got diarrhoea when he had food poisoning.</td></tr>
+      <tr><td>dizzy</td><td class="arabic">دائخ / يشعر بالدوار</td><td>I'm feeling dizzy. I think I ought to sit down.</td></tr>
+      <tr><td>drug</td><td class="arabic">دواء / عقار</td><td>There's a new drug available to treat arthritis.</td></tr>
+      <tr><td>earache</td><td class="arabic">ألم في الأذن</td><td>My earache has affected my hearing.</td></tr>
+      <tr><td>fainted</td><td class="arabic">أغمي عليه / فاقد الوعي</td><td>Two soldiers fainted because of the heat.</td></tr>
+      <tr><td>feel sick</td><td class="arabic">يشعر بالغثيان</td><td>I feel sick are you sure that fish was fresh?</td></tr>
+      <tr><td>flu</td><td class="arabic">إنفلونزا</td><td>Flu can be a very serious illness for old people.</td></tr>
+      <tr><td>food poisoning</td><td class="arabic">تسمم غذائي</td><td>She got food poisoning from eating chicken.</td></tr>
+      <tr><td>GP</td><td class="arabic">طبيب عام</td><td>If you think you have flu, go to your GP.</td></tr>
+      <tr><td>headache</td><td class="arabic">صداع</td><td>A headache is the most common health problem.</td></tr>
+      <tr><td>heart attack</td><td class="arabic">نوبة قلبية</td><td>Stress can make you at risk of having a heart attack.</td></tr>
+      <tr><td>high blood pressure</td><td class="arabic">ارتفاع ضغط الدم</td><td>High blood pressure can lead to having a stroke.</td></tr>
+      <tr><td>hurt (intransitive)</td><td class="arabic">يؤلم</td><td>I've got a really sore throat, it hurts when I swallow.</td></tr>
+      <tr><td>illness</td><td class="arabic">مرض</td><td>People suffer from more illnesses as they get older.</td></tr>
+      <tr><td>Injection</td><td class="arabic">حقنة</td><td>You can get an injection to protect you from flu.</td></tr>
+      <tr><td>injuries</td><td class="arabic">إصابات</td><td>He was taken to hospital, his injuries were serious.</td></tr>
+      <tr><td>medicine</td><td class="arabic">دواء</td><td>Take this medicine once a day until you feel better..</td></tr>
+      <tr><td>needle</td><td class="arabic">إبرة</td><td>She refused the injection, she's terrified of needles.</td></tr>
+      <tr><td>operation</td><td class="arabic">عملية جراحية</td><td>You'll need an operation to repair your knee.</td></tr>
+      <tr><td>pain (in his chest)</td><td class="arabic">ألم (في صدره)</td><td>You should always take a pain in the chest seriously.</td></tr>
+      <tr><td>painkillers</td><td class="arabic">مسكنات الألم</td><td>Take some painkillers and go to bed.</td></tr>
+      <tr><td>rash</td><td class="arabic">طفح جلدي</td><td>She gets a red rash all over if she eats strawberries.</td></tr>
+      <tr><td>rest</td><td class="arabic">راحة</td><td>It's important to get plenty of rest when you're ill.</td></tr>
+      <tr><td>scan</td><td class="arabic">تصوير طبي / أشعة</td><td>I had another scan today they said the baby's well.</td></tr>
+      <tr><td>sneeze</td><td class="arabic">يعطس</td><td></td></tr>
+      <tr><td>sore throat</td><td class="arabic">التهاب الحلق</td><td>I've got a really sore throat, it hurts when I swallow.</td></tr>
+      <tr><td>specialist</td><td class="arabic">طبيب أخصائي</td><td>My doctor is sending me to see a specialist.</td></tr>
+      <tr><td>sprained</td><td class="arabic">ملتوٍ (مفصل)</td><td>I haven't broken it. I've just sprained my ankle.</td></tr>
+      <tr><td>stitches</td><td class="arabic">غرز جراحية</td><td>I went to hospital to have my stitches taken out?</td></tr>
+      <tr><td>stomach ache</td><td class="arabic">ألم في المعدة</td><td>I'm never eating fish again I had stomach ache.</td></tr>
+      <tr><td>stroke</td><td class="arabic">سكتة دماغية</td><td>He's had a stroke - his right side is paralyzed.</td></tr>
+      <tr><td>swollen</td><td class="arabic">متورم</td><td>Her wrist looks very swollen - perhaps it's broken.</td></tr>
+      <tr><td>symptoms</td><td class="arabic">أعراض</td><td>Pains in the chest can be symptoms of a heart attack.</td></tr>
+      <tr><td>temperature</td><td class="arabic">حرارة (حمى)</td><td>He's got a temperature and his body aches.</td></tr>
+      <tr><td>treatment</td><td class="arabic">علاج</td><td>The best treatment I can suggest is to drink water.</td></tr>
+      <tr><td>twisted</td><td class="arabic">ملتوٍ</td><td>She twisted her ankle when she tripped over the cat.</td></tr>
+      <tr><td>unconscious</td><td class="arabic">فاقد الوعي</td><td>He can't hear me - 1 think he's unconscious.</td></tr>
+      <tr><td>wound</td><td class="arabic">جرح</td><td>I'll cover the wound with a bandage to keep it clean.</td></tr>
+      <tr><td>X-ray</td><td class="arabic">أشعة سينية</td><td>When they took an X-ray, they discovered a break.</td></tr>
+    </table>
+
+    <!-- More words to learn (from 1C) -->
+    <h2>More words to learn (from 1C)</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="20%">Arabic Translation</th><th width="60%">Example Sentence</th></tr>
+      <tr><td>breathe</td><td class="arabic">يتنفس</td><td>Breathe deeply so I can listen to your lungs.</td></tr>
+      <tr><td>cells</td><td class="arabic">خلايا</td><td>'Good stress' can aid proteins that repair cells.</td></tr>
+      <tr><td>choke</td><td class="arabic">يختنق</td><td>Use the Heimlich manoeuvre if he's choking.</td></tr>
+      <tr><td>damage</td><td class="arabic">يتلف / يضر</td><td>Experts agree that smoking damages vour health.</td></tr>
+      <tr><td>long-term</td><td class="arabic">طويل الأمد</td><td>Long-term stress is bad for your health.</td></tr>
+      <tr><td>panic</td><td class="arabic">يصاب بالذعر</td><td>Peter was choking - 1 began to panic.</td></tr>
+      <tr><td>sting (stung, stung)</td><td class="arabic">يلسع</td><td>My son was stung by a wasp when he was five.</td></tr>
+      <tr><td>strengthen</td><td class="arabic">يقوي</td><td>Good stress' can strengthen our natural defences.</td></tr>
+      <tr><td>stuck</td><td class="arabic">عالق</td><td>One of the tomatoes got stuck in Peter's throat.</td></tr>
+      <tr><td>swallow (v)</td><td class="arabic">يبتلع</td><td>I almost swallowed my tongue when I fell.</td></tr>
+    </table>
+
+    <!-- More words in 1C -->
+    <h2>More words in 1C</h2>
+    <table>
+      <tr><th width="20%">English Word</th><th width="20%">Arabic Translation</th><th width="60%">Example Sentence</th></tr>
+      <tr><td>achievement</td><td class="arabic">إنجاز</td><td>The award gave us a sense of achievement.</td></tr>
+      <tr><td>Alzheimer's</td><td class="arabic">مرض الزهايمر</td><td>Alzheimer's is a disease common among old people.</td></tr>
+      <tr><td>anti-ageing</td><td class="arabic">مضاد للشيخوخة</td><td>Dr Marios Kyriazis is an anti-ageing expert.</td></tr>
+      <tr><td>antiseptic</td><td class="arabic">مطهر / معقم</td><td>If you have a cut, put some antiseptic cream on it.</td></tr>
+      <tr><td>appointment</td><td class="arabic">موعد</td><td>Did you make an appointment to see the doctor?</td></tr>
+      <tr><td>arthritis</td><td class="arabic">التهاب المفاصل</td><td>A lot of old people suffer from arthritis.</td></tr>
+      <tr><td>beneficial</td><td class="arabic">مفيد</td><td>He claims 'good stress' is beneficial to our health.</td></tr>
+      <tr><td>burn</td><td class="arabic">حرق</td><td>You should never break any blisters on a burn.</td></tr>
+      <tr><td>check-up</td><td class="arabic">فحص طبي شامل</td><td>It's a good idea to get a check-up from vour dentist.</td></tr>
+      <tr><td>cherry</td><td class="arabic">كرز</td><td>There was a cherry on the top of my dessert.</td></tr>
+      <tr><td>chronic</td><td class="arabic">مزمن</td><td>Caring for someone with a chronic illness is hard.</td></tr>
+      <tr><td>claims</td><td class="arabic">يدعي</td><td>Dr Kyriazis claims that 'good stress' is beneficial.</td></tr>
+      <tr><td>consciousness</td><td class="arabic">وعي</td><td>If drink too much alcohol you can lose consciousness.</td></tr>
+      <tr><td>couch</td><td class="arabic">أريكة</td><td>I don't feel well- I'll just lie down on the couch.</td></tr>
+      <tr><td>deadline</td><td class="arabic">موعد نهائي</td><td>Working to a deadline is an example of 'good stress.</td></tr>
+      <tr><td>disease</td><td class="arabic">مرض</td><td>Cholera is a deadly disease.</td></tr>
+      <tr><td>exhausted</td><td class="arabic">منهك / متعب جداً</td><td>I'm exhausted! I've just swum 40 lengths of the pool.</td></tr>
+      <tr><td>glad</td><td class="arabic">مسرور / سعيد</td><td>I was glad I could help when the woman was choking.</td></tr>
+      <tr><td>giggle</td><td class="arabic">يقهقه</td><td>'Look at me, Mum, giggled my three- vear old son.</td></tr>
+      <tr><td>gradually</td><td class="arabic">تدريجياً</td><td>His health is gradually improving.</td></tr>
+      <tr><td>harmful</td><td class="arabic">ضار</td><td>There are a lot of harmful chemicals in cigarettes.</td></tr>
+      <tr><td>hug</td><td class="arabic">عناق</td><td>I just put my arm round the lady and gave her a hug.</td></tr>
+      <tr><td>infection</td><td class="arabic">عدوى / التهاب</td><td>Clean the wound thoroughly to prevent infection.</td></tr>
+      <tr><td>inwards</td><td class="arabic">إلى الداخل</td><td>The sides of the well collapsed inwards.</td></tr>
+      <tr><td>manoeuvre</td><td class="arabic">مناورة</td><td>Use the Heimlich manoeuvre if she's choking.</td></tr>
+      <tr><td>manual</td><td class="arabic">دليل إرشادي / يدوي</td><td>Do you have an instruction manual for the PC?</td></tr>
+      <tr><td>mechanism</td><td class="arabic">آلية</td><td>The body has a self-repair mechanism.</td></tr>
+      <tr><td>member</td><td class="arabic">عضو</td><td>There are five members in my family.</td></tr>
+      <tr><td>moderate (adj)</td><td class="arabic">معتدل</td><td>You need to bake this at moderate heat.</td></tr>
+      <tr><td>nosebleed</td><td class="arabic">رعاف / نزيف الأنف</td><td>To stop a nosebleed, sit down and pinch your nose.</td></tr>
+      <tr><td>patient (n)</td><td class="arabic">مريض</td><td>The new hospital will have beds for 1,500 patients.</td></tr>
+      <tr><td>pinch</td><td class="arabic">يقرص / يضغط</td><td>To stop a nosebleed, sit down and pinch your nose.</td></tr>
+      <tr><td>poisoning</td><td class="arabic">تسمم</td><td>He has food poisoning-he ate some raw pork.</td></tr>
+      <tr><td>pressure</td><td class="arabic">ضغط</td><td>Nosebleeds can be a symptom of high blood pressure.</td></tr>
+      <tr><td>process (n)</td><td class="arabic">عملية</td><td>Studying language is a slow process.</td></tr>
+      <tr><td>protein</td><td class="arabic">بروتين</td><td>Cells produce proteins which repair damage.</td></tr>
+      <tr><td>puppy</td><td class="arabic">جرو</td><td>We've had our dog since he was a puppy.</td></tr>
+      <tr><td>reach</td><td class="arabic">يصل إلى</td><td>I can't stop. I'm in a hurry to reach the airport.</td></tr>
+      <tr><td>reaction</td><td class="arabic">رد فعل</td><td>He had an allergic reaction when he ate nuts.</td></tr>
+      <tr><td>redecorating</td><td class="arabic">إعادة تزيين / تجديد</td><td>We're redecorating our bedroom this weekend.</td></tr>
+      <tr><td>remain</td><td class="arabic">يبقى</td><td>A piece of steak remained stuck in her throat.</td></tr>
+      <tr><td>response</td><td class="arabic">استجابة / رد</td><td>His response to the question was very rude.</td></tr>
+      <tr><td>rush</td><td class="arabic">يندفع / يسرع</td><td>I saw what was happening and rushed over to help.</td></tr>
+      <tr><td>self-repair</td><td class="arabic">إصلاح ذاتي</td><td>The self-repair mechanism of cells slows down.</td></tr>
+      <tr><td>short-term (adj)</td><td class="arabic">قصير الأمد</td><td>It's just a short- term solution, but a good one.</td></tr>
+      <tr><td>staff</td><td class="arabic">طاقم العمل</td><td>The ambulance staff told me exactly what to do.</td></tr>
+      <tr><td>switch (v)</td><td class="arabic">يشغل (زراً)</td><td>Switch on the light, it's dark in here.</td></tr>
+      <tr><td>treat (badly)</td><td class="arabic">يعامل (بشكل سيء)</td><td>When we treat our body badly, we damage it.</td></tr>
+      <tr><td>waist</td><td class="arabic">خصر</td><td>He put his arms round her waist.</td></tr>
+      <tr><td>wasp</td><td class="arabic">دبور</td><td>My son was stung by a wasp when he was five.</td></tr>
+    </table>
+</div>
+
+<script>
+    // وظيفة للبحث داخل الجداول وتصفية الكلمات الحية
+    function filterTables() {
+        let input = document.getElementById("searchInput");
+        let filter = input.value.toLowerCase();
+        let tables = document.querySelectorAll("table");
+
+        tables.forEach(table => {
+            let tr = table.getElementsByTagName("tr");
+            let tableHasVisibleRows = false;
+
+            // البدء من 1 لتخطي صف العناوين (th)
+            for (let i = 1; i < tr.length; i++) {
+                let rowText = tr[i].innerText.toLowerCase();
+                if (rowText.indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                    tableHasVisibleRows = true;
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+            
+            // إخفاء الجدول بأكمله إذا لم يكن هناك أي نتائج بحث فيه
+            let previousHeading = table.previousElementSibling;
+            if(previousHeading && previousHeading.tagName === "H2") {
+                if (tableHasVisibleRows || filter === "") {
+                    table.style.display = "";
+                    previousHeading.style.display = "";
+                } else {
+                    table.style.display = "none";
+                    previousHeading.style.display = "none";
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
