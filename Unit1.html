@@ -132,25 +132,25 @@
         font-size: 18px;
         font-weight: bold;
         color: #BF360C; 
-        cursor: pointer; /* تغيير شكل الماوس ليدل على أنها قابلة للنقر */
+        cursor: pointer; 
         transition: all 0.3s ease;
     }
     
     .hidden-translation {
         color: transparent !important;
-        text-shadow: 0 0 10px #BF360C; /* جعل النص ضبابياً */
+        text-shadow: 0 0 10px #BF360C; 
         background-color: #EFEBE9;
-        user-select: none; /* منع تحديد النص لكشفه */
+        user-select: none; 
     }
     .hidden-translation:hover {
-        text-shadow: 0 0 6px #BF360C; /* تقليل الضبابية قليلاً عند التمرير */
+        text-shadow: 0 0 6px #BF360C; 
     }
 
     /* إعدادات الطباعة مقاس A4 */
     @media print {
         @page {
             size: A4;
-            margin: 20mm; 
+            margin: 10mm; /* تم تقليل الهوامش للاستفادة من مساحة الورقة */
         }
         body {
             background-color: #FFF;
@@ -162,7 +162,9 @@
             box-shadow: none;
             border: none;
             padding: 0;
+            margin: 0;
             width: 100%;
+            max-width: 100%; /* إجبار الحاوية على التمدد لكامل الورقة */
         }
         /* إخفاء الأزرار وشريط البحث عند الطباعة */
         .no-print, .search-box, .header-controls, .instruction-text {
@@ -174,9 +176,11 @@
             border: 1px solid #000;
             page-break-after: avoid;
             -webkit-print-color-adjust: exact;
+            margin-top: 15px;
         }
         table {
             border: 1px solid #000;
+            width: 100%; /* التأكد من أن الجدول يأخذ العرض كاملاً */
         }
         th, td {
             border: 1px solid #000;
