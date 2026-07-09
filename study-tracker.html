@@ -4,216 +4,293 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تتبع الإنجاز الدراسي الذكية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --bg-app: #fbf9f4;
+            --bg-app: #f4f7f6;
             --surface: #ffffff;
-            --text-primary: #2d251e;
-            --text-secondary: #70655b;
-            --accent-primary: #4a3e3d;
-            --border-subtle: #eae3da;
-            --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.04);
-            --shadow-md: 0 10px 30px rgba(45, 37, 30, 0.06);
+            --text-primary: #1a1e23;
+            --text-secondary: #5a6270;
+            --accent-primary: #2563eb;
+            --accent-hover: #1d4ed8;
+            --border-subtle: #e2e8f0;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
             --radius-lg: 16px;
-            --radius-md: 12px;
+            --radius-md: 10px;
             --radius-sm: 8px;
-            --header-bg: rgba(251, 249, 244, 0.94);
-            --btn-primary-bg: #4a3e3d;
-            --btn-secondary-border: #e5c6c1;
-            --btn-secondary-text: #c0392b;
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --btn-secondary-bg: #f1f5f9;
+            --btn-secondary-hover: #e2e8f0;
+            --btn-danger-text: #dc2626;
+            --btn-danger-border: #fca5a5;
+            --btn-danger-hover: #fef2f2;
+            --success-color: #059669;
         }
 
         body.dark-mode {
             --bg-app: #121212; 
-            --surface: #1e1e1e; 
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --accent-primary: #d4a373; 
-            --border-subtle: #333333;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+            --surface: #1e1e24; 
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-primary: #60a5fa; 
+            --accent-hover: #93c5fd;
+            --border-subtle: #374151;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
             --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
-            --header-bg: rgba(18, 18, 18, 0.94);
-            --btn-primary-bg: #d4a373;
-            --btn-secondary-border: #8c4a38;
-            --btn-secondary-text: #e07a5f;
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.7);
+            --header-bg: rgba(30, 30, 36, 0.9);
+            --btn-secondary-bg: #374151;
+            --btn-secondary-hover: #4b5563;
+            --btn-danger-text: #fca5a5;
+            --btn-danger-border: #991b1b;
+            --btn-danger-hover: #7f1d1d;
+            --success-color: #34d399;
         }
 
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-app); color: var(--text-primary);
             margin: 0; padding: 0; line-height: 1.6; -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.4s ease, color 0.4s ease; display: flex; flex-direction: column; min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease; display: flex; flex-direction: column; min-height: 100vh;
         }
 
-        body.timer-ended { background-color: #d4edda; }
-        body.dark-mode.timer-ended { background-color: #2e4f37; }
+        body.timer-ended { background-color: #d1fae5; }
+        body.dark-mode.timer-ended { background-color: #064e3b; }
 
-        /* الشريط العائم */
+        /* الشريط العائم (المؤقت والإنجاز) */
         .sticky-progress {
             position: sticky; top: 0; background: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-subtle); padding: 12px 20px; z-index: 100; box-shadow: var(--shadow-sm); display: none; 
-            transition: background-color 0.4s ease, border-color 0.4s ease;
         }
         .sticky-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
         .sticky-timer-row {
-            display: flex; justify-content: space-between; align-items: center; background: var(--surface); padding: 8px 16px;
-            border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            display: flex; justify-content: space-between; align-items: center; background: var(--surface); padding: 12px 20px;
+            border-radius: var(--radius-md); border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm);
         }
-        .floating-timer-display { font-size: 24px; font-weight: 600; font-family: monospace; letter-spacing: 1px; color: var(--text-primary); }
-        .floating-timer-display.ending { color: #c0392b; }
-        body.dark-mode .floating-timer-display.ending { color: #e07a5f; }
-        .floating-timer-controls { display: flex; gap: 8px; }
+        .timer-info-group { display: flex; align-items: center; gap: 15px; }
+        .timer-label { font-size: 15px; font-weight: 700; color: var(--text-secondary); }
+        .floating-timer-display { font-size: 28px; font-weight: 700; font-family: monospace; letter-spacing: 2px; color: var(--text-primary); }
+        .floating-timer-display.ending { color: var(--btn-danger-text); animation: pulse 1s infinite; }
+        
+        .floating-timer-controls { display: flex; gap: 15px; }
+        .timer-btn-wrapper { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .timer-btn-wrapper span { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
         .icon-btn {
-            background: rgba(128,128,128,0.1); border: none; color: var(--text-primary); width: 36px; height: 36px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; transition: background 0.2s;
+            background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); 
+            width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            cursor: pointer; font-size: 16px; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
-        .icon-btn:hover { background: rgba(128,128,128,0.2); }
+        .icon-btn:hover { background: var(--btn-secondary-hover); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+        .icon-btn:active { transform: translateY(0); }
 
         .progress-container { display: flex; align-items: center; justify-content: flex-start; gap: 15px; flex-wrap: wrap; }
-        .subject-progress-box { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 6px; }
-        .subject-progress-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; color: var(--text-secondary); }
-        .progress-bar-wrapper { background: var(--border-subtle); height: 8px; border-radius: 20px; overflow: hidden; width: 100%; }
-        .progress-bar-fill { background-color: hsl(var(--subject-hue), 50%, 50%); height: 100%; width: 0%; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .subject-progress-box { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 8px; }
+        .subject-progress-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
+        .progress-bar-wrapper { background: var(--border-subtle); height: 10px; border-radius: 20px; overflow: hidden; width: 100%; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+        .progress-bar-fill { background-color: hsl(var(--subject-hue), 60%, 50%); height: 100%; width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
         /* التصميم العام */
         .main-layout { max-width: 1200px; margin: 30px auto; padding: 0 20px; box-sizing: border-box; flex: 1; width: 100%; }
         .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
-        .app-header h1 { font-size: 24px; font-weight: 700; margin: 0; color: var(--text-primary); }
+        .app-header h1 { font-size: 26px; font-weight: 700; margin: 0; color: var(--text-primary); }
         .header-actions { display: flex; gap: 10px; }
 
         .btn-theme, .btn-back {
             background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 10px 18px;
-            border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: var(--shadow-sm); transition: all 0.2s ease;
+            border-radius: var(--radius-md); font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-sm); transition: all 0.2s ease;
         }
-        .btn-theme:hover, .btn-back:hover { filter: brightness(0.95); }
-        body.dark-mode .btn-theme:hover, body.dark-mode .btn-back:hover { filter: brightness(1.1); }
+        .btn-theme:hover, .btn-back:hover { background: var(--btn-secondary-bg); transform: translateY(-1px); }
 
         /* الشاشات (مراحل التطبيق) */
-        .panel-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-md); animation: fadeIn 0.4s ease;}
-        .panel-title { font-size: 15px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-top: 0; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px; }
+        .panel-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-md); animation: fadeIn 0.4s ease; margin-bottom: 25px;}
+        .panel-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 12px; }
 
         /* 1. شاشة الترحيب */
-        #welcomePanel { text-align: center; max-width: 800px; margin: 0 auto; }
-        #welcomePanel h2 { color: var(--text-primary); margin-bottom: 30px; }
-        .range-buttons { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        #welcomePanel { text-align: center; max-width: 800px; margin: 40px auto; }
+        #welcomePanel h2 { color: var(--text-primary); margin-bottom: 40px; font-size: 24px; }
+        .range-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .btn-range-select {
-            background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary); padding: 20px 40px;
-            font-size: 18px; font-weight: bold; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-sm);
+            background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary); padding: 25px 45px;
+            font-size: 18px; font-weight: 700; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-sm);
         }
-        .btn-range-select:hover { border-color: var(--accent-primary); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .btn-range-select:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
         /* 2. شاشة الإعداد الأولي */
         #initialSetupPanel { display: none; max-width: 800px; margin: 0 auto; }
         
-        /* 3. شاشة الجلسة النشطة */
-        #activeSessionDashboard { display: none; }
-        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
-        @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
-
         /* حقول الإدخال */
-        .inputs-group { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
-        .input-field { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 100px; }
-        .input-field label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+        .inputs-group { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+        .input-field { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 120px; }
+        .input-field label { font-size: 14px; color: var(--text-secondary); font-weight: 600; }
         select, input[type="number"] {
-            background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 10px; font-size: 15px; border-radius: var(--radius-sm);
-            color: var(--text-primary); outline: none; transition: border 0.2s; font-family: inherit; width: 100%; box-sizing: border-box;
+            background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 12px 15px; font-size: 15px; border-radius: var(--radius-md);
+            color: var(--text-primary); outline: none; transition: all 0.2s; font-family: inherit; width: 100%; box-sizing: border-box; font-weight: 500;
         }
-        select:focus, input[type="number"]:focus { border-color: var(--accent-primary); }
+        select:focus, input[type="number"]:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); background: var(--surface); }
 
-        .range-config-group { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-subtle); }
+        .range-config-group { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed var(--border-subtle); background: var(--surface); border-radius: var(--radius-md); }
         .range-config-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-        /* الأزرار */
+        /* الأزرار الاحترافية */
         .btn-primary {
-            background: var(--btn-primary-bg); color: #ffffff; border: none; padding: 12px; border-radius: var(--radius-sm);
-            font-size: 15px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: var(--accent-primary); color: #ffffff; border: none; padding: 14px 24px; border-radius: var(--radius-md);
+            font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
         }
-        body.dark-mode .btn-primary { color: #121212; }
-        .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3); }
+        .btn-primary:active { transform: translateY(0); }
 
         .btn-secondary {
-            background: transparent; border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 12px; border-radius: var(--radius-sm);
-            font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px; transition: all 0.3s;
+            background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 14px 24px; border-radius: var(--radius-md);
+            font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px; transition: all 0.2s;
         }
-        .btn-secondary:hover { background: var(--bg-app); }
+        .btn-secondary:hover { background: var(--border-subtle); }
+
+        .btn-accent { background: var(--surface); border: 2px dashed var(--accent-primary); color: var(--accent-primary); }
+        .btn-accent:hover { background: rgba(37, 99, 235, 0.05); }
 
         .btn-danger {
-            background: transparent; border: 1px solid var(--btn-secondary-border); color: var(--btn-secondary-text); padding: 12px; border-radius: var(--radius-sm);
-            font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px; transition: all 0.3s;
+            background: var(--surface); border: 1px solid var(--btn-danger-border); color: var(--btn-danger-text); padding: 12px; border-radius: var(--radius-md);
+            font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; transition: all 0.2s;
         }
-        .btn-danger:hover { background: var(--btn-secondary-text); color: white; border-color: var(--btn-secondary-text); }
+        .btn-danger:hover { background: var(--btn-danger-hover); }
 
-        /* قسم إضافة مادة إضافية (مخفي وينزلق للأسفل) */
-        #addMoreSection { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-subtle); animation: fadeIn 0.3s ease; }
-
-        /* المؤقت */
-        .timer-modes { display: flex; background: var(--bg-app); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 15px; }
-        .mode-btn { flex: 1; background: transparent; border: none; padding: 8px; border-radius: 6px; font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer; }
-        .mode-btn.active { background: var(--surface); color: var(--accent-primary); box-shadow: var(--shadow-sm); }
-        .timer-setup { display: none; gap: 10px; margin-bottom: 15px; }
-        .timer-setup.active { display: flex; }
+        /* شاشة الجلسة النشطة */
+        #activeSessionDashboard { display: none; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+        #addMoreSection { display: none; margin-top: 20px; padding: 20px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-app); animation: fadeIn 0.3s ease; }
 
         /* مساحة العمل */
-        #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; align-items: start; }
-        .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease; }
-        .subject-header-title { font-size: 17px; font-weight: bold; color: var(--text-primary); margin-bottom: 20px; padding-right: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border-subtle); border-right: 4px solid hsl(var(--subject-hue), 60%, 50%); display: flex; justify-content: space-between; align-items: center; }
-        .task-section { background: rgba(128, 128, 128, 0.03); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 15px; margin-bottom: 15px; transition: background 0.3s; }
-        .task-section.completed { background: rgba(39, 174, 96, 0.1); border-color: rgba(39, 174, 96, 0.3); }
-        .task-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .task-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 0; }
-        .task-badge { background: var(--bg-app); color: var(--text-secondary); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); gap: 10px; }
-
-        .card { background-color: hsl(var(--subject-hue), 30%, 80%); color: #333; height: 48px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; cursor: pointer; user-select: none; transition: all 0.25s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        body.dark-mode .card { background-color: hsl(var(--subject-hue), 40%, 25%); color: #ccc; }
-        .card:hover { transform: translateY(-3px); filter: brightness(0.9); }
-        body.dark-mode .card:hover { filter: brightness(1.2); }
-        .card.studied { background-color: hsl(var(--subject-hue), 60%, 45%); color: #ffffff; box-shadow: 0 4px 12px hsla(var(--subject-hue), 60%, 45%, 0.3); }
-        body.dark-mode .card.studied { background-color: hsl(var(--subject-hue), 50%, 50%); color: #121212; box-shadow: 0 4px 12px hsla(var(--subject-hue), 50%, 50%, 0.4); }
-
-        .app-footer { text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: 14px; font-weight: 500; }
-
-        /* نافذة شاشة الفرح */
-        .celebration-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 9999; }
-        .celebration-content { background: var(--surface); padding: 40px; border-radius: var(--radius-lg); text-align: center; max-width: 400px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid #27ae60; }
-        .celebration-icon { font-size: 60px; margin-bottom: 15px; }
-        .celebration-title { font-size: 24px; font-weight: bold; color: #27ae60; margin-bottom: 10px; margin-top: 0;}
-        .celebration-text { font-size: 16px; color: var(--text-primary); margin-bottom: 25px; line-height: 1.6; }
+        #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; align-items: start; }
+        .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 25px; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease; position: relative; overflow: hidden;}
+        .subject-section::before { content: ''; position: absolute; top: 0; right: 0; width: 6px; height: 100%; background: hsl(var(--subject-hue), 60%, 50%); }
+        .subject-header-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-subtle); }
         
-        @keyframes bounceIn { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .task-section { background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px; margin-bottom: 15px; transition: all 0.3s ease; }
+        .task-section.completed { background: rgba(52, 211, 153, 0.1); border-color: var(--success-color); box-shadow: 0 0 10px rgba(52, 211, 153, 0.1); }
+        .task-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .task-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .task-badge { background: var(--surface); color: var(--text-secondary); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--border-subtle); }
+        
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 12px; }
+        .card { background-color: var(--surface); border: 2px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; cursor: pointer; user-select: none; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        body.dark-mode .card { border-color: hsl(var(--subject-hue), 40%, 30%); }
+        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); border-color: hsl(var(--subject-hue), 60%, 50%); }
+        .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; box-shadow: 0 4px 12px hsla(var(--subject-hue), 60%, 50%, 0.4); transform: scale(1.05); }
+
+        /* التذييل العصري */
+        .app-footer { text-align: center; padding: 40px 20px; margin-top: auto; color: var(--text-secondary); font-size: 14px; border-top: 1px solid var(--border-subtle); background: var(--surface); }
+        .footer-version { font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
+        .footer-features { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 13px; font-weight: 500; }
+        .footer-features span { display: flex; align-items: center; gap: 5px; }
+
+        /* النوافذ المنبثقة (Modals) المشتركة */
+        .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; }
+        .custom-modal-overlay.active { display: flex; opacity: 1; }
+        .custom-modal-content { background: var(--surface); padding: 35px; border-radius: var(--radius-lg); text-align: center; max-width: 400px; width: 90%; box-shadow: var(--shadow-lg); transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .custom-modal-overlay.active .custom-modal-content { transform: scale(1); }
+        .modal-title { font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 15px; color: var(--text-primary); }
+        .modal-text { font-size: 15px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.6; }
+
+        /* نافذة التنبيهات والأخطاء */
+        .alert-icon { font-size: 50px; margin-bottom: 15px; }
+
+        /* تصميم نافذة الفرح */
+        .celebration-content { border: 2px solid var(--success-color); }
+        .cel-title { color: var(--success-color); }
+
+        /* نافذة إعداد المؤقت */
+        .timer-modes-group { display: flex; background: var(--bg-app); border-radius: var(--radius-md); padding: 5px; margin-bottom: 20px; border: 1px solid var(--border-subtle); }
+        .mode-btn { flex: 1; background: transparent; border: none; padding: 10px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+        .mode-btn.active { background: var(--surface); color: var(--accent-primary); box-shadow: var(--shadow-sm); }
+        #timerInputContainer { display: none; margin-bottom: 20px; text-align: right; }
+        #timerInputContainer.active { display: block; }
+        
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         @media (max-width: 600px) {
-            .sticky-timer-row { flex-direction: column; gap: 10px; }
-            .floating-timer-controls { width: 100%; justify-content: center; }
-            .icon-btn { width: 44px; height: 44px; font-size: 16px; }
+            .sticky-timer-row { flex-direction: column; gap: 15px; }
+            .timer-info-group { width: 100%; justify-content: space-between; }
+            .floating-timer-controls { width: 100%; justify-content: space-around; }
             .subject-progress-box { min-width: 100%; }
+            .range-buttons { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-<div class="celebration-modal" id="celebrationModal">
-    <div class="celebration-content">
-        <div class="celebration-icon">🎉</div>
-        <h2 class="celebration-title">عمل رائع جداً!</h2>
-        <p class="celebration-text">
-            أنجزت للتو <strong>المهمة <span id="celTaskNum">1</span></strong> من مادة <strong id="celSubjectName">الاسم</strong>!<br>
-            لقد قطعت الآن <strong style="color:#27ae60; font-size:18px;"><span id="celPercentage">10</span>%</strong> من إجمالي المادة المطلوبة لهذه الجلسة. استمر!
+<div class="custom-modal-overlay" id="customAlertModal">
+    <div class="custom-modal-content">
+        <div class="alert-icon" id="alertIcon">⚠️</div>
+        <h2 class="modal-title" id="alertTitle">تنبيه</h2>
+        <p class="modal-text" id="alertMessage">الرسالة هنا</p>
+        <button class="btn-primary" onclick="closeCustomAlert()">حسناً فهمت</button>
+    </div>
+</div>
+
+<div class="custom-modal-overlay" id="celebrationModal">
+    <div class="custom-modal-content celebration-content">
+        <div class="alert-icon">🎉</div>
+        <h2 class="modal-title cel-title">عمل رائع جداً!</h2>
+        <p class="modal-text">
+            أنجزت للتو <strong>المهمة <span id="celTaskNum">1</span></strong> من مادة <strong id="celSubjectName" style="color:var(--text-primary)">الاسم</strong>!<br>
+            لقد قطعت الآن <strong style="color:var(--success-color); font-size:18px;"><span id="celPercentage">10</span>%</strong> من إجمالي المادة. استمر!
         </p>
-        <button class="btn-primary" onclick="closeCelebration()">متابعة الإنجاز 💪</button>
+        <button class="btn-primary" onclick="closeCelebration()" style="background:var(--success-color)">متابعة الإنجاز 💪</button>
+    </div>
+</div>
+
+<div class="custom-modal-overlay" id="timerSetupModal">
+    <div class="custom-modal-content">
+        <h2 class="modal-title">⚙️ إعداد مؤقت التركيز</h2>
+        <p class="modal-text">اختر نظام الوقت الذي تفضله لهذه الجلسة.</p>
+        
+        <div class="timer-modes-group">
+            <button class="mode-btn active" id="modeUpBtn">تصاعدي (مفتوح)</button>
+            <button class="mode-btn" id="modeDownBtn">تنازلي (محدد)</button>
+        </div>
+        
+        <div id="timerInputContainer" class="input-field">
+            <label>حدد وقت التركيز (بالدقائق)</label>
+            <input type="number" id="setMinutes" min="1" placeholder="مثال: 25 لدورة بومودورو">
+        </div>
+        
+        <div style="display:flex; gap:10px;">
+            <button class="btn-primary" id="applyTimerBtn" style="flex:2;">حفظ وإغلاق</button>
+            <button class="btn-secondary" onclick="closeTimerSetup()" style="flex:1; margin-top:0;">إلغاء</button>
+        </div>
     </div>
 </div>
 
 <div class="sticky-progress" id="stickyProgressContainer">
     <div class="sticky-inner">
         <div class="sticky-timer-row">
-            <div style="font-size:14px; font-weight:bold; color:var(--text-secondary);">⏱️ وقت التركيز:</div>
-            <div class="floating-timer-display" id="stickyTimer">00:00:00</div>
+            <div class="timer-info-group">
+                <span class="timer-label">⏱️ وقت التركيز</span>
+                <div class="floating-timer-display" id="stickyTimer">00:00:00</div>
+            </div>
+            
             <div class="floating-timer-controls">
-                <button class="icon-btn" id="sStartBtn" title="بدء">▶</button>
-                <button class="icon-btn" id="sPauseBtn" title="إيقاف">⏸</button>
-                <button class="icon-btn" id="sResetBtn" title="تصفير">🔄</button>
+                <div class="timer-btn-wrapper">
+                    <button class="icon-btn" id="sStartBtn" title="بدء">▶</button>
+                    <span>بدء</span>
+                </div>
+                <div class="timer-btn-wrapper">
+                    <button class="icon-btn" id="sPauseBtn" title="إيقاف">⏸</button>
+                    <span>إيقاف</span>
+                </div>
+                <div class="timer-btn-wrapper">
+                    <button class="icon-btn" id="sResetBtn" title="إعادة">🔄</button>
+                    <span>تصفير</span>
+                </div>
+                <div class="timer-btn-wrapper">
+                    <button class="icon-btn" onclick="openTimerSetup()" title="إعداد">⚙️</button>
+                    <span>إعداد</span>
+                </div>
             </div>
         </div>
         <div class="progress-container" id="progressBarsWrapper"></div>
@@ -224,84 +301,83 @@
     <div class="app-header">
         <h1>مساحة المتابعة الذكية ⚡</h1>
         <div class="header-actions">
-            <button id="themeToggleBtn" class="btn-theme">🌙 داكن</button>
-            <button class="btn-back" onclick="window.location.href='index.html'">الرجوع للرئيسية 🏠</button>
+            <button id="themeToggleBtn" class="btn-theme">🌙 الوضع الداكن</button>
+            <button class="btn-back" onclick="window.location.href='index.html'">الرئيسية 🏠</button>
         </div>
     </div>
 
     <div id="welcomePanel" class="panel-card">
-        <h2>أهلاً بك! بكم مادة تود البدء في هذه الجلسة؟</h2>
+        <h2>أهلاً بك! كم مادة تود البدء بها في هذه الجلسة؟</h2>
         <div class="range-buttons">
-            <button class="btn-range-select" onclick="showInitialSetup(1)">البدء بمادة واحدة</button>
-            <button class="btn-range-select" onclick="showInitialSetup(2)">البدء بمادتين</button>
-            <button class="btn-range-select" onclick="showInitialSetup(3)">البدء بـ 3 مواد</button>
+            <button class="btn-range-select" onclick="showInitialSetup(1)">مادة واحدة</button>
+            <button class="btn-range-select" onclick="showInitialSetup(2)">مادتين</button>
+            <button class="btn-range-select" onclick="showInitialSetup(3)">3 مواد</button>
         </div>
     </div>
 
     <div id="initialSetupPanel" class="panel-card">
-        <p class="panel-title">إعداد الجلسة الدراسية</p>
+        <h2 class="panel-title">تخصيص خطة الجلسة الدراسية</h2>
         <div id="initialFormsContainer"></div>
-        <button class="btn-primary" id="startSessionBtn" style="margin-top: 15px;">🚀 إنشاء مساحة الدراسة وبدء الجلسة</button>
-        <button class="btn-secondary" onclick="cancelInitialSetup()">إلغاء والعودة</button>
-    </div>
-
-    <div id="activeSessionDashboard">
-        <div class="dashboard-grid">
-            <div class="panel-card">
-                <p class="panel-title">إدارة الجلسة والمواد</p>
-                <p style="font-size:13px; color:var(--text-secondary); margin-bottom:15px;">
-                    جلستك الدراسية نشطة الآن ويتم حفظ تقدمك تلقائياً.
-                </p>
-                
-                <button class="btn-primary" id="toggleAddMoreBtn" style="background:var(--card-studied);">➕ إضافة مادة إضافية للوحة</button>
-                
-                <div id="addMoreSection">
-                    <div class="inputs-group">
-                        <div class="input-field" style="flex: 100%;">
-                            <label>اختر المادة</label>
-                            <select id="addSubjectSelect"></select>
-                        </div>
-                        <div class="input-field">
-                            <label>من صفحة</label>
-                            <input type="number" id="addStartPage" min="1" placeholder="1">
-                        </div>
-                        <div class="input-field">
-                            <label>إلى صفحة</label>
-                            <input type="number" id="addEndPage" min="1" placeholder="20">
-                        </div>
-                    </div>
-                    <div style="display:flex; gap:10px; margin-top:10px;">
-                        <button class="btn-primary" id="confirmAddMoreBtn" style="flex:2;">إضافة للوحة ✅</button>
-                        <button class="btn-secondary" id="cancelAddMoreBtn" style="flex:1; margin-top:0;">إلغاء</button>
-                    </div>
-                </div>
-
-                <button class="btn-danger" onclick="resetEverything()" style="margin-top:25px;">🗑️ إنهاء الجلسة وتصفير كل شيء</button>
-            </div>
-
-            <div class="panel-card" style="display: flex; flex-direction: column; justify-content: flex-start;">
-                <p class="panel-title">إعداد المؤقت الزمني</p>
-                <div class="timer-modes">
-                    <button class="mode-btn active" id="modeUpBtn">تصاعدي (مفتوح)</button>
-                    <button class="mode-btn" id="modeDownBtn">تنازلي (تحديد وقت)</button>
-                </div>
-                <div class="timer-setup" id="timerSetup">
-                    <input type="number" id="setMinutes" class="timer-input" min="1" placeholder="مثال: 25 دقيقة" style="flex:2;">
-                    <button class="btn-primary" id="applyTimerBtn" style="flex: 1; padding: 8px;">حفظ الوقت</button>
-                </div>
-            </div>
+        <div style="display:flex; gap:15px; margin-top:25px;">
+            <button class="btn-primary" id="startSessionBtn" style="flex:2;">🚀 إنشاء مساحة الدراسة وبدء الجلسة</button>
+            <button class="btn-secondary" onclick="cancelInitialSetup()" style="flex:1; margin-top:0;">الرجوع للخلف</button>
         </div>
     </div>
 
-    <div id="workspace"></div>
+    <div id="activeSessionDashboard">
+        <div class="panel-card" style="margin-bottom: 30px;">
+            <div class="dashboard-header">
+                <div>
+                    <h2 class="panel-title" style="border:none; padding:0; margin-bottom:5px;">إدارة الجلسة والمواد</h2>
+                    <p style="font-size:14px; color:var(--text-secondary); margin:0;">جلستك الدراسية نشطة الآن ويتم حفظ تقدمك تلقائياً وبشكل مستمر.</p>
+                </div>
+                <button class="btn-danger" onclick="resetEverything()" style="width:auto; margin:0; padding:10px 20px;">🗑️ إنهاء وتصفير اللوحة</button>
+            </div>
+            
+            <button class="btn-secondary btn-accent" id="toggleAddMoreBtn">➕ إضافة مادة جديدة للوحة</button>
+            
+            <div id="addMoreSection">
+                <h3 style="margin-top:0; font-size:16px; color:var(--text-primary);">تخصيص المادة الجديدة</h3>
+                <div class="inputs-group">
+                    <div class="input-field" style="flex: 100%;">
+                        <label>اختر المادة</label>
+                        <select id="addSubjectSelect"></select>
+                    </div>
+                    <div class="input-field">
+                        <label>من صفحة</label>
+                        <input type="number" id="addStartPage" min="1" placeholder="مثال: 1">
+                    </div>
+                    <div class="input-field">
+                        <label>إلى صفحة</label>
+                        <input type="number" id="addEndPage" min="1" placeholder="مثال: 20">
+                    </div>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:15px;">
+                    <button class="btn-primary" id="confirmAddMoreBtn" style="flex:2;">إضافة للوحة ✅</button>
+                    <button class="btn-secondary" id="cancelAddMoreBtn" style="flex:1; margin-top:0;">إلغاء الإضافة</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="workspace"></div>
+    </div>
 </div>
 
 <div class="app-footer">
-    الإصدار 8.0 - مساحة المتابعة الذكية للطلاب 📖
+    <div class="footer-version">الإصدار 8.1 - مساحة المتابعة الذكية للطلاب 📖</div>
+    <div class="footer-features">
+        <span>✨ حفظ سحابي محلي تلقائي</span>
+        <span>|</span>
+        <span>🎯 تقسيم المهام ذكي</span>
+        <span>|</span>
+        <span>⏱️ مؤقت مرن (بومودورو/حر)</span>
+        <span>|</span>
+        <span>🌙 واجهة مريحة للعين</span>
+    </div>
 </div>
 
 <script>
-    const STATE_KEY = 'studyTrackerSaveState_v8'; // إصدار جديد للذاكرة
+    const STATE_KEY = 'studyTrackerSaveState_v8_1'; 
     let currentConfigs = []; 
     let initialNumSelected = 0;
 
@@ -318,8 +394,8 @@
         "اللغة الإنجليزية 2": { hue: 90, group: "الفصل الثاني" }
     };
 
-    // توليد الخيارات للمنسدلة
-    let subjectOptionsHTML = `<option value="" disabled selected>اختر المادة...</option>`;
+    // توليد الخيارات
+    let subjectOptionsHTML = `<option value="" disabled selected>اختر المادة من القائمة...</option>`;
     let g1 = `<optgroup label="الفصل الدراسي الأول">`; let g2 = `<optgroup label="الفصل الدراسي الثاني">`;
     for (const [name, data] of Object.entries(subjectsData)) {
         if (data.group === "الفصل الأول") g1 += `<option value="${name}">${name}</option>`;
@@ -332,18 +408,29 @@
     // --- الوضع الداكن ---
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     if (localStorage.getItem('studyTrackerTheme') === 'dark') {
-        document.body.classList.add('dark-mode'); themeToggleBtn.innerHTML = '☀️ فاتح';
+        document.body.classList.add('dark-mode'); themeToggleBtn.innerHTML = '☀️ الوضع الفاتح';
     }
     themeToggleBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
         if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('studyTrackerTheme', 'dark'); themeToggleBtn.innerHTML = '☀️ فاتح';
+            localStorage.setItem('studyTrackerTheme', 'dark'); themeToggleBtn.innerHTML = '☀️ الوضع الفاتح';
         } else {
-            localStorage.setItem('studyTrackerTheme', 'light'); themeToggleBtn.innerHTML = '🌙 داكن';
+            localStorage.setItem('studyTrackerTheme', 'light'); themeToggleBtn.innerHTML = '🌙 الوضع الداكن';
         }
     });
 
-    // --- إدارة واجهات المراحل الثلاث ---
+    // --- نظام التنبيهات المخصص (Custom Alerts) ---
+    function showCustomAlert(title, message, icon = "⚠️") {
+        document.getElementById('alertTitle').textContent = title;
+        document.getElementById('alertMessage').textContent = message;
+        document.getElementById('alertIcon').textContent = icon;
+        document.getElementById('customAlertModal').classList.add('active');
+    }
+    function closeCustomAlert() {
+        document.getElementById('customAlertModal').classList.remove('active');
+    }
+
+    // --- إدارة واجهات المراحل ---
     const welcomePanel = document.getElementById('welcomePanel');
     const initialSetupPanel = document.getElementById('initialSetupPanel');
     const initialFormsContainer = document.getElementById('initialFormsContainer');
@@ -352,7 +439,6 @@
     const stickyProgressContainer = document.getElementById('stickyProgressContainer');
     const progressBarsWrapper = document.getElementById('progressBarsWrapper');
 
-    // المرحلة 1 -> 2: عرض نموذج الإعداد
     function showInitialSetup(num) {
         initialNumSelected = num;
         welcomePanel.style.display = 'none';
@@ -361,7 +447,7 @@
         for (let i = 1; i <= num; i++) {
             initialFormsContainer.innerHTML += `
                 <div class="range-config-group" id="initGroup${i}">
-                    <div style="font-weight:bold; margin-bottom:8px; color:var(--accent-primary);">المادة ${i}</div>
+                    <div style="font-weight:700; margin-bottom:12px; color:var(--accent-primary); font-size:16px;">📚 المادة ${i}</div>
                     <div class="inputs-group">
                         <div class="input-field" style="flex: 2;">
                             <label>اسم المادة</label>
@@ -369,11 +455,11 @@
                         </div>
                         <div class="input-field">
                             <label>من صفحة</label>
-                            <input type="number" id="initStart${i}" min="1" placeholder="مثال: 1">
+                            <input type="number" id="initStart${i}" min="1" placeholder="رقم">
                         </div>
                         <div class="input-field">
                             <label>إلى صفحة</label>
-                            <input type="number" id="initEnd${i}" min="1" placeholder="مثال: 20">
+                            <input type="number" id="initEnd${i}" min="1" placeholder="رقم">
                         </div>
                     </div>
                 </div>
@@ -381,13 +467,11 @@
         }
     }
 
-    // إلغاء العودة للمرحلة 1
     function cancelInitialSetup() {
         initialSetupPanel.style.display = 'none';
         welcomePanel.style.display = 'block';
     }
 
-    // المرحلة 2 -> 3: بدء الجلسة
     document.getElementById('startSessionBtn').addEventListener('click', () => {
         let configs = [];
         for (let i = 1; i <= initialNumSelected; i++) {
@@ -396,10 +480,10 @@
             const end = parseInt(document.getElementById(`initEnd${i}`).value);
             
             if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0) {
-                alert(`يرجى إكمال بيانات المادة ${i} بشكل صحيح!`); return;
+                showCustomAlert("بيانات غير مكتملة", `يرجى إكمال بيانات المادة (${i}) بشكل صحيح وتحديد الصفحات.`); return;
             }
-            if (start > end) { alert(`في المادة ${i}: صفحة البداية أكبر من النهاية!`); return; }
-            if (configs.find(c => c.name === subject)) { alert(`لقد اخترت المادة "${subject}" مرتين! يرجى التنويع.`); return; }
+            if (start > end) { showCustomAlert("خطأ في الأرقام", `في المادة (${i}): صفحة البداية يجب أن تكون أصغر من صفحة النهاية!`); return; }
+            if (configs.find(c => c.name === subject)) { showCustomAlert("مادة مكررة", `لقد اخترت المادة "${subject}" مرتين! يرجى اختيار مادة مختلفة.`); return; }
 
             configs.push({ id: `sub_${Date.now()}_${i}`, name: subject, start, end, hue: subjectsData[subject].hue });
         }
@@ -413,7 +497,7 @@
         window.scrollBy({ top: 100, behavior: 'smooth' });
     });
 
-    // --- إضافة مادة إضافية في المرحلة 3 ---
+    // --- إضافة مادة إضافية ---
     const addMoreSection = document.getElementById('addMoreSection');
     const toggleAddMoreBtn = document.getElementById('toggleAddMoreBtn');
     
@@ -429,9 +513,9 @@
         const start = parseInt(document.getElementById('addStartPage').value);
         const end = parseInt(document.getElementById('addEndPage').value);
         
-        if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0) { alert("يرجى اختيار المادة وتحديد الصفحات!"); return; }
-        if (start > end) { alert("صفحة البداية أكبر من النهاية!"); return; }
-        if (currentConfigs.find(c => c.name === subject)) { alert("هذه المادة موجودة بالفعل في لوحتك الحالية!"); return; }
+        if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0) { showCustomAlert("بيانات ناقصة", "يرجى اختيار المادة وتحديد أرقام الصفحات المطلوبة."); return; }
+        if (start > end) { showCustomAlert("خطأ في الأرقام", "رقم صفحة البداية أكبر من صفحة النهاية!"); return; }
+        if (currentConfigs.find(c => c.name === subject)) { showCustomAlert("المادة موجودة", "هذه المادة موجودة بالفعل في لوحتك الحالية! أتممها أولاً."); return; }
 
         const config = { id: `sub_${Date.now()}`, name: subject, start, end, hue: subjectsData[subject].hue };
         currentConfigs.push(config);
@@ -445,7 +529,7 @@
         window.scrollBy({ top: 300, behavior: 'smooth' });
     });
 
-    // تصفير كل شيء (العودة للمرحلة 1)
+    // تصفير الجلسة
     function resetEverything() {
         if (confirm("⚠️ هل أنت متأكد من رغبتك في إنهاء الجلسة وتصفير كل شيء؟ سيتم مسح تقدمك الحالي.")) {
             localStorage.removeItem(STATE_KEY);
@@ -454,11 +538,12 @@
             workspace.innerHTML = ''; progressBarsWrapper.innerHTML = '';
             stickyProgressContainer.style.display = 'none';
             welcomePanel.style.display = 'block';
+            addMoreSection.style.display = 'none';
             resetTimer();
         }
     }
 
-    // بناء مادة في مساحة العمل
+    // بناء مساحة العمل
     function appendSubjectToWorkspace(config) {
         stickyProgressContainer.style.display = 'block';
 
@@ -482,7 +567,8 @@
         
         subjectSection.innerHTML = `
             <div class="subject-header-title">
-                <span>📚 ${config.name} (من صفحة ${config.start} إلى ${config.end})</span>
+                <span>📚 ${config.name}</span>
+                <span style="font-size:14px; color:var(--text-secondary); font-weight:normal;">(من ${config.start} إلى ${config.end})</span>
             </div>
         `;
 
@@ -541,24 +627,23 @@
         if (allCards.length === studiedCards.length) {
             if (!taskSectionEl.classList.contains('completed')) {
                 taskSectionEl.classList.add('completed');
-                showCelebration(subjectName, taskIndex, subjectPercentage);
+                showCelebrationPopup(subjectName, taskIndex, subjectPercentage);
             }
         } else {
             taskSectionEl.classList.remove('completed');
         }
     }
 
-    function showCelebration(subjectName, taskIndex, percentage) {
+    function showCelebrationPopup(subjectName, taskIndex, percentage) {
         document.getElementById('celSubjectName').textContent = subjectName;
         document.getElementById('celTaskNum').textContent = taskIndex;
         document.getElementById('celPercentage').textContent = percentage;
-        const modal = document.getElementById('celebrationModal');
-        modal.style.display = 'flex';
-        setTimeout(closeCelebration, 5000);
+        document.getElementById('celebrationModal').classList.add('active');
+        setTimeout(closeCelebration, 6000);
     }
-    function closeCelebration() { document.getElementById('celebrationModal').style.display = 'none'; }
+    function closeCelebration() { document.getElementById('celebrationModal').classList.remove('active'); }
 
-    // --- المؤقت الزمني ---
+    // --- إعداد المؤقت (Modal) ---
     let timerInterval, seconds = 0, isRunning = false, isCountdown = false, startingSeconds = 0;
     const stickyTimerDisplay = document.getElementById('stickyTimer');
     const sStartBtn = document.getElementById('sStartBtn');
@@ -566,23 +651,34 @@
     const sResetBtn = document.getElementById('sResetBtn');
     const modeUpBtn = document.getElementById('modeUpBtn');
     const modeDownBtn = document.getElementById('modeDownBtn');
-    const timerSetup = document.getElementById('timerSetup');
+    const timerInputContainer = document.getElementById('timerInputContainer');
     const setMinutesInput = document.getElementById('setMinutes');
 
-    modeUpBtn.addEventListener('click', () => { isCountdown = false; modeUpBtn.classList.add('active'); modeDownBtn.classList.remove('active'); timerSetup.classList.remove('active'); resetTimer(); });
-    modeDownBtn.addEventListener('click', () => { isCountdown = true; modeDownBtn.classList.add('active'); modeUpBtn.classList.remove('active'); timerSetup.classList.add('active'); resetTimer(); });
+    function openTimerSetup() { document.getElementById('timerSetupModal').classList.add('active'); }
+    function closeTimerSetup() { document.getElementById('timerSetupModal').classList.remove('active'); }
+
+    modeUpBtn.addEventListener('click', () => { isCountdown = false; modeUpBtn.classList.add('active'); modeDownBtn.classList.remove('active'); timerInputContainer.classList.remove('active'); resetTimer(); });
+    modeDownBtn.addEventListener('click', () => { isCountdown = true; modeDownBtn.classList.add('active'); modeUpBtn.classList.remove('active'); timerInputContainer.classList.add('active'); resetTimer(); });
+    
     document.getElementById('applyTimerBtn').addEventListener('click', () => {
-        const mins = parseInt(setMinutesInput.value);
-        if (isNaN(mins) || mins <= 0) { alert("يرجى إدخال عدد دقائق صحيح!"); return; }
-        startingSeconds = mins * 60; seconds = startingSeconds; updateTimerDisplay(); saveState(); alert(`تم ضبط وقت التركيز على ${mins} دقيقة بنجاح.`);
+        if (isCountdown) {
+            const mins = parseInt(setMinutesInput.value);
+            if (isNaN(mins) || mins <= 0) { showCustomAlert("إدخال غير صحيح", "يرجى إدخال عدد دقائق صحيح لتبدأ العد التنازلي."); return; }
+            startingSeconds = mins * 60; seconds = startingSeconds; 
+        }
+        updateTimerDisplay(); saveState(); 
+        closeTimerSetup();
+        if (isCountdown) showCustomAlert("تم الضبط", `تم ضبط المؤقت التنازلي على ${setMinutesInput.value} دقيقة بنجاح. ابدأ التركيز!`, "⏱️");
     });
 
     function playAudioAlert() {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-        osc.connect(gain); gain.connect(audioCtx.destination);
-        osc.type = 'sine'; osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); setTimeout(() => osc.stop(), 500);
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.type = 'sine'; osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); setTimeout(() => osc.stop(), 600);
+        } catch (e) { console.log("Audio not supported"); }
     }
 
     function updateTimerDisplay() {
@@ -594,20 +690,31 @@
 
     function startTimer() {
         if (!isRunning) {
-            if (isCountdown && seconds === 0) { alert("يرجى حفظ الوقت أولاً."); return; }
+            if (isCountdown && seconds === 0) { openTimerSetup(); return; }
             document.body.classList.remove('timer-ended'); isRunning = true;
-            sStartBtn.style.backgroundColor = "rgba(46, 204, 113, 0.2)"; sPauseBtn.style.backgroundColor = "rgba(128,128,128,0.1)";
+            sStartBtn.style.background = "rgba(16, 185, 129, 0.15)"; sStartBtn.style.color = "#059669";
+            sPauseBtn.style.background = "var(--btn-secondary-bg)"; sPauseBtn.style.color = "var(--text-primary)";
             timerInterval = setInterval(() => {
                 if (isCountdown) {
                     if (seconds > 0) { seconds--; updateTimerDisplay(); }
-                    if (seconds === 0) { pauseTimer(); playAudioAlert(); document.body.classList.add('timer-ended'); setTimeout(() => { alert("⏰ انتهى وقت التركيز! خذ استراحة."); document.body.classList.remove('timer-ended'); }, 300); }
+                    if (seconds === 0) { pauseTimer(); playAudioAlert(); document.body.classList.add('timer-ended'); showCustomAlert("انتهى الوقت", "⏰ لقد انتهى وقت التركيز المخصص! خذ استراحة قصيرة.", "🎉"); }
                 } else { seconds++; updateTimerDisplay(); }
                 if (seconds % 5 === 0) saveState();
             }, 1000);
         }
     }
-    function pauseTimer() { isRunning = false; clearInterval(timerInterval); sStartBtn.style.backgroundColor = "rgba(128,128,128,0.1)"; sPauseBtn.style.backgroundColor = "rgba(231, 76, 60, 0.2)"; saveState(); }
-    function resetTimer() { pauseTimer(); document.body.classList.remove('timer-ended'); stickyTimerDisplay.classList.remove('ending'); sPauseBtn.style.backgroundColor = "rgba(128,128,128,0.1)"; if (isCountdown) seconds = startingSeconds; else seconds = 0; updateTimerDisplay(); saveState(); }
+    function pauseTimer() { 
+        isRunning = false; clearInterval(timerInterval); 
+        sStartBtn.style.background = "var(--btn-secondary-bg)"; sStartBtn.style.color = "var(--text-primary)";
+        sPauseBtn.style.background = "rgba(220, 38, 38, 0.15)"; sPauseBtn.style.color = "#dc2626";
+        saveState(); 
+    }
+    function resetTimer() { 
+        pauseTimer(); document.body.classList.remove('timer-ended'); stickyTimerDisplay.classList.remove('ending'); 
+        sPauseBtn.style.background = "var(--btn-secondary-bg)"; sPauseBtn.style.color = "var(--text-primary)";
+        if (isCountdown) seconds = startingSeconds; else seconds = 0; 
+        updateTimerDisplay(); saveState(); 
+    }
 
     sStartBtn.addEventListener('click', startTimer); sPauseBtn.addEventListener('click', pauseTimer); sResetBtn.addEventListener('click', resetTimer);
 
@@ -649,7 +756,7 @@
                 }
 
                 if (state.timer) {
-                    if (state.timer.mode === 'down') { isCountdown = true; modeDownBtn.classList.add('active'); modeUpBtn.classList.remove('active'); timerSetup.classList.add('active'); } 
+                    if (state.timer.mode === 'down') { isCountdown = true; modeDownBtn.classList.add('active'); modeUpBtn.classList.remove('active'); timerInputContainer.classList.add('active'); } 
                     else { isCountdown = false; modeUpBtn.classList.add('active'); modeDownBtn.classList.remove('active'); }
                     setMinutesInput.value = state.timer.mins || ''; startingSeconds = state.timer.startSec || 0; seconds = state.timer.sec || 0; updateTimerDisplay();
                 }
