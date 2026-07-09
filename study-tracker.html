@@ -19,7 +19,6 @@
             --radius-md: 12px;
             --radius-sm: 8px;
             --header-bg: rgba(251, 249, 244, 0.92);
-            /* ألوان أساسية للأزرار والمؤقت */
             --btn-primary-bg: #4a3e3d;
             --btn-secondary-border: #e5c6c1;
             --btn-secondary-text: #c0392b;
@@ -36,7 +35,6 @@
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
             --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
             --header-bg: rgba(18, 18, 18, 0.92);
-            
             --btn-primary-bg: #d4a373;
             --btn-secondary-border: #8c4a38;
             --btn-secondary-text: #e07a5f;
@@ -53,7 +51,6 @@
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* تأثير الوميض لانتهاء المؤقت */
         body.timer-ended { background-color: #d4edda; }
         body.dark-mode.timer-ended { background-color: #2e4f37; }
 
@@ -68,12 +65,12 @@
             padding: 12px 24px;
             z-index: 100;
             box-shadow: var(--shadow-sm);
-            display: none; /* مخفي البداية */
+            display: none; 
             transition: background-color 0.4s ease, border-color 0.4s ease;
         }
 
         .progress-container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -82,7 +79,6 @@
             flex-wrap: wrap;
         }
 
-        /* عنصر تقدم لكل مادة */
         .subject-progress-box {
             flex: 1;
             min-width: 200px;
@@ -108,15 +104,15 @@
         }
 
         .progress-bar-fill {
-            /* اللون يتحدد برمجياً حسب المادة */
             background-color: hsl(var(--subject-hue), 50%, 50%);
             height: 100%;
             width: 0%;
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* توسيع الحاوية لتناسب عرض النطاقات بجانب بعضها */
         .main-layout {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 30px auto;
             padding: 0 20px;
             box-sizing: border-box;
@@ -155,11 +151,13 @@
         .btn-theme:hover, .btn-back:hover { filter: brightness(0.95); }
         body.dark-mode .btn-theme:hover, body.dark-mode .btn-back:hover { filter: brightness(1.1); }
 
-        /* شاشة البداية لاختيار النطاقات */
+        /* شاشة البداية */
         #initialSetupPanel {
             text-align: center;
             padding: 40px 20px;
             animation: fadeIn 0.4s ease;
+            max-width: 800px;
+            margin: 0 auto;
         }
         #initialSetupPanel h2 { color: var(--text-primary); margin-bottom: 30px; }
         
@@ -187,7 +185,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* لوحة التحكم الرئيسية */
         #mainDashboard { display: none; animation: fadeIn 0.4s ease; }
 
         .dashboard-grid {
@@ -215,7 +212,6 @@
             padding-bottom: 10px;
         }
 
-        /* حقول الإدخال */
         .range-config-group { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-subtle); }
         .range-config-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
@@ -278,33 +274,60 @@
         body.dark-mode .timer-display.ending { color: #e07a5f; }
         .action-buttons-timer { display: flex; gap: 10px; }
 
-        /* مساحة العمل والبطاقات */
-        .subject-section { margin-bottom: 40px; animation: fadeIn 0.4s ease; }
-        .subject-header-title {
-            font-size: 20px; font-weight: bold; color: var(--text-primary);
-            margin-bottom: 15px; padding-right: 15px; border-right: 4px solid hsl(var(--subject-hue), 60%, 50%);
+        /* منطقة العمل (مقسمة لشبكة لعرض النطاقات بجانب بعضها) */
+        #workspace {
+            display: grid;
+            /* ستعرض المواد بجانب بعضها، وإذا ضاقت الشاشة ستنزل للأسفل تلقائياً */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            align-items: start;
         }
 
-        .task-section {
-            background: var(--surface); border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
+        /* تصميم المربع الحاضن لكل مادة */
+        .subject-section { 
+            background: var(--surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            animation: fadeIn 0.4s ease;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
         }
+
+        .subject-header-title {
+            font-size: 18px; 
+            font-weight: bold; 
+            color: var(--text-primary);
+            margin-bottom: 20px; 
+            padding-right: 12px; 
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--border-subtle);
+            border-right: 4px solid hsl(var(--subject-hue), 60%, 50%);
+        }
+
+        /* حاوية المهام الداخلية (أصبحت شفافة وهادئة لتناسب الترتيب الجديد) */
+        .task-section {
+            background: rgba(128, 128, 128, 0.03); 
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md); 
+            padding: 15px; 
+            margin-bottom: 15px; 
+        }
+
         .task-header {
             display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px dashed var(--border-subtle); padding-bottom: 12px; margin-bottom: 20px;
+            margin-bottom: 15px;
         }
-        .task-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0; }
-        .task-badge { background: var(--bg-app); color: var(--text-secondary); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .task-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .task-badge { background: var(--bg-app); color: var(--text-secondary); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
         
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 12px; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 10px; }
 
-        /* البطاقات المتفاعلة مع اللون المخصص للمادة */
         .card {
-            /* لون غير مدروس: فاتح / باهت */
             background-color: hsl(var(--subject-hue), 30%, 80%);
             color: #333;
-            height: 55px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
-            font-size: 16px; font-weight: 600; cursor: pointer; user-select: none;
+            height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
+            font-size: 15px; font-weight: 600; cursor: pointer; user-select: none;
             transition: all 0.25s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         body.dark-mode .card {
@@ -316,7 +339,6 @@
         body.dark-mode .card:hover { filter: brightness(1.2); }
 
         .card.studied {
-            /* لون مدروس: قوي وواضح */
             background-color: hsl(var(--subject-hue), 60%, 45%);
             color: #ffffff;
             box-shadow: 0 4px 12px hsla(var(--subject-hue), 60%, 45%, 0.3);
@@ -332,11 +354,8 @@
 </head>
 <body>
 
-<!-- شريط التقدم العائم (يُبنى برمجياً) -->
 <div class="sticky-progress" id="stickyProgressContainer">
-    <div class="progress-container" id="progressBarsWrapper">
-        <!-- سيتم إضافة الأشرطة هنا -->
-    </div>
+    <div class="progress-container" id="progressBarsWrapper"></div>
 </div>
 
 <div class="main-layout">
@@ -348,7 +367,6 @@
         </div>
     </div>
 
-    <!-- شاشة البداية: اختيار عدد النطاقات/المواد -->
     <div id="initialSetupPanel" class="panel-card">
         <h2>كم مادة تود مراجعتها/دراستها في هذه الجلسة؟</h2>
         <div class="range-buttons">
@@ -358,21 +376,15 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم الرئيسية (تظهر بعد الاختيار) -->
     <div id="mainDashboard">
         <div class="dashboard-grid">
-            
-            <!-- قسم الإعدادات الديناميكي -->
             <div class="panel-card">
                 <p class="panel-title">إعدادات النطاق الدراسي</p>
-                <div id="formsContainer">
-                    <!-- سيتم إضافة حقول المواد هنا برمجياً -->
-                </div>
+                <div id="formsContainer"></div>
                 <button class="btn-primary" id="generateBtn" style="margin-top: 15px;">إنشاء بطاقات المهام 🚀</button>
                 <button class="btn-secondary" onclick="resetToInitial()">إعادة ضبط الكل 🔄</button>
             </div>
 
-            <!-- لوحة المؤقت الزمني -->
             <div class="panel-card" style="display: flex; flex-direction: column; justify-content: space-between;">
                 <p class="panel-title">مؤقت التركيز الفعال</p>
                 <div class="timer-modes">
@@ -390,32 +402,26 @@
                     <button class="btn-secondary" id="resetTimerBtn" style="flex:1; margin-top:0;">إعادة</button>
                 </div>
             </div>
-            
         </div>
     </div>
 
-    <!-- مساحة توليد المهام -->
     <div id="workspace"></div>
 </div>
 
 <script>
-    // --- بيانات المواد (كل مادة لها Hue خاص في عجلة الألوان من 0 إلى 360) ---
     const subjectsData = {
-        // الفصل الأول
-        "بيولوجيا الخلية": { hue: 170, group: "الفصل الأول" },       // أخضر مزرق (Teal)
-        "الكيمياء العامة والعضوية": { hue: 25, group: "الفصل الأول" },// برتقالي دافئ
-        "الفيزياء الطبية": { hue: 210, group: "الفصل الأول" },       // أزرق
-        "اللغة الإنجليزية 1": { hue: 130, group: "الفصل الأول" },    // أخضر عشبي
-        "تاريخ الطب": { hue: 35, group: "الفصل الأول" },             // بني/خشبي
-        // الفصل الثاني
-        "التشريح العام": { hue: 0, group: "الفصل الثاني" },          // أحمر
-        "الفيزيولوجيا": { hue: 330, group: "الفصل الثاني" },         // وردي/زهري (Pink)
-        "علم الوراثة": { hue: 270, group: "الفصل الثاني" },          // بنفسجي
-        "الإحصاء الحيوي": { hue: 230, group: "الفصل الثاني" },       // نيلي/أزرق داكن
-        "اللغة الإنجليزية 2": { hue: 90, group: "الفصل الثاني" }     // أخضر ليموني
+        "بيولوجيا الخلية": { hue: 170, group: "الفصل الأول" },
+        "الكيمياء العامة والعضوية": { hue: 25, group: "الفصل الأول" },
+        "الفيزياء الطبية": { hue: 210, group: "الفصل الأول" },
+        "اللغة الإنجليزية 1": { hue: 130, group: "الفصل الأول" },
+        "تاريخ الطب": { hue: 35, group: "الفصل الأول" },
+        "التشريح العام": { hue: 0, group: "الفصل الثاني" },
+        "الفيزيولوجيا": { hue: 330, group: "الفصل الثاني" },
+        "علم الوراثة": { hue: 270, group: "الفصل الثاني" },
+        "الإحصاء الحيوي": { hue: 230, group: "الفصل الثاني" },
+        "اللغة الإنجليزية 2": { hue: 90, group: "الفصل الثاني" }
     };
 
-    // توليد خيارات القائمة المنسدلة (Options) HTML
     let subjectOptionsHTML = `<option value="" disabled selected>اختر المادة...</option>`;
     let g1 = `<optgroup label="الفصل الدراسي الأول">`;
     let g2 = `<optgroup label="الفصل الدراسي الثاني">`;
@@ -426,7 +432,6 @@
     g1 += `</optgroup>`; g2 += `</optgroup>`;
     subjectOptionsHTML += g1 + g2;
 
-    // --- نظام الوضع الداكن والفاتح ---
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const body = document.body;
     if (localStorage.getItem('studyTrackerTheme') === 'dark') {
@@ -444,7 +449,6 @@
         }
     });
 
-    // --- إدارة واجهة النطاقات ---
     const initialSetupPanel = document.getElementById('initialSetupPanel');
     const mainDashboard = document.getElementById('mainDashboard');
     const formsContainer = document.getElementById('formsContainer');
@@ -453,7 +457,6 @@
     const progressBarsWrapper = document.getElementById('progressBarsWrapper');
     let numRangesSelected = 0;
 
-    // دالة عرض نموذج إدخال المواد بناء على العدد المختار
     function setupDashboard(num) {
         numRangesSelected = num;
         initialSetupPanel.style.display = 'none';
@@ -483,7 +486,6 @@
         }
     }
 
-    // زر العودة لاختيار النطاقات (إعادة ضبط)
     function resetToInitial() {
         initialSetupPanel.style.display = 'block';
         mainDashboard.style.display = 'none';
@@ -492,10 +494,8 @@
         resetTimer();
     }
 
-    // --- توليد البطاقات ومساحة العمل ---
     document.getElementById('generateBtn').addEventListener('click', () => {
         let configs = [];
-        // التحقق من المدخلات
         for (let i = 1; i <= numRangesSelected; i++) {
             const subject = document.getElementById(`subject${i}`).value;
             const start = parseInt(document.getElementById(`start${i}`).value);
@@ -510,14 +510,11 @@
             configs.push({ id: `sub_${i}`, name: subject, start, end, hue: subjectsData[subject].hue });
         }
 
-        // تفريغ وتجهيز مساحة العمل
         workspace.innerHTML = '';
         progressBarsWrapper.innerHTML = '';
         stickyProgressContainer.style.display = 'block';
 
-        // إنشاء المهام وأشرطة التقدم لكل مادة
         configs.forEach(config => {
-            // 1. إنشاء شريط تقدم لهذه المادة فوق
             const pBarHTML = `
                 <div class="subject-progress-box" style="--subject-hue: ${config.hue};">
                     <div class="subject-progress-header">
@@ -531,7 +528,6 @@
             `;
             progressBarsWrapper.innerHTML += pBarHTML;
 
-            // 2. إنشاء منطقة المادة في مساحة العمل
             const subjectSection = document.createElement('div');
             subjectSection.className = 'subject-section';
             subjectSection.style.setProperty('--subject-hue', config.hue);
@@ -565,7 +561,7 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.textContent = page;
-                card.setAttribute('data-subject-id', config.id); // لربط البطاقة بالمادة لحساب التقدم
+                card.setAttribute('data-subject-id', config.id);
                 
                 card.addEventListener('click', function() {
                     this.classList.toggle('studied');
@@ -576,11 +572,10 @@
                 cardCount++;
             }
             workspace.appendChild(subjectSection);
-            updateProgressFor(config.id); // تصفير العداد ليعرض 0% مبدئياً
+            updateProgressFor(config.id);
         });
     });
 
-    // تحديث نسبة إنجاز مادة محددة
     function updateProgressFor(subjectId) {
         const subjectCards = document.querySelectorAll(`.card[data-subject-id="${subjectId}"]`);
         const studiedCards = document.querySelectorAll(`.card[data-subject-id="${subjectId}"].studied`);
@@ -592,8 +587,6 @@
         document.getElementById(`percentText_${subjectId}`).textContent = `${percentage}%`;
     }
 
-
-    // --- وظائف المؤقت الزمني ---
     let timerInterval, seconds = 0, isRunning = false, isCountdown = false, startingSeconds = 0;
     const timerDisplay = document.getElementById('timer');
     const startTimerBtn = document.getElementById('startTimerBtn');
