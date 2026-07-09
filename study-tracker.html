@@ -6,14 +6,12 @@
     <title>لوحة تتبع الإنجاز الدراسي الذكية</title>
     <style>
         :root {
-            /* ألوان الوضع الفاتح (الافتراضي) */
+            /* ألوان الوضع الفاتح */
             --bg-app: #fbf9f4;
             --surface: #ffffff;
             --text-primary: #2d251e;
             --text-secondary: #70655b;
             --accent-primary: #4a3e3d;
-            --card-unstudied: #e07a5f;
-            --card-studied: #81b29a;
             --border-subtle: #eae3da;
             --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.04);
             --shadow-md: 0 10px 30px rgba(45, 37, 30, 0.06);
@@ -21,21 +19,27 @@
             --radius-md: 12px;
             --radius-sm: 8px;
             --header-bg: rgba(251, 249, 244, 0.92);
+            /* ألوان أساسية للأزرار والمؤقت */
+            --btn-primary-bg: #4a3e3d;
+            --btn-secondary-border: #e5c6c1;
+            --btn-secondary-text: #c0392b;
         }
 
-        /* ألوان الوضع الداكن (مريحة للعين وموفرة للبطارية) */
+        /* ألوان الوضع الداكن */
         body.dark-mode {
-            --bg-app: #121212; /* أسود عميق لبطارية الآيباد */
-            --surface: #1e1e1e; /* رمادي داكن للبطاقات */
+            --bg-app: #121212; 
+            --surface: #1e1e1e; 
             --text-primary: #e0e0e0;
             --text-secondary: #a0a0a0;
-            --accent-primary: #d4a373; /* لون دافئ متناسق مع الظلام */
-            --card-unstudied: #8c4a38;
-            --card-studied: #4a7c5f;
+            --accent-primary: #d4a373; 
             --border-subtle: #333333;
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
             --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
             --header-bg: rgba(18, 18, 18, 0.92);
+            
+            --btn-primary-bg: #d4a373;
+            --btn-secondary-border: #8c4a38;
+            --btn-secondary-text: #e07a5f;
         }
 
         body {
@@ -49,13 +53,11 @@
             transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        body.timer-ended {
-            background-color: #d4edda;
-        }
-        body.dark-mode.timer-ended {
-            background-color: #2e4f37; /* لون تنبيه مناسب للوضع الداكن */
-        }
+        /* تأثير الوميض لانتهاء المؤقت */
+        body.timer-ended { background-color: #d4edda; }
+        body.dark-mode.timer-ended { background-color: #2e4f37; }
 
+        /* شريط التقدم العائم المتعدد */
         .sticky-progress {
             position: sticky;
             top: 0;
@@ -66,6 +68,7 @@
             padding: 12px 24px;
             z-index: 100;
             box-shadow: var(--shadow-sm);
+            display: none; /* مخفي البداية */
             transition: background-color 0.4s ease, border-color 0.4s ease;
         }
 
@@ -76,31 +79,40 @@
             align-items: center;
             justify-content: space-between;
             gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* عنصر تقدم لكل مادة */
+        .subject-progress-box {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .subject-progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
         }
 
         .progress-bar-wrapper {
-            flex-grow: 1;
             background: var(--border-subtle);
             height: 10px;
             border-radius: 20px;
             overflow: hidden;
-            transition: background-color 0.4s ease;
+            width: 100%;
         }
 
         .progress-bar-fill {
-            background: var(--card-studied);
+            /* اللون يتحدد برمجياً حسب المادة */
+            background-color: hsl(var(--subject-hue), 50%, 50%);
             height: 100%;
             width: 0%;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.4s ease;
-        }
-
-        .progress-text {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            min-width: 80px;
-            text-align: left;
-            transition: color 0.4s ease;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .main-layout {
@@ -124,13 +136,9 @@
             font-weight: 700;
             margin: 0;
             color: var(--text-primary);
-            transition: color 0.4s ease;
         }
         
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
+        .header-actions { display: flex; gap: 10px; }
 
         .btn-theme, .btn-back {
             background: var(--surface);
@@ -144,25 +152,51 @@
             box-shadow: var(--shadow-sm);
             transition: all 0.2s ease;
         }
+        .btn-theme:hover, .btn-back:hover { filter: brightness(0.95); }
+        body.dark-mode .btn-theme:hover, body.dark-mode .btn-back:hover { filter: brightness(1.1); }
 
-        .btn-theme:hover, .btn-back:hover {
-            transform: translateY(-1px);
-            filter: brightness(0.95);
+        /* شاشة البداية لاختيار النطاقات */
+        #initialSetupPanel {
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.4s ease;
         }
-        body.dark-mode .btn-theme:hover, body.dark-mode .btn-back:hover {
-            filter: brightness(1.1);
+        #initialSetupPanel h2 { color: var(--text-primary); margin-bottom: 30px; }
+        
+        .range-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
+        .btn-range-select {
+            background: var(--surface);
+            border: 2px solid var(--border-subtle);
+            color: var(--text-primary);
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-range-select:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* لوحة التحكم الرئيسية */
+        #mainDashboard { display: none; animation: fadeIn 0.4s ease; }
 
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
-
-        @media (max-width: 768px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
 
         .panel-card {
             background: var(--surface);
@@ -170,230 +204,138 @@
             border-radius: var(--radius-lg);
             padding: 24px;
             box-shadow: var(--shadow-md);
-            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
-
         .panel-title {
             font-size: 15px;
             font-weight: 600;
             text-transform: uppercase;
             color: var(--text-secondary);
-            margin-top: 0;
-            margin-bottom: 16px;
-            letter-spacing: 0.5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: color 0.4s ease;
+            margin-top: 0; margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 10px;
         }
 
-        .inputs-group {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
+        /* حقول الإدخال */
+        .range-config-group { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-subtle); }
+        .range-config-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-        .input-field {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .input-field label {
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: color 0.4s ease;
-        }
-
-        .input-field input, .timer-input {
+        .inputs-group { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+        .input-field { flex: 1; display: flex; flex-direction: column; gap: 6px; min-width: 100px; }
+        .input-field label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+        
+        select, input[type="number"] {
             background: var(--bg-app);
             border: 1px solid var(--border-subtle);
-            padding: 12px;
-            font-size: 16px;
+            padding: 10px;
+            font-size: 15px;
             border-radius: var(--radius-sm);
             color: var(--text-primary);
             outline: none;
-            transition: border 0.2s, background-color 0.4s ease, color 0.4s ease;
+            transition: border 0.2s;
+            font-family: inherit;
         }
-
-        .input-field input:focus, .timer-input:focus {
-            border-color: var(--accent-primary);
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
+        select:focus, input[type="number"]:focus { border-color: var(--accent-primary); }
 
         .btn-primary {
-            flex: 2;
-            background: var(--accent-primary);
-            color: #ffffff; /* ثابت دائمًا أبيض ليكون مقروءاً */
+            background: var(--btn-primary-bg);
+            color: #ffffff;
             border: none;
             padding: 12px;
             border-radius: var(--radius-sm);
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.2s, background-color 0.4s ease;
+            transition: opacity 0.2s;
+            width: 100%;
         }
-
+        body.dark-mode .btn-primary { color: #121212; }
         .btn-primary:hover { opacity: 0.9; }
 
         .btn-secondary {
-            flex: 1;
             background: transparent;
-            border: 1px solid var(--card-unstudied);
-            color: var(--card-unstudied);
+            border: 1px solid var(--btn-secondary-border);
+            color: var(--btn-secondary-text);
             padding: 12px;
             border-radius: var(--radius-sm);
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.4s ease;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .timer-modes {
-            display: flex;
-            background: var(--bg-app);
-            border-radius: var(--radius-sm);
-            padding: 4px;
-            margin-bottom: 15px;
-            transition: background-color 0.4s ease;
-        }
-
+        /* المؤقت */
+        .timer-modes { display: flex; background: var(--bg-app); border-radius: var(--radius-sm); padding: 4px; margin-bottom: 15px; }
         .mode-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.2s;
+            flex: 1; background: transparent; border: none; padding: 8px; border-radius: 6px;
+            font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer;
         }
+        .mode-btn.active { background: var(--surface); color: var(--accent-primary); box-shadow: var(--shadow-sm); }
+        .timer-setup { display: none; gap: 10px; margin-bottom: 15px; }
+        .timer-setup.active { display: flex; }
+        .timer-display { font-size: 36px; font-weight: 300; font-family: monospace; text-align: center; margin: 10px 0 20px 0; }
+        .timer-display.ending { color: #c0392b; font-weight: bold; }
+        body.dark-mode .timer-display.ending { color: #e07a5f; }
+        .action-buttons-timer { display: flex; gap: 10px; }
 
-        .mode-btn.active {
-            background: var(--surface);
-            color: var(--accent-primary);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .timer-setup {
-            display: none;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .timer-setup.active {
-            display: flex;
-        }
-
-        .timer-input {
-            width: 100px;
-            padding: 8px 12px;
-        }
-
-        .timer-display {
-            font-size: 36px;
-            font-weight: 300;
-            font-family: -apple-system-monospace, monospace;
-            text-align: center;
-            margin: 10px 0 20px 0;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-
-        .timer-display.ending {
-            color: var(--card-unstudied);
-            font-weight: bold;
+        /* مساحة العمل والبطاقات */
+        .subject-section { margin-bottom: 40px; animation: fadeIn 0.4s ease; }
+        .subject-header-title {
+            font-size: 20px; font-weight: bold; color: var(--text-primary);
+            margin-bottom: 15px; padding-right: 15px; border-right: 4px solid hsl(var(--subject-hue), 60%, 50%);
         }
 
         .task-section {
-            background: var(--surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow-md);
-            animation: fadeIn 0.4s ease;
-            transition: background-color 0.4s ease, border-color 0.4s ease;
+            background: var(--surface); border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
         }
-
         .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px dashed var(--border-subtle);
-            padding-bottom: 12px;
-            margin-bottom: 20px;
-            transition: border-color 0.4s ease;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px dashed var(--border-subtle); padding-bottom: 12px; margin-bottom: 20px;
         }
+        .task-title { font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 0; }
+        .task-badge { background: var(--bg-app); color: var(--text-secondary); padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 12px; }
 
-        .task-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--accent-primary);
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.4s ease;
-        }
-
-        .task-badge {
-            background: rgba(128, 128, 128, 0.1);
-            color: var(--text-secondary);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            transition: color 0.4s ease;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(65px, 1fr));
-            gap: 12px;
-        }
-
+        /* البطاقات المتفاعلة مع اللون المخصص للمادة */
         .card {
-            background: var(--card-unstudied);
+            /* لون غير مدروس: فاتح / باهت */
+            background-color: hsl(var(--subject-hue), 30%, 80%);
+            color: #333;
+            height: 55px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;
+            font-size: 16px; font-weight: 600; cursor: pointer; user-select: none;
+            transition: all 0.25s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .card {
+            background-color: hsl(var(--subject-hue), 40%, 25%);
+            color: #ccc;
+        }
+        
+        .card:hover { transform: translateY(-3px); filter: brightness(0.9); }
+        body.dark-mode .card:hover { filter: brightness(1.2); }
+
+        .card.studied {
+            /* لون مدروس: قوي وواضح */
+            background-color: hsl(var(--subject-hue), 60%, 45%);
             color: #ffffff;
-            height: 60px;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 4px 12px hsla(var(--subject-hue), 60%, 45%, 0.3);
+        }
+        body.dark-mode .card.studied {
+            background-color: hsl(var(--subject-hue), 50%, 50%);
+            color: #121212;
+            box-shadow: 0 4px 12px hsla(var(--subject-hue), 50%, 50%, 0.4);
         }
 
-        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-        .card.studied { background: var(--card-studied); }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div class="sticky-progress">
-    <div class="progress-container">
-        <div class="progress-bar-wrapper">
-            <div class="progress-bar-fill" id="progressBar"></div>
-        </div>
-        <div class="progress-text" id="progressText">تم إنجاز: 0%</div>
+<!-- شريط التقدم العائم (يُبنى برمجياً) -->
+<div class="sticky-progress" id="stickyProgressContainer">
+    <div class="progress-container" id="progressBarsWrapper">
+        <!-- سيتم إضافة الأشرطة هنا -->
     </div>
 </div>
 
@@ -406,63 +348,91 @@
         </div>
     </div>
 
-    <div class="dashboard-grid">
-        <div class="panel-card">
-            <p class="panel-title">إعدادات النطاق الدراسي</p>
-            <div class="inputs-group">
-                <div class="input-field">
-                    <label for="startPage">من صفحة</label>
-                    <input type="number" id="startPage" min="1" placeholder="مثال: 30">
-                </div>
-                <div class="input-field">
-                    <label for="endPage">إلى صفحة</label>
-                    <input type="number" id="endPage" min="1" placeholder="مثال: 40">
-                </div>
-            </div>
-            <div class="action-buttons">
-                <button class="btn-primary" id="generateBtn">إنشاء بطاقات المهام</button>
-                <button class="btn-secondary" id="resetBtn">تصفير</button>
-            </div>
-        </div>
-
-        <div class="panel-card" style="display: flex; flex-direction: column; justify-content: space-between;">
-            <p class="panel-title">مؤقت التركيز الفعال</p>
-            
-            <div class="timer-modes">
-                <button class="mode-btn active" id="modeUpBtn">تصاعدي (مفتوح)</button>
-                <button class="mode-btn" id="modeDownBtn">تنازلي (تحديد وقت)</button>
-            </div>
-
-            <div class="timer-setup" id="timerSetup">
-                <input type="number" id="setMinutes" class="timer-input" min="1" placeholder="دقائق (مثلاً 25)">
-                <button class="btn-primary" id="applyTimerBtn" style="flex: 1; padding: 8px;">ضبط الوقت</button>
-            </div>
-
-            <div class="timer-display" id="timer">00:00:00</div>
-            
-            <div class="action-buttons">
-                <button class="btn-primary" id="startTimerBtn" style="background:#5e504f;">بدء ▶</button>
-                <button class="btn-primary" id="pauseTimerBtn" style="background:#7a6c6b;">إيقاف ⏸</button>
-                <button class="btn-secondary" id="resetTimerBtn">إعادة</button>
-            </div>
+    <!-- شاشة البداية: اختيار عدد النطاقات/المواد -->
+    <div id="initialSetupPanel" class="panel-card">
+        <h2>كم مادة تود مراجعتها/دراستها في هذه الجلسة؟</h2>
+        <div class="range-buttons">
+            <button class="btn-range-select" onclick="setupDashboard(1)">مادة واحدة</button>
+            <button class="btn-range-select" onclick="setupDashboard(2)">مادتين</button>
+            <button class="btn-range-select" onclick="setupDashboard(3)">3 مواد</button>
         </div>
     </div>
 
+    <!-- لوحة التحكم الرئيسية (تظهر بعد الاختيار) -->
+    <div id="mainDashboard">
+        <div class="dashboard-grid">
+            
+            <!-- قسم الإعدادات الديناميكي -->
+            <div class="panel-card">
+                <p class="panel-title">إعدادات النطاق الدراسي</p>
+                <div id="formsContainer">
+                    <!-- سيتم إضافة حقول المواد هنا برمجياً -->
+                </div>
+                <button class="btn-primary" id="generateBtn" style="margin-top: 15px;">إنشاء بطاقات المهام 🚀</button>
+                <button class="btn-secondary" onclick="resetToInitial()">إعادة ضبط الكل 🔄</button>
+            </div>
+
+            <!-- لوحة المؤقت الزمني -->
+            <div class="panel-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <p class="panel-title">مؤقت التركيز الفعال</p>
+                <div class="timer-modes">
+                    <button class="mode-btn active" id="modeUpBtn">مفتوح</button>
+                    <button class="mode-btn" id="modeDownBtn">تحديد وقت</button>
+                </div>
+                <div class="timer-setup" id="timerSetup">
+                    <input type="number" id="setMinutes" class="timer-input" min="1" placeholder="دقائق (25)">
+                    <button class="btn-primary" id="applyTimerBtn" style="padding: 8px;">ضبط</button>
+                </div>
+                <div class="timer-display" id="timer">00:00:00</div>
+                <div class="action-buttons-timer">
+                    <button class="btn-primary" id="startTimerBtn" style="flex:2;">بدء ▶</button>
+                    <button class="btn-primary" id="pauseTimerBtn" style="flex:2;">إيقاف ⏸</button>
+                    <button class="btn-secondary" id="resetTimerBtn" style="flex:1; margin-top:0;">إعادة</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- مساحة توليد المهام -->
     <div id="workspace"></div>
 </div>
 
 <script>
+    // --- بيانات المواد (كل مادة لها Hue خاص في عجلة الألوان من 0 إلى 360) ---
+    const subjectsData = {
+        // الفصل الأول
+        "بيولوجيا الخلية": { hue: 170, group: "الفصل الأول" },       // أخضر مزرق (Teal)
+        "الكيمياء العامة والعضوية": { hue: 25, group: "الفصل الأول" },// برتقالي دافئ
+        "الفيزياء الطبية": { hue: 210, group: "الفصل الأول" },       // أزرق
+        "اللغة الإنجليزية 1": { hue: 130, group: "الفصل الأول" },    // أخضر عشبي
+        "تاريخ الطب": { hue: 35, group: "الفصل الأول" },             // بني/خشبي
+        // الفصل الثاني
+        "التشريح العام": { hue: 0, group: "الفصل الثاني" },          // أحمر
+        "الفيزيولوجيا": { hue: 330, group: "الفصل الثاني" },         // وردي/زهري (Pink)
+        "علم الوراثة": { hue: 270, group: "الفصل الثاني" },          // بنفسجي
+        "الإحصاء الحيوي": { hue: 230, group: "الفصل الثاني" },       // نيلي/أزرق داكن
+        "اللغة الإنجليزية 2": { hue: 90, group: "الفصل الثاني" }     // أخضر ليموني
+    };
+
+    // توليد خيارات القائمة المنسدلة (Options) HTML
+    let subjectOptionsHTML = `<option value="" disabled selected>اختر المادة...</option>`;
+    let g1 = `<optgroup label="الفصل الدراسي الأول">`;
+    let g2 = `<optgroup label="الفصل الدراسي الثاني">`;
+    for (const [name, data] of Object.entries(subjectsData)) {
+        if (data.group === "الفصل الأول") g1 += `<option value="${name}">${name}</option>`;
+        else g2 += `<option value="${name}">${name}</option>`;
+    }
+    g1 += `</optgroup>`; g2 += `</optgroup>`;
+    subjectOptionsHTML += g1 + g2;
+
     // --- نظام الوضع الداكن والفاتح ---
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     const body = document.body;
-
-    // استرجاع الإعداد المحفوظ مسبقاً إذا كان موجوداً
     if (localStorage.getItem('studyTrackerTheme') === 'dark') {
         body.classList.add('dark-mode');
         themeToggleBtn.innerHTML = '☀️ فاتح';
     }
-
-    // التبديل بين الوضعين وحفظ الخيار
     themeToggleBtn.addEventListener('click', () => {
         body.classList.toggle('dark-mode');
         if (body.classList.contains('dark-mode')) {
@@ -474,213 +444,224 @@
         }
     });
 
-    // --- متغيرات البطاقات ---
-    const startPageInput = document.getElementById('startPage');
-    const endPageInput = document.getElementById('endPage');
-    const generateBtn = document.getElementById('generateBtn');
-    const resetBtn = document.getElementById('resetBtn');
+    // --- إدارة واجهة النطاقات ---
+    const initialSetupPanel = document.getElementById('initialSetupPanel');
+    const mainDashboard = document.getElementById('mainDashboard');
+    const formsContainer = document.getElementById('formsContainer');
     const workspace = document.getElementById('workspace');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
+    const stickyProgressContainer = document.getElementById('stickyProgressContainer');
+    const progressBarsWrapper = document.getElementById('progressBarsWrapper');
+    let numRangesSelected = 0;
 
-    // --- متغيرات المؤقت ---
-    let timerInterval;
-    let seconds = 0;
-    let isRunning = false;
-    let isCountdown = false;
-    let startingSeconds = 0;
+    // دالة عرض نموذج إدخال المواد بناء على العدد المختار
+    function setupDashboard(num) {
+        numRangesSelected = num;
+        initialSetupPanel.style.display = 'none';
+        mainDashboard.style.display = 'block';
+        
+        formsContainer.innerHTML = '';
+        for (let i = 1; i <= num; i++) {
+            formsContainer.innerHTML += `
+                <div class="range-config-group" id="rangeGroup${i}">
+                    <div style="font-weight:bold; margin-bottom:8px; color:var(--accent-primary);">نطاق ${i}</div>
+                    <div class="inputs-group">
+                        <div class="input-field" style="flex: 2;">
+                            <label>المادة الدراسية</label>
+                            <select id="subject${i}">${subjectOptionsHTML}</select>
+                        </div>
+                        <div class="input-field">
+                            <label>من صـ</label>
+                            <input type="number" id="start${i}" min="1" placeholder="مثلاً: 1">
+                        </div>
+                        <div class="input-field">
+                            <label>إلى صـ</label>
+                            <input type="number" id="end${i}" min="1" placeholder="مثلاً: 20">
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
 
+    // زر العودة لاختيار النطاقات (إعادة ضبط)
+    function resetToInitial() {
+        initialSetupPanel.style.display = 'block';
+        mainDashboard.style.display = 'none';
+        workspace.innerHTML = '';
+        stickyProgressContainer.style.display = 'none';
+        resetTimer();
+    }
+
+    // --- توليد البطاقات ومساحة العمل ---
+    document.getElementById('generateBtn').addEventListener('click', () => {
+        let configs = [];
+        // التحقق من المدخلات
+        for (let i = 1; i <= numRangesSelected; i++) {
+            const subject = document.getElementById(`subject${i}`).value;
+            const start = parseInt(document.getElementById(`start${i}`).value);
+            const end = parseInt(document.getElementById(`end${i}`).value);
+            
+            if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0) {
+                alert(`يرجى إكمال بيانات النطاق ${i} بشكل صحيح!`); return;
+            }
+            if (start > end) {
+                alert(`في النطاق ${i}: صفحة البداية أكبر من النهاية!`); return;
+            }
+            configs.push({ id: `sub_${i}`, name: subject, start, end, hue: subjectsData[subject].hue });
+        }
+
+        // تفريغ وتجهيز مساحة العمل
+        workspace.innerHTML = '';
+        progressBarsWrapper.innerHTML = '';
+        stickyProgressContainer.style.display = 'block';
+
+        // إنشاء المهام وأشرطة التقدم لكل مادة
+        configs.forEach(config => {
+            // 1. إنشاء شريط تقدم لهذه المادة فوق
+            const pBarHTML = `
+                <div class="subject-progress-box" style="--subject-hue: ${config.hue};">
+                    <div class="subject-progress-header">
+                        <span>${config.name}</span>
+                        <span id="percentText_${config.id}">0%</span>
+                    </div>
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar-fill" id="percentBar_${config.id}"></div>
+                    </div>
+                </div>
+            `;
+            progressBarsWrapper.innerHTML += pBarHTML;
+
+            // 2. إنشاء منطقة المادة في مساحة العمل
+            const subjectSection = document.createElement('div');
+            subjectSection.className = 'subject-section';
+            subjectSection.style.setProperty('--subject-hue', config.hue);
+            
+            const subjectHeader = document.createElement('div');
+            subjectHeader.className = 'subject-header-title';
+            subjectHeader.textContent = `📚 ${config.name} (صـ ${config.start} إلى صـ ${config.end})`;
+            subjectSection.appendChild(subjectHeader);
+
+            let cardCount = 0;
+            let currentTaskSection = null, currentGrid = null, taskIndex = 1;
+
+            for (let page = config.start; page <= config.end; page++) {
+                if (cardCount % 10 === 0) {
+                    currentTaskSection = document.createElement('div');
+                    currentTaskSection.className = 'task-section';
+                    
+                    const taskHeader = document.createElement('div');
+                    taskHeader.className = 'task-header';
+                    taskHeader.innerHTML = `<h3 class="task-title">🎯 المهمة ${taskIndex}</h3>
+                                            <span class="task-badge">صـ ${page} - ${Math.min(page + 9, config.end)}</span>`;
+                    currentTaskSection.appendChild(taskHeader);
+                    
+                    currentGrid = document.createElement('div');
+                    currentGrid.className = 'cards-grid';
+                    currentTaskSection.appendChild(currentGrid);
+                    subjectSection.appendChild(currentTaskSection);
+                    taskIndex++;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.textContent = page;
+                card.setAttribute('data-subject-id', config.id); // لربط البطاقة بالمادة لحساب التقدم
+                
+                card.addEventListener('click', function() {
+                    this.classList.toggle('studied');
+                    updateProgressFor(config.id);
+                });
+                
+                currentGrid.appendChild(card);
+                cardCount++;
+            }
+            workspace.appendChild(subjectSection);
+            updateProgressFor(config.id); // تصفير العداد ليعرض 0% مبدئياً
+        });
+    });
+
+    // تحديث نسبة إنجاز مادة محددة
+    function updateProgressFor(subjectId) {
+        const subjectCards = document.querySelectorAll(`.card[data-subject-id="${subjectId}"]`);
+        const studiedCards = document.querySelectorAll(`.card[data-subject-id="${subjectId}"].studied`);
+        const total = subjectCards.length;
+        const studied = studiedCards.length;
+        
+        const percentage = total === 0 ? 0 : Math.round((studied / total) * 100);
+        document.getElementById(`percentBar_${subjectId}`).style.width = `${percentage}%`;
+        document.getElementById(`percentText_${subjectId}`).textContent = `${percentage}%`;
+    }
+
+
+    // --- وظائف المؤقت الزمني ---
+    let timerInterval, seconds = 0, isRunning = false, isCountdown = false, startingSeconds = 0;
     const timerDisplay = document.getElementById('timer');
     const startTimerBtn = document.getElementById('startTimerBtn');
     const pauseTimerBtn = document.getElementById('pauseTimerBtn');
     const resetTimerBtn = document.getElementById('resetTimerBtn');
-    
     const modeUpBtn = document.getElementById('modeUpBtn');
     const modeDownBtn = document.getElementById('modeDownBtn');
     const timerSetup = document.getElementById('timerSetup');
     const setMinutesInput = document.getElementById('setMinutes');
     const applyTimerBtn = document.getElementById('applyTimerBtn');
 
-    // --- وظائف البطاقات ---
-    function generateWorkspace() {
-        const start = parseInt(startPageInput.value);
-        const end = parseInt(endPageInput.value);
-        if (isNaN(start) || isNaN(end) || start <= 0 || end <= 0) {
-            alert("يرجى إدخال أرقام صفحات صحيحة!"); return;
-        }
-        if (start > end) {
-            alert("صفحة البداية لا يمكن أن تكون أكبر من صفحة النهاية!"); return;
-        }
-        workspace.innerHTML = '';
-        let cardCount = 0;
-        let currentTaskSection = null, currentGrid = null, taskIndex = 1;
-
-        for (let i = start; i <= end; i++) {
-            if (cardCount % 10 === 0) {
-                currentTaskSection = document.createElement('div');
-                currentTaskSection.className = 'task-section';
-                
-                const taskHeader = document.createElement('div');
-                taskHeader.className = 'task-header';
-                
-                const taskTitle = document.createElement('h3');
-                taskTitle.className = 'task-title';
-                taskTitle.innerHTML = `🎯 المهمة الدراسية ${taskIndex}`;
-                
-                const taskBadge = document.createElement('span');
-                taskBadge.className = 'task-badge';
-                const taskEnd = Math.min(i + 9, end);
-                taskBadge.textContent = `الصفحات: ${i} - ${taskEnd}`;
-                
-                taskHeader.appendChild(taskTitle);
-                taskHeader.appendChild(taskBadge);
-                currentTaskSection.appendChild(taskHeader);
-                
-                currentGrid = document.createElement('div');
-                currentGrid.className = 'cards-grid';
-                currentTaskSection.appendChild(currentGrid);
-                workspace.appendChild(currentTaskSection);
-                taskIndex++;
-            }
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.textContent = i;
-            card.addEventListener('click', function() {
-                this.classList.toggle('studied');
-                updateProgressBar();
-            });
-            currentGrid.appendChild(card);
-            cardCount++;
-        }
-        updateProgressBar();
-    }
-
-    function updateProgressBar() {
-        const totalCards = document.querySelectorAll('.card').length;
-        const studiedCards = document.querySelectorAll('.card.studied').length;
-        if (totalCards === 0) {
-            progressBar.style.width = '0%'; progressText.textContent = 'تم إنجاز: 0%'; return;
-        }
-        const percentage = Math.round((studiedCards / totalCards) * 100);
-        progressBar.style.width = `${percentage}%`;
-        progressText.textContent = `تم إنجاز: ${percentage}%`;
-    }
-
-    function resetApp() {
-        startPageInput.value = ''; endPageInput.value = ''; workspace.innerHTML = '';
-        updateProgressBar(); resetTimer();
-    }
-
-    // --- وظائف المؤقت ---
     modeUpBtn.addEventListener('click', () => {
-        isCountdown = false;
-        modeUpBtn.classList.add('active');
-        modeDownBtn.classList.remove('active');
-        timerSetup.classList.remove('active');
-        resetTimer();
+        isCountdown = false; modeUpBtn.classList.add('active'); modeDownBtn.classList.remove('active');
+        timerSetup.classList.remove('active'); resetTimer();
     });
-
     modeDownBtn.addEventListener('click', () => {
-        isCountdown = true;
-        modeDownBtn.classList.add('active');
-        modeUpBtn.classList.remove('active');
-        timerSetup.classList.add('active');
-        resetTimer();
+        isCountdown = true; modeDownBtn.classList.add('active'); modeUpBtn.classList.remove('active');
+        timerSetup.classList.add('active'); resetTimer();
     });
-
     applyTimerBtn.addEventListener('click', () => {
         const mins = parseInt(setMinutesInput.value);
-        if (isNaN(mins) || mins <= 0) {
-            alert("يرجى إدخال عدد دقائق صحيح!"); return;
-        }
-        startingSeconds = mins * 60;
-        seconds = startingSeconds;
-        updateTimerDisplay();
+        if (isNaN(mins) || mins <= 0) { alert("يرجى إدخال عدد دقائق صحيح!"); return; }
+        startingSeconds = mins * 60; seconds = startingSeconds; updateTimerDisplay();
     });
 
     function playAudioAlert() {
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+        oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+        oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
         gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        
-        oscillator.start();
-        setTimeout(() => oscillator.stop(), 500);
+        oscillator.start(); setTimeout(() => oscillator.stop(), 500);
     }
 
     function updateTimerDisplay() {
         let h = Math.floor(seconds / 3600);
         let m = Math.floor((seconds % 3600) / 60);
         let s = seconds % 60;
-        timerDisplay.textContent = 
-            (h < 10 ? "0" + h : h) + ":" + 
-            (m < 10 ? "0" + m : m) + ":" + 
-            (s < 10 ? "0" + s : s);
-
-        if (isCountdown && seconds > 0 && seconds <= 10) {
-            timerDisplay.classList.add('ending');
-        } else {
-            timerDisplay.classList.remove('ending');
-        }
+        timerDisplay.textContent = (h < 10 ? "0"+h : h) + ":" + (m < 10 ? "0"+m : m) + ":" + (s < 10 ? "0"+s : s);
+        if (isCountdown && seconds > 0 && seconds <= 10) timerDisplay.classList.add('ending');
+        else timerDisplay.classList.remove('ending');
     }
 
     function startTimer() {
         if (!isRunning) {
-            if (isCountdown && seconds === 0) {
-                alert("يرجى ضبط الوقت أولاً من خلال حقل الدقائق.");
-                return;
-            }
-            
+            if (isCountdown && seconds === 0) { alert("يرجى ضبط الوقت أولاً (إدخال الدقائق ثم الضغط على ضبط)."); return; }
             document.body.classList.remove('timer-ended');
             isRunning = true;
-            
             timerInterval = setInterval(() => {
                 if (isCountdown) {
-                    if (seconds > 0) {
-                        seconds--;
-                        updateTimerDisplay();
-                    }
+                    if (seconds > 0) { seconds--; updateTimerDisplay(); }
                     if (seconds === 0) {
-                        pauseTimer();
-                        playAudioAlert();
-                        document.body.classList.add('timer-ended');
-                        setTimeout(() => {
-                            alert("⏰ انتهى الوقت المخصص لجلسة الدراسة! خذ استراحة قصيرة وواصل إنجازك.");
-                            document.body.classList.remove('timer-ended');
-                        }, 300);
+                        pauseTimer(); playAudioAlert(); document.body.classList.add('timer-ended');
+                        setTimeout(() => { alert("⏰ انتهى وقت التركيز! خذ استراحة."); document.body.classList.remove('timer-ended'); }, 300);
                     }
-                } else {
-                    seconds++;
-                    updateTimerDisplay();
-                }
+                } else { seconds++; updateTimerDisplay(); }
             }, 1000);
         }
     }
 
-    function pauseTimer() {
-        isRunning = false;
-        clearInterval(timerInterval);
-    }
-
+    function pauseTimer() { isRunning = false; clearInterval(timerInterval); }
     function resetTimer() {
-        pauseTimer();
-        document.body.classList.remove('timer-ended');
-        timerDisplay.classList.remove('ending');
-        if (isCountdown) {
-            seconds = startingSeconds;
-        } else {
-            seconds = 0;
-        }
+        pauseTimer(); document.body.classList.remove('timer-ended'); timerDisplay.classList.remove('ending');
+        if (isCountdown) seconds = startingSeconds; else seconds = 0;
         updateTimerDisplay();
     }
 
-    generateBtn.addEventListener('click', generateWorkspace);
-    resetBtn.addEventListener('click', resetApp);
     startTimerBtn.addEventListener('click', startTimer);
     pauseTimerBtn.addEventListener('click', pauseTimer);
     resetTimerBtn.addEventListener('click', resetTimer);
