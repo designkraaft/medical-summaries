@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة تتبع الإنجاز الدراسي الذكية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-app: #f4f7f6;
-            --surface: #ffffff;
-            --text-primary: #1a1e23;
-            --text-secondary: #5a6270;
-            --accent-primary: #2563eb;
-            --accent-hover: #1d4ed8;
-            --border-subtle: #e2e8f0;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+            /* ألوان مريحة للعين (Sepia/Wood tones) لدراسة طويلة بدون إجهاد */
+            --bg-app: #f4ecd8; 
+            --surface: #fdfbf7;
+            --text-primary: #2d251e;
+            --text-secondary: #70655b;
+            --accent-primary: #3b82f6;
+            --accent-hover: #2563eb;
+            --border-subtle: #e3d7c5;
+            --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.05);
+            --shadow-md: 0 10px 30px rgba(45, 37, 30, 0.08);
+            --shadow-lg: 0 20px 40px rgba(45, 37, 30, 0.12);
             --radius-lg: 16px;
-            --radius-md: 10px;
+            --radius-md: 12px;
             --radius-sm: 8px;
-            --header-bg: rgba(255, 255, 255, 0.9);
-            --btn-secondary-bg: #f1f5f9;
-            --btn-secondary-hover: #e2e8f0;
+            --header-bg: rgba(253, 251, 247, 0.9);
+            --btn-secondary-bg: #eae0cf;
+            --btn-secondary-hover: #decfae;
             --btn-danger-text: #dc2626;
             --btn-danger-border: #fca5a5;
             --btn-danger-hover: #fef2f2;
@@ -54,7 +55,7 @@
             font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-app); color: var(--text-primary);
             margin: 0; padding: 0; line-height: 1.6; -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s ease, color 0.3s ease; display: flex; flex-direction: column; min-height: 100vh;
+            transition: background-color 0.4s ease, color 0.4s ease; display: flex; flex-direction: column; min-height: 100vh;
         }
 
         body.timer-ended { background-color: #d1fae5; }
@@ -71,16 +72,16 @@
         }
         .timer-info-group { display: flex; align-items: center; gap: 15px; }
         .timer-label { font-size: 15px; font-weight: 700; color: var(--text-secondary); }
-        .floating-timer-display { font-size: 28px; font-weight: 700; font-family: monospace; letter-spacing: 2px; color: var(--text-primary); }
+        .floating-timer-display { font-size: 28px; font-weight: 800; font-family: monospace; letter-spacing: 2px; color: var(--text-primary); }
         .floating-timer-display.ending { color: var(--btn-danger-text); animation: pulse 1s infinite; }
         
         .floating-timer-controls { display: flex; gap: 15px; }
         .timer-btn-wrapper { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .timer-btn-wrapper span { font-size: 11px; font-weight: 600; color: var(--text-secondary); }
+        .timer-btn-wrapper span { font-size: 11px; font-weight: 700; color: var(--text-secondary); }
         .icon-btn {
             background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); 
             width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; font-size: 16px; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            cursor: pointer; font-size: 16px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
         .icon-btn:hover { background: var(--btn-secondary-hover); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
         .icon-btn:active { transform: translateY(0); }
@@ -88,67 +89,73 @@
         .progress-container { display: flex; align-items: center; justify-content: flex-start; gap: 15px; flex-wrap: wrap; }
         .subject-progress-box { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 8px; }
         .subject-progress-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
-        .progress-bar-wrapper { background: var(--border-subtle); height: 10px; border-radius: 20px; overflow: hidden; width: 100%; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
-        .progress-bar-fill { background-color: hsl(var(--subject-hue), 60%, 50%); height: 100%; width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .progress-bar-wrapper { background: var(--border-subtle); height: 10px; border-radius: 20px; overflow: hidden; width: 100%; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .progress-bar-fill { background-color: hsl(var(--subject-hue), 60%, 50%); height: 100%; width: 0%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .main-layout { max-width: 1200px; margin: 30px auto; padding: 0 20px; box-sizing: border-box; flex: 1; width: 100%; }
         .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
-        .app-header h1 { font-size: 26px; font-weight: 700; margin: 0; color: var(--text-primary); }
+        .app-header h1 { font-size: 26px; font-weight: 800; margin: 0; color: var(--text-primary); }
         .header-actions { display: flex; gap: 10px; }
 
         .btn-theme, .btn-back {
             background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 10px 18px;
             border-radius: var(--radius-md); font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-sm); transition: all 0.2s ease;
         }
-        .btn-theme:hover, .btn-back:hover { background: var(--btn-secondary-bg); transform: translateY(-1px); }
+        .btn-theme:hover, .btn-back:hover { background: var(--btn-secondary-bg); transform: translateY(-2px); }
 
         .panel-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-md); animation: fadeIn 0.4s ease; margin-bottom: 25px;}
-        .panel-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 12px; }
+        .panel-title { font-size: 18px; font-weight: 800; color: var(--text-primary); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 12px; }
 
         #welcomePanel { text-align: center; max-width: 800px; margin: 40px auto; }
-        #welcomePanel h2 { color: var(--text-primary); margin-bottom: 40px; font-size: 24px; }
+        #welcomePanel h2 { color: var(--text-primary); margin-bottom: 40px; font-size: 24px; font-weight: 800; }
         .range-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .btn-range-select {
             background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary); padding: 25px 45px;
-            font-size: 18px; font-weight: 700; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-sm);
+            font-size: 18px; font-weight: 800; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow-sm);
         }
         .btn-range-select:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
         #initialSetupPanel { display: none; max-width: 800px; margin: 0 auto; }
         
-        .inputs-group { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
-        .input-field { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 120px; }
-        .input-field label { font-size: 14px; color: var(--text-secondary); font-weight: 600; }
+        .inputs-group { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; align-items: flex-end; }
+        .input-field { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 100px; }
+        .input-field label { font-size: 14px; color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; }
         select, input[type="number"] {
             background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 12px 15px; font-size: 15px; border-radius: var(--radius-md);
-            color: var(--text-primary); outline: none; transition: all 0.2s; font-family: inherit; width: 100%; box-sizing: border-box; font-weight: 500;
+            color: var(--text-primary); outline: none; transition: all 0.2s; font-family: inherit; width: 100%; box-sizing: border-box; font-weight: 600;
         }
-        select:focus, input[type="number"]:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); background: var(--surface); }
+        select:focus, input[type="number"]:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); background: var(--surface); }
 
         .range-config-group { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed var(--border-subtle); background: var(--surface); border-radius: var(--radius-md); }
         .range-config-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
+        .info-icon {
+            cursor: pointer; color: var(--accent-primary); font-size: 12px; margin-right: 8px; background: rgba(59, 130, 246, 0.1); 
+            border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .info-icon:hover { background: var(--accent-primary); color: #fff; transform: scale(1.1); }
+
         .btn-primary {
             background: var(--accent-primary); color: #ffffff; border: none; padding: 14px 24px; border-radius: var(--radius-md);
-            font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
         }
-        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3); }
         .btn-primary:active { transform: translateY(0); }
 
         .btn-secondary {
             background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 14px 24px; border-radius: var(--radius-md);
             font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-secondary:hover { background: var(--border-subtle); }
+        .btn-secondary:hover { background: var(--border-subtle); transform: translateY(-1px); }
 
         .btn-accent { background: var(--surface); border: 2px dashed var(--accent-primary); color: var(--accent-primary); width: 100%; }
-        .btn-accent:hover { background: rgba(37, 99, 235, 0.05); }
+        .btn-accent:hover { background: rgba(59, 130, 246, 0.05); }
 
         .btn-danger {
             background: var(--surface); border: 1px solid var(--btn-danger-border); color: var(--btn-danger-text); padding: 12px; border-radius: var(--radius-md);
             font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-danger:hover { background: var(--btn-danger-hover); }
+        .btn-danger:hover { background: var(--btn-danger-hover); transform: translateY(-1px); }
 
         .btn-icon-small {
             background: var(--bg-app); border: 1px solid var(--border-subtle); color: var(--text-secondary);
@@ -156,44 +163,41 @@
             cursor: pointer; transition: all 0.2s; font-size: 16px; box-shadow: var(--shadow-sm);
         }
         .btn-icon-small:hover { background: var(--btn-secondary-bg); color: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-2px); }
-        
-        .btn-icon-danger:hover { background: var(--btn-danger-hover); color: var(--btn-danger-text); border-color: var(--btn-danger-border); transform: translateY(-2px); }
+        .btn-icon-danger:hover { background: var(--btn-danger-hover); color: var(--btn-danger-text); border-color: var(--btn-danger-border); }
 
         #activeSessionDashboard { display: none; }
         .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;}
         .backup-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
         
-        #addMoreSection { display: none; margin-top: 20px; padding: 20px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-app); animation: fadeIn 0.3s ease; }
+        #addMoreSection { display: none; margin-top: 20px; padding: 25px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-app); animation: fadeIn 0.3s ease; }
 
         #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; align-items: start; }
         .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 25px; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease; position: relative; overflow: hidden;}
         .subject-section::before { content: ''; position: absolute; top: 0; right: 0; width: 6px; height: 100%; background: hsl(var(--subject-hue), 60%, 50%); }
-        .subject-header-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-subtle); }
+        .subject-header-title { font-size: 18px; font-weight: 800; color: var(--text-primary); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-subtle); }
         .subject-header-actions { display: flex; align-items: center; gap: 8px; }
         
         .task-section { background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px; margin-bottom: 15px; transition: all 0.3s ease; }
-        .task-section.completed { background: rgba(52, 211, 153, 0.1); border-color: var(--success-color); box-shadow: 0 0 10px rgba(52, 211, 153, 0.1); }
+        .task-section.completed { background: rgba(5, 150, 105, 0.1); border-color: var(--success-color); box-shadow: 0 0 10px rgba(5, 150, 105, 0.1); }
         .task-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .task-title { font-size: 15px; font-weight: 700; color: var(--text-primary); margin: 0; }
-        .task-badge { background: var(--surface); color: var(--text-secondary); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 1px solid var(--border-subtle); }
+        .task-title { font-size: 15px; font-weight: 800; color: var(--text-primary); margin: 0; }
+        .task-badge { background: var(--surface); color: var(--text-secondary); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; border: 1px solid var(--border-subtle); }
         
         .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 12px; }
-        .card { background-color: var(--surface); border: 2px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; cursor: pointer; user-select: none; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card { background-color: var(--surface); border: 2px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; cursor: pointer; user-select: none; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
         body.dark-mode .card { border-color: hsl(var(--subject-hue), 40%, 30%); }
         .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); border-color: hsl(var(--subject-hue), 60%, 50%); }
         .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; box-shadow: 0 4px 12px hsla(var(--subject-hue), 60%, 50%, 0.4); transform: scale(1.05); }
 
-        .app-footer { text-align: center; padding: 40px 20px; margin-top: auto; color: var(--text-secondary); font-size: 14px; border-top: 1px solid var(--border-subtle); background: var(--surface); }
-        .footer-version { font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
-        .footer-features { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 13px; font-weight: 500; }
-        .footer-features span { display: flex; align-items: center; gap: 5px; }
+        .app-footer { text-align: center; padding: 40px 20px; margin-top: auto; color: var(--text-secondary); font-size: 14px; border-top: 1px solid var(--border-subtle); background: var(--surface); display: flex; flex-direction: column; align-items: center; gap: 10px;}
+        .footer-version { font-weight: 800; color: var(--text-primary); }
 
         .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; }
         .custom-modal-overlay.active { display: flex; opacity: 1; }
-        .custom-modal-content { background: var(--surface); padding: 35px; border-radius: var(--radius-lg); text-align: center; max-width: 400px; width: 90%; box-shadow: var(--shadow-lg); transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .custom-modal-content { background: var(--surface); padding: 35px; border-radius: var(--radius-lg); text-align: center; max-width: 450px; width: 90%; box-shadow: var(--shadow-lg); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .custom-modal-overlay.active .custom-modal-content { transform: scale(1); }
-        .modal-title { font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 15px; color: var(--text-primary); }
-        .modal-text { font-size: 15px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.6; }
+        .modal-title { font-size: 22px; font-weight: 800; margin-top: 0; margin-bottom: 15px; color: var(--text-primary); }
+        .modal-text { font-size: 15px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.7; }
 
         .alert-icon { font-size: 50px; margin-bottom: 15px; }
         .celebration-content { border: 2px solid var(--success-color); }
@@ -205,10 +209,10 @@
         #timerInputContainer { display: none; margin-bottom: 20px; text-align: right; }
         #timerInputContainer.active { display: block; }
         
-        .update-features-list { text-align: right; margin-bottom: 25px; background: var(--bg-app); border-radius: var(--radius-md); padding: 20px 25px 20px 15px; border: 1px solid var(--border-subtle); }
-        .update-features-list li { margin-bottom: 12px; color: var(--text-primary); font-size: 14px; }
-        .update-features-list li:last-child { margin-bottom: 0; }
-        .update-features-list strong { color: var(--accent-primary); }
+        .update-features-list, .features-list { text-align: right; margin-bottom: 25px; background: var(--bg-app); border-radius: var(--radius-md); padding: 20px 25px 20px 15px; border: 1px solid var(--border-subtle); }
+        .update-features-list li, .features-list li { margin-bottom: 12px; color: var(--text-primary); font-size: 14px; line-height: 1.6; }
+        .update-features-list li:last-child, .features-list li:last-child { margin-bottom: 0; }
+        .update-features-list strong, .features-list strong { color: var(--accent-primary); }
 
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -221,26 +225,55 @@
             .range-buttons { flex-direction: column; }
             .backup-actions { width: 100%; justify-content: stretch; }
             .backup-actions > * { flex: 1; min-width: 100%; font-size: 13px; padding: 10px; margin-top: 5px !important; }
+            .inputs-group { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
 <body>
 
+<!-- نوافذ التنبيهات المنبثقة -->
 <div class="custom-modal-overlay" id="updateWelcomeModal">
-    <div class="custom-modal-content" style="max-width: 450px;">
+    <div class="custom-modal-content">
         <div class="alert-icon">✨</div>
-        <h2 class="modal-title">مرحباً بك في الإصدار 8.6!</h2>
-        <p class="modal-text" style="color: var(--success-color); font-weight: 700; margin-bottom: 15px;">
+        <h2 class="modal-title">مرحباً بك في الإصدار 8.7!</h2>
+        <p class="modal-text" style="color: var(--success-color); font-weight: 800; margin-bottom: 15px;">
             اطمئن! 🛡️ جميع إنجازاتك وجلستك السابقة محفوظة بأمان ولن تفقد أي شيء.
         </p>
         <p class="modal-text" style="text-align: right; margin-bottom: 10px;">إليك الميزات الجديدة التي أضفناها لتسهيل دراستك:</p>
         <ul class="update-features-list">
-            <li>🗑️ <strong>حذف المواد:</strong> أضفنا زر حذف بجانب أيقونة التعديل، يسمح لك بإزالة المادة من الجلسة بكل سهولة.</li>
-            <li>✏️ <strong>تعديل الصفحات:</strong> يمكنك الآن تغيير نطاق صفحات أي مادة.</li>
-            <li>💾 <strong>استيراد وتصدير:</strong> أزرار جديدة تتيح لك حفظ نسخة من إنجازك واستعادتها متى شئت.</li>
-            <li>🚀 <strong>نظام الترحيل التلقائي:</strong> تم نقلك للإصدار الجديد دون أي تدخل منك.</li>
+            <li>⚙️ <strong>تخصيص المهام:</strong> يمكنك الآن تحديد عدد الصفحات لكل مهمة بما يتناسب مع كثافة المادة.</li>
+            <li>🗑️ <strong>حذف وتعديل:</strong> أزرار للتحكم الكامل بالمادة داخل الجلسة.</li>
+            <li>💾 <strong>استيراد وتصدير:</strong> لحفظ نسخة من إنجازك واستعادتها بأمان.</li>
+            <li>🎨 <strong>ألوان مريحة:</strong> الوضع الفاتح الآن بدرجات ورقية مريحة جداً للعين للحد من الإجهاد.</li>
         </ul>
         <button class="btn-primary" onclick="closeUpdateWelcomeModal()">رائع، لنتابع الدراسة! 💪</button>
+    </div>
+</div>
+
+<div class="custom-modal-overlay" id="taskTipModal">
+    <div class="custom-modal-content">
+        <div class="alert-icon" style="font-size: 40px;">💡</div>
+        <h2 class="modal-title">كيف أحدد حجم المهمة؟</h2>
+        <ul class="features-list">
+            <li><strong>المواد الكثيفة أو الدراسة لأول مرة:</strong><br>اختر من <strong>10 إلى 15 صفحة</strong>. هذا المعدل مثالي لجلسة دراسية واحدة بتركيز عالي ويسمح باستيعاب التفاصيل الدقيقة براحة.</li>
+            <li><strong>المراجعة السريعة أو قراءة الملخصات:</strong><br>اختر من <strong>20 إلى 30 صفحة</strong>، حيث تكون الأفكار مألوفة وتحتاج فقط إلى استرجاع وتثبيت.</li>
+        </ul>
+        <button class="btn-primary" onclick="closeTaskTipModal()">فهمت ذلك، شكراً 👍</button>
+    </div>
+</div>
+
+<div class="custom-modal-overlay" id="featuresModal">
+    <div class="custom-modal-content">
+        <div class="alert-icon" style="font-size: 40px;">🚀</div>
+        <h2 class="modal-title">ميزات مساحة المتابعة الذكية</h2>
+        <ul class="features-list">
+            <li><strong>✨ حفظ سحابي محلي:</strong> تقدمك يُحفظ تلقائياً في متصفحك.</li>
+            <li><strong>🎯 تقسيم المهام ذكي:</strong> يمكنك تخصيص عدد الصفحات لكل مهمة لتناسب كثافة المادة.</li>
+            <li><strong>⏱️ مؤقت مرن:</strong> نظام بومودورو أو عد تصاعدي لضبط وقت التركيز بفعالية.</li>
+            <li><strong>🛡️ استيراد وتصدير:</strong> لن تفقد بياناتك! حمّل ملف جلستك واستعده في أي وقت.</li>
+            <li><strong>✏️ تحكم كامل:</strong> تعديل نطاق الصفحات أو حذف المواد بنقرة واحدة.</li>
+        </ul>
+        <button class="btn-primary" onclick="closeFeaturesModal()">إغلاق النافذة</button>
     </div>
 </div>
 
@@ -287,12 +320,13 @@
     </div>
 </div>
 
+<!-- نافذة التعديل مع حجم المهمة -->
 <div class="custom-modal-overlay" id="editSubjectModal">
     <div class="custom-modal-content">
-        <h2 class="modal-title">✏️ تعديل الصفحات</h2>
-        <p class="modal-text">تعديل الصفحات لمادة: <strong id="editSubName" style="color:var(--accent-primary)"></strong></p>
+        <h2 class="modal-title">✏️ إعدادات المادة</h2>
+        <p class="modal-text">تعديل الإعدادات لمادة: <strong id="editSubName" style="color:var(--accent-primary)"></strong></p>
         <input type="hidden" id="editSubId">
-        <div class="inputs-group">
+        <div class="inputs-group" style="align-items:flex-end;">
             <div class="input-field">
                 <label>من صفحة</label>
                 <input type="number" id="editStartPage" min="1">
@@ -301,8 +335,12 @@
                 <label>إلى صفحة</label>
                 <input type="number" id="editEndPage" min="1">
             </div>
+            <div class="input-field">
+                <label>صفحات المهمة <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">ℹ️</span></label>
+                <input type="number" id="editTaskSize" min="1">
+            </div>
         </div>
-        <div style="display:flex; gap:10px; margin-top:15px;">
+        <div style="display:flex; gap:10px; margin-top:20px;">
             <button class="btn-primary" id="saveEditBtn" style="flex:2;">حفظ التعديلات ✅</button>
             <button class="btn-secondary" onclick="closeEditModal()" style="flex:1; margin-top:0;">إلغاء</button>
         </div>
@@ -415,9 +453,9 @@
             <button class="btn-secondary btn-accent" id="toggleAddMoreBtn">➕ إضافة مادة جديدة للوحة</button>
             
             <div id="addMoreSection">
-                <h3 style="margin-top:0; font-size:16px; color:var(--text-primary);">تخصيص المادة الجديدة</h3>
+                <h3 style="margin-top:0; font-size:16px; font-weight:800; color:var(--text-primary);">تخصيص المادة الجديدة</h3>
                 <div class="inputs-group">
-                    <div class="input-field" style="flex: 100%;">
+                    <div class="input-field" style="flex: 2;">
                         <label>اختر المادة</label>
                         <select id="addSubjectSelect"></select>
                     </div>
@@ -428,6 +466,10 @@
                     <div class="input-field">
                         <label>إلى صفحة</label>
                         <input type="number" id="addEndPage" min="1" placeholder="مثال: 20">
+                    </div>
+                    <div class="input-field">
+                        <label>صفحات المهمة <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">ℹ️</span></label>
+                        <input type="number" id="addTaskSize" min="1" value="10">
                     </div>
                 </div>
                 <div style="display:flex; gap:10px; margin-top:15px;">
@@ -442,23 +484,17 @@
 </div>
 
 <div class="app-footer">
-    <div class="footer-version">الإصدار 8.6 - مساحة المتابعة الذكية للطلاب 📖</div>
-    <div class="footer-features">
-        <span>✨ حفظ سحابي محلي</span>
-        <span>|</span>
-        <span>🛡️ حفظ/استعادة الجلسة بأمان</span>
-        <span>|</span>
-        <span>⏱️ مؤقت مرن</span>
-        <span>|</span>
-        <span>✏️ تعديل متقدم</span>
-    </div>
+    <div class="footer-version">الإصدار 8.7 - مساحة المتابعة الذكية للطلاب 📖</div>
+    <button class="btn-secondary" style="margin-top:5px; padding: 8px 16px; border-radius: 20px; font-size: 13px; border-color:var(--accent-primary); color:var(--accent-primary);" onclick="openFeaturesModal()">
+        ✨ استكشف ميزات اللوحة
+    </button>
 </div>
 
 <script>
-    const APP_VERSION = '8.6';
+    const APP_VERSION = '8.7';
     const VERSION_KEY = 'studyTracker_appVersion';
-    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v8_6'; 
-    const OLD_STATE_KEYS = ['studyTrackerSaveState_v8_5', 'studyTrackerSaveState_v8_4', 'studyTrackerSaveState_v8_3', 'studyTrackerSaveState_v8_2', 'studyTrackerSaveState_v8_1', 'studyTrackerSaveState_v8', 'studyTrackerSaveState'];
+    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v8_7'; 
+    const OLD_STATE_KEYS = ['studyTrackerSaveState_v8_6', 'studyTrackerSaveState_v8_5', 'studyTrackerSaveState_v8_4', 'studyTrackerSaveState_v8_3', 'studyTrackerSaveState_v8_2', 'studyTrackerSaveState_v8_1', 'studyTrackerSaveState_v8', 'studyTrackerSaveState'];
 
     let currentConfigs = []; 
     let initialNumSelected = 0;
@@ -499,10 +535,15 @@
         }
     });
 
-    // --- نظام التنبيهات ونوافذ التحديث ---
+    // --- نوافذ الشرح ---
+    function openTaskTipModal() { document.getElementById('taskTipModal').classList.add('active'); }
+    function closeTaskTipModal() { document.getElementById('taskTipModal').classList.remove('active'); }
+    
+    function openFeaturesModal() { document.getElementById('featuresModal').classList.add('active'); }
+    function closeFeaturesModal() { document.getElementById('featuresModal').classList.remove('active'); }
+
     function checkUpdateNotification() {
         const savedVersion = localStorage.getItem(VERSION_KEY);
-        // نعرض التحديث فقط إذا كان هناك نسخة أقدم مخزنة ولم يتم عرض تحديث 8.6 من قبل
         if (savedVersion !== APP_VERSION) {
             document.getElementById('updateWelcomeModal').classList.add('active');
         }
@@ -539,7 +580,7 @@
         for (let i = 1; i <= num; i++) {
             initialFormsContainer.innerHTML += `
                 <div class="range-config-group" id="initGroup${i}">
-                    <div style="font-weight:700; margin-bottom:12px; color:var(--accent-primary); font-size:16px;">📚 المادة ${i}</div>
+                    <div style="font-weight:800; margin-bottom:12px; color:var(--accent-primary); font-size:16px;">📚 المادة ${i}</div>
                     <div class="inputs-group">
                         <div class="input-field" style="flex: 2;">
                             <label>اسم المادة</label>
@@ -552,6 +593,10 @@
                         <div class="input-field">
                             <label>إلى صفحة</label>
                             <input type="number" id="initEnd${i}" min="1" placeholder="رقم">
+                        </div>
+                        <div class="input-field">
+                            <label>صفحات المهمة <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">ℹ️</span></label>
+                            <input type="number" id="initTask${i}" min="1" value="10">
                         </div>
                     </div>
                 </div>
@@ -570,14 +615,15 @@
             const subject = document.getElementById(`initSubject${i}`).value;
             const start = parseInt(document.getElementById(`initStart${i}`).value);
             const end = parseInt(document.getElementById(`initEnd${i}`).value);
+            const tSize = parseInt(document.getElementById(`initTask${i}`).value) || 10;
             
-            if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0) {
+            if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0 || tSize <= 0) {
                 showCustomAlert("بيانات غير مكتملة", `يرجى إكمال بيانات المادة (${i}) بشكل صحيح وتحديد الصفحات.`); return;
             }
             if (start > end) { showCustomAlert("خطأ في الأرقام", `في المادة (${i}): صفحة البداية يجب أن تكون أصغر من صفحة النهاية!`); return; }
             if (configs.find(c => c.name === subject)) { showCustomAlert("مادة مكررة", `لقد اخترت المادة "${subject}" مرتين! يرجى اختيار مادة مختلفة.`); return; }
 
-            configs.push({ id: `sub_${Date.now()}_${i}`, name: subject, start, end, hue: subjectsData[subject].hue });
+            configs.push({ id: `sub_${Date.now()}_${i}`, name: subject, start, end, taskSize: tSize, hue: subjectsData[subject].hue });
         }
 
         currentConfigs = configs;
@@ -603,12 +649,13 @@
         const subject = document.getElementById('addSubjectSelect').value;
         const start = parseInt(document.getElementById('addStartPage').value);
         const end = parseInt(document.getElementById('addEndPage').value);
+        const tSize = parseInt(document.getElementById('addTaskSize').value) || 10;
         
-        if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0) { showCustomAlert("بيانات ناقصة", "يرجى اختيار المادة وتحديد أرقام الصفحات المطلوبة."); return; }
+        if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0 || tSize <= 0) { showCustomAlert("بيانات ناقصة", "يرجى اختيار المادة وتحديد الأرقام المطلوبة بشكل صحيح."); return; }
         if (start > end) { showCustomAlert("خطأ في الأرقام", "رقم صفحة البداية أكبر من صفحة النهاية!"); return; }
         if (currentConfigs.find(c => c.name === subject)) { showCustomAlert("المادة موجودة", "هذه المادة موجودة بالفعل في لوحتك الحالية! أتممها أولاً."); return; }
 
-        const config = { id: `sub_${Date.now()}`, name: subject, start, end, hue: subjectsData[subject].hue };
+        const config = { id: `sub_${Date.now()}`, name: subject, start, end, taskSize: tSize, hue: subjectsData[subject].hue };
         currentConfigs.push(config);
         appendSubjectToWorkspace(config);
         saveState();
@@ -616,6 +663,7 @@
         document.getElementById('addSubjectSelect').value = '';
         document.getElementById('addStartPage').value = '';
         document.getElementById('addEndPage').value = '';
+        document.getElementById('addTaskSize').value = '10';
         addMoreSection.style.display = 'none';
         window.scrollBy({ top: 300, behavior: 'smooth' });
     });
@@ -666,12 +714,12 @@
         event.target.value = '';
     }
 
-    // --- وظائف التعديل والحذف للمادة ---
-    function openEditModal(id, name, start, end) {
+    function openEditModal(id, name, start, end, taskSize) {
         document.getElementById('editSubId').value = id;
         document.getElementById('editSubName').textContent = name;
         document.getElementById('editStartPage').value = start;
         document.getElementById('editEndPage').value = end;
+        document.getElementById('editTaskSize').value = taskSize || 10;
         document.getElementById('editSubjectModal').classList.add('active');
     }
 
@@ -691,22 +739,17 @@
 
     document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
         const id = document.getElementById('deleteSubId').value;
-        
-        // حفظ إنجازات المواد الأخرى المتبقية
         const currentStudied = {};
         document.querySelectorAll('.card.studied').forEach(card => {
             const subId = card.getAttribute('data-subject-id');
             const page = parseInt(card.textContent);
-            if (subId !== id) { // لا نحتفظ بإنجاز المادة التي يتم حذفها
+            if (subId !== id) {
                 if (!currentStudied[subId]) currentStudied[subId] = [];
                 currentStudied[subId].push(page);
             }
         });
 
-        // إزالة المادة من الإعدادات
         currentConfigs = currentConfigs.filter(c => c.id !== id);
-
-        // إعادة بناء الواجهة
         workspace.innerHTML = '';
         progressBarsWrapper.innerHTML = '';
         
@@ -714,8 +757,6 @@
             stickyProgressContainer.style.display = 'none';
         } else {
             currentConfigs.forEach(conf => appendSubjectToWorkspace(conf));
-            
-            // استرجاع الإنجاز للمواد المتبقية
             for (const [subId, pages] of Object.entries(currentStudied)) {
                 const allCards = document.querySelectorAll(`.card[data-subject-id="${subId}"]`);
                 allCards.forEach(c => {
@@ -723,7 +764,6 @@
                 });
                 updateProgressFor(subId);
             }
-
             document.querySelectorAll('.task-section').forEach(taskSec => {
                 const allC = taskSec.querySelectorAll('.card');
                 const studiedC = taskSec.querySelectorAll('.card.studied');
@@ -740,9 +780,10 @@
         const id = document.getElementById('editSubId').value;
         const newStart = parseInt(document.getElementById('editStartPage').value);
         const newEnd = parseInt(document.getElementById('editEndPage').value);
+        const newTaskSize = parseInt(document.getElementById('editTaskSize').value) || 10;
 
-        if (isNaN(newStart) || isNaN(newEnd) || newStart <= 0 || newEnd <= 0) {
-            showCustomAlert("بيانات غير صالحة", "يرجى إدخال أرقام صفحات صحيحة."); return;
+        if (isNaN(newStart) || isNaN(newEnd) || newStart <= 0 || newEnd <= 0 || newTaskSize <= 0) {
+            showCustomAlert("بيانات غير صالحة", "يرجى إدخال أرقام صحيحة وصالحة."); return;
         }
         if (newStart > newEnd) {
             showCustomAlert("خطأ في الأرقام", "رقم صفحة البداية يجب أن يكون أصغر أو يساوي صفحة النهاية."); return;
@@ -760,6 +801,7 @@
         if (configIndex !== -1) {
             currentConfigs[configIndex].start = newStart;
             currentConfigs[configIndex].end = newEnd;
+            currentConfigs[configIndex].taskSize = newTaskSize;
         }
 
         workspace.innerHTML = '';
@@ -786,7 +828,7 @@
 
         saveState();
         closeEditModal();
-        showCustomAlert("تم التحديث", "تم تحديث نطاق الصفحات بنجاح مع الحفاظ على تقدمك!", "✅");
+        showCustomAlert("تم التحديث", "تم تحديث الإعدادات بنجاح مع الحفاظ على تقدمك!", "✅");
     });
 
     function appendSubjectToWorkspace(config) {
@@ -817,22 +859,24 @@
                     <span style="font-size:14px; color:var(--text-secondary); font-weight:normal; margin-right:5px;">(من ${config.start} إلى ${config.end})</span>
                 </div>
                 <div class="subject-header-actions">
-                    <button class="btn-icon-small" onclick="openEditModal('${config.id}', '${config.name}', ${config.start}, ${config.end})" title="تعديل الصفحات">✏️</button>
+                    <button class="btn-icon-small" onclick="openEditModal('${config.id}', '${config.name}', ${config.start}, ${config.end}, ${config.taskSize || 10})" title="تعديل الإعدادات">✏️</button>
                     <button class="btn-icon-small btn-icon-danger" onclick="openDeleteModal('${config.id}', '${config.name}')" title="حذف المادة">🗑️</button>
                 </div>
             </div>
         `;
 
         let cardCount = 0; let currentTaskSection = null, currentGrid = null, taskIndex = 1;
+        let tSize = config.taskSize || 10;
+        
         for (let page = config.start; page <= config.end; page++) {
-            if (cardCount % 10 === 0) {
+            if (cardCount % tSize === 0) {
                 currentTaskSection = document.createElement('div');
                 currentTaskSection.className = 'task-section';
                 currentTaskSection.setAttribute('data-task-index', taskIndex); 
                 currentTaskSection.innerHTML = `
                     <div class="task-header">
                         <h3 class="task-title">🎯 المهمة ${taskIndex}</h3>
-                        <span class="task-badge">صـ ${page} - ${Math.min(page + 9, config.end)}</span>
+                        <span class="task-badge">صـ ${page} - ${Math.min(page + (tSize - 1), config.end)}</span>
                     </div>
                 `;
                 currentGrid = document.createElement('div');
@@ -1033,4 +1077,3 @@
 </script>
 </body>
 </html>
-
