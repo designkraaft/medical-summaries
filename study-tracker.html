@@ -137,20 +137,19 @@
 
         .btn-secondary {
             background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 14px 24px; border-radius: var(--radius-md);
-            font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px; transition: all 0.2s;
+            font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
         .btn-secondary:hover { background: var(--border-subtle); }
 
-        .btn-accent { background: var(--surface); border: 2px dashed var(--accent-primary); color: var(--accent-primary); }
+        .btn-accent { background: var(--surface); border: 2px dashed var(--accent-primary); color: var(--accent-primary); width: 100%; }
         .btn-accent:hover { background: rgba(37, 99, 235, 0.05); }
 
         .btn-danger {
             background: var(--surface); border: 1px solid var(--btn-danger-border); color: var(--btn-danger-text); padding: 12px; border-radius: var(--radius-md);
-            font-size: 15px; font-weight: 700; cursor: pointer; width: 100%; transition: all 0.2s;
+            font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
         .btn-danger:hover { background: var(--btn-danger-hover); }
 
-        /* زر التعديل الصغير */
         .btn-icon-small {
             background: var(--bg-app); border: 1px solid var(--border-subtle); color: var(--text-secondary);
             width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
@@ -159,7 +158,8 @@
         .btn-icon-small:hover { background: var(--btn-secondary-bg); color: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-2px); }
 
         #activeSessionDashboard { display: none; }
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;}
+        .backup-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
         
         #addMoreSection { display: none; margin-top: 20px; padding: 20px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-app); animation: fadeIn 0.3s ease; }
 
@@ -212,6 +212,8 @@
             .floating-timer-controls { width: 100%; justify-content: space-around; }
             .subject-progress-box { min-width: 100%; }
             .range-buttons { flex-direction: column; }
+            .backup-actions { width: 100%; justify-content: stretch; }
+            .backup-actions > * { flex: 1; min-width: 100%; font-size: 13px; padding: 10px; margin-top: 5px !important; }
         }
     </style>
 </head>
@@ -260,7 +262,6 @@
     </div>
 </div>
 
-<!-- نافذة التعديل الجديدة -->
 <div class="custom-modal-overlay" id="editSubjectModal">
     <div class="custom-modal-content">
         <h2 class="modal-title">✏️ تعديل الصفحات</h2>
@@ -330,6 +331,14 @@
             <button class="btn-range-select" onclick="showInitialSetup(2)">مادتين</button>
             <button class="btn-range-select" onclick="showInitialSetup(3)">3 مواد</button>
         </div>
+        
+        <div style="margin-top: 40px; border-top: 1px dashed var(--border-subtle); padding-top: 20px;">
+            <p style="color:var(--text-secondary); font-size: 14px; margin-bottom: 10px;">هل لديك ملف لجلسة سابقة؟ يمكنك استعادته من هنا:</p>
+            <label class="btn-secondary" style="cursor:pointer; margin-top:0;">
+                📂 استعادة البيانات (استيراد)
+                <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
+            </label>
+        </div>
     </div>
 
     <div id="initialSetupPanel" class="panel-card">
@@ -346,9 +355,25 @@
             <div class="dashboard-header">
                 <div>
                     <h2 class="panel-title" style="border:none; padding:0; margin-bottom:5px;">إدارة الجلسة والمواد</h2>
-                    <p style="font-size:14px; color:var(--text-secondary); margin:0;">جلستك الدراسية نشطة الآن ويتم حفظ تقدمك تلقائياً وبشكل مستمر.</p>
+                    <p style="font-size:14px; color:var(--text-secondary); margin:0;">يتم حفظ تقدمك تلقائياً وبشكل مستمر، يمكنك أيضاً حفظه كملف.</p>
                 </div>
-                <button class="btn-danger" onclick="resetEverything()" style="width:auto; margin:0; padding:10px 20px;">🗑️ إنهاء وتصفير اللوحة</button>
+                
+                <div class="backup-actions">
+                    <!-- تمت إضافة زر الاستيراد هنا بجانب زر التصدير -->
+                    <label class="btn-secondary" style="cursor:pointer; margin-top:0; padding: 10px 15px; font-size: 13px;" title="استعادة تقدمك من ملف سابق">
+                        📂 استعادة (استيراد)
+                        <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
+                    </label>
+
+                    <!-- تم توضيح نص زر التصدير بشكل أكبر -->
+                    <button class="btn-secondary" onclick="exportData()" style="margin-top:0; padding: 10px 15px; font-size: 13px; color: var(--accent-primary); border-color: var(--accent-primary);" title="تنزيل ملف يحتوي على تقدمك الحالي لضمان عدم ضياعه">
+                        💾 حفظ الجلسة (تصدير)
+                    </button>
+                    
+                    <button class="btn-danger" onclick="resetEverything()" style="width:auto; margin:0; padding:10px 15px; font-size: 13px;">
+                        🗑️ إنهاء وتصفير
+                    </button>
+                </div>
             </div>
             
             <button class="btn-secondary btn-accent" id="toggleAddMoreBtn">➕ إضافة مادة جديدة للوحة</button>
@@ -381,20 +406,22 @@
 </div>
 
 <div class="app-footer">
-    <div class="footer-version">الإصدار 8.2 - مساحة المتابعة الذكية للطلاب 📖</div>
+    <div class="footer-version">الإصدار 8.4 - مساحة المتابعة الذكية للطلاب 📖</div>
     <div class="footer-features">
-        <span>✨ حفظ سحابي محلي تلقائي</span>
+        <span>✨ حفظ سحابي محلي</span>
         <span>|</span>
-        <span>🎯 تقسيم المهام ذكي</span>
+        <span>🛡️ حفظ/استعادة الجلسة بأمان</span>
         <span>|</span>
         <span>⏱️ مؤقت مرن</span>
         <span>|</span>
-        <span>✏️ تعديل متقدم للنطاق</span>
+        <span>✏️ تعديل متقدم</span>
     </div>
 </div>
 
 <script>
-    const STATE_KEY = 'studyTrackerSaveState_v8_2'; 
+    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v8_4'; 
+    const OLD_STATE_KEYS = ['studyTrackerSaveState_v8_3', 'studyTrackerSaveState_v8_2', 'studyTrackerSaveState_v8_1', 'studyTrackerSaveState_v8', 'studyTrackerSaveState'];
+
     let currentConfigs = []; 
     let initialNumSelected = 0;
 
@@ -543,7 +570,7 @@
 
     function resetEverything() {
         if (confirm("⚠️ هل أنت متأكد من رغبتك في إنهاء الجلسة وتصفير كل شيء؟ سيتم مسح تقدمك الحالي.")) {
-            localStorage.removeItem(STATE_KEY);
+            localStorage.removeItem(CURRENT_STATE_KEY);
             currentConfigs = [];
             activeSessionDashboard.style.display = 'none';
             workspace.innerHTML = ''; progressBarsWrapper.innerHTML = '';
@@ -554,7 +581,39 @@
         }
     }
 
-    // --- نظام التعديل الجديد للمادة ---
+    function exportData() {
+        const data = localStorage.getItem(CURRENT_STATE_KEY);
+        if(!data) { showCustomAlert("خطأ", "لا توجد بيانات محفوظة لتصديرها."); return; }
+        const blob = new Blob([data], {type: "application/json"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `StudyTracker_Backup_${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+    }
+
+    function importData(event) {
+        const file = event.target.files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const json = JSON.parse(e.target.result);
+                if(json.configs) {
+                    localStorage.setItem(CURRENT_STATE_KEY, JSON.stringify(json));
+                    showCustomAlert("نجاح!", "تمت استعادة البيانات بنجاح. سيتم تحديث الصفحة الآن.", "✅");
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    showCustomAlert("خطأ", "ملف النسخة الاحتياطية غير صالح أو تالف.");
+                }
+            } catch(err) {
+                showCustomAlert("خطأ", "حدث خطأ أثناء قراءة الملف.");
+            }
+        };
+        reader.readAsText(file);
+        event.target.value = ''; // تصفير الحقل ليسمح باختيار نفس الملف مجدداً إن لزم
+    }
+
     function openEditModal(id, name, start, end) {
         document.getElementById('editSubId').value = id;
         document.getElementById('editSubName').textContent = name;
@@ -579,7 +638,6 @@
             showCustomAlert("خطأ في الأرقام", "رقم صفحة البداية يجب أن يكون أصغر أو يساوي صفحة النهاية."); return;
         }
 
-        // 1. استخراج الصفحات المدروسة حالياً للحفاظ عليها
         const currentStudied = {};
         document.querySelectorAll('.card.studied').forEach(card => {
             const subId = card.getAttribute('data-subject-id');
@@ -588,21 +646,18 @@
             currentStudied[subId].push(page);
         });
 
-        // 2. تحديث إعدادات المادة المحددة
         const configIndex = currentConfigs.findIndex(c => c.id === id);
         if (configIndex !== -1) {
             currentConfigs[configIndex].start = newStart;
             currentConfigs[configIndex].end = newEnd;
         }
 
-        // 3. إعادة بناء مساحة العمل كاملة
         workspace.innerHTML = '';
         progressBarsWrapper.innerHTML = '';
         stickyProgressContainer.style.display = 'none';
         
         currentConfigs.forEach(conf => appendSubjectToWorkspace(conf));
 
-        // 4. استرجاع علامات الإنجاز السابقة للبطاقات
         for (const [subId, pages] of Object.entries(currentStudied)) {
             const allCards = document.querySelectorAll(`.card[data-subject-id="${subId}"]`);
             allCards.forEach(c => {
@@ -613,7 +668,6 @@
             updateProgressFor(subId);
         }
 
-        // 5. إعادة تقييم الأقسام المكتملة
         document.querySelectorAll('.task-section').forEach(taskSec => {
             const allC = taskSec.querySelectorAll('.card');
             const studiedC = taskSec.querySelectorAll('.card.studied');
@@ -646,7 +700,6 @@
         subjectSection.id = `section_${config.id}`;
         subjectSection.style.setProperty('--subject-hue', config.hue);
         
-        // تمت إضافة زر التعديل هنا
         subjectSection.innerHTML = `
             <div class="subject-header-title">
                 <div>
@@ -815,11 +868,25 @@
             configs: currentConfigs, studied: studiedData,
             timer: { mode: isCountdown ? 'down' : 'up', mins: setMinutesInput.value, sec: seconds, startSec: startingSeconds }
         };
-        localStorage.setItem(STATE_KEY, JSON.stringify(state));
+        localStorage.setItem(CURRENT_STATE_KEY, JSON.stringify(state));
+    }
+
+    function autoMigrateData() {
+        if (localStorage.getItem(CURRENT_STATE_KEY)) return;
+        for (let oldKey of OLD_STATE_KEYS) {
+            const oldData = localStorage.getItem(oldKey);
+            if (oldData) {
+                localStorage.setItem(CURRENT_STATE_KEY, oldData);
+                console.log(`تم ترحيل البيانات بنجاح من النسخة: ${oldKey}`);
+                break; 
+            }
+        }
     }
 
     function loadState() {
-        const saved = localStorage.getItem(STATE_KEY);
+        autoMigrateData(); 
+
+        const saved = localStorage.getItem(CURRENT_STATE_KEY);
         if (saved) {
             const state = JSON.parse(saved);
             if (state.configs && state.configs.length > 0) {
