@@ -8,23 +8,23 @@
     
     <style>
         :root {
-            /* ألوان مريحة للعين (Sepia/Wood tones) لدراسة طويلة بدون إجهاد */
-            --bg-app: #f4ecd8; 
-            --surface: #fdfbf7;
-            --text-primary: #2d251e;
-            --text-secondary: #70655b;
+            /* ألوان متناسقة ومريحة جداً للعين (Warm Paper Theme) */
+            --bg-app: #f7f5f0; 
+            --surface: #ffffff;
+            --text-primary: #2d2824;
+            --text-secondary: #6e6761;
             --accent-primary: #3b82f6;
             --accent-hover: #2563eb;
-            --border-subtle: #e3d7c5;
-            --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.05);
-            --shadow-md: 0 10px 30px rgba(45, 37, 30, 0.08);
-            --shadow-lg: 0 20px 40px rgba(45, 37, 30, 0.12);
+            --border-subtle: #e6e2d8;
+            --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.04);
+            --shadow-md: 0 10px 30px rgba(45, 37, 30, 0.06);
+            --shadow-lg: 0 20px 40px rgba(45, 37, 30, 0.1);
             --radius-lg: 16px;
             --radius-md: 12px;
             --radius-sm: 8px;
-            --header-bg: rgba(253, 251, 247, 0.9);
-            --btn-secondary-bg: #eae0cf;
-            --btn-secondary-hover: #decfae;
+            --header-bg: rgba(247, 245, 240, 0.95);
+            --btn-secondary-bg: #ffffff;
+            --btn-secondary-hover: #f0eee9;
             --btn-danger-text: #dc2626;
             --btn-danger-border: #fca5a5;
             --btn-danger-hover: #fef2f2;
@@ -42,9 +42,9 @@
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
             --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
             --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.7);
-            --header-bg: rgba(30, 30, 36, 0.9);
-            --btn-secondary-bg: #374151;
-            --btn-secondary-hover: #4b5563;
+            --header-bg: rgba(18, 18, 18, 0.95);
+            --btn-secondary-bg: #2a2a32;
+            --btn-secondary-hover: #3f3f4a;
             --btn-danger-text: #fca5a5;
             --btn-danger-border: #991b1b;
             --btn-danger-hover: #7f1d1d;
@@ -101,7 +101,7 @@
             background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 10px 18px;
             border-radius: var(--radius-md); font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-sm); transition: all 0.2s ease;
         }
-        .btn-theme:hover, .btn-back:hover { background: var(--btn-secondary-bg); transform: translateY(-2px); }
+        .btn-theme:hover, .btn-back:hover { background: var(--btn-secondary-hover); transform: translateY(-2px); }
 
         .panel-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-md); animation: fadeIn 0.4s ease; margin-bottom: 25px;}
         .panel-title { font-size: 18px; font-weight: 800; color: var(--text-primary); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 12px; }
@@ -121,19 +121,22 @@
         .input-field { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 100px; }
         .input-field label { font-size: 14px; color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; }
         select, input[type="number"] {
-            background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 12px 15px; font-size: 15px; border-radius: var(--radius-md);
+            background: var(--surface); border: 1px solid var(--border-subtle); padding: 12px 15px; font-size: 15px; border-radius: var(--radius-md);
             color: var(--text-primary); outline: none; transition: all 0.2s; font-family: inherit; width: 100%; box-sizing: border-box; font-weight: 600;
         }
-        select:focus, input[type="number"]:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); background: var(--surface); }
+        select:focus, input[type="number"]:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
 
         .range-config-group { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed var(--border-subtle); background: var(--surface); border-radius: var(--radius-md); }
         .range-config-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
+        /* زر النصيحة مع تأثير التعويم */
         .info-icon {
-            cursor: pointer; color: var(--accent-primary); font-size: 12px; margin-right: 8px; background: rgba(59, 130, 246, 0.1); 
-            border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s;
+            cursor: pointer; color: var(--accent-primary); font-size: 12px; font-weight: 700; margin-right: 8px; 
+            background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px; padding: 2px 10px; display: inline-flex; align-items: center; justify-content: center; 
+            transition: all 0.2s; animation: float 2s infinite ease-in-out;
         }
-        .info-icon:hover { background: var(--accent-primary); color: #fff; transform: scale(1.1); }
+        .info-icon:hover { background: var(--accent-primary); color: #fff; transform: scale(1.05); }
 
         .btn-primary {
             background: var(--accent-primary); color: #ffffff; border: none; padding: 14px 24px; border-radius: var(--radius-md);
@@ -146,7 +149,7 @@
             background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 14px 24px; border-radius: var(--radius-md);
             font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .btn-secondary:hover { background: var(--border-subtle); transform: translateY(-1px); }
+        .btn-secondary:hover { background: var(--btn-secondary-hover); transform: translateY(-1px); }
 
         .btn-accent { background: var(--surface); border: 2px dashed var(--accent-primary); color: var(--accent-primary); width: 100%; }
         .btn-accent:hover { background: rgba(59, 130, 246, 0.05); }
@@ -158,18 +161,18 @@
         .btn-danger:hover { background: var(--btn-danger-hover); transform: translateY(-1px); }
 
         .btn-icon-small {
-            background: var(--bg-app); border: 1px solid var(--border-subtle); color: var(--text-secondary);
+            background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-secondary);
             width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: all 0.2s; font-size: 16px; box-shadow: var(--shadow-sm);
         }
-        .btn-icon-small:hover { background: var(--btn-secondary-bg); color: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-2px); }
+        .btn-icon-small:hover { background: var(--btn-secondary-hover); color: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-2px); }
         .btn-icon-danger:hover { background: var(--btn-danger-hover); color: var(--btn-danger-text); border-color: var(--btn-danger-border); }
 
         #activeSessionDashboard { display: none; }
         .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;}
         .backup-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
         
-        #addMoreSection { display: none; margin-top: 20px; padding: 25px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-app); animation: fadeIn 0.3s ease; }
+        #addMoreSection { display: none; margin-top: 20px; padding: 25px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface); animation: fadeIn 0.3s ease; }
 
         #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; align-items: start; }
         .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 25px; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease; position: relative; overflow: hidden;}
@@ -192,7 +195,12 @@
         .app-footer { text-align: center; padding: 40px 20px; margin-top: auto; color: var(--text-secondary); font-size: 14px; border-top: 1px solid var(--border-subtle); background: var(--surface); display: flex; flex-direction: column; align-items: center; gap: 10px;}
         .footer-version { font-weight: 800; color: var(--text-primary); }
 
-        .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; }
+        .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        /* التحكم بالطبقات لضمان ظهور النوافذ بشكل صحيح */
+        #customAlertModal { z-index: 10010; }
+        #taskTipModal { z-index: 10005; } /* أعلى من نافذة الإعدادات */
+        #editSubjectModal, #deleteSubjectModal, #updateWelcomeModal, #timerSetupModal, #featuresModal, #celebrationModal { z-index: 9999; }
+        
         .custom-modal-overlay.active { display: flex; opacity: 1; }
         .custom-modal-content { background: var(--surface); padding: 35px; border-radius: var(--radius-lg); text-align: center; max-width: 450px; width: 90%; box-shadow: var(--shadow-lg); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .custom-modal-overlay.active .custom-modal-content { transform: scale(1); }
@@ -214,6 +222,7 @@
         .update-features-list li:last-child, .features-list li:last-child { margin-bottom: 0; }
         .update-features-list strong, .features-list strong { color: var(--accent-primary); }
 
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -235,7 +244,7 @@
 <div class="custom-modal-overlay" id="updateWelcomeModal">
     <div class="custom-modal-content">
         <div class="alert-icon">✨</div>
-        <h2 class="modal-title">مرحباً بك في الإصدار 8.7!</h2>
+        <h2 class="modal-title">مرحباً بك في الإصدار 8.8!</h2>
         <p class="modal-text" style="color: var(--success-color); font-weight: 800; margin-bottom: 15px;">
             اطمئن! 🛡️ جميع إنجازاتك وجلستك السابقة محفوظة بأمان ولن تفقد أي شيء.
         </p>
@@ -244,36 +253,25 @@
             <li>⚙️ <strong>تخصيص المهام:</strong> يمكنك الآن تحديد عدد الصفحات لكل مهمة بما يتناسب مع كثافة المادة.</li>
             <li>🗑️ <strong>حذف وتعديل:</strong> أزرار للتحكم الكامل بالمادة داخل الجلسة.</li>
             <li>💾 <strong>استيراد وتصدير:</strong> لحفظ نسخة من إنجازك واستعادتها بأمان.</li>
-            <li>🎨 <strong>ألوان مريحة:</strong> الوضع الفاتح الآن بدرجات ورقية مريحة جداً للعين للحد من الإجهاد.</li>
+            <li>🎨 <strong>ألوان مريحة للعين:</strong> تم تحسين الوضع الفاتح بدرجات متناسقة ودافئة لتقليل الإجهاد البصري.</li>
         </ul>
         <button class="btn-primary" onclick="closeUpdateWelcomeModal()">رائع، لنتابع الدراسة! 💪</button>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="taskTipModal">
-    <div class="custom-modal-content">
-        <div class="alert-icon" style="font-size: 40px;">💡</div>
-        <h2 class="modal-title">كيف أحدد حجم المهمة؟</h2>
-        <ul class="features-list">
-            <li><strong>المواد الكثيفة أو الدراسة لأول مرة:</strong><br>اختر من <strong>10 إلى 15 صفحة</strong>. هذا المعدل مثالي لجلسة دراسية واحدة بتركيز عالي ويسمح باستيعاب التفاصيل الدقيقة براحة.</li>
-            <li><strong>المراجعة السريعة أو قراءة الملخصات:</strong><br>اختر من <strong>20 إلى 30 صفحة</strong>، حيث تكون الأفكار مألوفة وتحتاج فقط إلى استرجاع وتثبيت.</li>
-        </ul>
-        <button class="btn-primary" onclick="closeTaskTipModal()">فهمت ذلك، شكراً 👍</button>
     </div>
 </div>
 
 <div class="custom-modal-overlay" id="featuresModal">
     <div class="custom-modal-content">
         <div class="alert-icon" style="font-size: 40px;">🚀</div>
-        <h2 class="modal-title">ميزات مساحة المتابعة الذكية</h2>
+        <h2 class="modal-title">الدليل الشامل لميزات اللوحة</h2>
         <ul class="features-list">
-            <li><strong>✨ حفظ سحابي محلي:</strong> تقدمك يُحفظ تلقائياً في متصفحك.</li>
-            <li><strong>🎯 تقسيم المهام ذكي:</strong> يمكنك تخصيص عدد الصفحات لكل مهمة لتناسب كثافة المادة.</li>
-            <li><strong>⏱️ مؤقت مرن:</strong> نظام بومودورو أو عد تصاعدي لضبط وقت التركيز بفعالية.</li>
-            <li><strong>🛡️ استيراد وتصدير:</strong> لن تفقد بياناتك! حمّل ملف جلستك واستعده في أي وقت.</li>
-            <li><strong>✏️ تحكم كامل:</strong> تعديل نطاق الصفحات أو حذف المواد بنقرة واحدة.</li>
+            <li><strong>✨ حفظ سحابي محلي:</strong> لا تقلق أبداً، تقدمك يُحفظ تلقائياً ومباشرة في متصفحك.</li>
+            <li><strong>🎯 تقسيم ذكي للمهام:</strong> حدد نطاق الصفحات وحجم كل مهمة، وسنقوم بتقسيمها لتسهيل دراستك.</li>
+            <li><strong>⏱️ مؤقت التركيز (Pomodoro):</strong> نظام مرن يتيح لك العد التصاعدي المفتوح، أو العد التنازلي لإدارة وقتك بدقة.</li>
+            <li><strong>🛡️ نظام النسخ الاحتياطي:</strong> احفظ تعبك! يمكنك تصدير بيانات جلستك كملف واستيراده على أي جهاز آخر.</li>
+            <li><strong>✏️ مرونة التعديل والحذف:</strong> يمكنك في أي وقت تغيير صفحات البداية والنهاية أو إزالة مادة بالكامل دون التأثير على إنجازك.</li>
+            <li><strong>🌙 راحة العين أولاً:</strong> أوضاع ألوان مصممة بعناية (داكن، وورقي دافئ) لضمان راحة عينيك أثناء الدراسة الطويلة.</li>
         </ul>
-        <button class="btn-primary" onclick="closeFeaturesModal()">إغلاق النافذة</button>
+        <button class="btn-primary" onclick="closeFeaturesModal()">إغلاق الدليل</button>
     </div>
 </div>
 
@@ -320,7 +318,7 @@
     </div>
 </div>
 
-<!-- نافذة التعديل مع حجم المهمة -->
+<!-- نافذة التعديل -->
 <div class="custom-modal-overlay" id="editSubjectModal">
     <div class="custom-modal-content">
         <h2 class="modal-title">✏️ إعدادات المادة</h2>
@@ -336,7 +334,9 @@
                 <input type="number" id="editEndPage" min="1">
             </div>
             <div class="input-field">
-                <label>صفحات المهمة <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">ℹ️</span></label>
+                <label>صفحات المهمة 
+                    <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">نصيحة 💡</span>
+                </label>
                 <input type="number" id="editTaskSize" min="1">
             </div>
         </div>
@@ -357,6 +357,19 @@
             <button class="btn-danger" id="confirmDeleteBtn" style="flex:2; margin-top:0;">نعم، احذف المادة</button>
             <button class="btn-secondary" onclick="closeDeleteModal()" style="flex:1; margin-top:0;">إلغاء</button>
         </div>
+    </div>
+</div>
+
+<!-- نافذة النصيحة - Z-index مرتفع جداً للظهور فوق نافذة التعديل -->
+<div class="custom-modal-overlay" id="taskTipModal" style="z-index: 10005;">
+    <div class="custom-modal-content">
+        <div class="alert-icon" style="font-size: 40px;">💡</div>
+        <h2 class="modal-title">كيف أحدد حجم المهمة؟</h2>
+        <ul class="features-list">
+            <li><strong>المواد الكثيفة أو الدراسة لأول مرة:</strong><br>اختر من <strong>10 إلى 15 صفحة</strong>. هذا المعدل مثالي لجلسة دراسية واحدة بتركيز عالي ويسمح باستيعاب التفاصيل الدقيقة براحة.</li>
+            <li><strong>المراجعة السريعة أو قراءة الملخصات:</strong><br>اختر من <strong>20 إلى 30 صفحة</strong>، حيث تكون الأفكار مألوفة وتحتاج فقط إلى استرجاع وتثبيت.</li>
+        </ul>
+        <button class="btn-primary" onclick="closeTaskTipModal()">فهمت ذلك، شكراً 👍</button>
     </div>
 </div>
 
@@ -468,7 +481,9 @@
                         <input type="number" id="addEndPage" min="1" placeholder="مثال: 20">
                     </div>
                     <div class="input-field">
-                        <label>صفحات المهمة <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">ℹ️</span></label>
+                        <label>صفحات المهمة 
+                            <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">نصيحة 💡</span>
+                        </label>
                         <input type="number" id="addTaskSize" min="1" value="10">
                     </div>
                 </div>
@@ -484,17 +499,17 @@
 </div>
 
 <div class="app-footer">
-    <div class="footer-version">الإصدار 8.7 - مساحة المتابعة الذكية للطلاب 📖</div>
-    <button class="btn-secondary" style="margin-top:5px; padding: 8px 16px; border-radius: 20px; font-size: 13px; border-color:var(--accent-primary); color:var(--accent-primary);" onclick="openFeaturesModal()">
-        ✨ استكشف ميزات اللوحة
+    <div class="footer-version">الإصدار 8.8 - مساحة المتابعة الذكية للطلاب 📖</div>
+    <button class="btn-secondary" style="margin-top:15px; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight:700; border-color:var(--accent-primary); color:var(--accent-primary); background: transparent;" onclick="openFeaturesModal()">
+        ✨ استكشف الدليل الشامل للوحة
     </button>
 </div>
 
 <script>
-    const APP_VERSION = '8.7';
+    const APP_VERSION = '8.8';
     const VERSION_KEY = 'studyTracker_appVersion';
-    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v8_7'; 
-    const OLD_STATE_KEYS = ['studyTrackerSaveState_v8_6', 'studyTrackerSaveState_v8_5', 'studyTrackerSaveState_v8_4', 'studyTrackerSaveState_v8_3', 'studyTrackerSaveState_v8_2', 'studyTrackerSaveState_v8_1', 'studyTrackerSaveState_v8', 'studyTrackerSaveState'];
+    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v8_8'; 
+    const OLD_STATE_KEYS = ['studyTrackerSaveState_v8_7', 'studyTrackerSaveState_v8_6', 'studyTrackerSaveState_v8_5', 'studyTrackerSaveState_v8_4', 'studyTrackerSaveState_v8_3', 'studyTrackerSaveState_v8_2', 'studyTrackerSaveState_v8_1', 'studyTrackerSaveState_v8', 'studyTrackerSaveState'];
 
     let currentConfigs = []; 
     let initialNumSelected = 0;
@@ -595,7 +610,7 @@
                             <input type="number" id="initEnd${i}" min="1" placeholder="رقم">
                         </div>
                         <div class="input-field">
-                            <label>صفحات المهمة <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">ℹ️</span></label>
+                            <label>صفحات المهمة <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">نصيحة 💡</span></label>
                             <input type="number" id="initTask${i}" min="1" value="10">
                         </div>
                     </div>
