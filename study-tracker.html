@@ -60,7 +60,6 @@
         body.timer-ended { background-color: #d1fae5; }
         body.dark-mode.timer-ended { background-color: #064e3b; }
 
-        /* الشريط العائم (المؤقت والإنجاز) */
         .sticky-progress {
             position: sticky; top: 0; background: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-subtle); padding: 12px 20px; z-index: 100; box-shadow: var(--shadow-sm); display: none; 
@@ -92,7 +91,6 @@
         .progress-bar-wrapper { background: var(--border-subtle); height: 10px; border-radius: 20px; overflow: hidden; width: 100%; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
         .progress-bar-fill { background-color: hsl(var(--subject-hue), 60%, 50%); height: 100%; width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        /* التصميم العام */
         .main-layout { max-width: 1200px; margin: 30px auto; padding: 0 20px; box-sizing: border-box; flex: 1; width: 100%; }
         .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
         .app-header h1 { font-size: 26px; font-weight: 700; margin: 0; color: var(--text-primary); }
@@ -104,11 +102,9 @@
         }
         .btn-theme:hover, .btn-back:hover { background: var(--btn-secondary-bg); transform: translateY(-1px); }
 
-        /* الشاشات (مراحل التطبيق) */
         .panel-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-md); animation: fadeIn 0.4s ease; margin-bottom: 25px;}
         .panel-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 12px; }
 
-        /* 1. شاشة الترحيب */
         #welcomePanel { text-align: center; max-width: 800px; margin: 40px auto; }
         #welcomePanel h2 { color: var(--text-primary); margin-bottom: 40px; font-size: 24px; }
         .range-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
@@ -118,10 +114,8 @@
         }
         .btn-range-select:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
-        /* 2. شاشة الإعداد الأولي */
         #initialSetupPanel { display: none; max-width: 800px; margin: 0 auto; }
         
-        /* حقول الإدخال */
         .inputs-group { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
         .input-field { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 120px; }
         .input-field label { font-size: 14px; color: var(--text-secondary); font-weight: 600; }
@@ -134,7 +128,6 @@
         .range-config-group { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed var(--border-subtle); background: var(--surface); border-radius: var(--radius-md); }
         .range-config-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-        /* الأزرار الاحترافية */
         .btn-primary {
             background: var(--accent-primary); color: #ffffff; border: none; padding: 14px 24px; border-radius: var(--radius-md);
             font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
@@ -157,17 +150,24 @@
         }
         .btn-danger:hover { background: var(--btn-danger-hover); }
 
-        /* شاشة الجلسة النشطة */
+        /* زر التعديل الصغير */
+        .btn-icon-small {
+            background: var(--bg-app); border: 1px solid var(--border-subtle); color: var(--text-secondary);
+            width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s; font-size: 16px; box-shadow: var(--shadow-sm);
+        }
+        .btn-icon-small:hover { background: var(--btn-secondary-bg); color: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-2px); }
+
         #activeSessionDashboard { display: none; }
         .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         
         #addMoreSection { display: none; margin-top: 20px; padding: 20px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--bg-app); animation: fadeIn 0.3s ease; }
 
-        /* مساحة العمل */
         #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; align-items: start; }
         .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 25px; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease; position: relative; overflow: hidden;}
         .subject-section::before { content: ''; position: absolute; top: 0; right: 0; width: 6px; height: 100%; background: hsl(var(--subject-hue), 60%, 50%); }
         .subject-header-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-subtle); }
+        .subject-header-actions { display: flex; align-items: center; gap: 10px; }
         
         .task-section { background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px; margin-bottom: 15px; transition: all 0.3s ease; }
         .task-section.completed { background: rgba(52, 211, 153, 0.1); border-color: var(--success-color); box-shadow: 0 0 10px rgba(52, 211, 153, 0.1); }
@@ -181,13 +181,11 @@
         .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); border-color: hsl(var(--subject-hue), 60%, 50%); }
         .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; box-shadow: 0 4px 12px hsla(var(--subject-hue), 60%, 50%, 0.4); transform: scale(1.05); }
 
-        /* التذييل العصري */
         .app-footer { text-align: center; padding: 40px 20px; margin-top: auto; color: var(--text-secondary); font-size: 14px; border-top: 1px solid var(--border-subtle); background: var(--surface); }
         .footer-version { font-weight: 700; margin-bottom: 10px; color: var(--text-primary); }
         .footer-features { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 13px; font-weight: 500; }
         .footer-features span { display: flex; align-items: center; gap: 5px; }
 
-        /* النوافذ المنبثقة (Modals) المشتركة */
         .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; }
         .custom-modal-overlay.active { display: flex; opacity: 1; }
         .custom-modal-content { background: var(--surface); padding: 35px; border-radius: var(--radius-lg); text-align: center; max-width: 400px; width: 90%; box-shadow: var(--shadow-lg); transform: scale(0.9); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -195,14 +193,10 @@
         .modal-title { font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 15px; color: var(--text-primary); }
         .modal-text { font-size: 15px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.6; }
 
-        /* نافذة التنبيهات والأخطاء */
         .alert-icon { font-size: 50px; margin-bottom: 15px; }
-
-        /* تصميم نافذة الفرح */
         .celebration-content { border: 2px solid var(--success-color); }
         .cel-title { color: var(--success-color); }
 
-        /* نافذة إعداد المؤقت */
         .timer-modes-group { display: flex; background: var(--bg-app); border-radius: var(--radius-md); padding: 5px; margin-bottom: 20px; border: 1px solid var(--border-subtle); }
         .mode-btn { flex: 1; background: transparent; border: none; padding: 10px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
         .mode-btn.active { background: var(--surface); color: var(--accent-primary); box-shadow: var(--shadow-sm); }
@@ -262,6 +256,29 @@
         <div style="display:flex; gap:10px;">
             <button class="btn-primary" id="applyTimerBtn" style="flex:2;">حفظ وإغلاق</button>
             <button class="btn-secondary" onclick="closeTimerSetup()" style="flex:1; margin-top:0;">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة التعديل الجديدة -->
+<div class="custom-modal-overlay" id="editSubjectModal">
+    <div class="custom-modal-content">
+        <h2 class="modal-title">✏️ تعديل الصفحات</h2>
+        <p class="modal-text">تعديل الصفحات لمادة: <strong id="editSubName" style="color:var(--accent-primary)"></strong></p>
+        <input type="hidden" id="editSubId">
+        <div class="inputs-group">
+            <div class="input-field">
+                <label>من صفحة</label>
+                <input type="number" id="editStartPage" min="1">
+            </div>
+            <div class="input-field">
+                <label>إلى صفحة</label>
+                <input type="number" id="editEndPage" min="1">
+            </div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:15px;">
+            <button class="btn-primary" id="saveEditBtn" style="flex:2;">حفظ التعديلات ✅</button>
+            <button class="btn-secondary" onclick="closeEditModal()" style="flex:1; margin-top:0;">إلغاء</button>
         </div>
     </div>
 </div>
@@ -364,20 +381,20 @@
 </div>
 
 <div class="app-footer">
-    <div class="footer-version">الإصدار 8.1 - مساحة المتابعة الذكية للطلاب 📖</div>
+    <div class="footer-version">الإصدار 8.2 - مساحة المتابعة الذكية للطلاب 📖</div>
     <div class="footer-features">
         <span>✨ حفظ سحابي محلي تلقائي</span>
         <span>|</span>
         <span>🎯 تقسيم المهام ذكي</span>
         <span>|</span>
-        <span>⏱️ مؤقت مرن (بومودورو/حر)</span>
+        <span>⏱️ مؤقت مرن</span>
         <span>|</span>
-        <span>🌙 واجهة مريحة للعين</span>
+        <span>✏️ تعديل متقدم للنطاق</span>
     </div>
 </div>
 
 <script>
-    const STATE_KEY = 'studyTrackerSaveState_v8_1'; 
+    const STATE_KEY = 'studyTrackerSaveState_v8_2'; 
     let currentConfigs = []; 
     let initialNumSelected = 0;
 
@@ -394,7 +411,6 @@
         "اللغة الإنجليزية 2": { hue: 90, group: "الفصل الثاني" }
     };
 
-    // توليد الخيارات
     let subjectOptionsHTML = `<option value="" disabled selected>اختر المادة من القائمة...</option>`;
     let g1 = `<optgroup label="الفصل الدراسي الأول">`; let g2 = `<optgroup label="الفصل الدراسي الثاني">`;
     for (const [name, data] of Object.entries(subjectsData)) {
@@ -405,7 +421,6 @@
     subjectOptionsHTML += g1 + g2;
     document.getElementById('addSubjectSelect').innerHTML = subjectOptionsHTML;
 
-    // --- الوضع الداكن ---
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     if (localStorage.getItem('studyTrackerTheme') === 'dark') {
         document.body.classList.add('dark-mode'); themeToggleBtn.innerHTML = '☀️ الوضع الفاتح';
@@ -419,7 +434,6 @@
         }
     });
 
-    // --- نظام التنبيهات المخصص (Custom Alerts) ---
     function showCustomAlert(title, message, icon = "⚠️") {
         document.getElementById('alertTitle').textContent = title;
         document.getElementById('alertMessage').textContent = message;
@@ -430,7 +444,6 @@
         document.getElementById('customAlertModal').classList.remove('active');
     }
 
-    // --- إدارة واجهات المراحل ---
     const welcomePanel = document.getElementById('welcomePanel');
     const initialSetupPanel = document.getElementById('initialSetupPanel');
     const initialFormsContainer = document.getElementById('initialFormsContainer');
@@ -497,7 +510,6 @@
         window.scrollBy({ top: 100, behavior: 'smooth' });
     });
 
-    // --- إضافة مادة إضافية ---
     const addMoreSection = document.getElementById('addMoreSection');
     const toggleAddMoreBtn = document.getElementById('toggleAddMoreBtn');
     
@@ -529,7 +541,6 @@
         window.scrollBy({ top: 300, behavior: 'smooth' });
     });
 
-    // تصفير الجلسة
     function resetEverything() {
         if (confirm("⚠️ هل أنت متأكد من رغبتك في إنهاء الجلسة وتصفير كل شيء؟ سيتم مسح تقدمك الحالي.")) {
             localStorage.removeItem(STATE_KEY);
@@ -543,7 +554,77 @@
         }
     }
 
-    // بناء مساحة العمل
+    // --- نظام التعديل الجديد للمادة ---
+    function openEditModal(id, name, start, end) {
+        document.getElementById('editSubId').value = id;
+        document.getElementById('editSubName').textContent = name;
+        document.getElementById('editStartPage').value = start;
+        document.getElementById('editEndPage').value = end;
+        document.getElementById('editSubjectModal').classList.add('active');
+    }
+
+    function closeEditModal() {
+        document.getElementById('editSubjectModal').classList.remove('active');
+    }
+
+    document.getElementById('saveEditBtn').addEventListener('click', () => {
+        const id = document.getElementById('editSubId').value;
+        const newStart = parseInt(document.getElementById('editStartPage').value);
+        const newEnd = parseInt(document.getElementById('editEndPage').value);
+
+        if (isNaN(newStart) || isNaN(newEnd) || newStart <= 0 || newEnd <= 0) {
+            showCustomAlert("بيانات غير صالحة", "يرجى إدخال أرقام صفحات صحيحة."); return;
+        }
+        if (newStart > newEnd) {
+            showCustomAlert("خطأ في الأرقام", "رقم صفحة البداية يجب أن يكون أصغر أو يساوي صفحة النهاية."); return;
+        }
+
+        // 1. استخراج الصفحات المدروسة حالياً للحفاظ عليها
+        const currentStudied = {};
+        document.querySelectorAll('.card.studied').forEach(card => {
+            const subId = card.getAttribute('data-subject-id');
+            const page = parseInt(card.textContent);
+            if (!currentStudied[subId]) currentStudied[subId] = [];
+            currentStudied[subId].push(page);
+        });
+
+        // 2. تحديث إعدادات المادة المحددة
+        const configIndex = currentConfigs.findIndex(c => c.id === id);
+        if (configIndex !== -1) {
+            currentConfigs[configIndex].start = newStart;
+            currentConfigs[configIndex].end = newEnd;
+        }
+
+        // 3. إعادة بناء مساحة العمل كاملة
+        workspace.innerHTML = '';
+        progressBarsWrapper.innerHTML = '';
+        stickyProgressContainer.style.display = 'none';
+        
+        currentConfigs.forEach(conf => appendSubjectToWorkspace(conf));
+
+        // 4. استرجاع علامات الإنجاز السابقة للبطاقات
+        for (const [subId, pages] of Object.entries(currentStudied)) {
+            const allCards = document.querySelectorAll(`.card[data-subject-id="${subId}"]`);
+            allCards.forEach(c => {
+                if (pages.includes(parseInt(c.textContent))) {
+                    c.classList.add('studied');
+                }
+            });
+            updateProgressFor(subId);
+        }
+
+        // 5. إعادة تقييم الأقسام المكتملة
+        document.querySelectorAll('.task-section').forEach(taskSec => {
+            const allC = taskSec.querySelectorAll('.card');
+            const studiedC = taskSec.querySelectorAll('.card.studied');
+            if (allC.length > 0 && allC.length === studiedC.length) taskSec.classList.add('completed');
+        });
+
+        saveState();
+        closeEditModal();
+        showCustomAlert("تم التحديث", "تم تحديث نطاق الصفحات بنجاح مع الحفاظ على تقدمك!", "✅");
+    });
+
     function appendSubjectToWorkspace(config) {
         stickyProgressContainer.style.display = 'block';
 
@@ -565,10 +646,16 @@
         subjectSection.id = `section_${config.id}`;
         subjectSection.style.setProperty('--subject-hue', config.hue);
         
+        // تمت إضافة زر التعديل هنا
         subjectSection.innerHTML = `
             <div class="subject-header-title">
-                <span>📚 ${config.name}</span>
-                <span style="font-size:14px; color:var(--text-secondary); font-weight:normal;">(من ${config.start} إلى ${config.end})</span>
+                <div>
+                    <span>📚 ${config.name}</span>
+                    <span style="font-size:14px; color:var(--text-secondary); font-weight:normal; margin-right:5px;">(من ${config.start} إلى ${config.end})</span>
+                </div>
+                <div class="subject-header-actions">
+                    <button class="btn-icon-small" onclick="openEditModal('${config.id}', '${config.name}', ${config.start}, ${config.end})" title="تعديل الصفحات">✏️</button>
+                </div>
             </div>
         `;
 
@@ -643,7 +730,6 @@
     }
     function closeCelebration() { document.getElementById('celebrationModal').classList.remove('active'); }
 
-    // --- إعداد المؤقت (Modal) ---
     let timerInterval, seconds = 0, isRunning = false, isCountdown = false, startingSeconds = 0;
     const stickyTimerDisplay = document.getElementById('stickyTimer');
     const sStartBtn = document.getElementById('sStartBtn');
@@ -718,7 +804,6 @@
 
     sStartBtn.addEventListener('click', startTimer); sPauseBtn.addEventListener('click', pauseTimer); sResetBtn.addEventListener('click', resetTimer);
 
-    // --- الحفظ والاسترجاع ---
     function saveState() {
         if (currentConfigs.length === 0) return;
         const studiedData = {};
