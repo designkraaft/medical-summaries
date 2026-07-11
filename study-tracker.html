@@ -3,1157 +3,813 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تتبع الإنجاز الدراسي الذكية</title>
+    <title>لوحة تتبع الإنجاز الدراسي الذكية 10.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* ألوان متناسقة ومريحة جداً للعين (Warm Paper Theme) */
-            --bg-app: #f7f5f0; 
-            --surface: #ffffff;
-            --text-primary: #2d2824;
-            --text-secondary: #6e6761;
-            --accent-primary: #3b82f6;
-            --accent-hover: #2563eb;
-            --border-subtle: #e6e2d8;
-            --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.04);
-            --shadow-md: 0 10px 30px rgba(45, 37, 30, 0.06);
-            --shadow-lg: 0 20px 40px rgba(45, 37, 30, 0.1);
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
-            --header-bg: rgba(247, 245, 240, 0.95);
-            --btn-secondary-bg: #ffffff;
-            --btn-secondary-hover: #f0eee9;
-            --btn-danger-text: #dc2626;
-            --btn-danger-border: #fca5a5;
-            --btn-danger-hover: #fef2f2;
-            --success-color: #059669;
+            --bg-app: #f4f1ea; --surface: #ffffff; --text-primary: #2d2824; --text-secondary: #6e6761;
+            --accent-primary: #3b82f6; --accent-hover: #2563eb; --border-subtle: #e6e2d8;
+            --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.04); --shadow-md: 0 8px 25px rgba(45, 37, 30, 0.08);
+            --shadow-lg: 0 20px 40px rgba(45, 37, 30, 0.12);
+            --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px;
+            --header-bg: rgba(244, 241, 234, 0.85); --btn-secondary-bg: #ffffff;
+            --btn-secondary-hover: #f0eee9; --btn-danger-text: #dc2626; --btn-danger-border: #fca5a5;
+            --success-color: #059669; --streak-color: #f97316;
         }
 
         body.dark-mode {
-            --bg-app: #121212; 
-            --surface: #1e1e24; 
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --accent-primary: #60a5fa; 
-            --accent-hover: #93c5fd;
-            --border-subtle: #374151;
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
-            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.7);
-            --header-bg: rgba(18, 18, 18, 0.95);
-            --btn-secondary-bg: #2a2a32;
-            --btn-secondary-hover: #3f3f4a;
-            --btn-danger-text: #fca5a5;
-            --btn-danger-border: #991b1b;
-            --btn-danger-hover: #7f1d1d;
+            --bg-app: #121212; --surface: #1e1e24; --text-primary: #f3f4f6; --text-secondary: #9ca3af;
+            --accent-primary: #60a5fa; --accent-hover: #93c5fd; --border-subtle: #374151;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4); --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
+            --header-bg: rgba(18, 18, 18, 0.85); --btn-secondary-bg: #2a2a32;
+            --btn-secondary-hover: #3f3f4a; --btn-danger-text: #fca5a5; --btn-danger-border: #991b1b;
             --success-color: #34d399;
         }
 
-        body {
-            font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg-app); color: var(--text-primary);
-            margin: 0; padding: 0; line-height: 1.6; -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.4s ease, color 0.4s ease; display: flex; flex-direction: column; min-height: 100vh;
-        }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-app); color: var(--text-primary); margin: 0; padding: 0; line-height: 1.6; transition: background-color 0.4s ease, color 0.4s ease; min-height: 100vh; overflow-x: hidden; }
 
-        body.timer-ended { background-color: #d1fae5; }
-        body.dark-mode.timer-ended { background-color: #064e3b; }
+        .top-nav { position: fixed; top: 0; width: 100%; height: 40px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; padding: 0 15px; box-sizing: border-box; z-index: 1000; border-bottom: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
+        .streak-box { display: flex; align-items: center; gap: 5px; font-weight: 800; color: var(--streak-color); font-size: 14px; background: rgba(249, 115, 22, 0.1); padding: 2px 10px; border-radius: 20px; }
+        .nav-icons { display: flex; gap: 10px; }
+        .nav-icon { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; }
+        .nav-icon:hover { background: var(--btn-secondary-hover); color: var(--accent-primary); }
 
-        .sticky-progress {
-            position: sticky; top: 0; background: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-subtle); padding: 12px 20px; z-index: 100; box-shadow: var(--shadow-sm); display: none; 
-        }
-        .sticky-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-        .sticky-timer-row {
-            display: flex; justify-content: space-between; align-items: center; background: var(--surface); padding: 12px 20px;
-            border-radius: var(--radius-md); border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm);
-        }
-        .timer-info-group { display: flex; align-items: center; gap: 15px; }
-        .timer-label { font-size: 15px; font-weight: 700; color: var(--text-secondary); }
-        .floating-timer-display { font-size: 28px; font-weight: 800; font-family: monospace; letter-spacing: 2px; color: var(--text-primary); }
-        .floating-timer-display.ending { color: var(--btn-danger-text); animation: pulse 1s infinite; }
+        .sticky-progress { position: sticky; top: 40px; background: var(--header-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle); padding: 8px 10px; z-index: 100; display: none; }
+        .progress-cards-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+        .progress-cards-grid::-webkit-scrollbar { display: none; }
+        .mini-subject-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 6px 10px; min-width: 120px; flex: 0 0 auto; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s; position: relative; overflow: hidden;}
+        .mini-subject-card:hover { transform: translateY(-2px); border-color: hsl(var(--subject-hue), 60%, 50%); }
+        .mini-subject-card::before { content: ''; position: absolute; right: 0; top: 0; height: 100%; width: 3px; background: hsl(var(--subject-hue), 60%, 50%); }
+        .mini-sub-title { font-size: 11px; font-weight: 800; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px;}
         
-        .floating-timer-controls { display: flex; gap: 15px; }
-        .timer-btn-wrapper { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .timer-btn-wrapper span { font-size: 11px; font-weight: 700; color: var(--text-secondary); }
-        .icon-btn {
-            background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); 
-            width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-            cursor: pointer; font-size: 16px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        .icon-btn:hover { background: var(--btn-secondary-hover); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-        .icon-btn:active { transform: translateY(0); }
-
-        .progress-container { display: flex; align-items: center; justify-content: flex-start; gap: 15px; flex-wrap: wrap; }
-        .subject-progress-box { flex: 1; min-width: 180px; display: flex; flex-direction: column; gap: 8px; }
-        .subject-progress-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; color: var(--text-secondary); }
-        .progress-bar-wrapper { background: var(--border-subtle); height: 10px; border-radius: 20px; overflow: hidden; width: 100%; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+        .progress-bar-wrapper { background: var(--border-subtle); height: 6px; border-radius: 20px; overflow: hidden; width: 100%; position: relative; background-image: linear-gradient(to right, transparent 24.5%, rgba(0,0,0,0.08) 25%, transparent 25.5%, transparent 49.5%, rgba(0,0,0,0.1) 50%, transparent 50.5%, transparent 74.5%, rgba(0,0,0,0.08) 75%, transparent 75.5%); }
+        body.dark-mode .progress-bar-wrapper { background-image: linear-gradient(to right, transparent 24.5%, rgba(255,255,255,0.15) 25%, transparent 25.5%, transparent 49.5%, rgba(255,255,255,0.2) 50%, transparent 50.5%, transparent 74.5%, rgba(255,255,255,0.15) 75%, transparent 75.5%); }
         .progress-bar-fill { background-color: hsl(var(--subject-hue), 60%, 50%); height: 100%; width: 0%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        .book-progress-wrapper { height: 4px; background: var(--border-subtle); border-radius: 10px; overflow: hidden; margin-top: -2px; }
+        .book-progress-wrapper { height: 3px; background: var(--border-subtle); border-radius: 10px; overflow: hidden; margin-top: 2px; }
         .book-progress-fill { background-color: var(--text-secondary); height: 100%; width: 0%; opacity: 0.6; transition: width 0.6s ease; }
 
-        .main-layout { max-width: 1200px; margin: 30px auto; padding: 0 20px; box-sizing: border-box; flex: 1; width: 100%; }
-        .app-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
-        .app-header h1 { font-size: 26px; font-weight: 800; margin: 0; color: var(--text-primary); }
-        .header-actions { display: flex; gap: 10px; }
+        .compact-timer { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 5px 12px; margin-top: 8px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); }
+        .compact-timer-display { font-size: 20px; font-weight: 800; font-family: monospace; letter-spacing: 1px; color: var(--text-primary); }
+        .compact-timer-display.ending { color: var(--btn-danger-text); animation: pulse 1s infinite; }
+        .compact-timer-controls { display: flex; gap: 8px; }
+        .ct-btn { background: none; border: none; font-size: 16px; cursor: pointer; padding: 4px; border-radius: 4px; color: var(--text-secondary); transition: all 0.2s;}
+        .ct-btn:hover { background: var(--btn-secondary-hover); color: var(--accent-primary); }
 
-        .btn-theme, .btn-back {
-            background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 10px 18px;
-            border-radius: var(--radius-md); font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow-sm); transition: all 0.2s ease;
-        }
-        .btn-theme:hover, .btn-back:hover { background: var(--btn-secondary-hover); transform: translateY(-2px); }
-
-        .panel-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-md); animation: fadeIn 0.4s ease; margin-bottom: 25px;}
-        .panel-title { font-size: 18px; font-weight: 800; color: var(--text-primary); margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border-subtle); padding-bottom: 12px; }
-
-        #welcomePanel { text-align: center; max-width: 800px; margin: 40px auto; }
-        #welcomePanel h2 { color: var(--text-primary); margin-bottom: 40px; font-size: 24px; font-weight: 800; }
-        .range-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-range-select {
-            background: var(--surface); border: 2px solid var(--border-subtle); color: var(--text-primary); padding: 25px 45px;
-            font-size: 18px; font-weight: 800; border-radius: var(--radius-lg); cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: var(--shadow-sm);
-        }
-        .btn-range-select:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-
-        #initialSetupPanel { display: none; max-width: 1000px; margin: 0 auto; }
+        .main-layout { max-width: 1200px; margin: 60px auto 100px; padding: 0 15px; box-sizing: border-box; }
+        #welcomePanel { text-align: center; max-width: 600px; margin: 80px auto; }
+        #welcomePanel h2 { font-size: 24px; font-weight: 800; margin-bottom: 20px;}
         
-        .inputs-group { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; align-items: flex-end; }
-        .input-field { flex: 1; display: flex; flex-direction: column; gap: 8px; min-width: 120px; }
-        .input-field label { font-size: 14px; color: var(--text-secondary); font-weight: 700; display: flex; align-items: center; }
-        select, input[type="number"] {
-            background: var(--surface); border: 1px solid var(--border-subtle); padding: 12px 15px; font-size: 15px; border-radius: var(--radius-md);
-            color: var(--text-primary); outline: none; transition: all 0.2s; font-family: inherit; width: 100%; box-sizing: border-box; font-weight: 600;
-        }
-        select:focus, input[type="number"]:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
-
-        .range-config-group { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed var(--border-subtle); background: var(--surface); border-radius: var(--radius-md); }
-        .range-config-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-        .info-icon {
-            cursor: pointer; color: var(--accent-primary); font-size: 12px; font-weight: 700; margin-right: 8px; 
-            background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 12px; padding: 2px 10px; display: inline-flex; align-items: center; justify-content: center; 
-            transition: all 0.2s; animation: float 2s infinite ease-in-out;
-        }
-        .info-icon:hover { background: var(--accent-primary); color: #fff; transform: scale(1.05); }
-
-        .btn-primary {
-            background: var(--accent-primary); color: #ffffff; border: none; padding: 14px 24px; border-radius: var(--radius-md);
-            font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
-        }
-        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3); }
-        .btn-primary:active { transform: translateY(0); }
-
-        .btn-secondary {
-            background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 14px 24px; border-radius: var(--radius-md);
-            font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 15px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-        }
-        .btn-secondary:hover { background: var(--btn-secondary-hover); transform: translateY(-1px); }
-
-        .btn-accent { background: var(--surface); border: 2px dashed var(--accent-primary); color: var(--accent-primary); width: 100%; }
-        .btn-accent:hover { background: rgba(59, 130, 246, 0.05); }
-
-        .btn-danger {
-            background: var(--surface); border: 1px solid var(--btn-danger-border); color: var(--btn-danger-text); padding: 12px; border-radius: var(--radius-md);
-            font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-        }
-        .btn-danger:hover { background: var(--btn-danger-hover); transform: translateY(-1px); }
-
-        .btn-icon-small {
-            background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-secondary);
-            width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s; font-size: 16px; box-shadow: var(--shadow-sm);
-        }
-        .btn-icon-small:hover { background: var(--btn-secondary-hover); color: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-2px); }
-        .btn-icon-danger:hover { background: var(--btn-danger-hover); color: var(--btn-danger-text); border-color: var(--btn-danger-border); }
-
-        #activeSessionDashboard { display: none; }
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;}
-        .backup-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; align-items: start; }
+        .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease; position: relative; }
+        .subject-header-title { font-size: 16px; font-weight: 800; color: var(--text-primary); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); }
         
-        #addMoreSection { display: none; margin-top: 20px; padding: 25px; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); background: var(--surface); animation: fadeIn 0.3s ease; }
+        .task-section { background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 15px; margin-bottom: 15px; transition: all 0.3s ease; }
+        .task-section.completed { background: rgba(5, 150, 105, 0.05); border-color: var(--success-color); border-right: 4px solid var(--success-color); }
+        
+        .task-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .task-title { font-size: 14px; font-weight: 800; color: var(--text-primary); margin: 0; display: flex; align-items: center; gap: 8px;}
+        .task-badge { background: var(--surface); color: var(--text-secondary); padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid var(--border-subtle); }
+        .task-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); gap: 8px; margin-top: 15px; transition: all 0.3s ease; transform-origin: top; }
+        .task-content.collapsed { display: none; }
+        .completed-icon { display: none; color: var(--success-color); font-size: 16px; }
+        .task-section.completed .completed-icon { display: inline-block; animation: bounceIn 0.5s; }
 
-        #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; align-items: start; }
-        .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 25px; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease; position: relative; overflow: hidden;}
-        .subject-section::before { content: ''; position: absolute; top: 0; right: 0; width: 6px; height: 100%; background: hsl(var(--subject-hue), 60%, 50%); }
-        .subject-header-title { font-size: 18px; font-weight: 800; color: var(--text-primary); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--border-subtle); }
-        .subject-header-actions { display: flex; align-items: center; gap: 8px; }
-        
-        .task-section { background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px; margin-bottom: 15px; transition: all 0.3s ease; }
-        .task-section.completed { background: rgba(5, 150, 105, 0.05); border-color: var(--success-color); box-shadow: 0 0 15px rgba(5, 150, 105, 0.1); }
-        .task-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .task-title { font-size: 15px; font-weight: 800; color: var(--text-primary); margin: 0; }
-        .task-badge { background: var(--surface); color: var(--text-secondary); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 800; border: 1px solid var(--border-subtle); }
-        
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(55px, 1fr)); gap: 12px; }
-        .card { background-color: var(--surface); border: 2px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; cursor: pointer; user-select: none; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card { background-color: var(--surface); border: 2px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 42px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; cursor: pointer; user-select: none; transition: all 0.2s; }
         body.dark-mode .card { border-color: hsl(var(--subject-hue), 40%, 30%); }
-        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-sm); border-color: hsl(var(--subject-hue), 60%, 50%); }
-        .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; box-shadow: 0 4px 12px hsla(var(--subject-hue), 60%, 50%, 0.4); transform: scale(1.05); }
+        .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: hsl(var(--subject-hue), 60%, 50%); }
+        .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; transform: scale(1.05); }
 
-        .app-footer { text-align: center; padding: 40px 20px; margin-top: auto; color: var(--text-secondary); font-size: 14px; border-top: 1px solid var(--border-subtle); background: var(--surface); display: flex; flex-direction: column; align-items: center; gap: 6px;}
-        .footer-version { font-weight: 800; color: var(--text-primary); }
+        .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+        .fab { background: var(--accent-primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 22px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .fab:hover { transform: scale(1.1); background: var(--accent-hover); }
+        .fab-scroll { background: var(--surface); color: var(--text-primary); border: 1px solid var(--border-subtle); display: none; }
+        .fab-scroll:hover { background: var(--btn-secondary-hover); }
 
-        .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
-        #customAlertModal { z-index: 10010; }
-        #taskTipModal { z-index: 10005; } 
-        #editSubjectModal, #deleteSubjectModal, #updateWelcomeModal, #timerSetupModal, #featuresModal, #celebrationModal { z-index: 9999; }
-        
+        .modal-tabs { display: flex; border-bottom: 1px solid var(--border-subtle); margin-bottom: 20px; overflow-x: auto; scrollbar-width: none;}
+        .modal-tabs::-webkit-scrollbar { display: none; }
+        .modal-tab { flex: 1; padding: 10px; background: none; border: none; border-bottom: 3px solid transparent; font-size: 14px; font-weight: 800; color: var(--text-secondary); cursor: pointer; white-space: nowrap;}
+        .modal-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
+        .tab-content { display: none; text-align: right; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+
+        .input-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px; }
+        .input-field label { font-size: 13px; color: var(--text-secondary); font-weight: 700; }
+        select, input[type="number"], input[type="text"], textarea { background: var(--surface); border: 1px solid var(--border-subtle); padding: 12px; font-size: 14px; border-radius: var(--radius-sm); color: var(--text-primary); outline: none; transition: all 0.2s; font-family: inherit; width: 100%; box-sizing: border-box; }
+        select:focus, input:focus, textarea:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+
+        /* تأثير التموج (Ripple) العصري للأزرار */
+        .btn-primary, .btn-secondary, .btn-danger { position: relative; overflow: hidden; }
+        .btn-primary::after, .btn-secondary::after, .btn-danger::after { content: ''; position: absolute; top: 50%; left: 50%; width: 5px; height: 5px; background: rgba(255, 255, 255, 0.5); opacity: 0; border-radius: 100%; transform: scale(1, 1) translate(-50%, -50%); transform-origin: 50% 50%; }
+        .btn-secondary::after { background: rgba(0, 0, 0, 0.1); }
+        body.dark-mode .btn-secondary::after { background: rgba(255, 255, 255, 0.1); }
+        .btn-primary:active::after, .btn-secondary:active::after, .btn-danger:active::after { animation: ripple 0.4s ease-out; }
+
+        .btn-primary { background: var(--accent-primary); color: #ffffff; border: none; padding: 12px 20px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3); }
+        .btn-secondary { background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 12px 20px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-secondary:hover { background: var(--btn-secondary-hover); }
+        .btn-danger { background: var(--surface); border: 1px solid var(--btn-danger-border); color: var(--btn-danger-text); padding: 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: inline-flex; justify-content: center;}
+        .btn-danger:hover { background: var(--btn-danger-hover); }
+
+        .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; z-index: 2000; padding: 15px; box-sizing: border-box;}
         .custom-modal-overlay.active { display: flex; opacity: 1; }
-        .custom-modal-content { background: var(--surface); padding: 35px; border-radius: var(--radius-lg); text-align: center; max-width: 450px; width: 90%; box-shadow: var(--shadow-lg); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .custom-modal-content { background: var(--bg-app); padding: 25px; border-radius: var(--radius-md); text-align: center; max-width: 450px; width: 100%; box-shadow: var(--shadow-lg); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto;}
         .custom-modal-overlay.active .custom-modal-content { transform: scale(1); }
-        .modal-title { font-size: 22px; font-weight: 800; margin-top: 0; margin-bottom: 15px; color: var(--text-primary); }
-        .modal-text { font-size: 15px; color: var(--text-secondary); margin-bottom: 25px; line-height: 1.7; }
-
-        .alert-icon { font-size: 50px; margin-bottom: 15px; }
-        .celebration-content { border: 2px solid var(--success-color); }
-        .cel-title { color: var(--success-color); }
-
-        .timer-modes-group { display: flex; background: var(--bg-app); border-radius: var(--radius-md); padding: 5px; margin-bottom: 20px; border: 1px solid var(--border-subtle); }
-        .mode-btn { flex: 1; background: transparent; border: none; padding: 10px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
-        .mode-btn.active { background: var(--surface); color: var(--accent-primary); box-shadow: var(--shadow-sm); }
-        #timerInputContainer { display: none; margin-bottom: 20px; text-align: right; }
-        #timerInputContainer.active { display: block; }
+        .modal-title { font-size: 20px; font-weight: 800; margin-top: 0; margin-bottom: 15px; color: var(--text-primary); }
         
-        .update-features-list, .features-list { text-align: right; margin-bottom: 25px; background: var(--bg-app); border-radius: var(--radius-md); padding: 20px 25px 20px 15px; border: 1px solid var(--border-subtle); }
-        .update-features-list li, .features-list li { margin-bottom: 12px; color: var(--text-primary); font-size: 14px; line-height: 1.6; }
-        .update-features-list li:last-child, .features-list li:last-child { margin-bottom: 0; }
-        .update-features-list strong, .features-list strong { color: var(--accent-primary); }
+        .stat-box { background: var(--surface); border: 1px solid var(--border-subtle); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;}
+        .stat-val { font-size: 20px; font-weight: 800; color: var(--accent-primary); }
 
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+        .shelf-item { display: flex; justify-content: space-between; align-items: center; background: var(--surface); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 10px; text-align: right;}
+
+        @keyframes bounceIn { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ضغط وتصغير المساحة في الجوال لتوفير أكبر قدر من الشاشة */
-        @media (max-width: 600px) {
-            .sticky-progress { padding: 6px 10px; }
-            .sticky-inner { gap: 8px; }
-            .sticky-timer-row { flex-direction: row; padding: 6px 8px; gap: 6px; }
-            .timer-info-group { gap: 6px; }
-            .timer-label { display: none; } 
-            .floating-timer-display { font-size: 20px; letter-spacing: 1px; }
-            .floating-timer-controls { gap: 6px; }
-            .timer-btn-wrapper span { display: none; } 
-            .icon-btn { width: 32px; height: 32px; font-size: 14px; }
-            
-            .progress-container { gap: 6px; }
-            .subject-progress-box { min-width: 100%; gap: 3px; }
-            .subject-progress-header { font-size: 12px; margin-bottom: 0;}
-            .progress-bar-wrapper { height: 5px; }
-            .book-progress-wrapper { height: 3px; margin-top: 0; }
-            
-            .range-buttons { flex-direction: column; }
-            .backup-actions { width: 100%; justify-content: stretch; }
-            .backup-actions > * { flex: 1; min-width: 100%; font-size: 13px; padding: 10px; margin-top: 5px !important; }
-            .inputs-group { flex-direction: column; align-items: stretch; }
-        }
+        @keyframes ripple { 0% { transform: scale(0, 0); opacity: 0.5; } 100% { transform: scale(40, 40); opacity: 0; } }
     </style>
 </head>
 <body>
 
-<div class="custom-modal-overlay" id="updateWelcomeModal">
-    <div class="custom-modal-content">
-        <div class="alert-icon">✨</div>
-        <h2 class="modal-title">مرحباً بك في الإصدار 9.1!</h2>
-        <p class="modal-text" style="color: var(--success-color); font-weight: 800; margin-bottom: 15px;">
-            اطمئن! 🛡️ جميع إنجازاتك وجلستك السابقة محفوظة بأمان ولن تفقد أي شيء.
-        </p>
-        <p class="modal-text" style="text-align: right; margin-bottom: 10px;">إليك الميزات الجديدة التي أضفناها لتسهيل دراستك:</p>
-        <ul class="update-features-list">
-            <li>📱 <strong>مساحة أوسع بكثير للجوال:</strong> تم ضغط الشريط العلوي بشكل كبير جداً لكي لا يأخذ مساحة من الشاشة ويترك لك حرية التركيز.</li>
-            <li>🎯 <strong>ترقيم وتحديد المهام:</strong> تظهر المهام الآن مرقمة (مثلاً المهمة 1 من 5) لتحديد هدفك بدقة.</li>
-            <li>📖 <strong>شريط الإنجاز الكلي:</strong> تتبع تقدمك في الكتاب الكلي أسفل تقدم جلستك اليومية.</li>
-        </ul>
-        <button class="btn-primary" onclick="closeUpdateWelcomeModal()">رائع، لنتابع الدراسة! 💪</button>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="featuresModal">
-    <div class="custom-modal-content">
-        <div class="alert-icon" style="font-size: 40px;">🚀</div>
-        <h2 class="modal-title">الدليل الشامل لميزات اللوحة</h2>
-        <ul class="features-list">
-            <li><strong>✨ حفظ سحابي محلي:</strong> تقدمك يُحفظ تلقائياً ومباشرة في متصفحك بشكل فوري.</li>
-            <li><strong>🎯 تقسيم وترقيم المهام:</strong> نجزّئ الجلسة ونرقمها (مثال: المهمة 2 من 5) لتعزيز الدافع النفسي.</li>
-            <li><strong>📖 الإنجاز الاستراتيجي (الرحلة الكبرى):</strong> أدخل إجمالي صفحات الكتاب لتشاهد شريط تقدم يوضح نسبة إنجازك في المقرر بأكمله.</li>
-            <li><strong>⏱️ مؤقت التركيز (Pomodoro):</strong> نظام مرن يتيح لك العد التصاعدي المفتوح، أو العد التنازلي لإدارة وقتك بدقة.</li>
-            <li><strong>🛡️ نظام النسخ الاحتياطي:</strong> احفظ تعبك! صَدِّر بيانات جلستك كملف واستورده على أي جهاز.</li>
-            <li><strong>✏️ تحكم كامل:</strong> تعديل نطاق الصفحات أو حذف المواد بالكامل في أي وقت.</li>
-        </ul>
-        <button class="btn-primary" onclick="closeFeaturesModal()">إغلاق الدليل</button>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="customAlertModal">
-    <div class="custom-modal-content">
-        <div class="alert-icon" id="alertIcon">⚠️</div>
-        <h2 class="modal-title" id="alertTitle">تنبيه</h2>
-        <p class="modal-text" id="alertMessage">الرسالة هنا</p>
-        <button class="btn-primary" onclick="closeCustomAlert()">حسناً فهمت</button>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="celebrationModal">
-    <div class="custom-modal-content celebration-content">
-        <div class="alert-icon">🎉</div>
-        <h2 class="modal-title cel-title">عمل رائع جداً!</h2>
-        <p class="modal-text">
-            أنجزت للتو المهمة بنجاح من مادة <strong id="celSubjectName" style="color:var(--text-primary)">الاسم</strong>!<br>
-            لقد قطعت الآن <strong style="color:var(--success-color); font-size:18px;"><span id="celPercentage">10</span>%</strong> من الجلسة. استمر!
-        </p>
-        <button class="btn-primary" onclick="closeCelebration()" style="background:var(--success-color)">متابعة الإنجاز 💪</button>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="timerSetupModal">
-    <div class="custom-modal-content">
-        <h2 class="modal-title">⚙️ إعداد مؤقت التركيز</h2>
-        <p class="modal-text">اختر نظام الوقت الذي تفضله لهذه الجلسة.</p>
-        
-        <div class="timer-modes-group">
-            <button class="mode-btn active" id="modeUpBtn">تصاعدي (مفتوح)</button>
-            <button class="mode-btn" id="modeDownBtn">تنازلي (محدد)</button>
-        </div>
-        
-        <div id="timerInputContainer" class="input-field">
-            <label>حدد وقت التركيز (بالدقائق)</label>
-            <input type="number" id="setMinutes" min="1" placeholder="مثال: 25 لدورة بومودورو">
-        </div>
-        
-        <div style="display:flex; gap:10px;">
-            <button class="btn-primary" id="applyTimerBtn" style="flex:2;">حفظ وإغلاق</button>
-            <button class="btn-secondary" onclick="closeTimerSetup()" style="flex:1; margin-top:0;">إلغاء</button>
-        </div>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="editSubjectModal">
-    <div class="custom-modal-content">
-        <h2 class="modal-title">✏️ إعدادات المادة</h2>
-        <p class="modal-text">تعديل الإعدادات لمادة: <strong id="editSubName" style="color:var(--accent-primary)"></strong></p>
-        <input type="hidden" id="editSubId">
-        <div class="inputs-group" style="align-items:flex-end;">
-            <div class="input-field">
-                <label>من صفحة</label>
-                <input type="number" id="editStartPage" min="1">
-            </div>
-            <div class="input-field">
-                <label>إلى صفحة</label>
-                <input type="number" id="editEndPage" min="1">
-            </div>
-            <div class="input-field">
-                <label>صفحات المهمة 
-                    <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">نصيحة 💡</span>
-                </label>
-                <input type="number" id="editTaskSize" min="1">
-            </div>
-        </div>
-        <div class="input-field" style="margin-top: 15px; text-align: right;">
-            <label style="margin-bottom: 5px;">صفحات المرجع/الكتاب الكلية (اختياري)</label>
-            <input type="number" id="editTotalPages" min="1" placeholder="مثال: 400">
-        </div>
-        <div style="display:flex; gap:10px; margin-top:20px;">
-            <button class="btn-primary" id="saveEditBtn" style="flex:2;">حفظ التعديلات ✅</button>
-            <button class="btn-secondary" onclick="closeEditModal()" style="flex:1; margin-top:0;">إلغاء</button>
-        </div>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="deleteSubjectModal">
-    <div class="custom-modal-content">
-        <div class="alert-icon" style="color: var(--btn-danger-text);">🗑️</div>
-        <h2 class="modal-title">تأكيد الحذف</h2>
-        <p class="modal-text">هل أنت متأكد من رغبتك في حذف مادة: <strong id="deleteSubName" style="color:var(--btn-danger-text)"></strong>؟<br><span style="font-size:13px; color:var(--text-secondary); display:block; margin-top:8px;">سيتم إزالة المادة وتقدمك فيها من مساحة العمل.</span></p>
-        <input type="hidden" id="deleteSubId">
-        <div style="display:flex; gap:10px; margin-top:15px;">
-            <button class="btn-danger" id="confirmDeleteBtn" style="flex:2; margin-top:0;">نعم، احذف المادة</button>
-            <button class="btn-secondary" onclick="closeDeleteModal()" style="flex:1; margin-top:0;">إلغاء</button>
-        </div>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="taskTipModal" style="z-index: 10005;">
-    <div class="custom-modal-content">
-        <div class="alert-icon" style="font-size: 40px;">💡</div>
-        <h2 class="modal-title">كيف أحدد حجم المهمة؟</h2>
-        <ul class="features-list">
-            <li><strong>المواد الكثيفة أو الدراسة لأول مرة:</strong><br>اختر من <strong>10 إلى 15 صفحة</strong>. هذا المعدل مثالي لجلسة دراسية واحدة بتركيز عالي ويسمح باستيعاب التفاصيل الدقيقة براحة.</li>
-            <li><strong>المراجعة السريعة أو قراءة الملخصات:</strong><br>اختر من <strong>20 إلى 30 صفحة</strong>، حيث تكون الأفكار مألوفة وتحتاج فقط إلى استرجاع وتثبيت.</li>
-        </ul>
-        <button class="btn-primary" onclick="closeTaskTipModal()">فهمت ذلك، شكراً 👍</button>
+<div class="top-nav">
+    <div class="streak-box" title="أيام الدراسة المتتالية">🔥 <span id="streakCount">0</span></div>
+    <div class="nav-icons">
+        <button class="nav-icon" onclick="window.location.href='index.html'" title="الرئيسية">🏠</button>
+        <button class="nav-icon" id="themeToggleBtn" title="تغيير المظهر">🌓</button>
     </div>
 </div>
 
 <div class="sticky-progress" id="stickyProgressContainer">
     <div class="sticky-inner">
-        <div class="sticky-timer-row">
-            <div class="timer-info-group">
-                <span class="timer-label">⏱️ وقت التركيز</span>
-                <div class="floating-timer-display" id="stickyTimer">00:00:00</div>
-            </div>
-            
-            <div class="floating-timer-controls">
-                <div class="timer-btn-wrapper">
-                    <button class="icon-btn" id="sStartBtn" title="بدء">▶</button>
-                    <span>بدء</span>
-                </div>
-                <div class="timer-btn-wrapper">
-                    <button class="icon-btn" id="sPauseBtn" title="إيقاف">⏸</button>
-                    <span>إيقاف</span>
-                </div>
-                <div class="timer-btn-wrapper">
-                    <button class="icon-btn" id="sResetBtn" title="إعادة">🔄</button>
-                    <span>تصفير</span>
-                </div>
-                <div class="timer-btn-wrapper">
-                    <button class="icon-btn" onclick="openTimerSetup()" title="إعداد">⚙️</button>
-                    <span>إعداد</span>
-                </div>
+        <div class="progress-cards-grid" id="progressCardsGrid"></div>
+        <div class="compact-timer" id="compactTimerDiv" style="display: none;">
+            <div class="compact-timer-display" id="stickyTimer">00:00:00</div>
+            <div class="compact-timer-controls">
+                <button class="ct-btn" id="sStartBtn" title="بدء">▶️</button>
+                <button class="ct-btn" id="sPauseBtn" title="إيقاف">⏸️</button>
+                <button class="ct-btn" id="sResetBtn" title="تصفير">🔄</button>
             </div>
         </div>
-        <div class="progress-container" id="progressBarsWrapper"></div>
     </div>
 </div>
 
 <div class="main-layout">
-    <div class="app-header">
-        <h1>مساحة المتابعة الذكية ⚡</h1>
-        <div class="header-actions">
-            <button id="themeToggleBtn" class="btn-theme">🌙 الوضع الداكن</button>
-            <button class="btn-back" onclick="window.location.href='index.html'">الرئيسية 🏠</button>
-        </div>
+    <div id="welcomePanel">
+        <h2>أهلاً بك في مساحتك الدراسية ⚡</h2>
+        <p style="color:var(--text-secondary); margin-bottom: 30px;">اضغط على زر (لوحة التحكم ⚙️) أسفل يمين الشاشة لإضافة موادك وتخطيط جلساتك بذكاء.</p>
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e6e2d8' width='120' height='120'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Icon" style="opacity: 0.7;">
     </div>
 
-    <div id="welcomePanel" class="panel-card">
-        <h2>أهلاً بك! كم مادة تود البدء بها في هذه الجلسة؟</h2>
-        <div class="range-buttons">
-            <button class="btn-range-select" onclick="showInitialSetup(1)">مادة واحدة</button>
-            <button class="btn-range-select" onclick="showInitialSetup(2)">مادتين</button>
-            <button class="btn-range-select" onclick="showInitialSetup(3)">3 مواد</button>
-        </div>
+    <div id="workspace"></div>
+</div>
+
+<div class="fab-container">
+    <button class="fab fab-scroll" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="للأعلى">⬆️</button>
+    <button class="fab" onclick="openControlPanel()" title="لوحة التحكم">⚙️</button>
+</div>
+
+<!-- ================== النوافذ المنبثقة ================== -->
+
+<div class="custom-modal-overlay" id="controlPanelModal">
+    <div class="custom-modal-content" style="max-width: 500px; text-align: right;">
+        <h2 class="modal-title" style="text-align: center;">⚙️ لوحة التحكم</h2>
         
-        <div style="margin-top: 40px; border-top: 1px dashed var(--border-subtle); padding-top: 20px;">
-            <p style="color:var(--text-secondary); font-size: 14px; margin-bottom: 10px;">هل لديك ملف لجلسة سابقة؟ يمكنك استعادته من هنا:</p>
-            <label class="btn-secondary" style="cursor:pointer; margin-top:0;">
-                📂 استعادة البيانات (استيراد)
+        <div class="modal-tabs">
+            <button class="modal-tab active" onclick="switchTab('tabAdd')">➕ إضافة مادة</button>
+            <button class="modal-tab" onclick="switchTab('tabStats')">📊 إحصائيات</button>
+            <button class="modal-tab" onclick="switchTab('tabShelf')">📚 الرف</button>
+            <button class="modal-tab" onclick="switchTab('tabSettings')">🔧 إعدادات</button>
+        </div>
+
+        <div class="tab-content active" id="tabAdd">
+            <div class="input-field">
+                <label>اختر المادة</label>
+                <select id="addSubjectSelect"></select>
+            </div>
+            <div class="input-field">
+                <label>نمط الخطة الدراسية</label>
+                <select id="planModeSelect" onchange="togglePlanModes()">
+                    <option value="free">النمط الحر (تحديد صفحات وحجم المهمة)</option>
+                    <option value="days">نمط الأيام (تقسيم على أيام للامتحان)</option>
+                    <option value="chapters">نمط الفصول (بناء هيكل المنهج)</option>
+                </select>
+            </div>
+
+            <div id="modeFreeInputs">
+                <div style="display:flex; gap:10px;">
+                    <div class="input-field" style="flex:1;"><label>من صفحة</label><input type="number" id="fStart" min="1"></div>
+                    <div class="input-field" style="flex:1;"><label>إلى صفحة</label><input type="number" id="fEnd" min="1"></div>
+                </div>
+                <div class="input-field"><label>حجم المهمة (كم صفحة في المهمة الواحدة؟)</label><input type="number" id="fTaskSize" value="10" min="1"></div>
+            </div>
+
+            <div id="modeDaysInputs" style="display:none;">
+                <div style="display:flex; gap:10px;">
+                    <div class="input-field" style="flex:1;"><label>من صفحة</label><input type="number" id="dStart" min="1"></div>
+                    <div class="input-field" style="flex:1;"><label>إلى صفحة</label><input type="number" id="dEnd" min="1"></div>
+                </div>
+                <div class="input-field"><label>كم يوماً متبقي للامتحان؟</label><input type="number" id="dDays" value="7" min="1">
+                <small style="color:var(--accent-primary); font-size:11px;">*سيتم تقسيم الصفحات كمهام يومية.</small></div>
+            </div>
+
+            <!-- نمط بناء الفصول الديناميكي -->
+            <div id="modeChaptersInputs" style="display:none;">
+                <div style="margin-bottom: 10px; font-size: 13px; color: var(--text-secondary);">أضف الفصول التي تريد دراستها، وسنقوم بترتيبها تلقائياً مع تجاهل المحذوف.</div>
+                <div id="chaptersContainer">
+                    <div class="chapter-row" style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
+                        <div class="input-field" style="flex: 2; margin-bottom: 0;">
+                            <input type="text" class="chap-name" placeholder="اسم الفصل (مثال: الفصل 1)">
+                        </div>
+                        <div class="input-field" style="flex: 1; margin-bottom: 0;">
+                            <input type="number" class="chap-start" placeholder="من ص" min="1">
+                        </div>
+                        <div class="input-field" style="flex: 1; margin-bottom: 0;">
+                            <input type="number" class="chap-end" placeholder="إلى ص" min="1">
+                        </div>
+                        <button class="btn-danger" style="width: 40px; height: 40px; padding: 0; margin-bottom: 0;" disabled>✖</button>
+                    </div>
+                </div>
+                <button class="btn-secondary" onclick="addChapterRow()" style="margin-top: 5px; width: 100%; border-style: dashed; border-color: var(--accent-primary); color: var(--accent-primary);">➕ إضافة فصل جديد</button>
+            </div>
+
+            <div class="input-field" id="totalBookInputDiv" style="margin-top: 15px;">
+                <label>إجمالي صفحات الكتاب/المرجع الكلية (اختياري)</label>
+                <input type="number" id="addTotalPages" min="1" placeholder="مثال: 400 لحساب الإنجاز الكلي">
+            </div>
+
+            <button class="btn-primary" onclick="addSubjectToPlan()" style="margin-top:15px;">إضافة للوحة التنفيذ 🚀</button>
+        </div>
+
+        <div class="tab-content" id="tabStats">
+            <div class="stat-box"><span>📖 صفحات اليوم:</span> <span class="stat-val" id="statPages">0</span></div>
+            <div class="stat-box"><span>⏱️ دقائق التركيز اليوم:</span> <span class="stat-val" id="statFocus">0</span></div>
+            <div class="stat-box"><span>🔥 أيام الاستمرارية:</span> <span class="stat-val" id="statStreak">0</span></div>
+            
+            <button class="btn-secondary" onclick="shareStats()" style="width:100%; margin-top:15px; color:var(--accent-primary); border-color:var(--accent-primary);">📤 شارك إنجازك اليومي</button>
+            <div style="margin-top:20px; border-top:1px dashed var(--border-subtle); padding-top:15px;">
+                <label style="font-size:13px; font-weight:700; display:block; margin-bottom:8px;">إعداد المؤقت العام للجلسة:</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="number" id="setMinutes" min="1" placeholder="دقائق بومودورو" style="flex:2;">
+                    <button class="btn-primary" onclick="applyGlobalTimer()" style="flex:1; padding:8px;">ضبط وبدء</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tabShelf">
+            <p style="font-size:13px; color:var(--text-secondary);">المواد التي أتممتها بنسبة 100% ستظهر هنا لمراجعتها لاحقاً.</p>
+            <div id="shelfContainer"></div>
+        </div>
+
+        <div class="tab-content" id="tabSettings">
+            <button class="btn-secondary" onclick="exportData()" style="margin-bottom:10px;">💾 تصدير (حفظ نسخة احتياطية)</button>
+            <label class="btn-secondary" style="cursor:pointer; margin-bottom:20px; margin-top:0;">
+                📂 استيراد (استعادة بيانات)
                 <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
             </label>
-        </div>
-    </div>
-
-    <div id="initialSetupPanel" class="panel-card">
-        <h2 class="panel-title">تخصيص خطة الجلسة الدراسية</h2>
-        <div id="initialFormsContainer"></div>
-        <div style="display:flex; gap:15px; margin-top:25px;">
-            <button class="btn-primary" id="startSessionBtn" style="flex:2;">🚀 إنشاء مساحة الدراسة وبدء الجلسة</button>
-            <button class="btn-secondary" onclick="cancelInitialSetup()" style="flex:1; margin-top:0;">الرجوع للخلف</button>
-        </div>
-    </div>
-
-    <div id="activeSessionDashboard">
-        <div class="panel-card" style="margin-bottom: 30px;">
-            <div class="dashboard-header">
-                <div>
-                    <h2 class="panel-title" style="border:none; padding:0; margin-bottom:5px;">إدارة الجلسة والمواد</h2>
-                    <p style="font-size:14px; color:var(--text-secondary); margin:0;">يتم حفظ تقدمك تلقائياً وبشكل مستمر، يمكنك أيضاً حفظه كملف.</p>
-                </div>
-                
-                <div class="backup-actions">
-                    <label class="btn-secondary" style="cursor:pointer; margin-top:0; padding: 10px 15px; font-size: 13px;" title="استعادة تقدمك من ملف سابق">
-                        📂 استعادة (استيراد)
-                        <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
-                    </label>
-
-                    <button class="btn-secondary" onclick="exportData()" style="margin-top:0; padding: 10px 15px; font-size: 13px; color: var(--accent-primary); border-color: var(--accent-primary);" title="تنزيل ملف يحتوي على تقدمك الحالي لضمان عدم ضياعه">
-                        💾 حفظ الجلسة (تصدير)
-                    </button>
-                    
-                    <button class="btn-danger" onclick="resetEverything()" style="width:auto; margin:0; padding:10px 15px; font-size: 13px;">
-                        🗑️ إنهاء وتصفير
-                    </button>
-                </div>
-            </div>
+            <button class="btn-danger" onclick="resetEverything()" style="margin-top:20px;">🗑️ إنهاء الجلسة وتصفير اللوحة بالكامل</button>
             
-            <button class="btn-secondary btn-accent" id="toggleAddMoreBtn">➕ إضافة مادة جديدة للوحة</button>
-            
-            <div id="addMoreSection">
-                <h3 style="margin-top:0; font-size:16px; font-weight:800; color:var(--text-primary);">تخصيص المادة الجديدة</h3>
-                <div class="inputs-group">
-                    <div class="input-field" style="flex: 2;">
-                        <label>اختر المادة</label>
-                        <select id="addSubjectSelect"></select>
-                    </div>
-                    <div class="input-field">
-                        <label>من صفحة</label>
-                        <input type="number" id="addStartPage" min="1" placeholder="مثال: 1">
-                    </div>
-                    <div class="input-field">
-                        <label>إلى صفحة</label>
-                        <input type="number" id="addEndPage" min="1" placeholder="مثال: 20">
-                    </div>
-                    <div class="input-field">
-                        <label>صفحات المهمة 
-                            <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">نصيحة 💡</span>
-                        </label>
-                        <input type="number" id="addTaskSize" min="1" value="10">
-                    </div>
-                </div>
-                <div class="input-field" style="margin-top: 15px;">
-                    <label>صفحات المرجع/الكتاب الكلية (اختياري)</label>
-                    <input type="number" id="addTotalPages" min="1" placeholder="مثال: 400 لمعرفة تقدمك في الكتاب كاملاً">
-                </div>
-                <div style="display:flex; gap:10px; margin-top:15px;">
-                    <button class="btn-primary" id="confirmAddMoreBtn" style="flex:2;">إضافة للوحة ✅</button>
-                    <button class="btn-secondary" id="cancelAddMoreBtn" style="flex:1; margin-top:0;">إلغاء الإضافة</button>
-                </div>
+            <div style="margin-top: 30px; text-align: center; font-size: 12px; color: var(--text-secondary);">
+                الإصدار 10.1 - تصميم الطالب خلدون الحمدو<br>جميع الحقوق محفوظة &copy; 2026
             </div>
         </div>
 
-        <div id="workspace"></div>
+        <button class="btn-secondary" onclick="closeModal('controlPanelModal')" style="margin-top:20px; border:none; background:transparent;">إغلاق</button>
     </div>
 </div>
 
-<div class="app-footer">
-    <div class="footer-version">الإصدار 9.1 - مساحة المتابعة الذكية للطلاب 📖</div>
-    <div style="font-weight: 700; color: var(--text-secondary); margin-top: 8px;">جميع الحقوق محفوظة &copy; 2026</div>
-    <button class="btn-secondary" style="margin-top:15px; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight:700; border-color:var(--accent-primary); color:var(--accent-primary); background: transparent;" onclick="openFeaturesModal()">
-        ✨ استكشف الدليل الشامل للوحة
-    </button>
+<div class="custom-modal-overlay" id="bookProgressModal">
+    <div class="custom-modal-content">
+        <h2 class="modal-title" id="bpTitle">تقدم المرجع</h2>
+        <div style="font-size:40px; font-weight:800; color:var(--accent-primary); margin:20px 0;" id="bpPercentage">0%</div>
+        <div class="modal-text" id="bpDetails" style="font-size: 14px; line-height: 1.8;"></div>
+        <button class="btn-primary" onclick="closeModal('bookProgressModal')" style="margin-top: 15px;">استمرار</button>
+    </div>
+</div>
+
+<div class="custom-modal-overlay" id="customAlertModal">
+    <div class="custom-modal-content">
+        <div class="alert-icon" id="alertIcon" style="font-size:40px;">⚠️</div>
+        <h2 class="modal-title" id="alertTitle">تنبيه</h2>
+        <p class="modal-text" id="alertMessage">الرسالة هنا</p>
+        <button class="btn-primary" onclick="closeModal('customAlertModal')">حسناً</button>
+    </div>
 </div>
 
 <script>
-    const APP_VERSION = '9.1';
-    const VERSION_KEY = 'studyTracker_appVersion';
-    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v9_1'; 
-    const OLD_STATE_KEYS = ['studyTrackerSaveState_v9_0', 'studyTrackerSaveState_v8_9', 'studyTrackerSaveState_v8_8', 'studyTrackerSaveState_v8_7', 'studyTrackerSaveState_v8_6', 'studyTrackerSaveState_v8_5', 'studyTrackerSaveState_v8_4', 'studyTrackerSaveState_v8_3', 'studyTrackerSaveState_v8_2', 'studyTrackerSaveState_v8_1', 'studyTrackerSaveState_v8', 'studyTrackerSaveState'];
+    const APP_VERSION = '10.1';
+    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v10_1'; 
+    const OLD_STATE_KEYS = ['studyTrackerSaveState_v10', 'studyTrackerSaveState_v9_2', 'studyTrackerSaveState_v9_1', 'studyTrackerSaveState_v9_0', 'studyTrackerSaveState_v8_9', 'studyTrackerSaveState_v8_8'];
 
-    let currentConfigs = []; 
-    let initialNumSelected = 0;
-
-    const subjectsData = {
-        "بيولوجيا الخلية": { hue: 170, group: "الفصل الأول" },
-        "الكيمياء العامة والعضوية": { hue: 25, group: "الفصل الأول" },
-        "الفيزياء الطبية": { hue: 210, group: "الفصل الأول" },
-        "اللغة الإنجليزية 1": { hue: 130, group: "الفصل الأول" },
-        "تاريخ الطب": { hue: 35, group: "الفصل الأول" },
-        "التشريح العام": { hue: 0, group: "الفصل الثاني" },
-        "الفيزيولوجيا": { hue: 330, group: "الفصل الثاني" },
-        "علم الوراثة": { hue: 270, group: "الفصل الثاني" },
-        "الإحصاء الحيوي": { hue: 230, group: "الفصل الثاني" },
-        "اللغة الإنجليزية 2": { hue: 90, group: "الفصل الثاني" }
+    let appState = {
+        configs: [], studied: {}, shelf: [],
+        timer: { sec: 0, startSec: 0, mode: 'up', isRunning: false },
+        stats: { todayDate: '', pagesToday: 0, totalFocusSec: 0, streak: 0, lastActiveDate: '' }
     };
 
-    let subjectOptionsHTML = `<option value="" disabled selected>اختر المادة من القائمة...</option>`;
-    let g1 = `<optgroup label="الفصل الدراسي الأول">`; let g2 = `<optgroup label="الفصل الدراسي الثاني">`;
-    for (const [name, data] of Object.entries(subjectsData)) {
-        if (data.group === "الفصل الأول") g1 += `<option value="${name}">${name}</option>`;
-        else g2 += `<option value="${name}">${name}</option>`;
-    }
-    g1 += `</optgroup>`; g2 += `</optgroup>`; 
-    subjectOptionsHTML += g1 + g2;
-    document.getElementById('addSubjectSelect').innerHTML = subjectOptionsHTML;
+    const subjectsData = {
+        "بيولوجيا الخلية": { hue: 170 }, "الكيمياء العامة والعضوية": { hue: 25 },
+        "الفيزياء الطبية": { hue: 210 }, "اللغة الإنجليزية 1": { hue: 130 }, "تاريخ الطب": { hue: 35 },
+        "التشريح العام": { hue: 0 }, "الفيزيولوجيا": { hue: 330 }, "علم الوراثة": { hue: 270 },
+        "الإحصاء الحيوي": { hue: 230 }, "اللغة الإنجليزية 2": { hue: 90 }
+    };
+
+    document.getElementById('addSubjectSelect').innerHTML = `<option value="" disabled selected>اختر المادة...</option>` + 
+        Object.keys(subjectsData).map(k => `<option value="${k}">${k}</option>`).join('');
 
     const themeToggleBtn = document.getElementById('themeToggleBtn');
-    if (localStorage.getItem('studyTrackerTheme') === 'dark') {
-        document.body.classList.add('dark-mode'); themeToggleBtn.innerHTML = '☀️ الوضع الفاتح';
-    }
+    if (localStorage.getItem('studyTrackerTheme') === 'dark') { document.body.classList.add('dark-mode'); themeToggleBtn.innerHTML = '☀️'; }
     themeToggleBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
-        if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('studyTrackerTheme', 'dark'); themeToggleBtn.innerHTML = '☀️ الوضع الفاتح';
-        } else {
-            localStorage.setItem('studyTrackerTheme', 'light'); themeToggleBtn.innerHTML = '🌙 الوضع الداكن';
-        }
+        localStorage.setItem('studyTrackerTheme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        themeToggleBtn.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌓';
     });
 
-    function openTaskTipModal() { document.getElementById('taskTipModal').classList.add('active'); }
-    function closeTaskTipModal() { document.getElementById('taskTipModal').classList.remove('active'); }
-    
-    function openFeaturesModal() { document.getElementById('featuresModal').classList.add('active'); }
-    function closeFeaturesModal() { document.getElementById('featuresModal').classList.remove('active'); }
+    window.addEventListener('scroll', () => {
+        document.getElementById('scrollTopBtn').style.display = window.scrollY > 300 ? 'flex' : 'none';
+    });
 
-    function checkUpdateNotification() {
-        const savedVersion = localStorage.getItem(VERSION_KEY);
-        if (savedVersion !== APP_VERSION) {
-            document.getElementById('updateWelcomeModal').classList.add('active');
-        }
-    }
-
-    function closeUpdateWelcomeModal() {
-        localStorage.setItem(VERSION_KEY, APP_VERSION);
-        document.getElementById('updateWelcomeModal').classList.remove('active');
-    }
-
-    function showCustomAlert(title, message, icon = "⚠️") {
+    function openControlPanel() { document.getElementById('controlPanelModal').classList.add('active'); updateStatsUI(); renderShelfUI(); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    function showAlert(title, msg, icon="⚠️") {
         document.getElementById('alertTitle').textContent = title;
-        document.getElementById('alertMessage').textContent = message;
+        document.getElementById('alertMessage').textContent = msg;
         document.getElementById('alertIcon').textContent = icon;
         document.getElementById('customAlertModal').classList.add('active');
     }
-    function closeCustomAlert() {
-        document.getElementById('customAlertModal').classList.remove('active');
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.modal-tab').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        event.target.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
     }
 
-    const welcomePanel = document.getElementById('welcomePanel');
-    const initialSetupPanel = document.getElementById('initialSetupPanel');
-    const initialFormsContainer = document.getElementById('initialFormsContainer');
-    const activeSessionDashboard = document.getElementById('activeSessionDashboard');
-    const workspace = document.getElementById('workspace');
-    const stickyProgressContainer = document.getElementById('stickyProgressContainer');
-    const progressBarsWrapper = document.getElementById('progressBarsWrapper');
-
-    function showInitialSetup(num) {
-        initialNumSelected = num;
-        welcomePanel.style.display = 'none';
-        initialSetupPanel.style.display = 'block';
-        initialFormsContainer.innerHTML = '';
-        for (let i = 1; i <= num; i++) {
-            initialFormsContainer.innerHTML += `
-                <div class="range-config-group" id="initGroup${i}">
-                    <div style="font-weight:800; margin-bottom:12px; color:var(--accent-primary); font-size:16px;">📚 المادة ${i}</div>
-                    <div class="inputs-group">
-                        <div class="input-field" style="flex: 2;">
-                            <label>اسم المادة</label>
-                            <select id="initSubject${i}">${subjectOptionsHTML}</select>
-                        </div>
-                        <div class="input-field">
-                            <label>من صفحة</label>
-                            <input type="number" id="initStart${i}" min="1" placeholder="رقم">
-                        </div>
-                        <div class="input-field">
-                            <label>إلى صفحة</label>
-                            <input type="number" id="initEnd${i}" min="1" placeholder="رقم">
-                        </div>
-                        <div class="input-field">
-                            <label>صفحات المهمة <span class="info-icon" onclick="openTaskTipModal()" title="كيف أحدد الحجم؟">نصيحة 💡</span></label>
-                            <input type="number" id="initTask${i}" min="1" value="10">
-                        </div>
-                    </div>
-                    <div class="input-field" style="margin-top: 15px;">
-                        <label>صفحات المرجع/الكتاب الكلية (اختياري)</label>
-                        <input type="number" id="initTotalPages${i}" min="1" placeholder="مثال: 400 لمعرفة تقدمك في الكتاب كاملاً">
-                    </div>
-                </div>
-            `;
-        }
+    function togglePlanModes() {
+        const mode = document.getElementById('planModeSelect').value;
+        document.getElementById('modeFreeInputs').style.display = mode === 'free' ? 'block' : 'none';
+        document.getElementById('modeDaysInputs').style.display = mode === 'days' ? 'block' : 'none';
+        document.getElementById('modeChaptersInputs').style.display = mode === 'chapters' ? 'block' : 'none';
+        document.getElementById('totalBookInputDiv').style.display = mode === 'chapters' ? 'none' : 'block'; 
     }
 
-    function cancelInitialSetup() {
-        initialSetupPanel.style.display = 'none';
-        welcomePanel.style.display = 'block';
+    // إدارة بناء الفصول ديناميكياً
+    function addChapterRow() {
+        const container = document.getElementById('chaptersContainer');
+        const rowCount = container.children.length + 1;
+        const row = document.createElement('div');
+        row.className = 'chapter-row';
+        row.style.cssText = 'display: flex; gap: 8px; margin-bottom: 10px; align-items: center;';
+        row.innerHTML = `
+            <div class="input-field" style="flex: 2; margin-bottom: 0;">
+                <input type="text" class="chap-name" placeholder="اسم الفصل (مثال: الفصل ${rowCount})">
+            </div>
+            <div class="input-field" style="flex: 1; margin-bottom: 0;">
+                <input type="number" class="chap-start" placeholder="من ص" min="1">
+            </div>
+            <div class="input-field" style="flex: 1; margin-bottom: 0;">
+                <input type="number" class="chap-end" placeholder="إلى ص" min="1">
+            </div>
+            <button class="btn-danger" onclick="this.parentElement.remove()" style="width: 40px; height: 40px; padding: 0; margin-bottom: 0;">✖</button>
+        `;
+        container.appendChild(row);
     }
 
-    document.getElementById('startSessionBtn').addEventListener('click', () => {
-        let configs = [];
-        for (let i = 1; i <= initialNumSelected; i++) {
-            const subject = document.getElementById(`initSubject${i}`).value;
-            const start = parseInt(document.getElementById(`initStart${i}`).value);
-            const end = parseInt(document.getElementById(`initEnd${i}`).value);
-            const tSize = parseInt(document.getElementById(`initTask${i}`).value) || 10;
-            const totalBookPages = parseInt(document.getElementById(`initTotalPages${i}`).value) || 0;
-            
-            if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0 || tSize <= 0) {
-                showCustomAlert("بيانات غير مكتملة", `يرجى إكمال بيانات المادة (${i}) بشكل صحيح وتحديد الصفحات.`); return;
-            }
-            if (start > end) { showCustomAlert("خطأ في الأرقام", `في المادة (${i}): صفحة البداية يجب أن تكون أصغر من صفحة النهاية!`); return; }
-            if (configs.find(c => c.name === subject)) { showCustomAlert("مادة مكررة", `لقد اخترت المادة "${subject}" مرتين! يرجى اختيار مادة مختلفة.`); return; }
-
-            configs.push({ id: `sub_${Date.now()}_${i}`, name: subject, start, end, taskSize: tSize, totalPages: totalBookPages, hue: subjectsData[subject].hue });
-        }
-
-        currentConfigs = configs;
-        initialSetupPanel.style.display = 'none';
-        activeSessionDashboard.style.display = 'block';
-        
-        currentConfigs.forEach(conf => appendSubjectToWorkspace(conf));
-        saveState();
-        window.scrollBy({ top: 100, behavior: 'smooth' });
-    });
-
-    const addMoreSection = document.getElementById('addMoreSection');
-    const toggleAddMoreBtn = document.getElementById('toggleAddMoreBtn');
-    
-    toggleAddMoreBtn.addEventListener('click', () => {
-        addMoreSection.style.display = addMoreSection.style.display === 'block' ? 'none' : 'block';
-    });
-    document.getElementById('cancelAddMoreBtn').addEventListener('click', () => {
-        addMoreSection.style.display = 'none';
-    });
-
-    document.getElementById('confirmAddMoreBtn').addEventListener('click', () => {
+    function addSubjectToPlan() {
         const subject = document.getElementById('addSubjectSelect').value;
-        const start = parseInt(document.getElementById('addStartPage').value);
-        const end = parseInt(document.getElementById('addEndPage').value);
-        const tSize = parseInt(document.getElementById('addTaskSize').value) || 10;
-        const totalBookPages = parseInt(document.getElementById('addTotalPages').value) || 0;
-        
-        if (!subject || isNaN(start) || isNaN(end) || start <= 0 || end <= 0 || tSize <= 0) { showCustomAlert("بيانات ناقصة", "يرجى اختيار المادة وتحديد الأرقام المطلوبة بشكل صحيح."); return; }
-        if (start > end) { showCustomAlert("خطأ في الأرقام", "رقم صفحة البداية أكبر من صفحة النهاية!"); return; }
-        if (currentConfigs.find(c => c.name === subject)) { showCustomAlert("المادة موجودة", "هذه المادة موجودة بالفعل في لوحتك الحالية! أتممها أولاً."); return; }
+        const mode = document.getElementById('planModeSelect').value;
+        if (!subject) return showAlert("خطأ", "يرجى اختيار المادة أولاً.");
+        if (appState.configs.find(c => c.name === subject)) return showAlert("موجودة", "المادة موجودة مسبقاً في مساحة العمل.");
 
-        const config = { id: `sub_${Date.now()}`, name: subject, start, end, taskSize: tSize, totalPages: totalBookPages, hue: subjectsData[subject].hue };
-        currentConfigs.push(config);
-        appendSubjectToWorkspace(config);
-        saveState();
-        
-        document.getElementById('addSubjectSelect').value = '';
-        document.getElementById('addStartPage').value = '';
-        document.getElementById('addEndPage').value = '';
-        document.getElementById('addTaskSize').value = '10';
-        document.getElementById('addTotalPages').value = '';
-        addMoreSection.style.display = 'none';
-        window.scrollBy({ top: 300, behavior: 'smooth' });
-    });
+        let config = { id: `sub_${Date.now()}`, name: subject, type: mode, hue: subjectsData[subject].hue, reviewCount: 0 };
 
-    function resetEverything() {
-        if (confirm("⚠️ هل أنت متأكد من رغبتك في إنهاء الجلسة وتصفير كل شيء؟ سيتم مسح تقدمك الحالي.")) {
-            localStorage.removeItem(CURRENT_STATE_KEY);
-            currentConfigs = [];
-            activeSessionDashboard.style.display = 'none';
-            workspace.innerHTML = ''; progressBarsWrapper.innerHTML = '';
-            stickyProgressContainer.style.display = 'none';
-            welcomePanel.style.display = 'block';
-            addMoreSection.style.display = 'none';
-            resetTimer();
-        }
-    }
+        if (mode === 'free' || mode === 'days') {
+            let start = parseInt(document.getElementById(mode==='free'?'fStart':'dStart').value);
+            let end = parseInt(document.getElementById(mode==='free'?'fEnd':'dEnd').value);
+            if (isNaN(start) || isNaN(end) || start > end) return showAlert("خطأ", "نطاق الصفحات غير صالح.");
+            
+            config.start = start; config.end = end;
+            config.totalPages = parseInt(document.getElementById('addTotalPages').value) || 0;
 
-    function exportData() {
-        const data = localStorage.getItem(CURRENT_STATE_KEY);
-        if(!data) { showCustomAlert("خطأ", "لا توجد بيانات محفوظة لتصديرها."); return; }
-        const blob = new Blob([data], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `StudyTracker_Backup_${new Date().toISOString().slice(0,10)}.json`;
-        a.click();
-    }
-
-    function importData(event) {
-        const file = event.target.files[0];
-        if(!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const json = JSON.parse(e.target.result);
-                if(json.configs) {
-                    localStorage.setItem(CURRENT_STATE_KEY, JSON.stringify(json));
-                    showCustomAlert("نجاح!", "تمت استعادة البيانات بنجاح. سيتم تحديث الصفحة الآن.", "✅");
-                    setTimeout(() => location.reload(), 2000);
-                } else {
-                    showCustomAlert("خطأ", "ملف النسخة الاحتياطية غير صالح أو تالف.");
-                }
-            } catch(err) {
-                showCustomAlert("خطأ", "حدث خطأ أثناء قراءة الملف.");
+            if (mode === 'free') {
+                config.taskSize = parseInt(document.getElementById('fTaskSize').value) || 10;
+            } else {
+                let days = parseInt(document.getElementById('dDays').value) || 1;
+                config.taskSize = Math.ceil((end - start + 1) / days);
             }
-        };
-        reader.readAsText(file);
-        event.target.value = '';
-    }
-
-    function openEditModal(id, name, start, end, taskSize, totalPages) {
-        document.getElementById('editSubId').value = id;
-        document.getElementById('editSubName').textContent = name;
-        document.getElementById('editStartPage').value = start;
-        document.getElementById('editEndPage').value = end;
-        document.getElementById('editTaskSize').value = taskSize || 10;
-        document.getElementById('editTotalPages').value = totalPages || '';
-        document.getElementById('editSubjectModal').classList.add('active');
-    }
-
-    function closeEditModal() {
-        document.getElementById('editSubjectModal').classList.remove('active');
-    }
-    
-    function openDeleteModal(id, name) {
-        document.getElementById('deleteSubId').value = id;
-        document.getElementById('deleteSubName').textContent = name;
-        document.getElementById('deleteSubjectModal').classList.add('active');
-    }
-
-    function closeDeleteModal() {
-        document.getElementById('deleteSubjectModal').classList.remove('active');
-    }
-
-    document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-        const id = document.getElementById('deleteSubId').value;
-        const currentStudied = {};
-        document.querySelectorAll('.card.studied').forEach(card => {
-            const subId = card.getAttribute('data-subject-id');
-            const page = parseInt(card.textContent);
-            if (subId !== id) {
-                if (!currentStudied[subId]) currentStudied[subId] = [];
-                currentStudied[subId].push(page);
-            }
-        });
-
-        currentConfigs = currentConfigs.filter(c => c.id !== id);
-        workspace.innerHTML = '';
-        progressBarsWrapper.innerHTML = '';
-        
-        if(currentConfigs.length === 0) {
-            stickyProgressContainer.style.display = 'none';
-        } else {
-            currentConfigs.forEach(conf => appendSubjectToWorkspace(conf));
-            for (const [subId, pages] of Object.entries(currentStudied)) {
-                const allCards = document.querySelectorAll(`.card[data-subject-id="${subId}"]`);
-                allCards.forEach(c => {
-                    if (pages.includes(parseInt(c.textContent))) c.classList.add('studied');
-                });
-                updateProgressFor(subId);
-            }
-            document.querySelectorAll('.task-section').forEach(taskSec => {
-                checkTaskCompletionForInit(taskSec, currentConfigs.find(c => c.id === taskSec.closest('.subject-section').id.replace('section_','')));
-            });
-        }
-
-        saveState();
-        closeDeleteModal();
-        showCustomAlert("تم الحذف", "تم حذف المادة بنجاح من مساحة العمل.", "🗑️");
-    });
-
-    document.getElementById('saveEditBtn').addEventListener('click', () => {
-        const id = document.getElementById('editSubId').value;
-        const newStart = parseInt(document.getElementById('editStartPage').value);
-        const newEnd = parseInt(document.getElementById('editEndPage').value);
-        const newTaskSize = parseInt(document.getElementById('editTaskSize').value) || 10;
-        const newTotalPages = parseInt(document.getElementById('editTotalPages').value) || 0;
-
-        if (isNaN(newStart) || isNaN(newEnd) || newStart <= 0 || newEnd <= 0 || newTaskSize <= 0) {
-            showCustomAlert("بيانات غير صالحة", "يرجى إدخال أرقام صحيحة وصالحة."); return;
-        }
-        if (newStart > newEnd) {
-            showCustomAlert("خطأ في الأرقام", "رقم صفحة البداية يجب أن يكون أصغر أو يساوي صفحة النهاية."); return;
-        }
-
-        const currentStudied = {};
-        document.querySelectorAll('.card.studied').forEach(card => {
-            const subId = card.getAttribute('data-subject-id');
-            const page = parseInt(card.textContent);
-            if (!currentStudied[subId]) currentStudied[subId] = [];
-            currentStudied[subId].push(page);
-        });
-
-        const configIndex = currentConfigs.findIndex(c => c.id === id);
-        if (configIndex !== -1) {
-            currentConfigs[configIndex].start = newStart;
-            currentConfigs[configIndex].end = newEnd;
-            currentConfigs[configIndex].taskSize = newTaskSize;
-            currentConfigs[configIndex].totalPages = newTotalPages;
-        }
-
-        workspace.innerHTML = '';
-        progressBarsWrapper.innerHTML = '';
-        stickyProgressContainer.style.display = 'none';
-        
-        currentConfigs.forEach(conf => appendSubjectToWorkspace(conf));
-
-        for (const [subId, pages] of Object.entries(currentStudied)) {
-            const allCards = document.querySelectorAll(`.card[data-subject-id="${subId}"]`);
-            allCards.forEach(c => {
-                if (pages.includes(parseInt(c.textContent))) {
-                    c.classList.add('studied');
+        } 
+        else if (mode === 'chapters') {
+            const rows = document.querySelectorAll('#chaptersContainer .chapter-row');
+            let chapters = []; let totalP = 0;
+            rows.forEach((row, idx) => {
+                let name = row.querySelector('.chap-name').value || `الفصل ${idx + 1}`;
+                let s = parseInt(row.querySelector('.chap-start').value);
+                let e = parseInt(row.querySelector('.chap-end').value);
+                if (!isNaN(s) && !isNaN(e) && s <= e) {
+                    chapters.push({ name: name, start: s, end: e });
+                    totalP += (e - s + 1);
                 }
             });
-            updateProgressFor(subId);
+            if(chapters.length === 0) return showAlert("خطأ", "يرجى إدخال فصل واحد صحيح على الأقل.");
+            chapters.sort((a,b) => a.start - b.start);
+            config.chapters = chapters;
+            config.totalPages = totalP; 
+            config.start = chapters[0].start; 
         }
 
-        document.querySelectorAll('.task-section').forEach(taskSec => {
-            checkTaskCompletionForInit(taskSec, currentConfigs.find(c => c.id === taskSec.closest('.subject-section').id.replace('section_','')));
-        });
-
+        appState.configs.push(config);
+        appState.studied[config.id] = [];
         saveState();
-        closeEditModal();
-        showCustomAlert("تم التحديث", "تم تحديث الإعدادات بنجاح مع الحفاظ على تقدمك!", "✅");
-    });
+        reloadWorkspace();
+        closeModal('controlPanelModal');
+        document.getElementById('welcomePanel').style.display = 'none';
+        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+    }
 
-    function appendSubjectToWorkspace(config) {
-        stickyProgressContainer.style.display = 'block';
+    function reloadWorkspace() {
+        const ws = document.getElementById('workspace');
+        const miniGrid = document.getElementById('progressCardsGrid');
+        ws.innerHTML = ''; miniGrid.innerHTML = '';
+        
+        const stickyBar = document.getElementById('stickyProgressContainer');
+        if (appState.configs.length === 0) {
+            stickyBar.style.display = 'none';
+            document.getElementById('welcomePanel').style.display = 'block';
+            return;
+        }
+        
+        document.getElementById('welcomePanel').style.display = 'none';
+        stickyBar.style.display = 'block';
+        document.getElementById('compactTimerDiv').style.display = 'flex';
 
-        let bookProgressHtml = '';
-        if (config.totalPages && config.totalPages > 0) {
-            bookProgressHtml = `
-                <div style="font-size:11px; margin-top:4px; color:var(--text-secondary); display:flex; justify-content:space-between; font-weight:700;">
-                    <span>إنجاز المرجع الكلي:</span>
-                    <span id="bookPercentText_${config.id}">0%</span>
-                </div>
-                <div class="book-progress-wrapper">
-                    <div class="book-progress-fill" id="bookPercentBar_${config.id}"></div>
+        appState.configs.forEach(conf => {
+            let miniHtml = `<div class="mini-subject-card" style="--subject-hue: ${conf.hue}" onclick="showBookProgress('${conf.id}')">
+                <div class="mini-sub-title">${conf.name} ${conf.reviewCount > 0 ? `(م${conf.reviewCount})` : ''}</div>
+                <div class="progress-bar-wrapper"><div class="progress-bar-fill" id="miniBar_${conf.id}"></div></div>`;
+            if(conf.totalPages > 0) miniHtml += `<div class="book-progress-wrapper"><div class="book-progress-fill" id="bookBar_${conf.id}"></div></div>`;
+            miniHtml += `</div>`;
+            miniGrid.insertAdjacentHTML('beforeend', miniHtml);
+
+            const sec = document.createElement('div');
+            sec.className = 'subject-section'; sec.id = `sec_${conf.id}`;
+            sec.style.setProperty('--subject-hue', conf.hue);
+            
+            let headerText = conf.type === 'chapters' ? "نظام الفصول" : `صـ ${conf.start} إلى ${conf.end}`;
+            sec.innerHTML = `
+                <div class="subject-header-title">
+                    <span style="display:flex; align-items:center; gap:8px;">
+                        📚 ${conf.name} <span style="font-size:12px; color:var(--text-secondary); font-weight:500;">(${headerText})</span>
+                    </span>
+                    <button class="icon-btn" style="width:30px; height:30px; font-size:14px;" onclick="confirmDelete('${conf.id}')" title="إزالة المادة">🗑️</button>
                 </div>
             `;
+
+            let studiedArr = appState.studied[conf.id] || [];
+
+            if (conf.type === 'chapters') {
+                conf.chapters.forEach((ch) => {
+                    sec.appendChild(buildTaskHtml(conf, ch.name, ch.start, ch.end, studiedArr));
+                });
+            } else {
+                let taskNum = 1;
+                let totalTasks = Math.ceil((conf.end - conf.start + 1) / conf.taskSize);
+                for (let i = conf.start; i <= conf.end; i += conf.taskSize) {
+                    let tEnd = Math.min(i + conf.taskSize - 1, conf.end);
+                    let title = conf.type === 'days' ? `اليوم ${taskNum}` : `المهمة ${taskNum} من ${totalTasks}`;
+                    sec.appendChild(buildTaskHtml(conf, title, i, tEnd, studiedArr));
+                    taskNum++;
+                }
+            }
+            
+            let toShelfBtn = document.createElement('button');
+            toShelfBtn.className = 'btn-primary';
+            toShelfBtn.style.marginTop = '20px';
+            toShelfBtn.style.display = 'none'; 
+            toShelfBtn.id = `toShelf_${conf.id}`;
+            toShelfBtn.innerHTML = `📦 نقل المادة إلى الرف (أرشيف)`;
+            toShelfBtn.onclick = () => moveToShelf(conf.id);
+            sec.appendChild(toShelfBtn);
+
+            ws.appendChild(sec);
+            updateProgressMetrics(conf.id); 
+        });
+    }
+
+    function buildTaskHtml(conf, title, startPage, endPage, studiedArr) {
+        let taskDiv = document.createElement('div');
+        taskDiv.className = 'task-section';
+        
+        let header = document.createElement('div');
+        header.className = 'task-header';
+        header.innerHTML = `
+            <h3 class="task-title"><span class="completed-icon">✅</span> ${title}</h3>
+            <span class="task-badge">صـ ${startPage} - ${endPage}</span>
+        `;
+        
+        let content = document.createElement('div');
+        content.className = 'task-content';
+        
+        let isFullyStudied = true;
+        for (let p = startPage; p <= endPage; p++) {
+            let c = document.createElement('div');
+            c.className = 'card'; c.textContent = p;
+            if(studiedArr.includes(p)) c.classList.add('studied'); else isFullyStudied = false;
+            
+            c.onclick = (e) => {
+                e.stopPropagation(); 
+                c.classList.toggle('studied');
+                if(c.classList.contains('studied')) {
+                    if(!appState.studied[conf.id].includes(p)) appState.studied[conf.id].push(p);
+                    appState.stats.pagesToday++; 
+                } else {
+                    appState.studied[conf.id] = appState.studied[conf.id].filter(x => x !== p);
+                }
+                saveState(); updateStatsUI();
+                checkTaskAutoCollapse(taskDiv, conf.id);
+            };
+            content.appendChild(c);
         }
 
-        const pBarHTML = `
-            <div class="subject-progress-box" id="pbox_${config.id}" style="--subject-hue: ${config.hue};">
-                <div class="subject-progress-header">
-                    <span>${config.name}</span>
-                    <span id="percentText_${config.id}">0%</span>
-                </div>
-                <div class="progress-bar-wrapper">
-                    <div class="progress-bar-fill" id="percentBar_${config.id}"></div>
-                </div>
-                ${bookProgressHtml}
-            </div>
-        `;
-        progressBarsWrapper.insertAdjacentHTML('beforeend', pBarHTML);
-
-        const subjectSection = document.createElement('div');
-        subjectSection.className = 'subject-section';
-        subjectSection.id = `section_${config.id}`;
-        subjectSection.style.setProperty('--subject-hue', config.hue);
+        header.onclick = () => content.classList.toggle('collapsed'); 
+        taskDiv.appendChild(header); taskDiv.appendChild(content);
         
-        subjectSection.innerHTML = `
-            <div class="subject-header-title">
-                <div>
-                    <span>📚 ${config.name}</span>
-                    <span style="font-size:14px; color:var(--text-secondary); font-weight:normal; margin-right:5px;">(من ${config.start} إلى ${config.end})</span>
-                </div>
-                <div class="subject-header-actions">
-                    <button class="btn-icon-small" onclick="openEditModal('${config.id}', '${config.name}', ${config.start}, ${config.end}, ${config.taskSize || 10}, ${config.totalPages || 0})" title="تعديل الإعدادات">✏️</button>
-                    <button class="btn-icon-small btn-icon-danger" onclick="openDeleteModal('${config.id}', '${config.name}')" title="حذف المادة">🗑️</button>
-                </div>
-            </div>
-        `;
+        if(isFullyStudied) {
+            taskDiv.classList.add('completed');
+            content.classList.add('collapsed'); 
+        }
+        return taskDiv;
+    }
 
-        let cardCount = 0; let currentTaskSection = null, currentGrid = null, taskIndex = 1;
-        let tSize = config.taskSize || 10;
-        let totalTasks = Math.ceil((config.end - config.start + 1) / tSize);
+    function checkTaskAutoCollapse(taskDiv, subjectId) {
+        let cards = taskDiv.querySelectorAll('.card');
+        let studied = taskDiv.querySelectorAll('.card.studied');
+        let content = taskDiv.querySelector('.task-content');
         
-        for (let page = config.start; page <= config.end; page++) {
-            if (cardCount % tSize === 0) {
-                currentTaskSection = document.createElement('div');
-                currentTaskSection.className = 'task-section';
-                currentTaskSection.setAttribute('data-task-index', taskIndex); 
-                currentTaskSection.innerHTML = `
-                    <div class="task-header">
-                        <h3 class="task-title">🎯 المهمة ${taskIndex} من ${totalTasks}</h3>
-                        <span class="task-badge">صـ ${page} - ${Math.min(page + (tSize - 1), config.end)}</span>
+        if (cards.length === studied.length && cards.length > 0) {
+            if(!taskDiv.classList.contains('completed')) {
+                taskDiv.classList.add('completed');
+                setTimeout(() => content.classList.add('collapsed'), 400); 
+            }
+        } else {
+            taskDiv.classList.remove('completed');
+            content.classList.remove('collapsed');
+        }
+        updateProgressMetrics(subjectId);
+    }
+
+    function updateProgressMetrics(subjectId) {
+        const conf = appState.configs.find(c => c.id === subjectId);
+        if(!conf) return;
+        
+        let totalSessionPages = conf.type === 'chapters' ? conf.chapters.reduce((a, b) => a + (b.end - b.start + 1), 0) : (conf.end - conf.start + 1);
+        let studiedPages = appState.studied[subjectId].length;
+        
+        let percent = totalSessionPages===0 ? 0 : Math.round((studiedPages/totalSessionPages)*100);
+        let miniBar = document.getElementById(`miniBar_${subjectId}`);
+        if(miniBar) miniBar.style.width = `${percent}%`;
+
+        let shelfBtn = document.getElementById(`toShelf_${subjectId}`);
+        if(shelfBtn) shelfBtn.style.display = percent === 100 ? 'block' : 'none';
+
+        if(conf.totalPages > 0) {
+            let totalInBook = conf.type !== 'chapters' ? (conf.start - 1) + studiedPages : studiedPages;
+            let bookPercent = Math.min(100, Math.round((totalInBook / conf.totalPages) * 100));
+            let bookBar = document.getElementById(`bookBar_${subjectId}`);
+            if(bookBar) bookBar.style.width = `${bookPercent}%`;
+        }
+    }
+
+    function showBookProgress(subjectId) {
+        const conf = appState.configs.find(c => c.id === subjectId);
+        if(!conf) return;
+        let studied = appState.studied[subjectId].length;
+        let totalSession = conf.type === 'chapters' ? conf.chapters.reduce((a, b) => a + (b.end - b.start + 1), 0) : (conf.end - conf.start + 1);
+        let percentSession = totalSession===0 ? 0 : Math.round((studied/totalSession)*100);
+        
+        let globalPercent = percentSession;
+        let htmlDetails = `<div style="margin-bottom:15px; color:var(--text-secondary);">أنجزت <strong>${studied}</strong> من أصل <strong>${totalSession}</strong> صفحة (لجلسة التتبع).</div>`;
+
+        if(conf.totalPages > 0) {
+            let totalInBook = conf.type !== 'chapters' ? (conf.start - 1) + studied : studied;
+            globalPercent = Math.min(100, Math.round((totalInBook / conf.totalPages) * 100));
+            htmlDetails += `<div style="padding-top:15px; border-top:1px dashed var(--border-subtle); color:var(--text-primary);">
+                إنجاز المرجع الكلي:<br>
+                <strong style="color:var(--accent-primary); font-size:18px;">${totalInBook}</strong> صفحة من أصل <strong>${conf.totalPages}</strong>
+            </div>`;
+        }
+
+        document.getElementById('bpTitle').textContent = `📖 ` + conf.name;
+        document.getElementById('bpPercentage').textContent = `${globalPercent}%`;
+        document.getElementById('bpDetails').innerHTML = htmlDetails;
+        document.getElementById('bookProgressModal').classList.add('active');
+    }
+
+    function moveToShelf(subjectId) {
+        let idx = appState.configs.findIndex(c => c.id === subjectId);
+        if(idx === -1) return;
+        let conf = appState.configs[idx];
+        conf.finishDate = new Date().toISOString().split('T')[0];
+        
+        appState.shelf.push(conf);
+        appState.configs.splice(idx, 1);
+        delete appState.studied[subjectId]; 
+        
+        saveState(); reloadWorkspace();
+        showAlert("تم الإنجاز!", `تم نقل ${conf.name} إلى رف الإنجازات. فخورون بك! 🎉`, "🏆");
+    }
+
+    function renderShelfUI() {
+        const cont = document.getElementById('shelfContainer');
+        cont.innerHTML = '';
+        if(appState.shelf.length === 0) {
+            cont.innerHTML = `<p style="text-align:center; color:var(--text-secondary); margin-top:30px;">الرف فارغ حالياً.</p>`;
+            return;
+        }
+        appState.shelf.forEach(item => {
+            cont.innerHTML += `
+                <div class="shelf-item">
+                    <div>
+                        <strong style="color:var(--accent-primary); display:block;">${item.name}</strong>
+                        <span style="font-size:11px; color:var(--text-secondary);">تاريخ الختم: ${item.finishDate} | مراجعات سابقة: ${item.reviewCount || 0}</span>
                     </div>
-                `;
-                currentGrid = document.createElement('div');
-                currentGrid.className = 'cards-grid';
-                currentTaskSection.appendChild(currentGrid);
-                
-                subjectSection.appendChild(currentTaskSection);
-                taskIndex++;
-            }
+                    <button class="btn-primary" style="width:auto; padding:6px 12px; font-size:12px;" onclick="reviewFromShelf('${item.id}')">🔄 بدء مراجعة</button>
+                </div>
+            `;
+        });
+    }
 
-            const card = document.createElement('div');
-            card.className = 'card'; card.textContent = page;
-            card.setAttribute('data-subject-id', config.id);
-            card.setAttribute('data-subject-name', config.name);
+    function reviewFromShelf(subjectId) {
+        let idx = appState.shelf.findIndex(c => c.id === subjectId);
+        if(idx === -1) return;
+        let conf = appState.shelf[idx];
+        conf.reviewCount = (conf.reviewCount || 0) + 1;
+        conf.id = `sub_${Date.now()}`; 
+        
+        appState.configs.push(conf);
+        appState.studied[conf.id] = [];
+        appState.shelf.splice(idx, 1);
+        
+        saveState(); reloadWorkspace(); renderShelfUI(); switchTab('tabAdd');
+        closeModal('controlPanelModal');
+        showAlert("رحلة مراجعة موفقة", "تم إعادة المادة لمساحة العمل ببطاقات بيضاء لبدء المراجعة.");
+    }
+
+    function confirmDelete(subjectId) {
+        if(confirm("هل أنت متأكد من إزالة هذه المادة من اللوحة؟ سيتم مسح تقدمك الحالي فيها ولن تنقل للرف.")) {
+            appState.configs = appState.configs.filter(c => c.id !== subjectId);
+            delete appState.studied[subjectId];
+            saveState(); reloadWorkspace();
+        }
+    }
+
+    function checkStreakAndDate() {
+        const today = new Date().toISOString().split('T')[0];
+        if (appState.stats.lastActiveDate) {
+            let last = new Date(appState.stats.lastActiveDate);
+            let current = new Date(today);
+            let diffDays = Math.floor((current - last) / (1000 * 60 * 60 * 24));
             
-            card.addEventListener('click', function() {
-                this.classList.toggle('studied');
-                let newPercentage = updateProgressFor(config.id);
-                saveState();
-                checkTaskCompletion(this.closest('.task-section'), config.name, newPercentage, config);
-            });
-            currentGrid.appendChild(card); cardCount++;
+            if (diffDays === 1) { if(appState.stats.todayDate !== today) appState.stats.streak++; } 
+            else if (diffDays > 1) { appState.stats.streak = 0; }
+        } else { appState.stats.streak = 1; }
+        
+        if (appState.stats.todayDate !== today) {
+            appState.stats.pagesToday = 0;
+            appState.stats.totalFocusSec = 0;
+            appState.stats.todayDate = today;
         }
-        workspace.appendChild(subjectSection);
-        updateProgressFor(config.id);
+        appState.stats.lastActiveDate = today;
+        saveState();
+        document.getElementById('streakCount').textContent = appState.stats.streak;
     }
 
-    function updateProgressFor(subjectId) {
-        const subjectCards = document.querySelectorAll(`.card[data-subject-id="${subjectId}"]`);
-        const studiedCards = document.querySelectorAll(`.card[data-subject-id="${subjectId}"].studied`);
-        const total = subjectCards.length; const studied = studiedCards.length;
-        const percentage = total === 0 ? 0 : Math.round((studied / total) * 100);
-        document.getElementById(`percentBar_${subjectId}`).style.width = `${percentage}%`;
-        document.getElementById(`percentText_${subjectId}`).textContent = `${percentage}%`;
-
-        const config = currentConfigs.find(c => c.id === subjectId);
-        if (config && config.totalPages && config.totalPages > 0) {
-            let totalCompletedInBook = (config.start - 1) + studied;
-            let bookPercentage = Math.min(100, Math.round((totalCompletedInBook / config.totalPages) * 100));
-            
-            const bookPercentBar = document.getElementById(`bookPercentBar_${subjectId}`);
-            const bookPercentText = document.getElementById(`bookPercentText_${subjectId}`);
-            
-            if (bookPercentBar && bookPercentText) {
-                bookPercentBar.style.width = `${bookPercentage}%`;
-                bookPercentText.textContent = `${bookPercentage}%`;
-            }
-        }
-
-        return percentage;
+    function updateStatsUI() {
+        document.getElementById('streakCount').textContent = appState.stats.streak || 0;
+        document.getElementById('statPages').textContent = appState.stats.pagesToday || 0;
+        document.getElementById('statFocus').textContent = Math.floor((appState.stats.totalFocusSec || 0) / 60);
+        document.getElementById('statStreak').textContent = appState.stats.streak || 0;
     }
 
-    function checkTaskCompletion(taskSectionEl, subjectName, subjectPercentage, config) {
-        if (!taskSectionEl) return;
-        const allCards = taskSectionEl.querySelectorAll('.card');
-        const studiedCards = taskSectionEl.querySelectorAll('.card.studied');
-        const taskIndex = parseInt(taskSectionEl.getAttribute('data-task-index'));
-
-        if (allCards.length === studiedCards.length && allCards.length > 0) {
-            if (!taskSectionEl.classList.contains('completed')) {
-                taskSectionEl.classList.add('completed');
-                showCelebrationPopup(subjectName, taskIndex, subjectPercentage);
-            }
-        } else {
-            taskSectionEl.classList.remove('completed');
-        }
+    function shareStats() {
+        const mins = Math.floor(appState.stats.totalFocusSec / 60);
+        const text = `🎯 إنجازي اليوم في دراسة الطب:\n📖 قرأت ${appState.stats.pagesToday} صفحة.\n⏱️ ركزت لمدة ${mins} دقيقة.\n🔥 مستمر لـ ${appState.stats.streak} أيام!\nعبر مساحة المتابعة الذكية ⚡`;
+        navigator.clipboard.writeText(text).then(() => {
+            showAlert("تم النسخ", "تم نسخ إنجازك بنجاح، شاركه الآن مع زملائك!", "📥");
+        }).catch(err => { showAlert("خطأ", "عذراً، متصفحك لا يدعم النسخ التلقائي."); });
     }
 
-    function checkTaskCompletionForInit(taskSectionEl, config) {
-        if (!taskSectionEl || !config) return;
-        const allCards = taskSectionEl.querySelectorAll('.card');
-        const studiedCards = taskSectionEl.querySelectorAll('.card.studied');
-
-        if (allCards.length === studiedCards.length && allCards.length > 0) {
-            taskSectionEl.classList.add('completed');
-        } else {
-            taskSectionEl.classList.remove('completed');
-        }
+    let timerInt;
+    function formatTime(s) {
+        let h = Math.floor(s/3600); let m = Math.floor((s%3600)/60); let ss = s%60;
+        return (h<10?'0'+h:h)+':'+(m<10?'0'+m:m)+':'+(ss<10?'0'+ss:ss);
     }
-
-    function showCelebrationPopup(subjectName, taskIndex, percentage) {
-        document.getElementById('celSubjectName').textContent = subjectName;
-        document.getElementById('celTaskNum').textContent = taskIndex;
-        document.getElementById('celPercentage').textContent = percentage;
-        document.getElementById('celebrationModal').classList.add('active');
-        setTimeout(closeCelebration, 4000);
-    }
-    function closeCelebration() { document.getElementById('celebrationModal').classList.remove('active'); }
-
-    let timerInterval, seconds = 0, isRunning = false, isCountdown = false, startingSeconds = 0;
-    const stickyTimerDisplay = document.getElementById('stickyTimer');
-    const sStartBtn = document.getElementById('sStartBtn');
-    const sPauseBtn = document.getElementById('sPauseBtn');
-    const sResetBtn = document.getElementById('sResetBtn');
-    const modeUpBtn = document.getElementById('modeUpBtn');
-    const modeDownBtn = document.getElementById('modeDownBtn');
-    const timerInputContainer = document.getElementById('timerInputContainer');
-    const setMinutesInput = document.getElementById('setMinutes');
-
-    function openTimerSetup() { document.getElementById('timerSetupModal').classList.add('active'); }
-    function closeTimerSetup() { document.getElementById('timerSetupModal').classList.remove('active'); }
-
-    modeUpBtn.addEventListener('click', () => { isCountdown = false; modeUpBtn.classList.add('active'); modeDownBtn.classList.remove('active'); timerInputContainer.classList.remove('active'); resetTimer(); });
-    modeDownBtn.addEventListener('click', () => { isCountdown = true; modeDownBtn.classList.add('active'); modeUpBtn.classList.remove('active'); timerInputContainer.classList.add('active'); resetTimer(); });
     
-    document.getElementById('applyTimerBtn').addEventListener('click', () => {
-        if (isCountdown) {
-            const mins = parseInt(setMinutesInput.value);
-            if (isNaN(mins) || mins <= 0) { showCustomAlert("إدخال غير صحيح", "يرجى إدخال عدد دقائق صحيح لتبدأ العد التنازلي."); return; }
-            startingSeconds = mins * 60; seconds = startingSeconds; 
-        }
-        updateTimerDisplay(); saveState(); 
-        closeTimerSetup();
-        if (isCountdown) showCustomAlert("تم الضبط", `تم ضبط المؤقت التنازلي على ${setMinutesInput.value} دقيقة بنجاح. ابدأ التركيز!`, "⏱️");
-    });
-
-    function playAudioAlert() {
-        try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.type = 'sine'; osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime); osc.start(); setTimeout(() => osc.stop(), 600);
-        } catch (e) { console.log("Audio not supported"); }
-    }
-
-    function updateTimerDisplay() {
-        let h = Math.floor(seconds / 3600); let m = Math.floor((seconds % 3600) / 60); let s = seconds % 60;
-        stickyTimerDisplay.textContent = (h < 10 ? "0"+h : h) + ":" + (m < 10 ? "0"+m : m) + ":" + (s < 10 ? "0"+s : s);
-        if (isCountdown && seconds > 0 && seconds <= 10) stickyTimerDisplay.classList.add('ending');
-        else stickyTimerDisplay.classList.remove('ending');
+    function applyGlobalTimer() {
+        let m = parseInt(document.getElementById('setMinutes').value);
+        if(!m || m<=0) return;
+        appState.timer.mode = 'down'; appState.timer.startSec = m*60; appState.timer.sec = m*60;
+        document.getElementById('stickyTimer').textContent = formatTime(appState.timer.sec);
+        saveState(); switchTab('tabAdd'); closeModal('controlPanelModal');
     }
 
     function startTimer() {
-        if (!isRunning) {
-            if (isCountdown && seconds === 0) { openTimerSetup(); return; }
-            document.body.classList.remove('timer-ended'); isRunning = true;
-            sStartBtn.style.background = "rgba(16, 185, 129, 0.15)"; sStartBtn.style.color = "#059669";
-            sPauseBtn.style.background = "var(--btn-secondary-bg)"; sPauseBtn.style.color = "var(--text-primary)";
-            timerInterval = setInterval(() => {
-                if (isCountdown) {
-                    if (seconds > 0) { seconds--; updateTimerDisplay(); }
-                    if (seconds === 0) { pauseTimer(); playAudioAlert(); document.body.classList.add('timer-ended'); showCustomAlert("انتهى الوقت", "⏰ لقد انتهى وقت التركيز المخصص! خذ استراحة قصيرة.", "🎉"); }
-                } else { seconds++; updateTimerDisplay(); }
-                if (seconds % 5 === 0) saveState();
-            }, 1000);
-        }
+        if(appState.timer.isRunning) return;
+        appState.timer.isRunning = true;
+        document.getElementById('sStartBtn').style.color = 'var(--success-color)';
+        document.getElementById('sPauseBtn').style.color = 'var(--text-secondary)';
+        
+        timerInt = setInterval(() => {
+            if(appState.timer.mode === 'down') {
+                if(appState.timer.sec > 0) appState.timer.sec--;
+                if(appState.timer.sec === 0) { pauseTimer(); document.body.classList.add('timer-ended'); setTimeout(()=>document.body.classList.remove('timer-ended'), 3000); showAlert("انتهى الوقت", "⏰ خذ استراحة قصيرة لتجديد نشاطك."); }
+            } else { appState.timer.sec++; }
+            appState.stats.totalFocusSec++; 
+            document.getElementById('stickyTimer').textContent = formatTime(appState.timer.sec);
+            if(appState.timer.sec % 10 === 0) saveState();
+        }, 1000);
     }
     function pauseTimer() { 
-        isRunning = false; clearInterval(timerInterval); 
-        sStartBtn.style.background = "var(--btn-secondary-bg)"; sStartBtn.style.color = "var(--text-primary)";
-        sPauseBtn.style.background = "rgba(220, 38, 38, 0.15)"; sPauseBtn.style.color = "#dc2626";
-        saveState(); 
+        appState.timer.isRunning = false; clearInterval(timerInt); 
+        document.getElementById('sStartBtn').style.color = 'var(--text-secondary)';
+        document.getElementById('sPauseBtn').style.color = 'var(--btn-danger-text)';
+        saveState(); updateStatsUI();
     }
     function resetTimer() { 
-        pauseTimer(); document.body.classList.remove('timer-ended'); stickyTimerDisplay.classList.remove('ending'); 
-        sPauseBtn.style.background = "var(--btn-secondary-bg)"; sPauseBtn.style.color = "var(--text-primary)";
-        if (isCountdown) seconds = startingSeconds; else seconds = 0; 
-        updateTimerDisplay(); saveState(); 
+        pauseTimer(); 
+        appState.timer.sec = appState.timer.mode==='down'?appState.timer.startSec:0; 
+        document.getElementById('stickyTimer').textContent = formatTime(appState.timer.sec);
+        document.getElementById('sPauseBtn').style.color = 'var(--text-secondary)';
+        saveState();
     }
 
-    sStartBtn.addEventListener('click', startTimer); sPauseBtn.addEventListener('click', pauseTimer); sResetBtn.addEventListener('click', resetTimer);
+    document.getElementById('sStartBtn').onclick = startTimer;
+    document.getElementById('sPauseBtn').onclick = pauseTimer;
+    document.getElementById('sResetBtn').onclick = resetTimer;
 
-    function saveState() {
-        if (currentConfigs.length === 0) return;
-        const studiedData = {};
-        document.querySelectorAll('.card.studied').forEach(card => {
-            const subId = card.getAttribute('data-subject-id'); const page = parseInt(card.textContent);
-            if (!studiedData[subId]) studiedData[subId] = []; studiedData[subId].push(page);
-        });
-        const state = {
-            configs: currentConfigs, studied: studiedData,
-            timer: { mode: isCountdown ? 'down' : 'up', mins: setMinutesInput.value, sec: seconds, startSec: startingSeconds }
-        };
-        localStorage.setItem(CURRENT_STATE_KEY, JSON.stringify(state));
-    }
+    function saveState() { localStorage.setItem(CURRENT_STATE_KEY, JSON.stringify(appState)); }
 
     function autoMigrateData() {
         if (localStorage.getItem(CURRENT_STATE_KEY)) return;
         for (let oldKey of OLD_STATE_KEYS) {
-            const oldData = localStorage.getItem(oldKey);
+            let oldData = localStorage.getItem(oldKey);
             if (oldData) {
-                localStorage.setItem(CURRENT_STATE_KEY, oldData);
-                console.log(`تم ترحيل البيانات بنجاح من النسخة: ${oldKey}`);
-                break; 
+                try {
+                    let parsed = JSON.parse(oldData);
+                    appState.configs = parsed.configs || [];
+                    appState.studied = parsed.studied || {};
+                    appState.timer.sec = parsed.timer?.sec || 0;
+                    appState.timer.mode = parsed.timer?.mode || 'up';
+                    appState.timer.startSec = parsed.timer?.startSec || 0;
+                    appState.configs.forEach(c => { if(!c.type) c.type = 'free'; if(!c.reviewCount) c.reviewCount = 0; });
+                    saveState();
+                    console.log(`تم ترحيل البيانات بنجاح من ${oldKey}`);
+                    break;
+                } catch(e) {}
             }
         }
     }
 
-    function loadState() {
-        autoMigrateData(); 
-
-        const saved = localStorage.getItem(CURRENT_STATE_KEY);
-        if (saved) {
-            const state = JSON.parse(saved);
-            if (state.configs && state.configs.length > 0) {
-                welcomePanel.style.display = 'none';
-                activeSessionDashboard.style.display = 'block';
-                
-                state.configs.forEach(conf => { currentConfigs.push(conf); appendSubjectToWorkspace(conf); });
-
-                if (state.studied) {
-                    for (const [subId, pages] of Object.entries(state.studied)) {
-                        const allCards = document.querySelectorAll(`.card[data-subject-id="${subId}"]`);
-                        allCards.forEach(c => { if (pages.includes(parseInt(c.textContent))) c.classList.add('studied'); });
-                        updateProgressFor(subId);
-                    }
-                    document.querySelectorAll('.task-section').forEach(taskSec => {
-                        checkTaskCompletionForInit(taskSec, currentConfigs.find(c => c.id === taskSec.closest('.subject-section').id.replace('section_','')));
-                    });
-                }
-
-                if (state.timer) {
-                    if (state.timer.mode === 'down') { isCountdown = true; modeDownBtn.classList.add('active'); modeUpBtn.classList.remove('active'); timerInputContainer.classList.add('active'); } 
-                    else { isCountdown = false; modeUpBtn.classList.add('active'); modeDownBtn.classList.remove('active'); }
-                    setMinutesInput.value = state.timer.mins || ''; startingSeconds = state.timer.startSec || 0; seconds = state.timer.sec || 0; updateTimerDisplay();
-                }
-            }
-        }
-        
-        checkUpdateNotification();
+    function exportData() {
+        saveState();
+        const blob = new Blob([JSON.stringify(appState)], {type: "application/json"});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = `StudyTracker_v10_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
     }
 
-    document.addEventListener('DOMContentLoaded', loadState);
+    function importData(e) {
+        const file = e.target.files[0]; if(!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            try {
+                let json = JSON.parse(ev.target.result);
+                if(json.configs && json.studied) {
+                    appState = json; saveState();
+                    showAlert("تم بنجاح", "سيتم إعادة تحميل الصفحة لتطبيق بياناتك المستردة.", "✅");
+                    setTimeout(()=>location.reload(), 1500);
+                } else showAlert("خطأ", "ملف البيانات تالف أو غير مدعوم.");
+            } catch(err) { showAlert("خطأ", "حدث خطأ في القراءة."); }
+        };
+        reader.readAsText(file); e.target.value='';
+    }
+
+    function resetEverything() {
+        if(confirm("تحذير نهائي: سيتم مسح كافة موادك، الإحصائيات، والرف بالكامل! هل أنت متأكد؟")) {
+            localStorage.removeItem(CURRENT_STATE_KEY);
+            location.reload();
+        }
+    }
+
+    function initApp() {
+        autoMigrateData();
+        let saved = localStorage.getItem(CURRENT_STATE_KEY);
+        if(saved) { try { appState = Object.assign(appState, JSON.parse(saved)); } catch(e){} }
+        checkStreakAndDate();
+        document.getElementById('stickyTimer').textContent = formatTime(appState.timer.sec);
+        if(appState.timer.isRunning) { appState.timer.isRunning=false; startTimer(); }
+        reloadWorkspace();
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
 </script>
 </body>
 </html>
