@@ -44,8 +44,8 @@
         .timer-btn { background: var(--surface); border: 1px solid var(--border-subtle); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; transition: 0.2s; box-shadow: var(--shadow-sm); }
         .timer-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-2px); }
 
-        /* --- شريط تقدم المواد (أفقي، رفيع، بدون المرجع الكلي) --- */
-        .sticky-progress { position: sticky; top: 55px; background: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle); padding: 10px 15px; z-index: 100; display: none; }
+        /* --- شريط تقدم المواد (أفقي، رفيع) --- */
+        .sticky-progress { position: sticky; top: 55px; background: var(--header-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle); padding: 10px 15px; z-index: 100; display: none; }
         .progress-cards-container { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; max-width: 1200px; margin: 0 auto; padding-bottom: 2px; }
         .progress-cards-container::-webkit-scrollbar { display: none; }
         .mini-subject-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 12px; min-width: 160px; flex: 0 0 auto; cursor: pointer; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); transition: 0.2s; }
@@ -74,14 +74,13 @@
         .task-title { font-size: 13px; font-weight: 800; margin: 0; color: var(--text-primary); }
         .task-badge { background: var(--surface); padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; border: 1px solid var(--border-subtle); color: var(--text-secondary); }
         
-        /* البطاقات مصغرة */
         .task-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); gap: 6px; margin-top: 12px; }
         .task-content.collapsed { display: none; }
         .card { background-color: var(--surface); border: 1.5px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; cursor: pointer; user-select: none; transition: 0.2s; }
         body.dark-mode .card { border-color: hsl(var(--subject-hue), 40%, 30%); }
         .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; }
 
-        /* --- النوافذ المنبثقة (Modals) بإصلاح الفراغات --- */
+        /* --- النوافذ المنبثقة (Modals) --- */
         .custom-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 15px; }
         .custom-modal-overlay.active { display: flex; }
         .custom-modal-content { background: var(--surface); padding: 20px; border-radius: var(--radius-md); width: 100%; max-width: 420px; box-shadow: var(--shadow-lg); max-height: 85vh; overflow-y: auto; overflow-x: hidden; position: relative; }
@@ -96,14 +95,12 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.3s; }
 
-        /* الحقول والإدخالات */
         .input-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; text-align: right; width: 100%; }
         .input-field label { font-size: 12px; color: var(--text-secondary); font-weight: 800; }
-        input, select, textarea { background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 10px 12px; font-size: 13px; border-radius: var(--radius-sm); color: var(--text-primary); width: 100%; outline: none; font-family: inherit; font-weight: 600; transition: 0.2s; box-sizing: border-box; }
-        input:focus, select:focus, textarea:focus { border-color: var(--accent-primary); }
+        input, select { background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 10px 12px; font-size: 13px; border-radius: var(--radius-sm); color: var(--text-primary); width: 100%; outline: none; font-family: inherit; font-weight: 600; transition: 0.2s; box-sizing: border-box; }
+        input:focus, select:focus { border-color: var(--accent-primary); }
 
-        /* أزرار النوافذ */
-        .btn-primary { background: var(--accent-primary); color: #fff; border: none; padding: 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 5px; position: relative; overflow: hidden; box-shadow: 0 4px 10px rgba(37,99,235,0.2); transition: 0.2s; }
+        .btn-primary { background: var(--accent-primary); color: #fff; border: none; padding: 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 5px; box-shadow: 0 4px 10px rgba(37,99,235,0.2); transition: 0.2s; }
         .btn-secondary { background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 12px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 5px; transition: 0.2s; }
         .btn-danger { background: transparent; border: 1px solid var(--danger-color); color: var(--danger-color); padding: 10px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
@@ -128,41 +125,38 @@
         @media (max-width: 480px) {
             .nav-center { position: relative; left: 0; transform: none; width: 100%; justify-content: center; order: 3; margin-top: 8px; }
             .top-nav { height: auto; flex-wrap: wrap; padding: 8px 15px; }
-            .sticky-progress { top: 90px; } /* لتعويض مساحة الشريط العلوي بعد التفافه */
+            .sticky-progress { top: 90px; } 
             #workspace { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<!-- الشريط العلوي الشامل (يحتوي المؤقت في المنتصف) -->
 <div class="top-nav">
     <div class="nav-right">
-        <div class="streak-box">🔥 <span id="streakCount">0</span></div>
+        <div class="streak-box" title="أيام الدراسة المتتالية">🔥 <span id="streakCount">0</span></div>
     </div>
     
     <div class="nav-center">
         <span class="timer-display" id="stickyTimer">00:00:00</span>
         <div class="timer-controls">
-            <button class="timer-btn play" onclick="startTimer()" title="بدء">▶</button>
-            <button class="timer-btn pause" onclick="pauseTimer()" title="إيقاف">⏸</button>
-            <button class="timer-btn" onclick="resetTimer()" title="تصفير">🔄</button>
-            <button class="timer-btn" onclick="openTimerSetup()" title="إعداد">⚙️</button>
+            <button class="timer-btn play" onclick="startTimer()">▶</button>
+            <button class="timer-btn pause" onclick="pauseTimer()">⏸</button>
+            <button class="timer-btn" onclick="resetTimer()">🔄</button>
+            <button class="timer-btn" onclick="openTimerSetup()">⚙️</button>
         </div>
     </div>
 
     <div class="nav-left">
-        <button class="nav-icon" onclick="window.scrollTo(0,0)" title="الرئيسية">🏠</button>
-        <button class="nav-icon" id="themeToggleBtn" title="المظهر">🌓</button>
+        <button class="nav-icon" onclick="window.scrollTo(0,0)">🏠</button>
+        <button class="nav-icon" id="themeToggleBtn">🌓</button>
     </div>
 </div>
 
-<!-- الشريط العائم الذكي (يعرض التقدم كصف واحد يمرر أفقياً) -->
 <div class="sticky-progress" id="stickyProgressContainer">
     <div class="progress-cards-container" id="progressCardsGrid"></div>
 </div>
 
-<!-- مساحة العمل الرئيسية -->
 <div class="main-layout">
     <div id="welcomePanel" style="text-align:center; padding-top: 40px;">
         <div style="font-size: 50px; margin-bottom:10px;">🚀</div>
@@ -172,7 +166,6 @@
     <div id="workspace"></div>
 </div>
 
-<!-- الأزرار العائمة السفلية -->
 <div class="fab-container-right">
     <button class="fab fab-scroll" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆️</button>
     <button class="fab" onclick="openControlPanel()">⚙️</button>
@@ -180,22 +173,20 @@
 
 <footer class="app-footer">الإصدار 12.0 - مساحة المتابعة الذكية</footer>
 
-<!-- ================= النوافذ المنبثقة (Modals) المُحسّنة ================= -->
-
+<!-- النوافذ المنبثقة -->
 <div class="custom-modal-overlay" id="updateWelcomeModal">
     <div class="custom-modal-content">
         <h2 class="modal-title" style="color:var(--accent-primary);">✨ تحديث (12.0)</h2>
         <p style="font-size:13px; text-align:right; margin-bottom:15px; color:var(--text-primary); line-height:1.7;">
             - ⏱️ <strong>المؤقت:</strong> تم دمجه بالمنتصف لتوفير مساحة العمل.<br>
             - ✏️ <strong>تعديل الفصول:</strong> زر التعديل يدعم الآن نظام الفصول بالكامل.<br>
-            - 📱 <strong>تجاوب ذكي:</strong> الكروت تتجاوب مع الشاشة بدون فراغات مزعجة.<br>
+            - ➕ <strong>مواد مخصصة:</strong> أضف أي مادة يدوياً غير موجودة بالقائمة.<br>
             - 💾 <strong>أمان تام:</strong> تمت حماية بياناتك وترحيلها بنجاح.
         </p>
         <button class="btn-primary" onclick="closeUpdateWelcomeModal()">رائع، لنتابع! 💪</button>
     </div>
 </div>
 
-<!-- لوحة التحكم -->
 <div class="custom-modal-overlay" id="controlPanelModal">
     <div class="custom-modal-content">
         <button class="close-modal-btn" onclick="closeModal('controlPanelModal')">✖</button>
@@ -209,8 +200,14 @@
         <div class="tab-content active" id="tabAdd">
             <div class="input-field">
                 <label>اختر المادة</label>
-                <select id="addSubjectSelect"></select>
+                <select id="addSubjectSelect" onchange="toggleCustomSubject()"></select>
             </div>
+            
+            <div class="input-field" id="customSubjectDiv" style="display:none; background: rgba(37, 99, 235, 0.05); padding: 10px; border-radius: var(--radius-sm); border-right: 3px solid var(--accent-primary);">
+                <label>اسم المادة الجديدة</label>
+                <input type="text" id="customSubjectInput" placeholder="اكتب اسم المادة هنا...">
+            </div>
+
             <div class="input-field">
                 <label>نمط الخطة الدراسية</label>
                 <select id="planModeSelect" onchange="togglePlanModes()">
@@ -255,7 +252,6 @@
     </div>
 </div>
 
-<!-- نافذة التعديل الذكية (بدون فراغات وتدعم الفصول) -->
 <div class="custom-modal-overlay" id="editSubjectModal">
     <div class="custom-modal-content">
         <button class="close-modal-btn" onclick="closeModal('editSubjectModal')">✖</button>
@@ -284,7 +280,6 @@
     </div>
 </div>
 
-<!-- نافذة الإنجاز المرجعي (Popup مصغر ونظيف) -->
 <div class="custom-modal-overlay" id="bookProgressModal">
     <div class="custom-modal-content" style="max-width: 300px;">
         <h2 class="modal-title" id="bpTitle" style="margin-bottom:5px;"></h2>
@@ -294,7 +289,6 @@
     </div>
 </div>
 
-<!-- إعداد المؤقت -->
 <div class="custom-modal-overlay" id="timerSetupModal">
     <div class="custom-modal-content" style="max-width: 280px;">
         <h2 class="modal-title">إعداد المؤقت</h2>
@@ -327,25 +321,19 @@
         <button class="btn-primary" style="background:var(--success-color); margin-top:10px;" onclick="closeModal('celebrationModal')">متابعة 💪</button>
     </div>
 </div>
-<!-- ================== السكريبت البرمجي (المنطق والتفاعل) ================== -->
+
 <script>
     const APP_VERSION = '12.0';
     const VERSION_KEY = 'studyTracker_appVersion';
     const CURRENT_STATE_KEY = 'studyTrackerSaveState_v12_0'; 
     const OLD_STATE_KEYS = [
-        'studyTrackerSaveState_v11_1', 'studyTrackerSaveState_v11_0', 
-        'studyTrackerSaveState_v11', 'studyTrackerSaveState_v10_2', 
-        'studyTrackerSaveState_v10_1', 'studyTrackerSaveState_v10', 
-        'studyTrackerSaveState_v9_2', 'studyTrackerSaveState_v9_1', 
-        'studyTrackerSaveState_v9_0', 'studyTrackerSaveState_v8'
+        'studyTrackerSaveState_v12', 'studyTrackerSaveState_v11_1', 
+        'studyTrackerSaveState_v11_0', 'studyTrackerSaveState_v11', 
+        'studyTrackerSaveState_v10_2', 'studyTrackerSaveState_v10_1', 
+        'studyTrackerSaveState_v10', 'studyTrackerSaveState_v9'
     ];
 
-    let appState = { 
-        configs: [], 
-        studied: {}, 
-        timer: { sec: 0, startSec: 0, mode: 'up', isRunning: false }, 
-        stats: { streak: 0, lastActiveDate: '' } 
-    };
+    let appState = { configs: [], studied: {}, timer: { sec: 0, startSec: 0, mode: 'up', isRunning: false }, stats: { streak: 0, lastActiveDate: '' } };
 
     const subjectsData = {
         "بيولوجيا الخلية": { hue: 170 }, "الكيمياء العامة والعضوية": { hue: 25 },
@@ -354,7 +342,17 @@
         "الإحصاء الحيوي": { hue: 230 }, "اللغة الإنجليزية 2": { hue: 90 }
     };
 
-    document.getElementById('addSubjectSelect').innerHTML = `<option value="" disabled selected>اختر المادة...</option>` + Object.keys(subjectsData).map(k => `<option value="${k}">${k}</option>`).join('');
+    function initSubjectSelect() {
+        let options = `<option value="" disabled selected>اختر المادة...</option>`;
+        options += Object.keys(subjectsData).map(k => `<option value="${k}">${k}</option>`).join('');
+        options += `<option value="custom">➕ مادة أخرى (كتابة يدوية)...</option>`;
+        document.getElementById('addSubjectSelect').innerHTML = options;
+    }
+
+    function toggleCustomSubject() {
+        const val = document.getElementById('addSubjectSelect').value;
+        document.getElementById('customSubjectDiv').style.display = val === 'custom' ? 'block' : 'none';
+    }
 
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     if (localStorage.getItem('studyTrackerTheme') === 'dark') { document.body.classList.add('dark-mode'); }
@@ -418,12 +416,24 @@
     }
 
     function addSubjectToPlan() {
-        const subject = document.getElementById('addSubjectSelect').value;
+        let subjectInput = document.getElementById('addSubjectSelect').value;
         const mode = document.getElementById('planModeSelect').value;
-        if (!subject) return showAlert("تنبيه", "يرجى اختيار المادة أولاً.");
-        if (appState.configs.find(c => c.name === subject)) return showAlert("موجودة مسبقاً", "هذه المادة موجودة بالفعل. قم بتعديلها عبر زر ✏️.");
+        let finalSubjectName = subjectInput;
+        let subjectHue = 0;
 
-        let config = { id: `sub_${Date.now()}`, name: subject, type: mode, hue: subjectsData[subject].hue };
+        if (!subjectInput) return showAlert("تنبيه", "يرجى اختيار المادة أولاً.");
+
+        if (subjectInput === 'custom') {
+            finalSubjectName = document.getElementById('customSubjectInput').value.trim();
+            if (!finalSubjectName) return showAlert("تنبيه", "يرجى كتابة اسم المادة الجديدة.");
+            subjectHue = Math.floor(Math.random() * 360);
+        } else {
+            subjectHue = subjectsData[subjectInput].hue;
+        }
+
+        if (appState.configs.find(c => c.name === finalSubjectName)) return showAlert("موجودة مسبقاً", "هذه المادة موجودة بالفعل. قم بتعديلها عبر زر ✏️.");
+
+        let config = { id: `sub_${Date.now()}`, name: finalSubjectName, type: mode, hue: subjectHue };
 
         if (mode === 'free') {
             let s = parseInt(document.getElementById('fStart').value); 
@@ -442,7 +452,7 @@
         appState.configs.push(config); appState.studied[config.id] = [];
         saveState(); reloadWorkspace(); closeModal('controlPanelModal');
         
-        // تفريغ حقول الفصول للعملية القادمة
+        document.getElementById('customSubjectInput').value = '';
         document.getElementById('chaptersContainer').innerHTML = `
             <div class="chapter-row" style="display:flex; gap:6px; margin-bottom:8px; align-items:center;">
                 <input type="text" class="chap-name" placeholder="الاسم" style="flex:2;">
@@ -451,7 +461,6 @@
                 <button class="btn-danger" style="width:36px; padding:0; margin:0;" disabled>✖</button>
             </div>
         `;
-        
         document.getElementById('welcomePanel').style.display = 'none';
         window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
@@ -509,7 +518,6 @@
             conf.taskSize = parseInt(document.getElementById('editTaskSize').value) || 10;
             conf.totalPages = parseInt(document.getElementById('editTotalPages').value) || 0;
         }
-
         saveState(); reloadWorkspace(); closeModal('editSubjectModal');
     }
 
@@ -536,7 +544,6 @@
         stickyBar.style.display = 'block';
 
         appState.configs.forEach(conf => {
-            // الكروت العلوية (شريط التمرير الأفقي)
             let miniHtml = `
                 <div class="mini-subject-card" style="--subject-hue: ${conf.hue}" onclick="showBookProgress('${conf.id}')">
                     <div class="mini-sub-header">
@@ -547,7 +554,6 @@
                 </div>`;
             miniGrid.insertAdjacentHTML('beforeend', miniHtml);
 
-            // القسم الأساسي
             const sec = document.createElement('div');
             sec.className = 'subject-section'; sec.id = `sec_${conf.id}`;
             sec.style.setProperty('--subject-hue', conf.hue);
@@ -618,7 +624,6 @@
         if (cards.length === studied.length && cards.length > 0) {
             if(!taskDiv.classList.contains('completed')) {
                 taskDiv.classList.add('completed'); content.classList.add('collapsed');
-                
                 const confName = appState.configs.find(c => c.id === subjectId)?.name;
                 document.getElementById('celTaskName').textContent = title;
                 document.getElementById('celSubjectName').textContent = confName;
@@ -632,10 +637,8 @@
 
     function updateProgressMetrics(subjectId) {
         const conf = appState.configs.find(c => c.id === subjectId); if(!conf) return;
-        
         let totalSessionPages = conf.type === 'chapters' ? conf.totalPages : (conf.end - conf.start + 1);
         let studiedPages = appState.studied[subjectId].length;
-        
         let percent = totalSessionPages===0 ? 0 : Math.round((studiedPages/totalSessionPages)*100);
         let miniBar = document.getElementById(`miniBar_${subjectId}`);
         let percentText = document.getElementById(`percentText_${subjectId}`);
@@ -667,7 +670,6 @@
         document.getElementById('bookProgressModal').classList.add('active');
     }
 
-    // --- المؤقت الزمني المدمج ---
     let timerInt;
     const stickyTimerDisplay = document.getElementById('stickyTimer');
 
@@ -684,14 +686,18 @@
 
     function openTimerSetup() {
         document.getElementById('timerInputContainer').style.display = appState.timer.mode === 'down' ? 'block' : 'none';
-        if(appState.timer.mode === 'down') document.getElementById('btnTimerDown').style.borderColor = 'var(--accent-primary)';
+        if(appState.timer.mode === 'down') {
+            document.getElementById('btnTimerDown').style.borderColor = 'var(--accent-primary)';
+            document.getElementById('btnTimerDown').style.color = 'var(--accent-primary)';
+        }
         document.getElementById('timerSetupModal').classList.add('active');
     }
 
     function setTimerMode(mode, btn) {
         appState.timer.mode = mode;
-        document.querySelectorAll('#timerSetupModal .btn-secondary').forEach(b => { b.style.borderColor = 'var(--border-subtle)'; });
+        document.querySelectorAll('#timerSetupModal .btn-secondary').forEach(b => { b.style.borderColor = 'var(--border-subtle)'; b.style.color = 'var(--text-primary)'; });
         btn.style.borderColor = 'var(--accent-primary)';
+        btn.style.color = 'var(--accent-primary)';
         document.getElementById('timerInputContainer').style.display = mode === 'down' ? 'block' : 'none';
     }
 
@@ -719,9 +725,7 @@
         }, 1000);
     }
 
-    function pauseTimer() {
-        appState.timer.isRunning = false; clearInterval(timerInt); saveState(); 
-    }
+    function pauseTimer() { appState.timer.isRunning = false; clearInterval(timerInt); saveState(); }
 
     function resetTimer() {
         pauseTimer();
@@ -729,7 +733,6 @@
         updateTimerDisplay(); saveState();
     }
 
-    // --- نظام الاسترجاع الذكي جداً والترحيل ---
     function checkStreakAndDate() {
         const today = new Date().toISOString().split('T')[0];
         if (appState.stats.lastActiveDate) {
@@ -746,7 +749,8 @@
     function autoMigrateData() {
         if (localStorage.getItem(CURRENT_STATE_KEY)) return;
         
-        // خوارزمية بحث قوية عن أي بيانات قديمة
+        // خوارزمية بحث قوية لاستعادة الجلسات من أي إصدار سابق
+        let migrated = false;
         for (let oldKey of OLD_STATE_KEYS) {
             let oldData = localStorage.getItem(oldKey);
             if (oldData) {
@@ -756,12 +760,30 @@
                     appState.studied = parsed.studied || {};
                     appState.timer = parsed.timer || { sec:0, startSec:0, mode:'up', isRunning:false };
                     appState.stats = parsed.stats || { streak: 0, lastActiveDate: '' };
-                    
                     saveState(); 
                     console.log(`✅ تم ترحيل البيانات بنجاح من الإصدار القديم: ${oldKey}`); 
-                    return; 
+                    migrated = true;
+                    break; 
                 } catch(e) {}
             }
+        }
+
+        // إذا لم يجد المفاتيح المعروفة، سيبحث في كامل ذاكرة المتصفح
+        if(!migrated && localStorage.length > 0) {
+             for(let i=0; i<localStorage.length; i++) {
+                 let key = localStorage.key(i);
+                 if(key && key.startsWith('studyTrackerSaveState') && key !== CURRENT_STATE_KEY) {
+                     try {
+                        let parsed = JSON.parse(localStorage.getItem(key));
+                        if(parsed.configs) {
+                            appState = parsed;
+                            saveState();
+                            console.log(`✅ تم استرجاع البيانات المفقودة من المفتاح: ${key}`);
+                            break;
+                        }
+                     } catch(e) {}
+                 }
+             }
         }
     }
 
@@ -795,7 +817,8 @@
     }
 
     function initApp() {
-        autoMigrateData(); // محاولة البحث عن بيانات قديمة فوراً
+        initSubjectSelect();
+        autoMigrateData(); 
         let saved = localStorage.getItem(CURRENT_STATE_KEY);
         if(saved) { try { appState = Object.assign(appState, JSON.parse(saved)); } catch(e){} }
         
