@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>لوحة تتبع الإنجاز الدراسي الذكية</title>
+    <title>لوحة تتبع الإنجاز الدراسي الذكية 12.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -36,7 +36,7 @@
         .nav-icon { background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); font-size: 15px; cursor: pointer; color: var(--text-primary); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: 0.2s; }
         .nav-icon:hover { color: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-2px); }
 
-        /* المؤقت في المنتصف تماماً */
+        /* المؤقت في المنتصف */
         .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; z-index: 1; background: var(--btn-secondary-bg); padding: 4px 12px; border-radius: 30px; border: 1px solid var(--border-subtle); width: auto; white-space: nowrap; }
         .timer-display { font-family: monospace; font-size: 20px; font-weight: 800; color: var(--text-primary); letter-spacing: 1px; }
         .timer-display.ending { color: var(--danger-color); animation: pulse 1s infinite; }
@@ -44,8 +44,8 @@
         .timer-btn { background: var(--surface); border: 1px solid var(--border-subtle); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; transition: 0.2s; box-shadow: var(--shadow-sm); }
         .timer-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-2px); }
 
-        /* --- شريط تقدم المواد (أفقي، رفيع، بدون المرجع الكلي) --- */
-        .sticky-progress { position: sticky; top: 55px; background: var(--header-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle); padding: 10px 15px; z-index: 100; display: none; }
+        /* --- شريط تقدم المواد (أفقي) --- */
+        .sticky-progress { position: sticky; top: 55px; background: var(--header-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle); padding: 10px 15px; z-index: 100; display: none; }
         .progress-cards-container { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; max-width: 1200px; margin: 0 auto; padding-bottom: 2px; }
         .progress-cards-container::-webkit-scrollbar { display: none; }
         .mini-subject-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 12px; min-width: 160px; flex: 0 0 auto; cursor: pointer; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); transition: 0.2s; }
@@ -57,7 +57,7 @@
         .progress-bar-wrapper { background: var(--border-subtle); height: 5px; border-radius: 10px; overflow: hidden; width: 100%; }
         .progress-bar-fill { background-color: hsl(var(--subject-hue), 60%, 50%); height: 100%; width: 0%; transition: width 0.5s ease; }
 
-        /* --- مساحة العمل (المهام والبطاقات) --- */
+        /* --- مساحة العمل --- */
         .main-layout { max-width: 1200px; margin: 25px auto 100px auto; padding: 0 15px; flex: 1; width: 100%; }
         #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; align-items: start; }
         
@@ -74,14 +74,13 @@
         .task-title { font-size: 13px; font-weight: 800; margin: 0; color: var(--text-primary); }
         .task-badge { background: var(--surface); padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; border: 1px solid var(--border-subtle); color: var(--text-secondary); }
         
-        /* البطاقات مصغرة */
         .task-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); gap: 6px; margin-top: 12px; }
         .task-content.collapsed { display: none; }
         .card { background-color: var(--surface); border: 1.5px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; cursor: pointer; user-select: none; transition: 0.2s; }
         body.dark-mode .card { border-color: hsl(var(--subject-hue), 40%, 30%); }
         .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; }
 
-        /* --- النوافذ المنبثقة (Modals) بإصلاح الفراغات --- */
+        /* النوافذ المنبثقة (Modals) */
         .custom-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 15px; }
         .custom-modal-overlay.active { display: flex; }
         .custom-modal-content { background: var(--surface); padding: 20px; border-radius: var(--radius-md); width: 100%; max-width: 420px; box-shadow: var(--shadow-lg); max-height: 85vh; overflow-y: auto; overflow-x: hidden; position: relative; }
@@ -90,11 +89,12 @@
         .close-modal-btn { position: absolute; top: 15px; left: 15px; background: var(--btn-secondary-bg); border: none; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: 0.2s; }
         .close-modal-btn:hover { color: var(--danger-color); background: rgba(239,68,68,0.1); }
 
-        .modal-tabs { display: flex; border-bottom: 1px solid var(--border-subtle); margin-bottom: 15px; }
-        .modal-tab { flex: 1; padding: 10px; background: none; border: none; border-bottom: 2px solid transparent; font-size: 13px; font-weight: 800; color: var(--text-secondary); cursor: pointer; }
+        .modal-tabs { display: flex; border-bottom: 1px solid var(--border-subtle); margin-bottom: 15px; overflow-x: auto; scrollbar-width: none; }
+        .modal-tabs::-webkit-scrollbar { display: none; }
+        .modal-tab { flex: 1; padding: 10px; background: none; border: none; border-bottom: 2px solid transparent; font-size: 13px; font-weight: 800; color: var(--text-secondary); cursor: pointer; white-space: nowrap; }
         .modal-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s; }
+        .tab-content { display: none; animation: fadeIn 0.3s;}
+        .tab-content.active { display: block; }
 
         /* الحقول والإدخالات */
         .input-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; text-align: right; width: 100%; }
@@ -102,13 +102,18 @@
         input, select, textarea { background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 10px 12px; font-size: 13px; border-radius: var(--radius-sm); color: var(--text-primary); width: 100%; outline: none; font-family: inherit; font-weight: 600; transition: 0.2s; box-sizing: border-box; }
         input:focus, select:focus, textarea:focus { border-color: var(--accent-primary); }
 
+        /* الإحصائيات والرف */
+        .stat-box { background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 12px 15px; border-radius: var(--radius-sm); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .stat-val { font-size: 18px; font-weight: 800; color: var(--accent-primary); }
+        .shelf-item { background: rgba(16, 185, 129, 0.05); border: 1px solid var(--success-color); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+
         /* أزرار النوافذ */
         .btn-primary { background: var(--accent-primary); color: #fff; border: none; padding: 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 5px; position: relative; overflow: hidden; box-shadow: 0 4px 10px rgba(37,99,235,0.2); transition: 0.2s; }
         .btn-secondary { background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 12px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 5px; transition: 0.2s; }
         .btn-danger { background: transparent; border: 1px solid var(--danger-color); color: var(--danger-color); padding: 10px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; }
         .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
 
-        /* الأزرار العائمة السفلية */
+        /* الأزرار العائمة */
         .fab-container-right { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
         .fab { background: var(--accent-primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 22px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); cursor: pointer; transition: 0.2s; }
         .fab:hover { transform: scale(1.1); }
@@ -116,10 +121,13 @@
 
         .app-footer { text-align: center; padding: 15px; font-size: 12px; color: var(--text-secondary); font-weight: 700; margin-top: auto; border-top: 1px solid var(--border-subtle); }
 
+        .btn-ripple::after { content: ""; display: block; position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; background-image: radial-gradient(circle, #fff 10%, transparent 10.01%); background-repeat: no-repeat; background-position: 50%; transform: scale(10, 10); opacity: 0; transition: transform .5s, opacity 1s; }
+        .btn-secondary.btn-ripple::after { background-image: radial-gradient(circle, var(--accent-primary) 10%, transparent 10.01%); }
+        .btn-ripple:active::after { transform: scale(0, 0); opacity: .3; transition: 0s; }
+
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* التجاوب (Responsive) */
         @media (max-width: 768px) {
             .nav-center { width: auto; padding: 4px 10px; }
             .nav-right, .nav-left { width: auto; }
@@ -128,7 +136,7 @@
         @media (max-width: 480px) {
             .nav-center { position: relative; left: 0; transform: none; width: 100%; justify-content: center; order: 3; margin-top: 8px; }
             .top-nav { height: auto; flex-wrap: wrap; padding: 8px 15px; }
-            .sticky-progress { top: 90px; } /* لتعويض مساحة الشريط العلوي بعد التفافه */
+            .sticky-progress { top: 90px; }
             #workspace { grid-template-columns: 1fr; }
         }
     </style>
@@ -138,7 +146,7 @@
 <!-- الشريط العلوي الشامل (يحتوي المؤقت في المنتصف) -->
 <div class="top-nav">
     <div class="nav-right">
-        <div class="streak-box">🔥 <span id="streakCount">0</span></div>
+        <div class="streak-box" title="أيام الدراسة المتتالية">🔥 <span id="streakCount">0</span></div>
     </div>
     
     <div class="nav-center">
@@ -152,8 +160,8 @@
     </div>
 
     <div class="nav-left">
-        <button class="nav-icon" onclick="window.scrollTo(0,0)" title="الرئيسية">🏠</button>
-        <button class="nav-icon" id="themeToggleBtn" title="المظهر">🌓</button>
+        <button class="nav-icon btn-ripple" onclick="window.scrollTo(0,0)" title="الرئيسية">🏠</button>
+        <button class="nav-icon btn-ripple" id="themeToggleBtn" title="المظهر">🌓</button>
     </div>
 </div>
 
@@ -174,43 +182,52 @@
 
 <!-- الأزرار العائمة السفلية -->
 <div class="fab-container-right">
-    <button class="fab fab-scroll" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆️</button>
-    <button class="fab" onclick="openControlPanel()">⚙️</button>
+    <button class="fab fab-scroll btn-ripple" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆️</button>
+    <button class="fab btn-ripple" onclick="openControlPanel()">⚙️</button>
 </div>
 
-<footer class="app-footer">الإصدار 12.0 - مساحة المتابعة الذكية</footer>
+<footer class="app-footer">الإصدار 12.1 - مساحة المتابعة الذكية</footer>
 
-<!-- ================= النوافذ المنبثقة (Modals) المُحسّنة ================= -->
+<!-- ================= النوافذ المنبثقة (Modals) ================= -->
 
 <div class="custom-modal-overlay" id="updateWelcomeModal">
     <div class="custom-modal-content">
-        <h2 class="modal-title" style="color:var(--accent-primary);">✨ تحديث (12.0)</h2>
+        <h2 class="modal-title" style="color:var(--accent-primary);">✨ تحديث (12.1)</h2>
         <p style="font-size:13px; text-align:right; margin-bottom:15px; color:var(--text-primary); line-height:1.7;">
+            - 📊 <strong>الإحصائيات والرف:</strong> تمت إعادتها للوحة التحكم لمتابعة إنجازك اليومي والاحتفاظ بموادك المكتملة.<br>
             - ⏱️ <strong>المؤقت:</strong> تم دمجه بالمنتصف لتوفير مساحة العمل.<br>
             - ✏️ <strong>تعديل الفصول:</strong> زر التعديل يدعم الآن نظام الفصول بالكامل.<br>
-            - 📱 <strong>تجاوب ذكي:</strong> الكروت تتجاوب مع الشاشة بدون فراغات مزعجة.<br>
-            - 💾 <strong>أمان تام:</strong> تمت حماية بياناتك وترحيلها بنجاح.
+            - ➕ <strong>مواد مخصصة:</strong> يمكنك الآن كتابة أي مادة يدوياً غير موجودة بالقائمة.
         </p>
-        <button class="btn-primary" onclick="closeUpdateWelcomeModal()">رائع، لنتابع! 💪</button>
+        <button class="btn-primary btn-ripple" onclick="closeUpdateWelcomeModal()">رائع، لنتابع! 💪</button>
     </div>
 </div>
 
-<!-- لوحة التحكم -->
+<!-- لوحة التحكم الشاملة (أربع علامات تبويب) -->
 <div class="custom-modal-overlay" id="controlPanelModal">
-    <div class="custom-modal-content">
+    <div class="custom-modal-content" style="max-width: 500px;">
         <button class="close-modal-btn" onclick="closeModal('controlPanelModal')">✖</button>
         <h2 class="modal-title">لوحة التحكم</h2>
         
         <div class="modal-tabs">
-            <button class="modal-tab active" onclick="switchTab('tabAdd')">إضافة مادة</button>
-            <button class="modal-tab" onclick="switchTab('tabSettings')">الإعدادات</button>
+            <button class="modal-tab active" onclick="switchTab('tabAdd')">➕ إضافة</button>
+            <button class="modal-tab" onclick="switchTab('tabStats')">📊 إحصائيات</button>
+            <button class="modal-tab" onclick="switchTab('tabShelf')">📚 الرف</button>
+            <button class="modal-tab" onclick="switchTab('tabSettings')">⚙️ إعدادات</button>
         </div>
 
+        <!-- 1. تبويب الإضافة -->
         <div class="tab-content active" id="tabAdd">
             <div class="input-field">
                 <label>اختر المادة</label>
-                <select id="addSubjectSelect"></select>
+                <select id="addSubjectSelect" onchange="toggleCustomSubject()"></select>
             </div>
+            
+            <div class="input-field" id="customSubjectDiv" style="display:none; background: rgba(37, 99, 235, 0.05); padding: 10px; border-radius: var(--radius-sm); border-right: 3px solid var(--accent-primary);">
+                <label>اسم المادة الجديدة</label>
+                <input type="text" id="customSubjectInput" placeholder="اكتب اسم المادة هنا...">
+            </div>
+
             <div class="input-field">
                 <label>نمط الخطة الدراسية</label>
                 <select id="planModeSelect" onchange="togglePlanModes()">
@@ -240,22 +257,36 @@
                         <button class="btn-danger" style="width:36px; padding:0; margin:0;" disabled>✖</button>
                     </div>
                 </div>
-                <button class="btn-secondary" style="border-style:dashed; color:var(--accent-primary);" onclick="addChapterRow('chaptersContainer')">➕ إضافة فصل</button>
+                <button class="btn-secondary btn-ripple" style="border-style:dashed; color:var(--accent-primary);" onclick="addChapterRow('chaptersContainer')">➕ إضافة فصل</button>
             </div>
-            <button class="btn-primary" onclick="addSubjectToPlan()">إضافة للوحة التنفيذ 🚀</button>
+            <button class="btn-primary btn-ripple" onclick="addSubjectToPlan()">إضافة للوحة التنفيذ 🚀</button>
         </div>
 
+        <!-- 2. تبويب الإحصائيات -->
+        <div class="tab-content" id="tabStats">
+            <div class="stat-box"><span>📖 صفحات اليوم:</span> <span class="stat-val" id="statPages">0</span></div>
+            <div class="stat-box"><span>⏱️ دقائق التركيز:</span> <span class="stat-val" id="statFocus">0</span></div>
+            <div class="stat-box"><span>🔥 الاستمرارية:</span> <span class="stat-val" id="statStreak">0</span></div>
+        </div>
+
+        <!-- 3. تبويب الرف -->
+        <div class="tab-content" id="tabShelf">
+            <p style="font-size:12px; color:var(--text-secondary); margin-bottom:15px; text-align:center;">المواد المكتملة 100% ستظهر هنا للاحتفاظ بها أو مراجعتها.</p>
+            <div id="shelfContainer"></div>
+        </div>
+
+        <!-- 4. تبويب الإعدادات -->
         <div class="tab-content" id="tabSettings">
-            <button class="btn-secondary" onclick="exportData()">تصدير (حفظ) 💾</button>
-            <label class="btn-secondary" style="display:block; text-align:center;">
-                استيراد (استعادة) 📂 <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
+            <button class="btn-secondary btn-ripple" onclick="exportData()">تصدير (حفظ نسخة احتياطية) 💾</button>
+            <label class="btn-secondary btn-ripple" style="display:block; text-align:center;">
+                استيراد (استعادة بيانات) 📂 <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
             </label>
             <button class="btn-danger" onclick="resetEverything()" style="margin-top:20px;">تصفير ومسح اللوحة بالكامل</button>
         </div>
     </div>
 </div>
 
-<!-- نافذة التعديل الذكية (بدون فراغات وتدعم الفصول) -->
+<!-- نافذة التعديل الذكية (تدعم الفصول) -->
 <div class="custom-modal-overlay" id="editSubjectModal">
     <div class="custom-modal-content">
         <button class="close-modal-btn" onclick="closeModal('editSubjectModal')">✖</button>
@@ -277,20 +308,20 @@
 
         <div id="editChapterInputs" style="display:none;">
             <div id="editChaptersContainer"></div>
-            <button class="btn-secondary" style="border-style:dashed; color:var(--accent-primary);" onclick="addChapterRow('editChaptersContainer')">➕ إضافة فصل جديد</button>
+            <button class="btn-secondary btn-ripple" style="border-style:dashed; color:var(--accent-primary);" onclick="addChapterRow('editChaptersContainer')">➕ إضافة فصل جديد</button>
         </div>
 
-        <button class="btn-primary" onclick="saveEditData()">حفظ التعديلات ✅</button>
+        <button class="btn-primary btn-ripple" onclick="saveEditData()">حفظ التعديلات ✅</button>
     </div>
 </div>
 
-<!-- نافذة الإنجاز المرجعي (Popup مصغر ونظيف) -->
+<!-- نافذة الإنجاز المرجعي (Popup) -->
 <div class="custom-modal-overlay" id="bookProgressModal">
     <div class="custom-modal-content" style="max-width: 300px;">
         <h2 class="modal-title" id="bpTitle" style="margin-bottom:5px;"></h2>
         <div style="font-size:32px; font-weight:800; color:var(--accent-primary); margin-bottom:10px; text-align:center;" id="bpPercentage"></div>
         <div id="bpDetails" style="font-size:13px; color:var(--text-secondary); text-align:center; line-height:1.6;"></div>
-        <button class="btn-primary" onclick="closeModal('bookProgressModal')">إغلاق</button>
+        <button class="btn-primary btn-ripple" onclick="closeModal('bookProgressModal')">إغلاق</button>
     </div>
 </div>
 
@@ -299,40 +330,43 @@
     <div class="custom-modal-content" style="max-width: 280px;">
         <h2 class="modal-title">إعداد المؤقت</h2>
         <div style="display:flex; gap:10px; margin-bottom:15px;">
-            <button class="btn-secondary" id="btnTimerUp" onclick="setTimerMode('up', this)">تصاعدي</button>
-            <button class="btn-secondary" id="btnTimerDown" onclick="setTimerMode('down', this)">تنازلي</button>
+            <button class="btn-secondary btn-ripple" id="btnTimerUp" onclick="setTimerMode('up', this)">تصاعدي</button>
+            <button class="btn-secondary btn-ripple" id="btnTimerDown" onclick="setTimerMode('down', this)">تنازلي</button>
         </div>
         <div class="input-field" id="timerInputContainer" style="display:none;">
             <label>حدد الدقائق</label>
             <input type="number" id="setMinutes" min="1">
         </div>
-        <button class="btn-primary" onclick="applyTimer()">حفظ</button>
+        <button class="btn-primary btn-ripple" onclick="applyTimer()">حفظ</button>
     </div>
 </div>
 
+<!-- تنبيه مخصص -->
 <div class="custom-modal-overlay" id="customAlertModal">
     <div class="custom-modal-content" style="max-width: 280px; text-align:center;">
         <div style="font-size:35px; margin-bottom:10px;">⚠️</div>
         <h2 class="modal-title" id="alertTitle" style="margin-bottom:5px;"></h2>
         <p style="font-size:13px; color:var(--text-secondary); margin-bottom:15px;" id="alertMessage"></p>
-        <button class="btn-primary" onclick="closeModal('customAlertModal')">إغلاق</button>
+        <button class="btn-primary btn-ripple" onclick="closeModal('customAlertModal')">إغلاق</button>
     </div>
 </div>
 
+<!-- نافذة الاحتفال -->
 <div class="custom-modal-overlay" id="celebrationModal">
     <div class="custom-modal-content" style="max-width: 280px; text-align:center;">
         <div style="font-size:40px; margin-bottom:10px;">🎉</div>
         <h2 class="modal-title" style="color:var(--success-color); margin-bottom:5px;">عمل رائع!</h2>
         <p style="font-size:14px; font-weight:700; color:var(--text-primary);">أنجزت للتو <strong id="celTaskName" style="color:var(--accent-primary);"></strong> من مادة <strong id="celSubjectName"></strong>.</p>
-        <button class="btn-primary" style="background:var(--success-color); margin-top:10px;" onclick="closeModal('celebrationModal')">متابعة 💪</button>
+        <button class="btn-primary btn-ripple" style="background:var(--success-color); margin-top:10px;" onclick="closeModal('celebrationModal')">متابعة 💪</button>
     </div>
 </div>
-<!-- ================== السكريبت البرمجي (المنطق والتفاعل) ================== -->
+<!-- ================== بداية القسم الثالث (السكريبت البرمجي JavaScript) ================== -->
 <script>
-    const APP_VERSION = '12.0';
+    const APP_VERSION = '12.1';
     const VERSION_KEY = 'studyTracker_appVersion';
-    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v12_0'; 
+    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v12_1'; 
     const OLD_STATE_KEYS = [
+        'studyTrackerSaveState_v12_0', 'studyTrackerSaveState_v12',
         'studyTrackerSaveState_v11_1', 'studyTrackerSaveState_v11_0', 
         'studyTrackerSaveState_v11', 'studyTrackerSaveState_v10_2', 
         'studyTrackerSaveState_v10_1', 'studyTrackerSaveState_v10', 
@@ -343,8 +377,9 @@
     let appState = { 
         configs: [], 
         studied: {}, 
+        shelf: [], 
         timer: { sec: 0, startSec: 0, mode: 'up', isRunning: false }, 
-        stats: { streak: 0, lastActiveDate: '' } 
+        stats: { streak: 0, lastActiveDate: '', pagesToday: 0, totalFocusSec: 0 } 
     };
 
     const subjectsData = {
@@ -354,7 +389,17 @@
         "الإحصاء الحيوي": { hue: 230 }, "اللغة الإنجليزية 2": { hue: 90 }
     };
 
-    document.getElementById('addSubjectSelect').innerHTML = `<option value="" disabled selected>اختر المادة...</option>` + Object.keys(subjectsData).map(k => `<option value="${k}">${k}</option>`).join('');
+    function initSubjectSelect() {
+        let options = `<option value="" disabled selected>اختر المادة...</option>`;
+        options += Object.keys(subjectsData).map(k => `<option value="${k}">${k}</option>`).join('');
+        options += `<option value="custom">➕ مادة أخرى (كتابة يدوية)...</option>`;
+        document.getElementById('addSubjectSelect').innerHTML = options;
+    }
+
+    function toggleCustomSubject() {
+        const val = document.getElementById('addSubjectSelect').value;
+        document.getElementById('customSubjectDiv').style.display = val === 'custom' ? 'block' : 'none';
+    }
 
     const themeToggleBtn = document.getElementById('themeToggleBtn');
     if (localStorage.getItem('studyTrackerTheme') === 'dark') { document.body.classList.add('dark-mode'); }
@@ -371,7 +416,12 @@
     function checkUpdateNotification() { if (localStorage.getItem(VERSION_KEY) !== APP_VERSION) document.getElementById('updateWelcomeModal').classList.add('active'); }
     function closeUpdateWelcomeModal() { localStorage.setItem(VERSION_KEY, APP_VERSION); closeModal('updateWelcomeModal'); }
     
-    function openControlPanel() { document.getElementById('controlPanelModal').classList.add('active'); }
+    function openControlPanel() { 
+        updateStatsUI(); 
+        renderShelfUI(); 
+        document.getElementById('controlPanelModal').classList.add('active'); 
+    }
+    
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
     function showAlert(title, msg) { document.getElementById('alertTitle').textContent = title; document.getElementById('alertMessage').textContent = msg; document.getElementById('customAlertModal').classList.add('active'); }
     
@@ -418,12 +468,24 @@
     }
 
     function addSubjectToPlan() {
-        const subject = document.getElementById('addSubjectSelect').value;
+        let subjectInput = document.getElementById('addSubjectSelect').value;
         const mode = document.getElementById('planModeSelect').value;
-        if (!subject) return showAlert("تنبيه", "يرجى اختيار المادة أولاً.");
-        if (appState.configs.find(c => c.name === subject)) return showAlert("موجودة مسبقاً", "هذه المادة موجودة بالفعل. قم بتعديلها عبر زر ✏️.");
+        let finalSubjectName = subjectInput;
+        let subjectHue = 0;
 
-        let config = { id: `sub_${Date.now()}`, name: subject, type: mode, hue: subjectsData[subject].hue };
+        if (!subjectInput) return showAlert("تنبيه", "يرجى اختيار المادة أولاً.");
+
+        if (subjectInput === 'custom') {
+            finalSubjectName = document.getElementById('customSubjectInput').value.trim();
+            if (!finalSubjectName) return showAlert("تنبيه", "يرجى كتابة اسم المادة الجديدة.");
+            subjectHue = Math.floor(Math.random() * 360);
+        } else {
+            subjectHue = subjectsData[subjectInput].hue;
+        }
+
+        if (appState.configs.find(c => c.name === finalSubjectName)) return showAlert("موجودة مسبقاً", "هذه المادة موجودة بالفعل. قم بتعديلها عبر زر ✏️.");
+
+        let config = { id: `sub_${Date.now()}`, name: finalSubjectName, type: mode, hue: subjectHue, reviewCount: 0 };
 
         if (mode === 'free') {
             let s = parseInt(document.getElementById('fStart').value); 
@@ -442,7 +504,7 @@
         appState.configs.push(config); appState.studied[config.id] = [];
         saveState(); reloadWorkspace(); closeModal('controlPanelModal');
         
-        // تفريغ حقول الفصول للعملية القادمة
+        document.getElementById('customSubjectInput').value = '';
         document.getElementById('chaptersContainer').innerHTML = `
             <div class="chapter-row" style="display:flex; gap:6px; margin-bottom:8px; align-items:center;">
                 <input type="text" class="chap-name" placeholder="الاسم" style="flex:2;">
@@ -451,7 +513,6 @@
                 <button class="btn-danger" style="width:36px; padding:0; margin:0;" disabled>✖</button>
             </div>
         `;
-        
         document.getElementById('welcomePanel').style.display = 'none';
         window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
@@ -476,7 +537,7 @@
                     <input type="text" class="chap-name" value="${ch.name}" style="flex:2;">
                     <input type="number" class="chap-start" value="${ch.start}" min="1" style="flex:1;">
                     <input type="number" class="chap-end" value="${ch.end}" min="1" style="flex:1;">
-                    <button class="btn-danger" onclick="this.parentElement.remove()" style="width:36px; padding:0; margin:0; border-radius:8px;">✖</button>
+                    <button class="btn-danger btn-ripple" onclick="this.parentElement.remove()" style="width:36px; padding:0; margin:0; border-radius:8px;">✖</button>
                 `;
                 cont.appendChild(row);
             });
@@ -509,7 +570,6 @@
             conf.taskSize = parseInt(document.getElementById('editTaskSize').value) || 10;
             conf.totalPages = parseInt(document.getElementById('editTotalPages').value) || 0;
         }
-
         saveState(); reloadWorkspace(); closeModal('editSubjectModal');
     }
 
@@ -518,6 +578,18 @@
             appState.configs = appState.configs.filter(c => c.id !== id); delete appState.studied[id];
             saveState(); reloadWorkspace();
         }
+    }
+
+    function moveToShelf(subjectId) {
+        let idx = appState.configs.findIndex(c => c.id === subjectId);
+        if(idx === -1) return;
+        let conf = appState.configs[idx];
+        conf.finishDate = new Date().toISOString().split('T')[0];
+        appState.shelf.push(conf);
+        appState.configs.splice(idx, 1);
+        delete appState.studied[subjectId]; 
+        saveState(); reloadWorkspace();
+        showAlert("تهانينا! 🌟", `أتممت مادة ${conf.name} وتم حفظها في الرف.`);
     }
 
     function reloadWorkspace() {
@@ -536,7 +608,6 @@
         stickyBar.style.display = 'block';
 
         appState.configs.forEach(conf => {
-            // الكروت العلوية (شريط التمرير الأفقي)
             let miniHtml = `
                 <div class="mini-subject-card" style="--subject-hue: ${conf.hue}" onclick="showBookProgress('${conf.id}')">
                     <div class="mini-sub-header">
@@ -547,18 +618,19 @@
                 </div>`;
             miniGrid.insertAdjacentHTML('beforeend', miniHtml);
 
-            // القسم الأساسي
             const sec = document.createElement('div');
             sec.className = 'subject-section'; sec.id = `sec_${conf.id}`;
             sec.style.setProperty('--subject-hue', conf.hue);
             
-            let hText = conf.type === 'chapters' ? "الفصول" : `صـ ${conf.start} إلى ${conf.end}`;
+            let hText = conf.type === 'chapters' ? "نظام الفصول" : `صـ ${conf.start} إلى ${conf.end}`;
+            let reviewText = conf.reviewCount > 0 ? ` <span style="font-size:11px; background:var(--btn-secondary-bg); padding:2px 6px; border-radius:10px;">مراجعة ${conf.reviewCount}</span>` : '';
+            
             sec.innerHTML = `
                 <div class="subject-header-title">
-                    <div class="sub-title-text">📚 ${conf.name} <span style="font-size:12px; color:var(--text-secondary); font-weight:normal;">(${hText})</span></div>
+                    <div class="sub-title-text">📚 ${conf.name}${reviewText} <span style="font-size:12px; color:var(--text-secondary); font-weight:normal;">(${hText})</span></div>
                     <div class="sub-header-actions">
-                        <button class="action-btn-small" onclick="openEditModal('${conf.id}')" title="تعديل">✏️</button>
-                        <button class="action-btn-small danger" onclick="deleteSubject('${conf.id}')" title="إزالة">🗑️</button>
+                        <button class="action-btn-small btn-ripple" onclick="openEditModal('${conf.id}')" title="تعديل">✏️</button>
+                        <button class="action-btn-small danger btn-ripple" onclick="deleteSubject('${conf.id}')" title="إزالة">🗑️</button>
                     </div>
                 </div>
             `;
@@ -575,6 +647,16 @@
                     sec.appendChild(buildTaskHtml(conf.id, `المهمة ${taskNum++} من ${totalTasks}`, i, tEnd, studiedArr));
                 }
             }
+
+            let toShelfBtn = document.createElement('button');
+            toShelfBtn.className = 'btn-primary btn-ripple'; 
+            toShelfBtn.style.marginTop = '15px'; 
+            toShelfBtn.style.display = 'none'; 
+            toShelfBtn.id = `toShelf_${conf.id}`; 
+            toShelfBtn.innerHTML = `🌟 المادة اكتملت! نقل إلى الرف`;
+            toShelfBtn.onclick = () => moveToShelf(conf.id);
+            sec.appendChild(toShelfBtn);
+
             ws.appendChild(sec);
             updateProgressMetrics(conf.id); 
         });
@@ -595,11 +677,14 @@
                 e.stopPropagation(); 
                 c.classList.toggle('studied');
                 if(c.classList.contains('studied')) {
-                    if(!appState.studied[confId].includes(p)) appState.studied[confId].push(p);
+                    if(!appState.studied[confId].includes(p)) {
+                        appState.studied[confId].push(p);
+                        appState.stats.pagesToday++;
+                    }
                 } else {
                     appState.studied[confId] = appState.studied[confId].filter(x => x !== p);
                 }
-                saveState(); checkTaskState(taskDiv, confId, title);
+                saveState(); checkTaskState(taskDiv, confId, title); updateStatsUI();
             };
             content.appendChild(c);
         }
@@ -618,7 +703,6 @@
         if (cards.length === studied.length && cards.length > 0) {
             if(!taskDiv.classList.contains('completed')) {
                 taskDiv.classList.add('completed'); content.classList.add('collapsed');
-                
                 const confName = appState.configs.find(c => c.id === subjectId)?.name;
                 document.getElementById('celTaskName').textContent = title;
                 document.getElementById('celSubjectName').textContent = confName;
@@ -641,6 +725,9 @@
         let percentText = document.getElementById(`percentText_${subjectId}`);
         if(miniBar) miniBar.style.width = `${percent}%`;
         if(percentText) percentText.textContent = `${percent}%`;
+
+        let shelfBtn = document.getElementById(`toShelf_${subjectId}`);
+        if(shelfBtn) shelfBtn.style.display = percent === 100 ? 'block' : 'none';
     }
 
     function showBookProgress(subjectId) {
@@ -667,7 +754,38 @@
         document.getElementById('bookProgressModal').classList.add('active');
     }
 
-    // --- المؤقت الزمني المدمج ---
+    function updateStatsUI() {
+        document.getElementById('statPages').textContent = appState.stats.pagesToday || 0;
+        document.getElementById('statFocus').textContent = Math.floor((appState.stats.totalFocusSec || 0) / 60);
+        document.getElementById('statStreak').textContent = appState.stats.streak || 0;
+    }
+
+    function renderShelfUI() {
+        const cont = document.getElementById('shelfContainer'); cont.innerHTML = '';
+        if(!appState.shelf || appState.shelf.length === 0) return cont.innerHTML = `<p style="text-align:center; color:var(--text-secondary);">لا توجد مواد مكتملة حالياً.</p>`;
+        
+        appState.shelf.forEach(item => {
+            cont.innerHTML += `
+                <div class="stat-box" style="margin-bottom:10px; background: rgba(16, 185, 129, 0.05); border-color: var(--success-color);">
+                    <div>
+                        <strong style="color:var(--success-color); display:block; font-size:14px;">${item.name}</strong>
+                        <span style="font-size:11px; color:var(--text-secondary);">اكتملت: ${item.finishDate || 'سابقاً'} | المراجعات: ${item.reviewCount || 0}</span>
+                    </div>
+                    <button class="btn-primary btn-ripple" style="width:auto; padding:6px 10px; font-size:12px; margin:0;" onclick="reviewFromShelf('${item.id}')">مراجعة</button>
+                </div>
+            `;
+        });
+    }
+
+    function reviewFromShelf(subjectId) {
+        let idx = appState.shelf.findIndex(c => c.id === subjectId); if(idx === -1) return;
+        let conf = appState.shelf[idx];
+        conf.reviewCount = (conf.reviewCount || 0) + 1; conf.id = `sub_${Date.now()}`; 
+        appState.configs.push(conf); appState.studied[conf.id] = []; appState.shelf.splice(idx, 1);
+        saveState(); reloadWorkspace(); closeModal('controlPanelModal');
+        showAlert("تم بنجاح", "تم إعادة المادة لمساحة العمل لبدء المراجعة.");
+    }
+
     let timerInt;
     const stickyTimerDisplay = document.getElementById('stickyTimer');
 
@@ -684,14 +802,18 @@
 
     function openTimerSetup() {
         document.getElementById('timerInputContainer').style.display = appState.timer.mode === 'down' ? 'block' : 'none';
-        if(appState.timer.mode === 'down') document.getElementById('btnTimerDown').style.borderColor = 'var(--accent-primary)';
+        if(appState.timer.mode === 'down') {
+            document.getElementById('btnTimerDown').style.borderColor = 'var(--accent-primary)';
+            document.getElementById('btnTimerDown').style.color = 'var(--accent-primary)';
+        }
         document.getElementById('timerSetupModal').classList.add('active');
     }
 
     function setTimerMode(mode, btn) {
         appState.timer.mode = mode;
-        document.querySelectorAll('#timerSetupModal .btn-secondary').forEach(b => { b.style.borderColor = 'var(--border-subtle)'; });
+        document.querySelectorAll('#timerSetupModal .btn-secondary').forEach(b => { b.style.borderColor = 'var(--border-subtle)'; b.style.color = 'var(--text-primary)'; });
         btn.style.borderColor = 'var(--accent-primary)';
+        btn.style.color = 'var(--accent-primary)';
         document.getElementById('timerInputContainer').style.display = mode === 'down' ? 'block' : 'none';
     }
 
@@ -714,14 +836,14 @@
                 if (appState.timer.sec > 0) appState.timer.sec--;
                 else { pauseTimer(); showAlert("انتهى الوقت", "⏰ لقد انتهى وقت التركيز المخصص للعد التنازلي."); return; }
             } else { appState.timer.sec++; }
+            
+            appState.stats.totalFocusSec = (appState.stats.totalFocusSec || 0) + 1;
             updateTimerDisplay(); 
-            if (appState.timer.sec % 10 === 0) saveState();
+            if (appState.timer.sec % 10 === 0) { saveState(); updateStatsUI(); }
         }, 1000);
     }
 
-    function pauseTimer() {
-        appState.timer.isRunning = false; clearInterval(timerInt); saveState(); 
-    }
+    function pauseTimer() { appState.timer.isRunning = false; clearInterval(timerInt); saveState(); updateStatsUI(); }
 
     function resetTimer() {
         pauseTimer();
@@ -729,14 +851,21 @@
         updateTimerDisplay(); saveState();
     }
 
-    // --- نظام الاسترجاع الذكي جداً والترحيل ---
     function checkStreakAndDate() {
         const today = new Date().toISOString().split('T')[0];
         if (appState.stats.lastActiveDate) {
             let diffDays = Math.floor((new Date(today) - new Date(appState.stats.lastActiveDate)) / (1000 * 60 * 60 * 24));
-            if (diffDays === 1) { appState.stats.streak++; } 
-            else if (diffDays > 1) { appState.stats.streak = 0; }
+            if (diffDays === 1) { 
+                if(appState.stats.todayDate !== today) appState.stats.streak++; 
+            } else if (diffDays > 1) { appState.stats.streak = 0; }
         } else { appState.stats.streak = 1; }
+        
+        if (appState.stats.todayDate !== today) {
+            appState.stats.pagesToday = 0; 
+            appState.stats.totalFocusSec = 0; 
+            appState.stats.todayDate = today;
+        }
+        
         appState.stats.lastActiveDate = today; saveState();
         document.getElementById('streakCount').textContent = appState.stats.streak;
     }
@@ -746,7 +875,7 @@
     function autoMigrateData() {
         if (localStorage.getItem(CURRENT_STATE_KEY)) return;
         
-        // خوارزمية بحث قوية عن أي بيانات قديمة
+        let migrated = false;
         for (let oldKey of OLD_STATE_KEYS) {
             let oldData = localStorage.getItem(oldKey);
             if (oldData) {
@@ -754,14 +883,36 @@
                     let parsed = JSON.parse(oldData);
                     appState.configs = parsed.configs || []; 
                     appState.studied = parsed.studied || {};
+                    appState.shelf = parsed.shelf || [];
                     appState.timer = parsed.timer || { sec:0, startSec:0, mode:'up', isRunning:false };
-                    appState.stats = parsed.stats || { streak: 0, lastActiveDate: '' };
-                    
+                    appState.stats = parsed.stats || { streak: 0, lastActiveDate: '', pagesToday: 0, totalFocusSec: 0 };
                     saveState(); 
                     console.log(`✅ تم ترحيل البيانات بنجاح من الإصدار القديم: ${oldKey}`); 
-                    return; 
+                    migrated = true;
+                    break; 
                 } catch(e) {}
             }
+        }
+
+        if(!migrated && localStorage.length > 0) {
+             for(let i=0; i<localStorage.length; i++) {
+                 let key = localStorage.key(i);
+                 if(key && key.startsWith('studyTrackerSaveState') && key !== CURRENT_STATE_KEY) {
+                     try {
+                        let parsed = JSON.parse(localStorage.getItem(key));
+                        if(parsed.configs) {
+                            appState.configs = parsed.configs;
+                            appState.studied = parsed.studied || {};
+                            appState.shelf = parsed.shelf || [];
+                            appState.timer = parsed.timer || { sec:0, startSec:0, mode:'up', isRunning:false };
+                            appState.stats = parsed.stats || { streak: 0, lastActiveDate: '', pagesToday: 0, totalFocusSec: 0 };
+                            saveState();
+                            console.log(`✅ تم استرجاع البيانات المفقودة من المفتاح: ${key}`);
+                            break;
+                        }
+                     } catch(e) {}
+                 }
+             }
         }
     }
 
@@ -779,6 +930,8 @@
             try {
                 let json = JSON.parse(ev.target.result);
                 if(json.configs && json.studied) {
+                    if(!json.shelf) json.shelf = [];
+                    if(!json.stats) json.stats = { streak: 0, lastActiveDate: '', pagesToday: 0, totalFocusSec: 0 };
                     appState = json; saveState();
                     showAlert("نجاح!", "تم استيراد الجلسات بنجاح. سيتم تحديث اللوحة.");
                     setTimeout(()=>location.reload(), 1500);
@@ -795,17 +948,28 @@
     }
 
     function initApp() {
-        autoMigrateData(); // محاولة البحث عن بيانات قديمة فوراً
+        initSubjectSelect();
+        autoMigrateData(); 
         let saved = localStorage.getItem(CURRENT_STATE_KEY);
-        if(saved) { try { appState = Object.assign(appState, JSON.parse(saved)); } catch(e){} }
+        if(saved) { 
+            try { 
+                let parsed = JSON.parse(saved);
+                if(!parsed.shelf) parsed.shelf = [];
+                if(!parsed.stats) parsed.stats = { streak: 0, lastActiveDate: '', pagesToday: 0, totalFocusSec: 0 };
+                appState = Object.assign(appState, parsed); 
+            } catch(e){} 
+        }
         
-        checkStreakAndDate(); updateTimerDisplay();
+        checkStreakAndDate(); 
+        updateTimerDisplay();
         if(appState.timer.isRunning) { appState.timer.isRunning=false; startTimer(); }
         
-        reloadWorkspace(); checkUpdateNotification();
+        reloadWorkspace(); 
+        checkUpdateNotification();
     }
 
     document.addEventListener('DOMContentLoaded', initApp);
 </script>
 </body>
 </html>
+<!-- ================== نهاية القسم الثالث والملف بالكامل ================== -->
