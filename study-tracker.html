@@ -2,338 +2,309 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>لوحة تتبع الإنجاز الدراسي الذكية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تتبع الإنجاز الدراسي الذكية 10.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-app: #f4f6f9; --surface: #ffffff; --text-primary: #1e293b; --text-secondary: #64748b;
-            --accent-primary: #2563eb; --accent-hover: #1d4ed8; --border-subtle: #e2e8f0;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05); --shadow-md: 0 8px 16px rgba(0,0,0,0.08);
-            --shadow-lg: 0 15px 30px rgba(0,0,0,0.12);
-            --radius-lg: 20px; --radius-md: 12px; --radius-sm: 8px;
-            --header-bg: rgba(255, 255, 255, 0.95); --btn-secondary-bg: #f8fafc;
-            --success-color: #10b981; --streak-color: #f59e0b; --danger-color: #ef4444;
+            --bg-app: #f4f1ea; --surface: #ffffff; --text-primary: #2d2824; --text-secondary: #6e6761;
+            --accent-primary: #3b82f6; --accent-hover: #2563eb; --border-subtle: #e6e2d8;
+            --shadow-sm: 0 2px 8px rgba(45, 37, 30, 0.04); --shadow-md: 0 8px 25px rgba(45, 37, 30, 0.08);
+            --shadow-lg: 0 20px 40px rgba(45, 37, 30, 0.12);
+            --radius-lg: 16px; --radius-md: 12px; --radius-sm: 8px;
+            --header-bg: rgba(244, 241, 234, 0.85); --btn-secondary-bg: #ffffff;
+            --btn-secondary-hover: #f0eee9; --btn-danger-text: #dc2626; --btn-danger-border: #fca5a5;
+            --success-color: #059669; --streak-color: #f97316;
         }
 
         body.dark-mode {
-            --bg-app: #0f172a; --surface: #1e293b; --text-primary: #f8fafc; --text-secondary: #94a3b8;
-            --accent-primary: #3b82f6; --accent-hover: #60a5fa; --border-subtle: #334155;
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.3); --shadow-md: 0 8px 16px rgba(0,0,0,0.4);
-            --header-bg: rgba(30, 41, 59, 0.95); --btn-secondary-bg: #334155;
+            --bg-app: #121212; --surface: #1e1e24; --text-primary: #f3f4f6; --text-secondary: #9ca3af;
+            --accent-primary: #60a5fa; --accent-hover: #93c5fd; --border-subtle: #374151;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4); --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
+            --header-bg: rgba(18, 18, 18, 0.85); --btn-secondary-bg: #2a2a32;
+            --btn-secondary-hover: #3f3f4a; --btn-danger-text: #fca5a5; --btn-danger-border: #991b1b;
+            --success-color: #34d399;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-app); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-app); color: var(--text-primary); margin: 0; padding: 0; line-height: 1.6; transition: background-color 0.4s ease, color 0.4s ease; min-height: 100vh; overflow-x: hidden; }
 
-        /* --- الشريط العلوي الثابت --- */
-        .top-nav { position: fixed; top: 0; width: 100%; height: 55px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; padding: 0 15px; z-index: 1000; border-bottom: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
-        .nav-right, .nav-left { display: flex; align-items: center; gap: 8px; z-index: 2; width: 25%; }
-        .nav-left { justify-content: flex-end; }
+        .top-nav { position: fixed; top: 0; width: 100%; height: 40px; background: var(--surface); display: flex; justify-content: space-between; align-items: center; padding: 0 15px; box-sizing: border-box; z-index: 1000; border-bottom: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); }
+        .streak-box { display: flex; align-items: center; gap: 5px; font-weight: 800; color: var(--streak-color); font-size: 14px; background: rgba(249, 115, 22, 0.1); padding: 2px 10px; border-radius: 20px; }
+        .nav-icons { display: flex; gap: 10px; }
+        .nav-icon { background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-secondary); transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; }
+        .nav-icon:hover { background: var(--btn-secondary-hover); color: var(--accent-primary); }
+
+        .sticky-progress { position: sticky; top: 40px; background: var(--header-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-subtle); padding: 8px 10px; z-index: 100; display: none; }
+        .progress-cards-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+        .progress-cards-grid::-webkit-scrollbar { display: none; }
+        .mini-subject-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 6px 10px; min-width: 120px; flex: 0 0 auto; box-shadow: var(--shadow-sm); cursor: pointer; transition: transform 0.2s; position: relative; overflow: hidden;}
+        .mini-subject-card:hover { transform: translateY(-2px); border-color: hsl(var(--subject-hue), 60%, 50%); }
+        .mini-subject-card::before { content: ''; position: absolute; right: 0; top: 0; height: 100%; width: 3px; background: hsl(var(--subject-hue), 60%, 50%); }
+        .mini-sub-title { font-size: 11px; font-weight: 800; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px;}
         
-        .streak-box { display: flex; align-items: center; gap: 5px; font-weight: 800; color: var(--streak-color); font-size: 13px; background: rgba(245, 158, 11, 0.1); padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(245, 158, 11, 0.2); }
-        .nav-icon { background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); font-size: 15px; cursor: pointer; color: var(--text-primary); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; transition: 0.2s; }
-        .nav-icon:hover { color: var(--accent-primary); border-color: var(--accent-primary); transform: translateY(-2px); }
+        .progress-bar-wrapper { background: var(--border-subtle); height: 6px; border-radius: 20px; overflow: hidden; width: 100%; position: relative; background-image: linear-gradient(to right, transparent 24.5%, rgba(0,0,0,0.08) 25%, transparent 25.5%, transparent 49.5%, rgba(0,0,0,0.1) 50%, transparent 50.5%, transparent 74.5%, rgba(0,0,0,0.08) 75%, transparent 75.5%); }
+        body.dark-mode .progress-bar-wrapper { background-image: linear-gradient(to right, transparent 24.5%, rgba(255,255,255,0.15) 25%, transparent 25.5%, transparent 49.5%, rgba(255,255,255,0.2) 50%, transparent 50.5%, transparent 74.5%, rgba(255,255,255,0.15) 75%, transparent 75.5%); }
+        .progress-bar-fill { background-color: hsl(var(--subject-hue), 60%, 50%); height: 100%; width: 0%; transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+        .book-progress-wrapper { height: 3px; background: var(--border-subtle); border-radius: 10px; overflow: hidden; margin-top: 2px; }
+        .book-progress-fill { background-color: var(--text-secondary); height: 100%; width: 0%; opacity: 0.6; transition: width 0.6s ease; }
 
-        /* المؤقت في المنتصف تماماً */
-        .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; z-index: 1; background: var(--btn-secondary-bg); padding: 4px 12px; border-radius: 30px; border: 1px solid var(--border-subtle); width: auto; white-space: nowrap; }
-        .timer-display { font-family: monospace; font-size: 20px; font-weight: 800; color: var(--text-primary); letter-spacing: 1px; }
-        .timer-display.ending { color: var(--danger-color); animation: pulse 1s infinite; }
-        .timer-controls { display: flex; gap: 4px; }
-        .timer-btn { background: var(--surface); border: 1px solid var(--border-subtle); width: 28px; height: 28px; border-radius: 50%; font-size: 12px; cursor: pointer; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; transition: 0.2s; box-shadow: var(--shadow-sm); }
-        .timer-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-2px); }
+        .compact-timer { display: flex; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 5px 12px; margin-top: 8px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02); }
+        .compact-timer-display { font-size: 20px; font-weight: 800; font-family: monospace; letter-spacing: 1px; color: var(--text-primary); }
+        .compact-timer-display.ending { color: var(--btn-danger-text); animation: pulse 1s infinite; }
+        .compact-timer-controls { display: flex; gap: 8px; }
+        .ct-btn { background: none; border: none; font-size: 16px; cursor: pointer; padding: 4px; border-radius: 4px; color: var(--text-secondary); transition: all 0.2s;}
+        .ct-btn:hover { background: var(--btn-secondary-hover); color: var(--accent-primary); }
 
-        /* --- شريط تقدم المواد (أفقي، رفيع) --- */
-        .sticky-progress { position: sticky; top: 55px; background: var(--header-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-subtle); padding: 10px 15px; z-index: 100; display: none; }
-        .progress-cards-container { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; max-width: 1200px; margin: 0 auto; padding-bottom: 2px; }
-        .progress-cards-container::-webkit-scrollbar { display: none; }
-        .mini-subject-card { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 8px 12px; min-width: 160px; flex: 0 0 auto; cursor: pointer; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); transition: 0.2s; }
-        .mini-subject-card:hover { border-color: var(--accent-primary); transform: translateY(-2px); }
-        .mini-subject-card::before { content: ''; position: absolute; right: 0; top: 0; height: 100%; width: 4px; background: hsl(var(--subject-hue), 60%, 50%); }
-        .mini-sub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .mini-sub-title { font-size: 12px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75%; }
-        .percent-badge { color: var(--accent-primary); font-size: 11px; font-weight: 800; }
-        .progress-bar-wrapper { background: var(--border-subtle); height: 5px; border-radius: 10px; overflow: hidden; width: 100%; }
-        .progress-bar-fill { background-color: hsl(var(--subject-hue), 60%, 50%); height: 100%; width: 0%; transition: width 0.5s ease; }
-
-        /* --- مساحة العمل (المهام والبطاقات) --- */
-        .main-layout { max-width: 1200px; margin: 25px auto 100px auto; padding: 0 15px; flex: 1; width: 100%; }
+        .main-layout { max-width: 1200px; margin: 60px auto 100px; padding: 0 15px; box-sizing: border-box; }
+        #welcomePanel { text-align: center; max-width: 600px; margin: 80px auto; }
+        #welcomePanel h2 { font-size: 24px; font-weight: 800; margin-bottom: 20px;}
+        
         #workspace { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; align-items: start; }
+        .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-sm); animation: fadeIn 0.4s ease; position: relative; }
+        .subject-header-title { font-size: 16px; font-weight: 800; color: var(--text-primary); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-subtle); }
         
-        .subject-section { background: var(--surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-sm); }
-        .subject-header-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-subtle); }
-        .sub-title-text { font-size: 15px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
-        .sub-header-actions { display: flex; gap: 6px; }
-        .action-btn-small { background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; cursor: pointer; color: var(--text-secondary); transition: 0.2s; }
-        .action-btn-small:hover { border-color: var(--accent-primary); color: var(--accent-primary); background: var(--surface); }
+        .task-section { background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 15px; margin-bottom: 15px; transition: all 0.3s ease; }
+        .task-section.completed { background: rgba(5, 150, 105, 0.05); border-color: var(--success-color); border-right: 4px solid var(--success-color); }
         
-        .task-section { background: var(--bg-app); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; margin-bottom: 12px; transition: 0.3s; }
-        .task-section.completed { border-color: var(--success-color); border-right: 4px solid var(--success-color); background: rgba(16, 185, 129, 0.05); }
-        .task-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-        .task-title { font-size: 13px; font-weight: 800; margin: 0; color: var(--text-primary); }
-        .task-badge { background: var(--surface); padding: 3px 8px; border-radius: 12px; font-size: 11px; font-weight: 700; border: 1px solid var(--border-subtle); color: var(--text-secondary); }
-        
-        .task-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); gap: 6px; margin-top: 12px; }
+        .task-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .task-title { font-size: 14px; font-weight: 800; color: var(--text-primary); margin: 0; display: flex; align-items: center; gap: 8px;}
+        .task-badge { background: var(--surface); color: var(--text-secondary); padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 800; border: 1px solid var(--border-subtle); }
+        .task-content { display: grid; grid-template-columns: repeat(auto-fill, minmax(45px, 1fr)); gap: 8px; margin-top: 15px; transition: all 0.3s ease; transform-origin: top; }
         .task-content.collapsed { display: none; }
-        .card { background-color: var(--surface); border: 1.5px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; cursor: pointer; user-select: none; transition: 0.2s; }
+        .completed-icon { display: none; color: var(--success-color); font-size: 16px; }
+        .task-section.completed .completed-icon { display: inline-block; animation: bounceIn 0.5s; }
+
+        .card { background-color: var(--surface); border: 2px solid hsl(var(--subject-hue), 40%, 80%); color: var(--text-primary); height: 42px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; cursor: pointer; user-select: none; transition: all 0.2s; }
         body.dark-mode .card { border-color: hsl(var(--subject-hue), 40%, 30%); }
-        .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; }
+        .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); border-color: hsl(var(--subject-hue), 60%, 50%); }
+        .card.studied { background-color: hsl(var(--subject-hue), 60%, 50%); border-color: hsl(var(--subject-hue), 60%, 50%); color: #ffffff; transform: scale(1.05); }
 
-        /* --- النوافذ المنبثقة (Modals) --- */
-        .custom-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 15px; }
-        .custom-modal-overlay.active { display: flex; }
-        .custom-modal-content { background: var(--surface); padding: 20px; border-radius: var(--radius-md); width: 100%; max-width: 420px; box-shadow: var(--shadow-lg); max-height: 85vh; overflow-y: auto; overflow-x: hidden; position: relative; }
-        
-        .modal-title { font-size: 16px; font-weight: 800; margin-top: 0; margin-bottom: 15px; text-align: center; }
-        .close-modal-btn { position: absolute; top: 15px; left: 15px; background: var(--btn-secondary-bg); border: none; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: 0.2s; }
-        .close-modal-btn:hover { color: var(--danger-color); background: rgba(239,68,68,0.1); }
+        .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+        .fab { background: var(--accent-primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 22px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .fab:hover { transform: scale(1.1); background: var(--accent-hover); }
+        .fab-scroll { background: var(--surface); color: var(--text-primary); border: 1px solid var(--border-subtle); display: none; }
+        .fab-scroll:hover { background: var(--btn-secondary-hover); }
 
-        .modal-tabs { display: flex; border-bottom: 1px solid var(--border-subtle); margin-bottom: 15px; }
-        .modal-tab { flex: 1; padding: 10px; background: none; border: none; border-bottom: 2px solid transparent; font-size: 13px; font-weight: 800; color: var(--text-secondary); cursor: pointer; }
+        .modal-tabs { display: flex; border-bottom: 1px solid var(--border-subtle); margin-bottom: 20px; overflow-x: auto; scrollbar-width: none;}
+        .modal-tabs::-webkit-scrollbar { display: none; }
+        .modal-tab { flex: 1; padding: 10px; background: none; border: none; border-bottom: 3px solid transparent; font-size: 14px; font-weight: 800; color: var(--text-secondary); cursor: pointer; white-space: nowrap;}
         .modal-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
-        .tab-content { display: none; }
+        .tab-content { display: none; text-align: right; }
         .tab-content.active { display: block; animation: fadeIn 0.3s; }
 
-        .input-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; text-align: right; width: 100%; }
-        .input-field label { font-size: 12px; color: var(--text-secondary); font-weight: 800; }
-        input, select { background: var(--bg-app); border: 1px solid var(--border-subtle); padding: 10px 12px; font-size: 13px; border-radius: var(--radius-sm); color: var(--text-primary); width: 100%; outline: none; font-family: inherit; font-weight: 600; transition: 0.2s; box-sizing: border-box; }
-        input:focus, select:focus { border-color: var(--accent-primary); }
+        .input-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px; }
+        .input-field label { font-size: 13px; color: var(--text-secondary); font-weight: 700; }
+        select, input[type="number"], input[type="text"], textarea { background: var(--surface); border: 1px solid var(--border-subtle); padding: 12px; font-size: 14px; border-radius: var(--radius-sm); color: var(--text-primary); outline: none; transition: all 0.2s; font-family: inherit; width: 100%; box-sizing: border-box; }
+        select:focus, input:focus, textarea:focus { border-color: var(--accent-primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
 
-        .btn-primary { background: var(--accent-primary); color: #fff; border: none; padding: 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 5px; box-shadow: 0 4px 10px rgba(37,99,235,0.2); transition: 0.2s; }
-        .btn-secondary { background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 12px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 5px; transition: 0.2s; }
-        .btn-danger { background: transparent; border: 1px solid var(--danger-color); color: var(--danger-color); padding: 10px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 10px; }
-        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+        /* تأثير التموج (Ripple) العصري للأزرار */
+        .btn-primary, .btn-secondary, .btn-danger { position: relative; overflow: hidden; }
+        .btn-primary::after, .btn-secondary::after, .btn-danger::after { content: ''; position: absolute; top: 50%; left: 50%; width: 5px; height: 5px; background: rgba(255, 255, 255, 0.5); opacity: 0; border-radius: 100%; transform: scale(1, 1) translate(-50%, -50%); transform-origin: 50% 50%; }
+        .btn-secondary::after { background: rgba(0, 0, 0, 0.1); }
+        body.dark-mode .btn-secondary::after { background: rgba(255, 255, 255, 0.1); }
+        .btn-primary:active::after, .btn-secondary:active::after, .btn-danger:active::after { animation: ripple 0.4s ease-out; }
 
-        /* الأزرار العائمة السفلية */
-        .fab-container-right { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-        .fab { background: var(--accent-primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 22px; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); cursor: pointer; transition: 0.2s; }
-        .fab:hover { transform: scale(1.1); }
-        .fab-scroll { background: var(--surface); color: var(--text-primary); border: 1px solid var(--border-subtle); display: none; }
+        .btn-primary { background: var(--accent-primary); color: #ffffff; border: none; padding: 12px 20px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(59, 130, 246, 0.3); }
+        .btn-secondary { background: var(--btn-secondary-bg); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 12px 20px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-secondary:hover { background: var(--btn-secondary-hover); }
+        .btn-danger { background: var(--surface); border: 1px solid var(--btn-danger-border); color: var(--btn-danger-text); padding: 12px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: inline-flex; justify-content: center;}
+        .btn-danger:hover { background: var(--btn-danger-hover); }
 
-        .app-footer { text-align: center; padding: 15px; font-size: 12px; color: var(--text-secondary); font-weight: 700; margin-top: auto; border-top: 1px solid var(--border-subtle); }
+        .custom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; z-index: 2000; padding: 15px; box-sizing: border-box;}
+        .custom-modal-overlay.active { display: flex; opacity: 1; }
+        .custom-modal-content { background: var(--bg-app); padding: 25px; border-radius: var(--radius-md); text-align: center; max-width: 450px; width: 100%; box-shadow: var(--shadow-lg); transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 90vh; overflow-y: auto;}
+        .custom-modal-overlay.active .custom-modal-content { transform: scale(1); }
+        .modal-title { font-size: 20px; font-weight: 800; margin-top: 0; margin-bottom: 15px; color: var(--text-primary); }
+        
+        .stat-box { background: var(--surface); border: 1px solid var(--border-subtle); padding: 15px; border-radius: var(--radius-sm); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;}
+        .stat-val { font-size: 20px; font-weight: 800; color: var(--accent-primary); }
 
+        .shelf-item { display: flex; justify-content: space-between; align-items: center; background: var(--surface); padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-bottom: 10px; text-align: right;}
+
+        @keyframes bounceIn { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* التجاوب (Responsive) */
-        @media (max-width: 768px) {
-            .nav-center { width: auto; padding: 4px 10px; }
-            .nav-right, .nav-left { width: auto; }
-            .timer-display { font-size: 16px; }
-        }
-        @media (max-width: 480px) {
-            .nav-center { position: relative; left: 0; transform: none; width: 100%; justify-content: center; order: 3; margin-top: 8px; }
-            .top-nav { height: auto; flex-wrap: wrap; padding: 8px 15px; }
-            .sticky-progress { top: 90px; } 
-            #workspace { grid-template-columns: 1fr; }
-        }
+        @keyframes ripple { 0% { transform: scale(0, 0); opacity: 0.5; } 100% { transform: scale(40, 40); opacity: 0; } }
     </style>
 </head>
 <body>
 
 <div class="top-nav">
-    <div class="nav-right">
-        <div class="streak-box" title="أيام الدراسة المتتالية">🔥 <span id="streakCount">0</span></div>
-    </div>
-    
-    <div class="nav-center">
-        <span class="timer-display" id="stickyTimer">00:00:00</span>
-        <div class="timer-controls">
-            <button class="timer-btn play" onclick="startTimer()">▶</button>
-            <button class="timer-btn pause" onclick="pauseTimer()">⏸</button>
-            <button class="timer-btn" onclick="resetTimer()">🔄</button>
-            <button class="timer-btn" onclick="openTimerSetup()">⚙️</button>
-        </div>
-    </div>
-
-    <div class="nav-left">
-        <button class="nav-icon" onclick="window.scrollTo(0,0)">🏠</button>
-        <button class="nav-icon" id="themeToggleBtn">🌓</button>
+    <div class="streak-box" title="أيام الدراسة المتتالية">🔥 <span id="streakCount">0</span></div>
+    <div class="nav-icons">
+        <button class="nav-icon" onclick="window.location.href='index.html'" title="الرئيسية">🏠</button>
+        <button class="nav-icon" id="themeToggleBtn" title="تغيير المظهر">🌓</button>
     </div>
 </div>
 
 <div class="sticky-progress" id="stickyProgressContainer">
-    <div class="progress-cards-container" id="progressCardsGrid"></div>
+    <div class="sticky-inner">
+        <div class="progress-cards-grid" id="progressCardsGrid"></div>
+        <div class="compact-timer" id="compactTimerDiv" style="display: none;">
+            <div class="compact-timer-display" id="stickyTimer">00:00:00</div>
+            <div class="compact-timer-controls">
+                <button class="ct-btn" id="sStartBtn" title="بدء">▶️</button>
+                <button class="ct-btn" id="sPauseBtn" title="إيقاف">⏸️</button>
+                <button class="ct-btn" id="sResetBtn" title="تصفير">🔄</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="main-layout">
-    <div id="welcomePanel" style="text-align:center; padding-top: 40px;">
-        <div style="font-size: 50px; margin-bottom:10px;">🚀</div>
-        <h2 style="font-size: 22px; font-weight:800; margin-bottom: 5px;">مساحتك الدراسية الذكية</h2>
-        <p style="color:var(--text-secondary); font-size:14px;">اضغط على ⚙️ في الأسفل لإضافة موادك وتخطيط جلساتك.</p>
+    <div id="welcomePanel">
+        <h2>أهلاً بك في مساحتك الدراسية ⚡</h2>
+        <p style="color:var(--text-secondary); margin-bottom: 30px;">اضغط على زر (لوحة التحكم ⚙️) أسفل يمين الشاشة لإضافة موادك وتخطيط جلساتك بذكاء.</p>
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e6e2d8' width='120' height='120'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Icon" style="opacity: 0.7;">
     </div>
+
     <div id="workspace"></div>
 </div>
 
-<div class="fab-container-right">
-    <button class="fab fab-scroll" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆️</button>
-    <button class="fab" onclick="openControlPanel()">⚙️</button>
+<div class="fab-container">
+    <button class="fab fab-scroll" id="scrollTopBtn" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="للأعلى">⬆️</button>
+    <button class="fab" onclick="openControlPanel()" title="لوحة التحكم">⚙️</button>
 </div>
 
-<footer class="app-footer">الإصدار 12.0 - مساحة المتابعة الذكية</footer>
-
-<!-- النوافذ المنبثقة -->
-<div class="custom-modal-overlay" id="updateWelcomeModal">
-    <div class="custom-modal-content">
-        <h2 class="modal-title" style="color:var(--accent-primary);">✨ تحديث (12.0)</h2>
-        <p style="font-size:13px; text-align:right; margin-bottom:15px; color:var(--text-primary); line-height:1.7;">
-            - ⏱️ <strong>المؤقت:</strong> تم دمجه بالمنتصف لتوفير مساحة العمل.<br>
-            - ✏️ <strong>تعديل الفصول:</strong> زر التعديل يدعم الآن نظام الفصول بالكامل.<br>
-            - ➕ <strong>مواد مخصصة:</strong> أضف أي مادة يدوياً غير موجودة بالقائمة.<br>
-            - 💾 <strong>أمان تام:</strong> تمت حماية بياناتك وترحيلها بنجاح.
-        </p>
-        <button class="btn-primary" onclick="closeUpdateWelcomeModal()">رائع، لنتابع! 💪</button>
-    </div>
-</div>
+<!-- ================== النوافذ المنبثقة ================== -->
 
 <div class="custom-modal-overlay" id="controlPanelModal">
-    <div class="custom-modal-content">
-        <button class="close-modal-btn" onclick="closeModal('controlPanelModal')">✖</button>
-        <h2 class="modal-title">لوحة التحكم</h2>
+    <div class="custom-modal-content" style="max-width: 500px; text-align: right;">
+        <h2 class="modal-title" style="text-align: center;">⚙️ لوحة التحكم</h2>
         
         <div class="modal-tabs">
-            <button class="modal-tab active" onclick="switchTab('tabAdd')">إضافة مادة</button>
-            <button class="modal-tab" onclick="switchTab('tabSettings')">الإعدادات</button>
+            <button class="modal-tab active" onclick="switchTab('tabAdd')">➕ إضافة مادة</button>
+            <button class="modal-tab" onclick="switchTab('tabStats')">📊 إحصائيات</button>
+            <button class="modal-tab" onclick="switchTab('tabShelf')">📚 الرف</button>
+            <button class="modal-tab" onclick="switchTab('tabSettings')">🔧 إعدادات</button>
         </div>
 
         <div class="tab-content active" id="tabAdd">
             <div class="input-field">
                 <label>اختر المادة</label>
-                <select id="addSubjectSelect" onchange="toggleCustomSubject()"></select>
+                <select id="addSubjectSelect"></select>
             </div>
-            
-            <div class="input-field" id="customSubjectDiv" style="display:none; background: rgba(37, 99, 235, 0.05); padding: 10px; border-radius: var(--radius-sm); border-right: 3px solid var(--accent-primary);">
-                <label>اسم المادة الجديدة</label>
-                <input type="text" id="customSubjectInput" placeholder="اكتب اسم المادة هنا...">
-            </div>
-
             <div class="input-field">
                 <label>نمط الخطة الدراسية</label>
                 <select id="planModeSelect" onchange="togglePlanModes()">
-                    <option value="free">النمط الحر (تحديد صفحات)</option>
-                    <option value="chapters">نمط الفصول (هيكل المنهج)</option>
+                    <option value="free">النمط الحر (تحديد صفحات وحجم المهمة)</option>
+                    <option value="days">نمط الأيام (تقسيم على أيام للامتحان)</option>
+                    <option value="chapters">نمط الفصول (بناء هيكل المنهج)</option>
                 </select>
             </div>
 
             <div id="modeFreeInputs">
                 <div style="display:flex; gap:10px;">
-                    <div class="input-field"><label>من ص</label><input type="number" id="fStart" min="1"></div>
-                    <div class="input-field"><label>إلى ص</label><input type="number" id="fEnd" min="1"></div>
+                    <div class="input-field" style="flex:1;"><label>من صفحة</label><input type="number" id="fStart" min="1"></div>
+                    <div class="input-field" style="flex:1;"><label>إلى صفحة</label><input type="number" id="fEnd" min="1"></div>
                 </div>
-                <div class="input-field"><label>حجم المهمة</label><input type="number" id="fTaskSize" value="10" min="1"></div>
-                <div class="input-field" style="border-top:1px dashed var(--border-subtle); padding-top:10px;">
-                    <label>إجمالي صفحات المرجع (اختياري)</label>
-                    <input type="number" id="addTotalPages" min="1" placeholder="لحساب النسبة الكلية">
-                </div>
+                <div class="input-field"><label>حجم المهمة (كم صفحة في المهمة الواحدة؟)</label><input type="number" id="fTaskSize" value="10" min="1"></div>
             </div>
 
+            <div id="modeDaysInputs" style="display:none;">
+                <div style="display:flex; gap:10px;">
+                    <div class="input-field" style="flex:1;"><label>من صفحة</label><input type="number" id="dStart" min="1"></div>
+                    <div class="input-field" style="flex:1;"><label>إلى صفحة</label><input type="number" id="dEnd" min="1"></div>
+                </div>
+                <div class="input-field"><label>كم يوماً متبقي للامتحان؟</label><input type="number" id="dDays" value="7" min="1">
+                <small style="color:var(--accent-primary); font-size:11px;">*سيتم تقسيم الصفحات كمهام يومية.</small></div>
+            </div>
+
+            <!-- نمط بناء الفصول الديناميكي -->
             <div id="modeChaptersInputs" style="display:none;">
+                <div style="margin-bottom: 10px; font-size: 13px; color: var(--text-secondary);">أضف الفصول التي تريد دراستها، وسنقوم بترتيبها تلقائياً مع تجاهل المحذوف.</div>
                 <div id="chaptersContainer">
-                    <div class="chapter-row" style="display:flex; gap:6px; margin-bottom:8px; align-items:center;">
-                        <input type="text" class="chap-name" placeholder="الاسم" style="flex:2;">
-                        <input type="number" class="chap-start" placeholder="من" style="flex:1;">
-                        <input type="number" class="chap-end" placeholder="إلى" style="flex:1;">
-                        <button class="btn-danger" style="width:36px; padding:0; margin:0;" disabled>✖</button>
+                    <div class="chapter-row" style="display: flex; gap: 8px; margin-bottom: 10px; align-items: center;">
+                        <div class="input-field" style="flex: 2; margin-bottom: 0;">
+                            <input type="text" class="chap-name" placeholder="اسم الفصل (مثال: الفصل 1)">
+                        </div>
+                        <div class="input-field" style="flex: 1; margin-bottom: 0;">
+                            <input type="number" class="chap-start" placeholder="من ص" min="1">
+                        </div>
+                        <div class="input-field" style="flex: 1; margin-bottom: 0;">
+                            <input type="number" class="chap-end" placeholder="إلى ص" min="1">
+                        </div>
+                        <button class="btn-danger" style="width: 40px; height: 40px; padding: 0; margin-bottom: 0;" disabled>✖</button>
                     </div>
                 </div>
-                <button class="btn-secondary" style="border-style:dashed; color:var(--accent-primary);" onclick="addChapterRow('chaptersContainer')">➕ إضافة فصل</button>
+                <button class="btn-secondary" onclick="addChapterRow()" style="margin-top: 5px; width: 100%; border-style: dashed; border-color: var(--accent-primary); color: var(--accent-primary);">➕ إضافة فصل جديد</button>
             </div>
-            <button class="btn-primary" onclick="addSubjectToPlan()">إضافة للوحة التنفيذ 🚀</button>
+
+            <div class="input-field" id="totalBookInputDiv" style="margin-top: 15px;">
+                <label>إجمالي صفحات الكتاب/المرجع الكلية (اختياري)</label>
+                <input type="number" id="addTotalPages" min="1" placeholder="مثال: 400 لحساب الإنجاز الكلي">
+            </div>
+
+            <button class="btn-primary" onclick="addSubjectToPlan()" style="margin-top:15px;">إضافة للوحة التنفيذ 🚀</button>
+        </div>
+
+        <div class="tab-content" id="tabStats">
+            <div class="stat-box"><span>📖 صفحات اليوم:</span> <span class="stat-val" id="statPages">0</span></div>
+            <div class="stat-box"><span>⏱️ دقائق التركيز اليوم:</span> <span class="stat-val" id="statFocus">0</span></div>
+            <div class="stat-box"><span>🔥 أيام الاستمرارية:</span> <span class="stat-val" id="statStreak">0</span></div>
+            
+            <button class="btn-secondary" onclick="shareStats()" style="width:100%; margin-top:15px; color:var(--accent-primary); border-color:var(--accent-primary);">📤 شارك إنجازك اليومي</button>
+            <div style="margin-top:20px; border-top:1px dashed var(--border-subtle); padding-top:15px;">
+                <label style="font-size:13px; font-weight:700; display:block; margin-bottom:8px;">إعداد المؤقت العام للجلسة:</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="number" id="setMinutes" min="1" placeholder="دقائق بومودورو" style="flex:2;">
+                    <button class="btn-primary" onclick="applyGlobalTimer()" style="flex:1; padding:8px;">ضبط وبدء</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tabShelf">
+            <p style="font-size:13px; color:var(--text-secondary);">المواد التي أتممتها بنسبة 100% ستظهر هنا لمراجعتها لاحقاً.</p>
+            <div id="shelfContainer"></div>
         </div>
 
         <div class="tab-content" id="tabSettings">
-            <button class="btn-secondary" onclick="exportData()">تصدير (حفظ) 💾</button>
-            <label class="btn-secondary" style="display:block; text-align:center;">
-                استيراد (استعادة) 📂 <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
+            <button class="btn-secondary" onclick="exportData()" style="margin-bottom:10px;">💾 تصدير (حفظ نسخة احتياطية)</button>
+            <label class="btn-secondary" style="cursor:pointer; margin-bottom:20px; margin-top:0;">
+                📂 استيراد (استعادة بيانات)
+                <input type="file" accept=".json" style="display:none;" onchange="importData(event)">
             </label>
-            <button class="btn-danger" onclick="resetEverything()" style="margin-top:20px;">تصفير ومسح اللوحة بالكامل</button>
-        </div>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="editSubjectModal">
-    <div class="custom-modal-content">
-        <button class="close-modal-btn" onclick="closeModal('editSubjectModal')">✖</button>
-        <h2 class="modal-title">تعديل الإعدادات</h2>
-        <p style="color:var(--accent-primary); font-weight:800; font-size:14px; text-align:center; margin-bottom:15px;" id="editSubName"></p>
-        <input type="hidden" id="editSubId">
-        
-        <div id="editNormalInputs">
-            <div style="display:flex; gap:10px;">
-                <div class="input-field"><label>من ص</label><input type="number" id="editStartPage" min="1"></div>
-                <div class="input-field"><label>إلى ص</label><input type="number" id="editEndPage" min="1"></div>
-            </div>
-            <div class="input-field"><label>حجم المهمة</label><input type="number" id="editTaskSize" min="1"></div>
-            <div class="input-field" style="border-top:1px dashed var(--border-subtle); padding-top:10px;">
-                <label>إجمالي صفحات المرجع (اختياري)</label>
-                <input type="number" id="editTotalPages" min="1">
+            <button class="btn-danger" onclick="resetEverything()" style="margin-top:20px;">🗑️ إنهاء الجلسة وتصفير اللوحة بالكامل</button>
+            
+            <div style="margin-top: 30px; text-align: center; font-size: 12px; color: var(--text-secondary);">
+                الإصدار 10.1 - <br>جميع الحقوق محفوظة &copy; 2026
             </div>
         </div>
 
-        <div id="editChapterInputs" style="display:none;">
-            <div id="editChaptersContainer"></div>
-            <button class="btn-secondary" style="border-style:dashed; color:var(--accent-primary);" onclick="addChapterRow('editChaptersContainer')">➕ إضافة فصل جديد</button>
-        </div>
-
-        <button class="btn-primary" onclick="saveEditData()">حفظ التعديلات ✅</button>
+        <button class="btn-secondary" onclick="closeModal('controlPanelModal')" style="margin-top:20px; border:none; background:transparent;">إغلاق</button>
     </div>
 </div>
 
 <div class="custom-modal-overlay" id="bookProgressModal">
-    <div class="custom-modal-content" style="max-width: 300px;">
-        <h2 class="modal-title" id="bpTitle" style="margin-bottom:5px;"></h2>
-        <div style="font-size:32px; font-weight:800; color:var(--accent-primary); margin-bottom:10px; text-align:center;" id="bpPercentage"></div>
-        <div id="bpDetails" style="font-size:13px; color:var(--text-secondary); text-align:center; line-height:1.6;"></div>
-        <button class="btn-primary" onclick="closeModal('bookProgressModal')">إغلاق</button>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="timerSetupModal">
-    <div class="custom-modal-content" style="max-width: 280px;">
-        <h2 class="modal-title">إعداد المؤقت</h2>
-        <div style="display:flex; gap:10px; margin-bottom:15px;">
-            <button class="btn-secondary" id="btnTimerUp" onclick="setTimerMode('up', this)">تصاعدي</button>
-            <button class="btn-secondary" id="btnTimerDown" onclick="setTimerMode('down', this)">تنازلي</button>
-        </div>
-        <div class="input-field" id="timerInputContainer" style="display:none;">
-            <label>حدد الدقائق</label>
-            <input type="number" id="setMinutes" min="1">
-        </div>
-        <button class="btn-primary" onclick="applyTimer()">حفظ</button>
+    <div class="custom-modal-content">
+        <h2 class="modal-title" id="bpTitle">تقدم المرجع</h2>
+        <div style="font-size:40px; font-weight:800; color:var(--accent-primary); margin:20px 0;" id="bpPercentage">0%</div>
+        <div class="modal-text" id="bpDetails" style="font-size: 14px; line-height: 1.8;"></div>
+        <button class="btn-primary" onclick="closeModal('bookProgressModal')" style="margin-top: 15px;">استمرار</button>
     </div>
 </div>
 
 <div class="custom-modal-overlay" id="customAlertModal">
-    <div class="custom-modal-content" style="max-width: 280px; text-align:center;">
-        <div style="font-size:35px; margin-bottom:10px;">⚠️</div>
-        <h2 class="modal-title" id="alertTitle" style="margin-bottom:5px;"></h2>
-        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:15px;" id="alertMessage"></p>
-        <button class="btn-primary" onclick="closeModal('customAlertModal')">إغلاق</button>
-    </div>
-</div>
-
-<div class="custom-modal-overlay" id="celebrationModal">
-    <div class="custom-modal-content" style="max-width: 280px; text-align:center;">
-        <div style="font-size:40px; margin-bottom:10px;">🎉</div>
-        <h2 class="modal-title" style="color:var(--success-color); margin-bottom:5px;">عمل رائع!</h2>
-        <p style="font-size:14px; font-weight:700; color:var(--text-primary);">أنجزت للتو <strong id="celTaskName" style="color:var(--accent-primary);"></strong> من مادة <strong id="celSubjectName"></strong>.</p>
-        <button class="btn-primary" style="background:var(--success-color); margin-top:10px;" onclick="closeModal('celebrationModal')">متابعة 💪</button>
+    <div class="custom-modal-content">
+        <div class="alert-icon" id="alertIcon" style="font-size:40px;">⚠️</div>
+        <h2 class="modal-title" id="alertTitle">تنبيه</h2>
+        <p class="modal-text" id="alertMessage">الرسالة هنا</p>
+        <button class="btn-primary" onclick="closeModal('customAlertModal')">حسناً</button>
     </div>
 </div>
 
 <script>
-    const APP_VERSION = '12.0';
-    const VERSION_KEY = 'studyTracker_appVersion';
-    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v12_0'; 
-    const OLD_STATE_KEYS = [
-        'studyTrackerSaveState_v12', 'studyTrackerSaveState_v11_1', 
-        'studyTrackerSaveState_v11_0', 'studyTrackerSaveState_v11', 
-        'studyTrackerSaveState_v10_2', 'studyTrackerSaveState_v10_1', 
-        'studyTrackerSaveState_v10', 'studyTrackerSaveState_v9'
-    ];
+    const APP_VERSION = '10.1';
+    const CURRENT_STATE_KEY = 'studyTrackerSaveState_v10_1'; 
+    const OLD_STATE_KEYS = ['studyTrackerSaveState_v10', 'studyTrackerSaveState_v9_2', 'studyTrackerSaveState_v9_1', 'studyTrackerSaveState_v9_0', 'studyTrackerSaveState_v8_9', 'studyTrackerSaveState_v8_8'];
 
-    let appState = { configs: [], studied: {}, timer: { sec: 0, startSec: 0, mode: 'up', isRunning: false }, stats: { streak: 0, lastActiveDate: '' } };
+    let appState = {
+        configs: [], studied: {}, shelf: [],
+        timer: { sec: 0, startSec: 0, mode: 'up', isRunning: false },
+        stats: { todayDate: '', pagesToday: 0, totalFocusSec: 0, streak: 0, lastActiveDate: '' }
+    };
 
     const subjectsData = {
         "بيولوجيا الخلية": { hue: 170 }, "الكيمياء العامة والعضوية": { hue: 25 },
@@ -342,190 +313,116 @@
         "الإحصاء الحيوي": { hue: 230 }, "اللغة الإنجليزية 2": { hue: 90 }
     };
 
-    function initSubjectSelect() {
-        let options = `<option value="" disabled selected>اختر المادة...</option>`;
-        options += Object.keys(subjectsData).map(k => `<option value="${k}">${k}</option>`).join('');
-        options += `<option value="custom">➕ مادة أخرى (كتابة يدوية)...</option>`;
-        document.getElementById('addSubjectSelect').innerHTML = options;
-    }
-
-    function toggleCustomSubject() {
-        const val = document.getElementById('addSubjectSelect').value;
-        document.getElementById('customSubjectDiv').style.display = val === 'custom' ? 'block' : 'none';
-    }
+    document.getElementById('addSubjectSelect').innerHTML = `<option value="" disabled selected>اختر المادة...</option>` + 
+        Object.keys(subjectsData).map(k => `<option value="${k}">${k}</option>`).join('');
 
     const themeToggleBtn = document.getElementById('themeToggleBtn');
-    if (localStorage.getItem('studyTrackerTheme') === 'dark') { document.body.classList.add('dark-mode'); }
+    if (localStorage.getItem('studyTrackerTheme') === 'dark') { document.body.classList.add('dark-mode'); themeToggleBtn.innerHTML = '☀️'; }
     themeToggleBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('studyTrackerTheme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        themeToggleBtn.innerHTML = document.body.classList.contains('dark-mode') ? '☀️' : '🌓';
     });
 
-    window.addEventListener('scroll', () => { 
-        let btn = document.getElementById('scrollTopBtn');
-        if(btn) btn.style.display = window.scrollY > 300 ? 'flex' : 'none'; 
+    window.addEventListener('scroll', () => {
+        document.getElementById('scrollTopBtn').style.display = window.scrollY > 300 ? 'flex' : 'none';
     });
 
-    function checkUpdateNotification() { if (localStorage.getItem(VERSION_KEY) !== APP_VERSION) document.getElementById('updateWelcomeModal').classList.add('active'); }
-    function closeUpdateWelcomeModal() { localStorage.setItem(VERSION_KEY, APP_VERSION); closeModal('updateWelcomeModal'); }
-    
-    function openControlPanel() { document.getElementById('controlPanelModal').classList.add('active'); }
+    function openControlPanel() { document.getElementById('controlPanelModal').classList.add('active'); updateStatsUI(); renderShelfUI(); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-    function showAlert(title, msg) { document.getElementById('alertTitle').textContent = title; document.getElementById('alertMessage').textContent = msg; document.getElementById('customAlertModal').classList.add('active'); }
-    
+    function showAlert(title, msg, icon="⚠️") {
+        document.getElementById('alertTitle').textContent = title;
+        document.getElementById('alertMessage').textContent = msg;
+        document.getElementById('alertIcon').textContent = icon;
+        document.getElementById('customAlertModal').classList.add('active');
+    }
+
     function switchTab(tabId) {
         document.querySelectorAll('.modal-tab').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        event.target.classList.add('active'); document.getElementById(tabId).classList.add('active');
+        event.target.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
     }
 
     function togglePlanModes() {
         const mode = document.getElementById('planModeSelect').value;
         document.getElementById('modeFreeInputs').style.display = mode === 'free' ? 'block' : 'none';
+        document.getElementById('modeDaysInputs').style.display = mode === 'days' ? 'block' : 'none';
         document.getElementById('modeChaptersInputs').style.display = mode === 'chapters' ? 'block' : 'none';
+        document.getElementById('totalBookInputDiv').style.display = mode === 'chapters' ? 'none' : 'block'; 
     }
 
-    function addChapterRow(containerId) {
-        const container = document.getElementById(containerId);
+    // إدارة بناء الفصول ديناميكياً
+    function addChapterRow() {
+        const container = document.getElementById('chaptersContainer');
         const rowCount = container.children.length + 1;
         const row = document.createElement('div');
         row.className = 'chapter-row';
-        row.style.cssText = 'display: flex; gap: 6px; margin-bottom: 8px; align-items: center;';
+        row.style.cssText = 'display: flex; gap: 8px; margin-bottom: 10px; align-items: center;';
         row.innerHTML = `
-            <input type="text" class="chap-name" placeholder="اسم الفصل (تلقائي: ${rowCount})" style="flex: 2;">
-            <input type="number" class="chap-start" placeholder="من ص" style="flex: 1;" min="1">
-            <input type="number" class="chap-end" placeholder="إلى ص" style="flex: 1;" min="1">
-            <button class="btn-danger" onclick="this.parentElement.remove()" style="width: 36px; padding: 0; margin: 0; border-radius: 8px;">✖</button>
+            <div class="input-field" style="flex: 2; margin-bottom: 0;">
+                <input type="text" class="chap-name" placeholder="اسم الفصل (مثال: الفصل ${rowCount})">
+            </div>
+            <div class="input-field" style="flex: 1; margin-bottom: 0;">
+                <input type="number" class="chap-start" placeholder="من ص" min="1">
+            </div>
+            <div class="input-field" style="flex: 1; margin-bottom: 0;">
+                <input type="number" class="chap-end" placeholder="إلى ص" min="1">
+            </div>
+            <button class="btn-danger" onclick="this.parentElement.remove()" style="width: 40px; height: 40px; padding: 0; margin-bottom: 0;">✖</button>
         `;
         container.appendChild(row);
     }
 
-    function parseChapterRows(containerId) {
-        const rows = document.querySelectorAll(`#${containerId} .chapter-row`);
-        let chapters = []; let totalP = 0;
-        rows.forEach((row, idx) => {
-            let name = row.querySelector('.chap-name').value.trim() || `الفصل ${idx + 1}`;
-            let s = parseInt(row.querySelector('.chap-start').value);
-            let e = parseInt(row.querySelector('.chap-end').value);
-            if (!isNaN(s) && !isNaN(e) && s <= e) {
-                chapters.push({ name: name, start: s, end: e });
-                totalP += (e - s + 1);
-            }
-        });
-        return { chapters, totalP };
-    }
-
     function addSubjectToPlan() {
-        let subjectInput = document.getElementById('addSubjectSelect').value;
+        const subject = document.getElementById('addSubjectSelect').value;
         const mode = document.getElementById('planModeSelect').value;
-        let finalSubjectName = subjectInput;
-        let subjectHue = 0;
+        if (!subject) return showAlert("خطأ", "يرجى اختيار المادة أولاً.");
+        if (appState.configs.find(c => c.name === subject)) return showAlert("موجودة", "المادة موجودة مسبقاً في مساحة العمل.");
 
-        if (!subjectInput) return showAlert("تنبيه", "يرجى اختيار المادة أولاً.");
+        let config = { id: `sub_${Date.now()}`, name: subject, type: mode, hue: subjectsData[subject].hue, reviewCount: 0 };
 
-        if (subjectInput === 'custom') {
-            finalSubjectName = document.getElementById('customSubjectInput').value.trim();
-            if (!finalSubjectName) return showAlert("تنبيه", "يرجى كتابة اسم المادة الجديدة.");
-            subjectHue = Math.floor(Math.random() * 360);
-        } else {
-            subjectHue = subjectsData[subjectInput].hue;
-        }
-
-        if (appState.configs.find(c => c.name === finalSubjectName)) return showAlert("موجودة مسبقاً", "هذه المادة موجودة بالفعل. قم بتعديلها عبر زر ✏️.");
-
-        let config = { id: `sub_${Date.now()}`, name: finalSubjectName, type: mode, hue: subjectHue };
-
-        if (mode === 'free') {
-            let s = parseInt(document.getElementById('fStart').value); 
-            let e = parseInt(document.getElementById('fEnd').value);
-            if (isNaN(s) || isNaN(e) || s > e) return showAlert("خطأ", "نطاق صفحات غير صالح.");
-            config.start = s; config.end = e; 
-            config.taskSize = parseInt(document.getElementById('fTaskSize').value) || 10;
+        if (mode === 'free' || mode === 'days') {
+            let start = parseInt(document.getElementById(mode==='free'?'fStart':'dStart').value);
+            let end = parseInt(document.getElementById(mode==='free'?'fEnd':'dEnd').value);
+            if (isNaN(start) || isNaN(end) || start > end) return showAlert("خطأ", "نطاق الصفحات غير صالح.");
+            
+            config.start = start; config.end = end;
             config.totalPages = parseInt(document.getElementById('addTotalPages').value) || 0;
-        } else if (mode === 'chapters') {
-            const data = parseChapterRows('chaptersContainer');
-            if(data.chapters.length === 0) return showAlert("تنبيه", "يرجى إدخال فصل واحد صحيح على الأقل.");
-            data.chapters.sort((a,b) => a.start - b.start);
-            config.chapters = data.chapters; config.totalPages = data.totalP; config.start = data.chapters[0].start; config.end = data.chapters[data.chapters.length-1].end;
+
+            if (mode === 'free') {
+                config.taskSize = parseInt(document.getElementById('fTaskSize').value) || 10;
+            } else {
+                let days = parseInt(document.getElementById('dDays').value) || 1;
+                config.taskSize = Math.ceil((end - start + 1) / days);
+            }
+        } 
+        else if (mode === 'chapters') {
+            const rows = document.querySelectorAll('#chaptersContainer .chapter-row');
+            let chapters = []; let totalP = 0;
+            rows.forEach((row, idx) => {
+                let name = row.querySelector('.chap-name').value || `الفصل ${idx + 1}`;
+                let s = parseInt(row.querySelector('.chap-start').value);
+                let e = parseInt(row.querySelector('.chap-end').value);
+                if (!isNaN(s) && !isNaN(e) && s <= e) {
+                    chapters.push({ name: name, start: s, end: e });
+                    totalP += (e - s + 1);
+                }
+            });
+            if(chapters.length === 0) return showAlert("خطأ", "يرجى إدخال فصل واحد صحيح على الأقل.");
+            chapters.sort((a,b) => a.start - b.start);
+            config.chapters = chapters;
+            config.totalPages = totalP; 
+            config.start = chapters[0].start; 
         }
 
-        appState.configs.push(config); appState.studied[config.id] = [];
-        saveState(); reloadWorkspace(); closeModal('controlPanelModal');
-        
-        document.getElementById('customSubjectInput').value = '';
-        document.getElementById('chaptersContainer').innerHTML = `
-            <div class="chapter-row" style="display:flex; gap:6px; margin-bottom:8px; align-items:center;">
-                <input type="text" class="chap-name" placeholder="الاسم" style="flex:2;">
-                <input type="number" class="chap-start" placeholder="من" style="flex:1;">
-                <input type="number" class="chap-end" placeholder="إلى" style="flex:1;">
-                <button class="btn-danger" style="width:36px; padding:0; margin:0;" disabled>✖</button>
-            </div>
-        `;
+        appState.configs.push(config);
+        appState.studied[config.id] = [];
+        saveState();
+        reloadWorkspace();
+        closeModal('controlPanelModal');
         document.getElementById('welcomePanel').style.display = 'none';
         window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
-    }
-
-    function openEditModal(id) {
-        const conf = appState.configs.find(c => c.id === id); if(!conf) return;
-        
-        document.getElementById('editSubId').value = conf.id;
-        document.getElementById('editSubName').textContent = conf.name;
-        
-        if (conf.type === 'chapters') {
-            document.getElementById('editNormalInputs').style.display = 'none';
-            document.getElementById('editChapterInputs').style.display = 'block';
-            
-            const cont = document.getElementById('editChaptersContainer');
-            cont.innerHTML = '';
-            conf.chapters.forEach((ch) => {
-                const row = document.createElement('div');
-                row.className = 'chapter-row';
-                row.style.cssText = 'display: flex; gap: 6px; margin-bottom: 8px; align-items: center;';
-                row.innerHTML = `
-                    <input type="text" class="chap-name" value="${ch.name}" style="flex:2;">
-                    <input type="number" class="chap-start" value="${ch.start}" min="1" style="flex:1;">
-                    <input type="number" class="chap-end" value="${ch.end}" min="1" style="flex:1;">
-                    <button class="btn-danger" onclick="this.parentElement.remove()" style="width:36px; padding:0; margin:0; border-radius:8px;">✖</button>
-                `;
-                cont.appendChild(row);
-            });
-        } else {
-            document.getElementById('editNormalInputs').style.display = 'block';
-            document.getElementById('editChapterInputs').style.display = 'none';
-            document.getElementById('editStartPage').value = conf.start;
-            document.getElementById('editEndPage').value = conf.end;
-            document.getElementById('editTaskSize').value = conf.taskSize || 10;
-            document.getElementById('editTotalPages').value = conf.totalPages || '';
-        }
-        document.getElementById('editSubjectModal').classList.add('active');
-    }
-
-    function saveEditData() {
-        const id = document.getElementById('editSubId').value;
-        const conf = appState.configs.find(c => c.id === id); if(!conf) return;
-
-        if (conf.type === 'chapters') {
-            const data = parseChapterRows('editChaptersContainer');
-            if(data.chapters.length === 0) return showAlert("تنبيه", "يجب أن تحتوي المادة على فصل واحد صحيح على الأقل.");
-            data.chapters.sort((a,b) => a.start - b.start);
-            conf.chapters = data.chapters; conf.totalPages = data.totalP; 
-            conf.start = data.chapters[0].start; conf.end = data.chapters[data.chapters.length-1].end;
-        } else {
-            let s = parseInt(document.getElementById('editStartPage').value); 
-            let e = parseInt(document.getElementById('editEndPage').value);
-            if (isNaN(s) || isNaN(e) || s > e) return showAlert("خطأ", "أرقام الصفحات غير صحيحة.");
-            conf.start = s; conf.end = e; 
-            conf.taskSize = parseInt(document.getElementById('editTaskSize').value) || 10;
-            conf.totalPages = parseInt(document.getElementById('editTotalPages').value) || 0;
-        }
-        saveState(); reloadWorkspace(); closeModal('editSubjectModal');
-    }
-
-    function deleteSubject(id) {
-        if(confirm("هل أنت متأكد من إزالة المادة بالكامل من اللوحة؟")) {
-            appState.configs = appState.configs.filter(c => c.id !== id); delete appState.studied[id];
-            saveState(); reloadWorkspace();
-        }
     }
 
     function reloadWorkspace() {
@@ -542,248 +439,332 @@
         
         document.getElementById('welcomePanel').style.display = 'none';
         stickyBar.style.display = 'block';
+        document.getElementById('compactTimerDiv').style.display = 'flex';
 
         appState.configs.forEach(conf => {
-            let miniHtml = `
-                <div class="mini-subject-card" style="--subject-hue: ${conf.hue}" onclick="showBookProgress('${conf.id}')">
-                    <div class="mini-sub-header">
-                        <div class="mini-sub-title">${conf.name}</div>
-                        <span class="percent-badge" id="percentText_${conf.id}">0%</span>
-                    </div>
-                    <div class="progress-bar-wrapper"><div class="progress-bar-fill" id="miniBar_${conf.id}"></div></div>
-                </div>`;
+            let miniHtml = `<div class="mini-subject-card" style="--subject-hue: ${conf.hue}" onclick="showBookProgress('${conf.id}')">
+                <div class="mini-sub-title">${conf.name} ${conf.reviewCount > 0 ? `(م${conf.reviewCount})` : ''}</div>
+                <div class="progress-bar-wrapper"><div class="progress-bar-fill" id="miniBar_${conf.id}"></div></div>`;
+            if(conf.totalPages > 0) miniHtml += `<div class="book-progress-wrapper"><div class="book-progress-fill" id="bookBar_${conf.id}"></div></div>`;
+            miniHtml += `</div>`;
             miniGrid.insertAdjacentHTML('beforeend', miniHtml);
 
             const sec = document.createElement('div');
             sec.className = 'subject-section'; sec.id = `sec_${conf.id}`;
             sec.style.setProperty('--subject-hue', conf.hue);
             
-            let hText = conf.type === 'chapters' ? "الفصول" : `صـ ${conf.start} إلى ${conf.end}`;
+            let headerText = conf.type === 'chapters' ? "نظام الفصول" : `صـ ${conf.start} إلى ${conf.end}`;
             sec.innerHTML = `
                 <div class="subject-header-title">
-                    <div class="sub-title-text">📚 ${conf.name} <span style="font-size:12px; color:var(--text-secondary); font-weight:normal;">(${hText})</span></div>
-                    <div class="sub-header-actions">
-                        <button class="action-btn-small" onclick="openEditModal('${conf.id}')" title="تعديل">✏️</button>
-                        <button class="action-btn-small danger" onclick="deleteSubject('${conf.id}')" title="إزالة">🗑️</button>
-                    </div>
+                    <span style="display:flex; align-items:center; gap:8px;">
+                        📚 ${conf.name} <span style="font-size:12px; color:var(--text-secondary); font-weight:500;">(${headerText})</span>
+                    </span>
+                    <button class="icon-btn" style="width:30px; height:30px; font-size:14px;" onclick="confirmDelete('${conf.id}')" title="إزالة المادة">🗑️</button>
                 </div>
             `;
 
             let studiedArr = appState.studied[conf.id] || [];
 
             if (conf.type === 'chapters') {
-                conf.chapters.forEach((ch) => sec.appendChild(buildTaskHtml(conf.id, ch.name, ch.start, ch.end, studiedArr)));
+                conf.chapters.forEach((ch) => {
+                    sec.appendChild(buildTaskHtml(conf, ch.name, ch.start, ch.end, studiedArr));
+                });
             } else {
-                let taskNum = 1; let tSize = conf.taskSize || 10;
-                let totalTasks = Math.ceil((conf.end - conf.start + 1) / tSize);
-                for (let i = conf.start; i <= conf.end; i += tSize) {
-                    let tEnd = Math.min(i + tSize - 1, conf.end);
-                    sec.appendChild(buildTaskHtml(conf.id, `المهمة ${taskNum++} من ${totalTasks}`, i, tEnd, studiedArr));
+                let taskNum = 1;
+                let totalTasks = Math.ceil((conf.end - conf.start + 1) / conf.taskSize);
+                for (let i = conf.start; i <= conf.end; i += conf.taskSize) {
+                    let tEnd = Math.min(i + conf.taskSize - 1, conf.end);
+                    let title = conf.type === 'days' ? `اليوم ${taskNum}` : `المهمة ${taskNum} من ${totalTasks}`;
+                    sec.appendChild(buildTaskHtml(conf, title, i, tEnd, studiedArr));
+                    taskNum++;
                 }
             }
+            
+            let toShelfBtn = document.createElement('button');
+            toShelfBtn.className = 'btn-primary';
+            toShelfBtn.style.marginTop = '20px';
+            toShelfBtn.style.display = 'none'; 
+            toShelfBtn.id = `toShelf_${conf.id}`;
+            toShelfBtn.innerHTML = `📦 نقل المادة إلى الرف (أرشيف)`;
+            toShelfBtn.onclick = () => moveToShelf(conf.id);
+            sec.appendChild(toShelfBtn);
+
             ws.appendChild(sec);
             updateProgressMetrics(conf.id); 
         });
     }
 
-    function buildTaskHtml(confId, title, startPage, endPage, studiedArr) {
-        let taskDiv = document.createElement('div'); taskDiv.className = 'task-section';
-        let header = document.createElement('div'); header.className = 'task-header';
-        header.innerHTML = `<h3 class="task-title">${title}</h3><span class="task-badge">${startPage} - ${endPage}</span>`;
-        let content = document.createElement('div'); content.className = 'task-content';
+    function buildTaskHtml(conf, title, startPage, endPage, studiedArr) {
+        let taskDiv = document.createElement('div');
+        taskDiv.className = 'task-section';
+        
+        let header = document.createElement('div');
+        header.className = 'task-header';
+        header.innerHTML = `
+            <h3 class="task-title"><span class="completed-icon">✅</span> ${title}</h3>
+            <span class="task-badge">صـ ${startPage} - ${endPage}</span>
+        `;
+        
+        let content = document.createElement('div');
+        content.className = 'task-content';
         
         let isFullyStudied = true;
         for (let p = startPage; p <= endPage; p++) {
-            let c = document.createElement('div'); c.className = 'card'; c.textContent = p;
+            let c = document.createElement('div');
+            c.className = 'card'; c.textContent = p;
             if(studiedArr.includes(p)) c.classList.add('studied'); else isFullyStudied = false;
             
             c.onclick = (e) => {
                 e.stopPropagation(); 
                 c.classList.toggle('studied');
                 if(c.classList.contains('studied')) {
-                    if(!appState.studied[confId].includes(p)) appState.studied[confId].push(p);
+                    if(!appState.studied[conf.id].includes(p)) appState.studied[conf.id].push(p);
+                    appState.stats.pagesToday++; 
                 } else {
-                    appState.studied[confId] = appState.studied[confId].filter(x => x !== p);
+                    appState.studied[conf.id] = appState.studied[conf.id].filter(x => x !== p);
                 }
-                saveState(); checkTaskState(taskDiv, confId, title);
+                saveState(); updateStatsUI();
+                checkTaskAutoCollapse(taskDiv, conf.id);
             };
             content.appendChild(c);
         }
 
         header.onclick = () => content.classList.toggle('collapsed'); 
         taskDiv.appendChild(header); taskDiv.appendChild(content);
-        if(isFullyStudied) { taskDiv.classList.add('completed'); content.classList.add('collapsed'); }
+        
+        if(isFullyStudied) {
+            taskDiv.classList.add('completed');
+            content.classList.add('collapsed'); 
+        }
         return taskDiv;
     }
 
-    function checkTaskState(taskDiv, subjectId, title) {
+    function checkTaskAutoCollapse(taskDiv, subjectId) {
         let cards = taskDiv.querySelectorAll('.card');
         let studied = taskDiv.querySelectorAll('.card.studied');
         let content = taskDiv.querySelector('.task-content');
         
         if (cards.length === studied.length && cards.length > 0) {
             if(!taskDiv.classList.contains('completed')) {
-                taskDiv.classList.add('completed'); content.classList.add('collapsed');
-                const confName = appState.configs.find(c => c.id === subjectId)?.name;
-                document.getElementById('celTaskName').textContent = title;
-                document.getElementById('celSubjectName').textContent = confName;
-                document.getElementById('celebrationModal').classList.add('active');
+                taskDiv.classList.add('completed');
+                setTimeout(() => content.classList.add('collapsed'), 400); 
             }
         } else {
-            taskDiv.classList.remove('completed'); content.classList.remove('collapsed');
+            taskDiv.classList.remove('completed');
+            content.classList.remove('collapsed');
         }
         updateProgressMetrics(subjectId);
     }
 
     function updateProgressMetrics(subjectId) {
-        const conf = appState.configs.find(c => c.id === subjectId); if(!conf) return;
-        let totalSessionPages = conf.type === 'chapters' ? conf.totalPages : (conf.end - conf.start + 1);
+        const conf = appState.configs.find(c => c.id === subjectId);
+        if(!conf) return;
+        
+        let totalSessionPages = conf.type === 'chapters' ? conf.chapters.reduce((a, b) => a + (b.end - b.start + 1), 0) : (conf.end - conf.start + 1);
         let studiedPages = appState.studied[subjectId].length;
+        
         let percent = totalSessionPages===0 ? 0 : Math.round((studiedPages/totalSessionPages)*100);
         let miniBar = document.getElementById(`miniBar_${subjectId}`);
-        let percentText = document.getElementById(`percentText_${subjectId}`);
         if(miniBar) miniBar.style.width = `${percent}%`;
-        if(percentText) percentText.textContent = `${percent}%`;
+
+        let shelfBtn = document.getElementById(`toShelf_${subjectId}`);
+        if(shelfBtn) shelfBtn.style.display = percent === 100 ? 'block' : 'none';
+
+        if(conf.totalPages > 0) {
+            let totalInBook = conf.type !== 'chapters' ? (conf.start - 1) + studiedPages : studiedPages;
+            let bookPercent = Math.min(100, Math.round((totalInBook / conf.totalPages) * 100));
+            let bookBar = document.getElementById(`bookBar_${subjectId}`);
+            if(bookBar) bookBar.style.width = `${bookPercent}%`;
+        }
     }
 
     function showBookProgress(subjectId) {
-        const conf = appState.configs.find(c => c.id === subjectId); if(!conf) return;
+        const conf = appState.configs.find(c => c.id === subjectId);
+        if(!conf) return;
         let studied = appState.studied[subjectId].length;
-        let totalSession = conf.type === 'chapters' ? conf.totalPages : (conf.end - conf.start + 1);
+        let totalSession = conf.type === 'chapters' ? conf.chapters.reduce((a, b) => a + (b.end - b.start + 1), 0) : (conf.end - conf.start + 1);
         let percentSession = totalSession===0 ? 0 : Math.round((studied/totalSession)*100);
         
         let globalPercent = percentSession;
-        let htmlDetails = `تم إنجاز <strong>${studied}</strong> من أصل <strong>${totalSession}</strong> صفحة في الجلسة الحالية.`;
+        let htmlDetails = `<div style="margin-bottom:15px; color:var(--text-secondary);">أنجزت <strong>${studied}</strong> من أصل <strong>${totalSession}</strong> صفحة (لجلسة التتبع).</div>`;
 
         if(conf.totalPages > 0) {
             let totalInBook = conf.type !== 'chapters' ? (conf.start - 1) + studied : studied;
             globalPercent = Math.min(100, Math.round((totalInBook / conf.totalPages) * 100));
-            htmlDetails += `<br><br><div style="padding-top:10px; border-top:1px dashed var(--border-subtle);">
-                <strong>إنجاز المرجع الكلي:</strong><br>
-                <span style="font-size:22px; color:var(--accent-primary); font-weight:800;">${totalInBook}</span> من أصل <span style="font-weight:800;">${conf.totalPages}</span> صفحة
+            htmlDetails += `<div style="padding-top:15px; border-top:1px dashed var(--border-subtle); color:var(--text-primary);">
+                إنجاز المرجع الكلي:<br>
+                <strong style="color:var(--accent-primary); font-size:18px;">${totalInBook}</strong> صفحة من أصل <strong>${conf.totalPages}</strong>
             </div>`;
         }
 
-        document.getElementById('bpTitle').textContent = conf.name;
+        document.getElementById('bpTitle').textContent = `📖 ` + conf.name;
         document.getElementById('bpPercentage').textContent = `${globalPercent}%`;
         document.getElementById('bpDetails').innerHTML = htmlDetails;
         document.getElementById('bookProgressModal').classList.add('active');
     }
 
-    let timerInt;
-    const stickyTimerDisplay = document.getElementById('stickyTimer');
-
-    function formatTime(s) {
-        let h = Math.floor(s/3600); let m = Math.floor((s%3600)/60); let ss = s%60;
-        return (h<10?'0'+h:h)+':'+(m<10?'0'+m:m)+':'+(ss<10?'0'+ss:ss);
-    }
-
-    function updateTimerDisplay() {
-        stickyTimerDisplay.textContent = formatTime(appState.timer.sec);
-        if (appState.timer.mode === 'down' && appState.timer.sec > 0 && appState.timer.sec <= 10) stickyTimerDisplay.classList.add('ending');
-        else stickyTimerDisplay.classList.remove('ending');
-    }
-
-    function openTimerSetup() {
-        document.getElementById('timerInputContainer').style.display = appState.timer.mode === 'down' ? 'block' : 'none';
-        if(appState.timer.mode === 'down') {
-            document.getElementById('btnTimerDown').style.borderColor = 'var(--accent-primary)';
-            document.getElementById('btnTimerDown').style.color = 'var(--accent-primary)';
-        }
-        document.getElementById('timerSetupModal').classList.add('active');
-    }
-
-    function setTimerMode(mode, btn) {
-        appState.timer.mode = mode;
-        document.querySelectorAll('#timerSetupModal .btn-secondary').forEach(b => { b.style.borderColor = 'var(--border-subtle)'; b.style.color = 'var(--text-primary)'; });
-        btn.style.borderColor = 'var(--accent-primary)';
-        btn.style.color = 'var(--accent-primary)';
-        document.getElementById('timerInputContainer').style.display = mode === 'down' ? 'block' : 'none';
-    }
-
-    function applyTimer() {
-        if (appState.timer.mode === 'down') {
-            let m = parseInt(document.getElementById('setMinutes').value);
-            if(isNaN(m) || m <= 0) return showAlert("تنبيه", "يرجى تحديد الدقائق أولاً.");
-            appState.timer.startSec = m * 60; appState.timer.sec = m * 60;
-        } else { appState.timer.sec = 0; }
-        updateTimerDisplay(); saveState(); closeModal('timerSetupModal');
-    }
-
-    function startTimer() {
-        if (appState.timer.isRunning) return;
-        if (appState.timer.mode === 'down' && appState.timer.sec === 0) return openTimerSetup();
+    function moveToShelf(subjectId) {
+        let idx = appState.configs.findIndex(c => c.id === subjectId);
+        if(idx === -1) return;
+        let conf = appState.configs[idx];
+        conf.finishDate = new Date().toISOString().split('T')[0];
         
-        appState.timer.isRunning = true;
-        timerInt = setInterval(() => {
-            if (appState.timer.mode === 'down') {
-                if (appState.timer.sec > 0) appState.timer.sec--;
-                else { pauseTimer(); showAlert("انتهى الوقت", "⏰ لقد انتهى وقت التركيز المخصص للعد التنازلي."); return; }
-            } else { appState.timer.sec++; }
-            updateTimerDisplay(); 
-            if (appState.timer.sec % 10 === 0) saveState();
-        }, 1000);
+        appState.shelf.push(conf);
+        appState.configs.splice(idx, 1);
+        delete appState.studied[subjectId]; 
+        
+        saveState(); reloadWorkspace();
+        showAlert("تم الإنجاز!", `تم نقل ${conf.name} إلى رف الإنجازات. فخورون بك! 🎉`, "🏆");
     }
 
-    function pauseTimer() { appState.timer.isRunning = false; clearInterval(timerInt); saveState(); }
+    function renderShelfUI() {
+        const cont = document.getElementById('shelfContainer');
+        cont.innerHTML = '';
+        if(appState.shelf.length === 0) {
+            cont.innerHTML = `<p style="text-align:center; color:var(--text-secondary); margin-top:30px;">الرف فارغ حالياً.</p>`;
+            return;
+        }
+        appState.shelf.forEach(item => {
+            cont.innerHTML += `
+                <div class="shelf-item">
+                    <div>
+                        <strong style="color:var(--accent-primary); display:block;">${item.name}</strong>
+                        <span style="font-size:11px; color:var(--text-secondary);">تاريخ الختم: ${item.finishDate} | مراجعات سابقة: ${item.reviewCount || 0}</span>
+                    </div>
+                    <button class="btn-primary" style="width:auto; padding:6px 12px; font-size:12px;" onclick="reviewFromShelf('${item.id}')">🔄 بدء مراجعة</button>
+                </div>
+            `;
+        });
+    }
 
-    function resetTimer() {
-        pauseTimer();
-        appState.timer.sec = (appState.timer.mode === 'down') ? appState.timer.startSec : 0;
-        updateTimerDisplay(); saveState();
+    function reviewFromShelf(subjectId) {
+        let idx = appState.shelf.findIndex(c => c.id === subjectId);
+        if(idx === -1) return;
+        let conf = appState.shelf[idx];
+        conf.reviewCount = (conf.reviewCount || 0) + 1;
+        conf.id = `sub_${Date.now()}`; 
+        
+        appState.configs.push(conf);
+        appState.studied[conf.id] = [];
+        appState.shelf.splice(idx, 1);
+        
+        saveState(); reloadWorkspace(); renderShelfUI(); switchTab('tabAdd');
+        closeModal('controlPanelModal');
+        showAlert("رحلة مراجعة موفقة", "تم إعادة المادة لمساحة العمل ببطاقات بيضاء لبدء المراجعة.");
+    }
+
+    function confirmDelete(subjectId) {
+        if(confirm("هل أنت متأكد من إزالة هذه المادة من اللوحة؟ سيتم مسح تقدمك الحالي فيها ولن تنقل للرف.")) {
+            appState.configs = appState.configs.filter(c => c.id !== subjectId);
+            delete appState.studied[subjectId];
+            saveState(); reloadWorkspace();
+        }
     }
 
     function checkStreakAndDate() {
         const today = new Date().toISOString().split('T')[0];
         if (appState.stats.lastActiveDate) {
-            let diffDays = Math.floor((new Date(today) - new Date(appState.stats.lastActiveDate)) / (1000 * 60 * 60 * 24));
-            if (diffDays === 1) { appState.stats.streak++; } 
+            let last = new Date(appState.stats.lastActiveDate);
+            let current = new Date(today);
+            let diffDays = Math.floor((current - last) / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) { if(appState.stats.todayDate !== today) appState.stats.streak++; } 
             else if (diffDays > 1) { appState.stats.streak = 0; }
         } else { appState.stats.streak = 1; }
-        appState.stats.lastActiveDate = today; saveState();
+        
+        if (appState.stats.todayDate !== today) {
+            appState.stats.pagesToday = 0;
+            appState.stats.totalFocusSec = 0;
+            appState.stats.todayDate = today;
+        }
+        appState.stats.lastActiveDate = today;
+        saveState();
         document.getElementById('streakCount').textContent = appState.stats.streak;
     }
+
+    function updateStatsUI() {
+        document.getElementById('streakCount').textContent = appState.stats.streak || 0;
+        document.getElementById('statPages').textContent = appState.stats.pagesToday || 0;
+        document.getElementById('statFocus').textContent = Math.floor((appState.stats.totalFocusSec || 0) / 60);
+        document.getElementById('statStreak').textContent = appState.stats.streak || 0;
+    }
+
+    function shareStats() {
+        const mins = Math.floor(appState.stats.totalFocusSec / 60);
+        const text = `🎯 إنجازي اليوم في دراسة الطب:\n📖 قرأت ${appState.stats.pagesToday} صفحة.\n⏱️ ركزت لمدة ${mins} دقيقة.\n🔥 مستمر لـ ${appState.stats.streak} أيام!\nعبر مساحة المتابعة الذكية ⚡`;
+        navigator.clipboard.writeText(text).then(() => {
+            showAlert("تم النسخ", "تم نسخ إنجازك بنجاح، شاركه الآن مع زملائك!", "📥");
+        }).catch(err => { showAlert("خطأ", "عذراً، متصفحك لا يدعم النسخ التلقائي."); });
+    }
+
+    let timerInt;
+    function formatTime(s) {
+        let h = Math.floor(s/3600); let m = Math.floor((s%3600)/60); let ss = s%60;
+        return (h<10?'0'+h:h)+':'+(m<10?'0'+m:m)+':'+(ss<10?'0'+ss:ss);
+    }
+    
+    function applyGlobalTimer() {
+        let m = parseInt(document.getElementById('setMinutes').value);
+        if(!m || m<=0) return;
+        appState.timer.mode = 'down'; appState.timer.startSec = m*60; appState.timer.sec = m*60;
+        document.getElementById('stickyTimer').textContent = formatTime(appState.timer.sec);
+        saveState(); switchTab('tabAdd'); closeModal('controlPanelModal');
+    }
+
+    function startTimer() {
+        if(appState.timer.isRunning) return;
+        appState.timer.isRunning = true;
+        document.getElementById('sStartBtn').style.color = 'var(--success-color)';
+        document.getElementById('sPauseBtn').style.color = 'var(--text-secondary)';
+        
+        timerInt = setInterval(() => {
+            if(appState.timer.mode === 'down') {
+                if(appState.timer.sec > 0) appState.timer.sec--;
+                if(appState.timer.sec === 0) { pauseTimer(); document.body.classList.add('timer-ended'); setTimeout(()=>document.body.classList.remove('timer-ended'), 3000); showAlert("انتهى الوقت", "⏰ خذ استراحة قصيرة لتجديد نشاطك."); }
+            } else { appState.timer.sec++; }
+            appState.stats.totalFocusSec++; 
+            document.getElementById('stickyTimer').textContent = formatTime(appState.timer.sec);
+            if(appState.timer.sec % 10 === 0) saveState();
+        }, 1000);
+    }
+    function pauseTimer() { 
+        appState.timer.isRunning = false; clearInterval(timerInt); 
+        document.getElementById('sStartBtn').style.color = 'var(--text-secondary)';
+        document.getElementById('sPauseBtn').style.color = 'var(--btn-danger-text)';
+        saveState(); updateStatsUI();
+    }
+    function resetTimer() { 
+        pauseTimer(); 
+        appState.timer.sec = appState.timer.mode==='down'?appState.timer.startSec:0; 
+        document.getElementById('stickyTimer').textContent = formatTime(appState.timer.sec);
+        document.getElementById('sPauseBtn').style.color = 'var(--text-secondary)';
+        saveState();
+    }
+
+    document.getElementById('sStartBtn').onclick = startTimer;
+    document.getElementById('sPauseBtn').onclick = pauseTimer;
+    document.getElementById('sResetBtn').onclick = resetTimer;
 
     function saveState() { localStorage.setItem(CURRENT_STATE_KEY, JSON.stringify(appState)); }
 
     function autoMigrateData() {
         if (localStorage.getItem(CURRENT_STATE_KEY)) return;
-        
-        // خوارزمية بحث قوية لاستعادة الجلسات من أي إصدار سابق
-        let migrated = false;
         for (let oldKey of OLD_STATE_KEYS) {
             let oldData = localStorage.getItem(oldKey);
             if (oldData) {
                 try {
                     let parsed = JSON.parse(oldData);
-                    appState.configs = parsed.configs || []; 
+                    appState.configs = parsed.configs || [];
                     appState.studied = parsed.studied || {};
-                    appState.timer = parsed.timer || { sec:0, startSec:0, mode:'up', isRunning:false };
-                    appState.stats = parsed.stats || { streak: 0, lastActiveDate: '' };
-                    saveState(); 
-                    console.log(`✅ تم ترحيل البيانات بنجاح من الإصدار القديم: ${oldKey}`); 
-                    migrated = true;
-                    break; 
+                    appState.timer.sec = parsed.timer?.sec || 0;
+                    appState.timer.mode = parsed.timer?.mode || 'up';
+                    appState.timer.startSec = parsed.timer?.startSec || 0;
+                    appState.configs.forEach(c => { if(!c.type) c.type = 'free'; if(!c.reviewCount) c.reviewCount = 0; });
+                    saveState();
+                    console.log(`تم ترحيل البيانات بنجاح من ${oldKey}`);
+                    break;
                 } catch(e) {}
             }
-        }
-
-        // إذا لم يجد المفاتيح المعروفة، سيبحث في كامل ذاكرة المتصفح
-        if(!migrated && localStorage.length > 0) {
-             for(let i=0; i<localStorage.length; i++) {
-                 let key = localStorage.key(i);
-                 if(key && key.startsWith('studyTrackerSaveState') && key !== CURRENT_STATE_KEY) {
-                     try {
-                        let parsed = JSON.parse(localStorage.getItem(key));
-                        if(parsed.configs) {
-                            appState = parsed;
-                            saveState();
-                            console.log(`✅ تم استرجاع البيانات المفقودة من المفتاح: ${key}`);
-                            break;
-                        }
-                     } catch(e) {}
-                 }
-             }
         }
     }
 
@@ -791,7 +772,8 @@
         saveState();
         const blob = new Blob([JSON.stringify(appState)], {type: "application/json"});
         const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-        a.download = `StudyTracker_Backup_${new Date().toISOString().split('T')[0]}.json`; a.click();
+        a.download = `StudyTracker_v10_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
     }
 
     function importData(e) {
@@ -802,30 +784,29 @@
                 let json = JSON.parse(ev.target.result);
                 if(json.configs && json.studied) {
                     appState = json; saveState();
-                    showAlert("نجاح!", "تم استيراد الجلسات بنجاح. سيتم تحديث اللوحة.");
+                    showAlert("تم بنجاح", "سيتم إعادة تحميل الصفحة لتطبيق بياناتك المستردة.", "✅");
                     setTimeout(()=>location.reload(), 1500);
-                } else showAlert("خطأ", "ملف النسخة الاحتياطية غير صالح.");
-            } catch(err) { showAlert("خطأ", "لا يمكن قراءة الملف."); }
+                } else showAlert("خطأ", "ملف البيانات تالف أو غير مدعوم.");
+            } catch(err) { showAlert("خطأ", "حدث خطأ في القراءة."); }
         };
         reader.readAsText(file); e.target.value='';
     }
 
     function resetEverything() {
-        if(confirm("تحذير نهائي: سيتم مسح كافة موادك والإحصائيات بالكامل! هل أنت متأكد؟")) {
-            localStorage.removeItem(CURRENT_STATE_KEY); location.reload();
+        if(confirm("تحذير نهائي: سيتم مسح كافة موادك، الإحصائيات، والرف بالكامل! هل أنت متأكد؟")) {
+            localStorage.removeItem(CURRENT_STATE_KEY);
+            location.reload();
         }
     }
 
     function initApp() {
-        initSubjectSelect();
-        autoMigrateData(); 
+        autoMigrateData();
         let saved = localStorage.getItem(CURRENT_STATE_KEY);
         if(saved) { try { appState = Object.assign(appState, JSON.parse(saved)); } catch(e){} }
-        
-        checkStreakAndDate(); updateTimerDisplay();
+        checkStreakAndDate();
+        document.getElementById('stickyTimer').textContent = formatTime(appState.timer.sec);
         if(appState.timer.isRunning) { appState.timer.isRunning=false; startTimer(); }
-        
-        reloadWorkspace(); checkUpdateNotification();
+        reloadWorkspace();
     }
 
     document.addEventListener('DOMContentLoaded', initApp);
