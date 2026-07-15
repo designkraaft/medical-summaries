@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مؤقت الإنجاز القرائي</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .settings-btn-top {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .timer-display {
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            color: var(--primary);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-main { background-color: var(--primary); color: white; }
+        .btn-main:hover:not(:disabled) { background-color: var(--primary-hover); }
+        
+        .btn-secondary { background-color: #e2e8f0; color: #475569; }
+        .btn-secondary:hover:not(:disabled) { background-color: #cbd5e1; }
+
+        .btn-danger { background-color: #ef4444; color: white; }
+        .btn-danger:hover:not(:disabled) { background-color: #dc2626; }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal h3 { margin-top: 0; }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px;
+            text-align: center;
+        }
+        
+        th { background-color: var(--bg); }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 1rem;
+            cursor: pointer;
+            float: left;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Screen -->
+    <div class="container">
+        <button class="settings-btn-top" id="openSettingsBtn" title="الضبط والسجل">⚙️</button>
+        <div class="timer-display" id="timeDisplay">10:00</div>
+        
+        <div class="controls">
+            <button id="startBtn" class="btn-main">بدء</button>
+            <button id="pauseBtn" class="btn-secondary" disabled>إيقاف مؤقت</button>
+            <button id="stopBtn" class="btn-danger" disabled>إنهاء</button>
+        </div>
+    </div>
+
+    <!-- End Round Modal -->
+    <div id="endModal" class="modal">
+        <div class="modal-content">
+            <h3>انتهت الجولة! 👏</h3>
+            <label>كم صفحة درست خلال هذه الجولة؟</label>
+            <input type="number" id="pagesInput" min="0" placeholder="أدخل عدد الصفحات...">
+            <button id="saveRoundBtn" class="btn-main" style="width: 100%;">حفظ السجل</button>
+        </div>
+    </div>
+
+    <!-- Settings & History Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeSettingsBtn">✖ إغلاق</button>
+            <h3>الضبط</h3>
+            <label>مدة الجولة (بالدقائق):</label>
+            <input type="number" id="durationInput" min="1" value="10">
+            
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
+            
+            <h3>سجل الجولات</h3>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الجولة</th>
+                            <th>التاريخ</th>
+                            <th>الصفحات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <!-- Data will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const timeDisplay = document.getElementById('timeDisplay');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        
+        const endModal = document.getElementById('endModal');
+        const pagesInput = document.getElementById('pagesInput');
+        const saveRoundBtn = document.getElementById('saveRoundBtn');
+        
+        const settingsModal = document.getElementById('settingsModal');
+        const openSettingsBtn = document.getElementById('openSettingsBtn');
+        const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        const durationInput = document.getElementById('durationInput');
+        const historyTableBody = document.getElementById('historyTableBody');
+
+        // Variables
+        let timerInterval;
+        let defaultDurationSeconds = 10 * 60; // 10 minutes default
+        let timeLeft = defaultDurationSeconds;
+        let isRunning = false;
+        let isPaused = false;
+        let roundCounter = 1;
+        let historyData = [];
+
+        // Audio Context for beeps (No external files needed)
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playBeep(frequency, duration) {
+            if (!audioCtx) return;
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.value = frequency;
+            
+            // Soft volume
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + duration);
+        }
+
+        // Timer Functions
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            initAudio(); // Initialize audio on first user interaction
+            
+            if (isRunning) return;
+            
+            isRunning = true;
+            isPaused = false;
+            
+            startBtn.textContent = "بدء";
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            stopBtn.disabled = false;
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateDisplay();
+
+                // Beep last 10 seconds
+                if (timeLeft <= 10 && timeLeft > 0) {
+                    playBeep(600, 0.1); // Short beep
+                }
+
+                // Time's up
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    playBeep(800, 0.8); // Long end beep
+                    showEndModal();
+                    resetTimerUI();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            isPaused = true;
+            
+            startBtn.textContent = "استئناف";
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            resetTimerUI();
+            timeLeft = defaultDurationSeconds;
+            updateDisplay();
+        }
+
+        function resetTimerUI() {
+            isRunning = false;
+            isPaused = false;
+            startBtn.textContent = "بدء";
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            stopBtn.disabled = true;
+        }
+
+        // Modals & History Logic
+        function showEndModal() {
+            endModal.style.display = 'flex';
+            pagesInput.value = '';
+            pagesInput.focus();
+        }
+
+        saveRoundBtn.addEventListener('click', () => {
+            const pages = pagesInput.value;
+            if (pages === "" || pages < 0) {
+                alert("الرجاء إدخال عدد صفحات صحيح.");
+                return;
+            }
+
+            const now = new Date();
+            const dateString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')} - ${now.toLocaleDateString()}`;
+            
+            historyData.push({
+                round: roundCounter,
+                date: dateString,
+                pages: pages
+            });
+
+            roundCounter++;
+            updateHistoryTable();
+            endModal.style.display = 'none';
+            
+            // Reset timer for next round
+            timeLeft = defaultDurationSeconds;
+            updateDisplay();
+        });
+
+        function updateHistoryTable() {
+            historyTableBody.innerHTML = '';
+            historyData.slice().reverse().forEach(entry => { // Reverse to show newest first
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>الجولة ${entry.round}</td>
+                    <td dir="ltr">${entry.date}</td>
+                    <td>${entry.pages}</td>
+                `;
+                historyTableBody.appendChild(row);
+            });
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        stopBtn.addEventListener('click', stopTimer);
+
+        openSettingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'flex';
+        });
+
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsModal.style.display = 'none';
+            // Update duration if changed
+            const newMins = parseInt(durationInput.value);
+            if (newMins > 0 && !isRunning && !isPaused) {
+                defaultDurationSeconds = newMins * 60;
+                timeLeft = defaultDurationSeconds;
+                updateDisplay();
+            }
+        });
+
+        // Close modal if clicked outside
+        window.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                closeSettingsBtn.click();
+            }
+        });
+
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>
