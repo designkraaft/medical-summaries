@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مؤقت الإنجاز القرائي</title>
+    <title>مؤقت الإنجاز القرائي الدقيق</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -58,6 +58,7 @@
             margin: 2rem 0;
             color: var(--primary);
             font-variant-numeric: tabular-nums;
+            direction: ltr;
         }
 
         .controls {
@@ -150,6 +151,24 @@
             float: left;
             padding: 0;
         }
+
+        .danger-zone {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+        }
+
+        .danger-zone h4 {
+            margin: 0 0 10px 0;
+            color: #991b1b;
+        }
+        .danger-zone p {
+            font-size: 0.85rem;
+            color: #7f1d1d;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -192,7 +211,7 @@
                     <thead>
                         <tr>
                             <th>الجولة</th>
-                            <th>التاريخ</th>
+                            <th>التاريخ والوقت</th>
                             <th>الصفحات</th>
                         </tr>
                     </thead>
@@ -200,6 +219,12 @@
                         <!-- Data will be injected here -->
                     </tbody>
                 </table>
+            </div>
+
+            <div class="danger-zone">
+                <h4>تحديث النظام بالكامل</h4>
+                <p>استخدم هذا الزر فقط إذا أردت مسح السجل بأكمله وإعادة المؤقت للصفر (لن يتأثر بتحديث الصفحة العادي).</p>
+                <button id="hardResetBtn" class="btn-danger" style="width: 100%;">مسح البيانات والتحديث</button>
             </div>
         </div>
     </div>
@@ -220,17 +245,21 @@
         const closeSettingsBtn = document.getElementById('closeSettingsBtn');
         const durationInput = document.getElementById('durationInput');
         const historyTableBody = document.getElementById('historyTableBody');
+        const hardResetBtn = document.getElementById('hardResetBtn');
 
         // Variables
         let timerInterval;
-        let defaultDurationSeconds = 10 * 60; // 10 minutes default
+        let defaultDurationSeconds = 10 * 60;
         let timeLeft = defaultDurationSeconds;
         let isRunning = false;
         let isPaused = false;
+        let endTime = 0; // Timestamp for strict background accuracy
+        let lastBeepedSecond = -1;
+        
         let roundCounter = 1;
         let historyData = [];
 
-        // Audio Context for beeps (No external files needed)
+        // Audio Context
         let audioCtx;
 
         function initAudio() {
@@ -250,7 +279,6 @@
             oscillator.type = 'sine';
             oscillator.frequency.value = frequency;
             
-            // Soft volume
             gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
             
@@ -261,43 +289,109 @@
             oscillator.stop(audioCtx.currentTime + duration);
         }
 
-        // Timer Functions
+        // --- Storage Management ---
+        function saveData() {
+            const state = {
+                timeLeft, isRunning, isPaused, endTime, defaultDurationSeconds, roundCounter
+            };
+            localStorage.setItem('studyTimerState', JSON.stringify(state));
+            localStorage.setItem('studyTimerHistory', JSON.stringify(historyData));
+        }
+
+        function loadData() {
+            const savedHistory = localStorage.getItem('studyTimerHistory');
+            if (savedHistory) {
+                historyData = JSON.parse(savedHistory);
+                updateHistoryTable();
+            }
+
+            const savedState = localStorage.getItem('studyTimerState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                defaultDurationSeconds = state.defaultDurationSeconds || (10 * 60);
+                durationInput.value = defaultDurationSeconds / 60;
+                roundCounter = state.roundCounter || 1;
+                
+                if (state.isRunning) {
+                    // It was running, calculate accurate time left
+                    const now = Date.now();
+                    timeLeft = Math.max(0, Math.round((state.endTime - now) / 1000));
+                    endTime = state.endTime;
+                    
+                    if (timeLeft > 0) {
+                        startTimer(true); // resume active timer
+                    } else {
+                        // Finished while page was closed
+                        timeLeft = 0;
+                        updateDisplay();
+                        showEndModal();
+                    }
+                } else if (state.isPaused) {
+                    timeLeft = state.timeLeft;
+                    isPaused = true;
+                    updateDisplay();
+                    startBtn.textContent = "استئناف";
+                    startBtn.disabled = false;
+                    pauseBtn.disabled = true;
+                    stopBtn.disabled = false;
+                } else {
+                    timeLeft = defaultDurationSeconds;
+                    updateDisplay();
+                }
+            } else {
+                updateDisplay();
+            }
+        }
+
+        // --- Timer Logic ---
         function updateDisplay() {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
             timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
-        function startTimer() {
-            initAudio(); // Initialize audio on first user interaction
+        function tick() {
+            if (!isRunning) return;
             
-            if (isRunning) return;
+            const now = Date.now();
+            timeLeft = Math.max(0, Math.round((endTime - now) / 1000));
+            updateDisplay();
+
+            // Handle beeps
+            if (timeLeft <= 10 && timeLeft > 0 && lastBeepedSecond !== timeLeft) {
+                playBeep(600, 0.1);
+                lastBeepedSecond = timeLeft;
+            }
+
+            // Time's up
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                playBeep(800, 0.8);
+                showEndModal();
+                resetTimerUI();
+            }
+            saveData();
+        }
+
+        function startTimer(isResuming = false) {
+            initAudio();
+            
+            if (!isResuming) {
+                endTime = Date.now() + (timeLeft * 1000);
+            }
             
             isRunning = true;
             isPaused = false;
+            lastBeepedSecond = -1; // Reset beep tracker
             
             startBtn.textContent = "بدء";
             startBtn.disabled = true;
             pauseBtn.disabled = false;
             stopBtn.disabled = false;
 
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateDisplay();
-
-                // Beep last 10 seconds
-                if (timeLeft <= 10 && timeLeft > 0) {
-                    playBeep(600, 0.1); // Short beep
-                }
-
-                // Time's up
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    playBeep(800, 0.8); // Long end beep
-                    showEndModal();
-                    resetTimerUI();
-                }
-            }, 1000);
+            clearInterval(timerInterval);
+            timerInterval = setInterval(tick, 500); // Check every 0.5s for responsiveness
+            saveData();
         }
 
         function pauseTimer() {
@@ -308,6 +402,7 @@
             startBtn.textContent = "استئناف";
             startBtn.disabled = false;
             pauseBtn.disabled = true;
+            saveData();
         }
 
         function stopTimer() {
@@ -315,6 +410,7 @@
             resetTimerUI();
             timeLeft = defaultDurationSeconds;
             updateDisplay();
+            saveData();
         }
 
         function resetTimerUI() {
@@ -326,7 +422,7 @@
             stopBtn.disabled = true;
         }
 
-        // Modals & History Logic
+        // --- Modals & History Logic ---
         function showEndModal() {
             endModal.style.display = 'flex';
             pagesInput.value = '';
@@ -334,6 +430,7 @@
         }
 
         saveRoundBtn.addEventListener('click', () => {
+            initAudio(); // Wake audio context if needed
             const pages = pagesInput.value;
             if (pages === "" || pages < 0) {
                 alert("الرجاء إدخال عدد صفحات صحيح.");
@@ -341,11 +438,13 @@
             }
 
             const now = new Date();
-            const dateString = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')} - ${now.toLocaleDateString()}`;
+            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            const dateString = `${now.getFullYear()}/${(now.getMonth()+1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')}`;
+            const fullDateTime = `${dateString} - ${timeString}`;
             
             historyData.push({
                 round: roundCounter,
-                date: dateString,
+                date: fullDateTime,
                 pages: pages
             });
 
@@ -356,11 +455,12 @@
             // Reset timer for next round
             timeLeft = defaultDurationSeconds;
             updateDisplay();
+            saveData();
         });
 
         function updateHistoryTable() {
             historyTableBody.innerHTML = '';
-            historyData.slice().reverse().forEach(entry => { // Reverse to show newest first
+            historyData.slice().reverse().forEach(entry => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>الجولة ${entry.round}</td>
@@ -371,8 +471,8 @@
             });
         }
 
-        // Event Listeners
-        startBtn.addEventListener('click', startTimer);
+        // --- Event Listeners ---
+        startBtn.addEventListener('click', () => startTimer(false));
         pauseBtn.addEventListener('click', pauseTimer);
         stopBtn.addEventListener('click', stopTimer);
 
@@ -382,24 +482,33 @@
 
         closeSettingsBtn.addEventListener('click', () => {
             settingsModal.style.display = 'none';
-            // Update duration if changed
+            
             const newMins = parseInt(durationInput.value);
             if (newMins > 0 && !isRunning && !isPaused) {
                 defaultDurationSeconds = newMins * 60;
                 timeLeft = defaultDurationSeconds;
                 updateDisplay();
+                saveData();
             }
         });
 
-        // Close modal if clicked outside
+        // Hard Reset Button
+        hardResetBtn.addEventListener('click', () => {
+            if (confirm('هل أنت متأكد أنك تريد مسح جميع البيانات وسجل الجولات بالكامل؟ (هذا الإجراء لا يمكن التراجع عنه)')) {
+                localStorage.removeItem('studyTimerState');
+                localStorage.removeItem('studyTimerHistory');
+                location.reload(); // Refresh the page to reset everything naturally
+            }
+        });
+
+        // Close modals if clicked outside
         window.addEventListener('click', (e) => {
-            if (e.target === settingsModal) {
-                closeSettingsBtn.click();
-            }
+            if (e.target === settingsModal) closeSettingsBtn.click();
         });
 
-        // Initialize display
-        updateDisplay();
+        // Initialize on Load
+        window.addEventListener('DOMContentLoaded', loadData);
+
     </script>
 </body>
 </html>
