@@ -237,6 +237,20 @@
 </head>
 <body>
 
+    <!-- Subjects Datalist for Autocomplete -->
+    <datalist id="prepSubjects">
+        <option value="البيولوجيا (علم الخلية)"></option>
+        <option value="الفيزياء الطبية"></option>
+        <option value="الكيمياء الطبية"></option>
+        <option value="تاريخ الطب"></option>
+        <option value="اللغة الإنجليزية 1"></option>
+        <option value="التشريح العام"></option>
+        <option value="الفيزيولوجيا"></option>
+        <option value="الوراثة الطبية"></option>
+        <option value="الإحصاء الطبي"></option>
+        <option value="اللغة الإنجليزية 2"></option>
+    </datalist>
+
     <!-- Main Screen -->
     <div class="container">
         <button class="settings-btn-top" id="openSettingsBtn" title="القائمة">⚙️</button>
@@ -264,7 +278,7 @@
 
             <div class="form-group">
                 <label>المادة / الموضوع:</label>
-                <input type="text" id="autoSubject" placeholder="مثال: علم التشريح، فيزيولوجيا...">
+                <input type="text" id="autoSubject" list="prepSubjects" placeholder="اختر من القائمة أو اكتب المادة...">
             </div>
 
             <div class="form-group">
@@ -293,7 +307,7 @@
 
             <div class="form-group">
                 <label>المادة / الموضوع:</label>
-                <input type="text" id="editSubject">
+                <input type="text" id="editSubject" list="prepSubjects">
             </div>
 
             <div class="form-group">
@@ -349,7 +363,7 @@
 
                 <div class="form-group">
                     <label>المادة / الموضوع:</label>
-                    <input type="text" id="manualSubject" placeholder="مثال: علم التشريح، مراجعة...">
+                    <input type="text" id="manualSubject" list="prepSubjects" placeholder="اختر من القائمة أو اكتب المادة...">
                 </div>
 
                 <div class="form-group">
@@ -436,6 +450,11 @@
         let roundCounter = 1;
         let historyData = [];
 
+        // Generate robust unique ID
+        function generateId() {
+            return 'id_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 5);
+        }
+
         // Audio System
         let audioCtx;
         function initAudio() {
@@ -468,10 +487,10 @@
             if (savedHistory) {
                 historyData = JSON.parse(savedHistory);
                 
-                // ترقيع هام: إعطاء ID للسجلات القديمة التي تم حفظها قبل هذا التحديث
-                historyData.forEach((item, index) => {
-                    if (!item.id) {
-                        item.id = Date.now() + index; 
+                // إصلاح المعرفات القديمة برقم قوي
+                historyData.forEach((item) => {
+                    if (!item.id || typeof item.id === 'number') {
+                        item.id = generateId(); 
                     }
                 });
                 
@@ -483,7 +502,13 @@
                 const state = JSON.parse(savedState);
                 defaultDurationSeconds = state.defaultDurationSeconds || (10 * 60);
                 durationInput.value = defaultDurationSeconds / 60;
-                roundCounter = state.roundCounter || 1;
+                
+                // تصحيح العداد إذا كان السجل فارغاً
+                if (historyData.length === 0) {
+                    roundCounter = 1;
+                } else {
+                    roundCounter = state.roundCounter || 1;
+                }
                 
                 if (state.isRunning) {
                     const now = Date.now();
@@ -587,7 +612,7 @@
         // Data Operations
         function addRecord(pages, subject, readType, note = '') {
             historyData.push({
-                id: Date.now(),
+                id: generateId(),
                 round: roundCounter,
                 date: getCurrentDateTimeString(),
                 pages: pages,
@@ -602,15 +627,19 @@
 
         window.deleteRecord = function(id) {
             if(confirm("هل أنت متأكد من حذف هذه الجولة؟")) {
-                // التحويل إلى نصوص لضمان المطابقة
                 historyData = historyData.filter(item => String(item.id) !== String(id));
+                
+                // إعادة العداد للصفر إذا تم حذف كل السجلات
+                if (historyData.length === 0) {
+                    roundCounter = 1;
+                }
+                
                 updateHistoryTable();
                 saveData();
             }
         }
 
         window.openEditModal = function(id) {
-            // التحويل إلى نصوص لضمان المطابقة
             const record = historyData.find(item => String(item.id) === String(id));
             if(record) {
                 editRecordId.value = record.id;
@@ -623,7 +652,6 @@
             }
         }
 
-        // إصلاح زر حفظ التعديلات
         saveEditBtn.addEventListener('click', () => {
             const idStr = editRecordId.value;
             const pgs = editPages.value;
@@ -641,9 +669,9 @@
                 historyData[index].readType = editReadType.value;
                 updateHistoryTable();
                 saveData();
-                editModal.style.display = 'none'; // إخفاء النافذة بعد الحفظ بنجاح
+                editModal.style.display = 'none'; 
             } else {
-                alert("حدث خطأ: لم نتمكن من حفظ التعديل، قد تكون الجولة محذوفة.");
+                alert("حدث خطأ: لم نتمكن من حفظ التعديل.");
             }
         });
 
