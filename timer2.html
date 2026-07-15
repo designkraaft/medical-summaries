@@ -106,12 +106,13 @@
 
         .modal-content {
             background-color: var(--card-bg);
-            padding: 2rem;
+            padding: 2rem 1.5rem;
             border-radius: 16px;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
 
         .modal h3 { margin-top: 0; }
@@ -126,11 +127,49 @@
             text-align: center;
         }
 
+        /* Tabs System */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 10px 5px;
+            font-size: 0.95rem;
+            color: #64748b;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            border-radius: 0;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
             font-size: 0.9rem;
         }
         
@@ -140,16 +179,26 @@
             text-align: center;
         }
         
-        th { background-color: var(--bg); }
+        th { background-color: var(--bg); position: sticky; top: 0; }
+
+        .table-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
 
         .close-modal {
             background: none;
             border: none;
             color: #ef4444;
-            font-size: 1rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            float: left;
+            position: absolute;
+            top: 15px;
+            left: 15px;
             padding: 0;
+            line-height: 1;
         }
 
         /* Update Zone */
@@ -161,23 +210,18 @@
             border-radius: 8px;
         }
 
-        .update-zone h4 {
-            margin: 0 0 10px 0;
-            color: #166534;
-        }
-        
-        .update-zone p {
-            font-size: 0.85rem;
-            color: #15803d;
-            margin-bottom: 15px;
-        }
+        .update-zone h4 { margin: 0 0 10px 0; color: #166534; }
+        .update-zone p { font-size: 0.85rem; color: #15803d; margin-bottom: 15px; }
+        .btn-update { background-color: #16a34a; color: white; }
+        .btn-update:hover { background-color: #15803d; }
 
-        .btn-update {
-            background-color: #16a34a;
-            color: white;
-        }
-        .btn-update:hover {
-            background-color: #15803d;
+        .tag-manual {
+            font-size: 0.75rem;
+            background-color: #f1f5f9;
+            color: #475569;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -185,7 +229,7 @@
 
     <!-- Main Screen -->
     <div class="container">
-        <button class="settings-btn-top" id="openSettingsBtn" title="الضبط والسجل">⚙️</button>
+        <button class="settings-btn-top" id="openSettingsBtn" title="القائمة">⚙️</button>
         <div class="timer-display" id="timeDisplay">10:00</div>
         
         <div class="controls">
@@ -198,45 +242,61 @@
     <!-- End Round Modal -->
     <div id="endModal" class="modal">
         <div class="modal-content">
-            <h3>انتهت الجولة! 👏</h3>
+            <h3 style="text-align: center;">انتهت الجولة! 👏</h3>
             <label>كم صفحة درست خلال هذه الجولة؟</label>
             <input type="number" id="pagesInput" min="0" placeholder="أدخل عدد الصفحات...">
             <button id="saveRoundBtn" class="btn-main" style="width: 100%;">حفظ السجل</button>
         </div>
     </div>
 
-    <!-- Settings & History Modal -->
+    <!-- Settings & History Modal (With Tabs) -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
-            <button class="close-modal" id="closeSettingsBtn">✖ إغلاق</button>
-            <h3>الضبط</h3>
-            <label>مدة الجولة (بالدقائق):</label>
-            <input type="number" id="durationInput" min="1" value="10">
+            <button class="close-modal" id="closeSettingsBtn" title="إغلاق">✖</button>
             
-            <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
-            
-            <h3>سجل الجولات</h3>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>الجولة</th>
-                            <th>التاريخ والوقت</th>
-                            <th>الصفحات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="historyTableBody">
-                        <!-- Data will be injected here -->
-                    </tbody>
-                </table>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="tab-history">السجل</button>
+                <button class="tab-btn" data-tab="tab-manual">إضافة يدوية</button>
+                <button class="tab-btn" data-tab="tab-settings">الضبط</button>
             </div>
 
-            <!-- Update App Section -->
-            <div class="update-zone">
-                <h4>تحديث الإصدار</h4>
-                <p>انقر هنا لتحديث الصفحة وسحب أحدث إصدار من المؤقت. (سجل الجولات الخاص بك آمن ولن يُمحى).</p>
-                <button id="updateAppBtn" class="btn-update" style="width: 100%;">تحديث الآن</button>
+            <!-- Tab 1: History -->
+            <div id="tab-history" class="tab-content active">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الجولة</th>
+                                <th>التاريخ والوقت</th>
+                                <th>الصفحات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <!-- Data will be injected here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+            <!-- Tab 2: Manual Add -->
+            <div id="tab-manual" class="tab-content">
+                <label>عدد الصفحات التي قرأتها (في جولة خارجية):</label>
+                <input type="number" id="manualPagesInput" min="0" placeholder="مثال: 5">
+                <button id="saveManualBtn" class="btn-main" style="width: 100%;">إضافة إلى السجل</button>
+            </div>
+
+            <!-- Tab 3: Settings -->
+            <div id="tab-settings" class="tab-content">
+                <label>مدة الجولة الافتراضية (بالدقائق):</label>
+                <input type="number" id="durationInput" min="1" value="10">
+                
+                <div class="update-zone">
+                    <h4>تحديث الإصدار</h4>
+                    <p>انقر هنا لتحديث الصفحة وسحب أحدث إصدار من المؤقت (السجل آمن).</p>
+                    <button id="updateAppBtn" class="btn-update" style="width: 100%;">تحديث الآن</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -254,9 +314,27 @@
         const settingsModal = document.getElementById('settingsModal');
         const openSettingsBtn = document.getElementById('openSettingsBtn');
         const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+        
         const durationInput = document.getElementById('durationInput');
         const historyTableBody = document.getElementById('historyTableBody');
         const updateAppBtn = document.getElementById('updateAppBtn');
+        
+        const manualPagesInput = document.getElementById('manualPagesInput');
+        const saveManualBtn = document.getElementById('saveManualBtn');
+
+        // Tabs logic
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
 
         // Variables
         let timerInterval;
@@ -264,7 +342,7 @@
         let timeLeft = defaultDurationSeconds;
         let isRunning = false;
         let isPaused = false;
-        let endTime = 0; // Timestamp for strict background accuracy
+        let endTime = 0; 
         let lastBeepedSecond = -1;
         
         let roundCounter = 1;
@@ -324,15 +402,13 @@
                 roundCounter = state.roundCounter || 1;
                 
                 if (state.isRunning) {
-                    // It was running, calculate accurate time left
                     const now = Date.now();
                     timeLeft = Math.max(0, Math.round((state.endTime - now) / 1000));
                     endTime = state.endTime;
                     
                     if (timeLeft > 0) {
-                        startTimer(true); // resume active timer
+                        startTimer(true);
                     } else {
-                        // Finished while page was closed
                         timeLeft = 0;
                         updateDisplay();
                         showEndModal();
@@ -368,13 +444,11 @@
             timeLeft = Math.max(0, Math.round((endTime - now) / 1000));
             updateDisplay();
 
-            // Handle beeps
             if (timeLeft <= 10 && timeLeft > 0 && lastBeepedSecond !== timeLeft) {
                 playBeep(600, 0.1);
                 lastBeepedSecond = timeLeft;
             }
 
-            // Time's up
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
                 playBeep(800, 0.8);
@@ -393,7 +467,7 @@
             
             isRunning = true;
             isPaused = false;
-            lastBeepedSecond = -1; // Reset beep tracker
+            lastBeepedSecond = -1;
             
             startBtn.textContent = "بدء";
             startBtn.disabled = true;
@@ -401,7 +475,7 @@
             stopBtn.disabled = false;
 
             clearInterval(timerInterval);
-            timerInterval = setInterval(tick, 500); // Check every 0.5s for responsiveness
+            timerInterval = setInterval(tick, 500);
             saveData();
         }
 
@@ -433,56 +507,83 @@
             stopBtn.disabled = true;
         }
 
-        // --- Modals & History Logic ---
+        // --- Helper for Date & Time ---
+        function getCurrentDateTimeString() {
+            const now = new Date();
+            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            const dateString = `${now.getFullYear()}/${(now.getMonth()+1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')}`;
+            return `${dateString} - ${timeString}`;
+        }
+
+        // --- Add Record to History ---
+        function addRecord(pages, note = '') {
+            historyData.push({
+                round: roundCounter,
+                date: getCurrentDateTimeString(),
+                pages: pages,
+                note: note
+            });
+
+            roundCounter++;
+            updateHistoryTable();
+            saveData();
+        }
+
+        // --- Modals & Events ---
         function showEndModal() {
             endModal.style.display = 'flex';
             pagesInput.value = '';
             pagesInput.focus();
         }
 
+        // حفظ جولة من المؤقت التلقائي
         saveRoundBtn.addEventListener('click', () => {
-            initAudio(); // Wake audio context if needed
+            initAudio();
             const pages = pagesInput.value;
             if (pages === "" || pages < 0) {
                 alert("الرجاء إدخال عدد صفحات صحيح.");
                 return;
             }
 
-            const now = new Date();
-            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-            const dateString = `${now.getFullYear()}/${(now.getMonth()+1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')}`;
-            const fullDateTime = `${dateString} - ${timeString}`;
+            addRecord(pages);
             
-            historyData.push({
-                round: roundCounter,
-                date: fullDateTime,
-                pages: pages
-            });
-
-            roundCounter++;
-            updateHistoryTable();
             endModal.style.display = 'none';
-            
-            // Reset timer for next round
             timeLeft = defaultDurationSeconds;
             updateDisplay();
             saveData();
         });
 
+        // حفظ جولة يدوية من التبويب
+        saveManualBtn.addEventListener('click', () => {
+            const pages = manualPagesInput.value;
+            if (pages === "" || pages < 0) {
+                alert("الرجاء إدخال عدد صفحات صحيح.");
+                return;
+            }
+
+            addRecord(pages, 'يدوي');
+            
+            manualPagesInput.value = '';
+            
+            // الانتقال لتبويب السجل لرؤية النتيجة
+            document.querySelector('[data-tab="tab-history"]').click();
+        });
+
         function updateHistoryTable() {
             historyTableBody.innerHTML = '';
             historyData.slice().reverse().forEach(entry => {
+                const noteHtml = entry.note ? `<span class="tag-manual">${entry.note}</span>` : '';
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>الجولة ${entry.round}</td>
                     <td dir="ltr">${entry.date}</td>
-                    <td>${entry.pages}</td>
+                    <td>${entry.pages} ${noteHtml}</td>
                 `;
                 historyTableBody.appendChild(row);
             });
         }
 
-        // --- Event Listeners ---
+        // --- Base Events ---
         startBtn.addEventListener('click', () => startTimer(false));
         pauseBtn.addEventListener('click', pauseTimer);
         stopBtn.addEventListener('click', stopTimer);
@@ -503,19 +604,14 @@
             }
         });
 
-        // --- Update App Button Logic ---
+        // Update App Force Refresh
         updateAppBtn.addEventListener('click', () => {
-            saveData(); // Ensure everything is saved before refreshing
-            
-            // By appending a timestamp to the URL as a query parameter, 
-            // we force the browser to fetch the new file from the server instead of the cache.
+            saveData();
             const url = new URL(window.location.href);
-            url.searchParams.set('v', new Date().getTime()); // e.g. ?v=16873528...
-            
+            url.searchParams.set('v', new Date().getTime()); 
             window.location.href = url.toString();
         });
 
-        // Close modals if clicked outside
         window.addEventListener('click', (e) => {
             if (e.target === settingsModal) closeSettingsBtn.click();
         });
