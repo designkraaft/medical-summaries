@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- أوامر قهرية لمنع الكاش -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <title>مؤقت التركيز الطبي</title>
+    <style>
+        :root {
+            --main-color: #0ea5e9;
+            --main-hover: #0284c7;
+            --page-bg: #f1f5f9;
+            --text-dark: #0f172a;
+            --box-bg: #ffffff;
+            --line-color: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--page-bg);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .app-wrapper {
+            background-color: var(--box-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+        }
+
+        .icon-btn-top {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #475569;
+        }
+
+        .clock-screen {
+            font-size: 5.5rem;
+            font-weight: 800;
+            margin: 2.5rem 0;
+            color: var(--main-color);
+            font-variant-numeric: tabular-nums;
+            direction: ltr;
+        }
+
+        .action-pad {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .click-btn {
+            padding: 14px 26px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .click-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .btn-core { background-color: var(--main-color); color: white; }
+        .btn-core:hover:not(:disabled) { background-color: var(--main-hover); }
+        
+        .btn-alt { background-color: #e2e8f0; color: #334155; }
+        .btn-alt:hover:not(:disabled) { background-color: #94a3b8; }
+
+        .btn-warn { background-color: #f43f5e; color: white; }
+        .btn-warn:hover:not(:disabled) { background-color: #e11d48; }
+
+        .btn-mini { padding: 8px 14px; font-size: 0.85rem; margin: 3px; }
+
+        /* Overlays */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(15, 23, 42, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 15px;
+            backdrop-filter: blur(4px);
+        }
+
+        .overlay-box {
+            background-color: var(--box-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .input-block {
+            margin-bottom: 18px;
+            text-align: right;
+        }
+        .input-block label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        input[type="number"], input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--line-color);
+            border-radius: 10px;
+            font-size: 1.05rem;
+            outline: none;
+        }
+        input:focus, select:focus { border-color: var(--main-color); }
+
+        /* Menu Nav */
+        .menu-nav {
+            display: flex;
+            border-bottom: 2px solid var(--line-color);
+            margin-bottom: 25px;
+            margin-top: 35px;
+        }
+
+        .nav-item {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 12px 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            cursor: pointer;
+        }
+
+        .nav-item.active-tab {
+            color: var(--main-color);
+            border-bottom-color: var(--main-color);
+        }
+
+        .nav-pane { display: none; animation: dropIn 0.3s ease; }
+        .nav-pane.active-pane { display: block; }
+
+        @keyframes dropIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Data Grid */
+        .data-grid {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        
+        .data-grid th, .data-grid td {
+            border: 1px solid var(--line-color);
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .data-grid th { background-color: var(--page-bg); position: sticky; top: 0; z-index: 1; }
+
+        .grid-wrapper {
+            max-height: 350px;
+            overflow: auto;
+            border: 1px solid var(--line-color);
+            border-radius: 10px;
+        }
+
+        .exit-btn {
+            background: none;
+            border: none;
+            color: #f43f5e;
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .refresh-card {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0fdfa;
+            border: 2px solid #ccfbf1;
+            border-radius: 12px;
+        }
+        .refresh-card h4 { margin: 0 0 10px 0; color: #0f766e; }
+        .refresh-card p { font-size: 0.9rem; color: #115e59; margin-bottom: 15px; }
+        .btn-green { background-color: #14b8a6; color: white; }
+        .btn-green:hover { background-color: #0f766e; }
+
+        .badge {
+            font-size: 0.75rem;
+            background-color: #e2e8f0;
+            color: #475569;
+            padding: 3px 6px;
+            border-radius: 6px;
+            display: block;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة المخفية لتضليل الكاش القديم -->
+    <datalist id="medicalCourses">
+        <option value="البيولوجيا (علم الخلية)"></option>
+        <option value="الفيزياء الطبية"></option>
+        <option value="الكيمياء الطبية"></option>
+        <option value="تاريخ الطب"></option>
+        <option value="اللغة الإنجليزية 1"></option>
+        <option value="التشريح العام"></option>
+        <option value="الفيزيولوجيا"></option>
+        <option value="الوراثة الطبية"></option>
+        <option value="الإحصاء الطبي"></option>
+        <option value="اللغة الإنجليزية 2"></option>
+    </datalist>
+
+    <div class="app-wrapper">
+        <button class="icon-btn-top" id="btnConfig">⚙️</button>
+        <div class="clock-screen" id="txtClock">10:00</div>
+        
+        <div class="action-pad">
+            <button id="btnPlay" class="click-btn btn-core">انطلاق</button>
+            <button id="btnHold" class="click-btn btn-alt" disabled>تريث</button>
+            <button id="btnFinish" class="click-btn btn-warn" disabled>إلغاء</button>
+        </div>
+    </div>
+
+    <!-- نافذة النهاية الجديدة -->
+    <div id="popupDone" class="overlay">
+        <div class="overlay-box" style="max-width: 420px;">
+            <h3 style="text-align: center; font-size: 1.5rem; color: var(--main-color);">ممتاز! تمت الجولة 👏</h3>
+            
+            <div class="input-block">
+                <label>نمط الدراسة:</label>
+                <select id="selDoneType">
+                    <option value="قراءة بتركيز">قراءة بتركيز عميق</option>
+                    <option value="قراءة سريعة">قراءة سريعة ومراجعة</option>
+                </select>
+            </div>
+
+            <div class="input-block">
+                <label>اسم المادة:</label>
+                <input type="text" id="inpDoneSubj" list="medicalCourses" placeholder="اختر من المواد أو اكتب...">
+            </div>
+
+            <div class="input-block">
+                <label>الصفحات المنجزة:</label>
+                <input type="number" id="inpDonePages" min="0" placeholder="رقم الصفحات...">
+            </div>
+            
+            <button id="btnSaveDone" class="click-btn btn-core" style="width: 100%;">توثيق الإنجاز</button>
+        </div>
+    </div>
+
+    <!-- نافذة التعديل الجديدة -->
+    <div id="popupModify" class="overlay" style="z-index: 10005;">
+        <div class="overlay-box" style="max-width: 420px;">
+            <button class="exit-btn" id="btnExitModify">✖</button>
+            <h3>تعديل البيانات</h3>
+            <input type="hidden" id="hdnTargetId">
+            
+            <div class="input-block">
+                <label>نمط الدراسة:</label>
+                <select id="selModType">
+                    <option value="قراءة بتركيز">قراءة بتركيز عميق</option>
+                    <option value="قراءة سريعة">قراءة سريعة ومراجعة</option>
+                </select>
+            </div>
+
+            <div class="input-block">
+                <label>اسم المادة:</label>
+                <input type="text" id="inpModSubj" list="medicalCourses">
+            </div>
+
+            <div class="input-block">
+                <label>الصفحات المنجزة:</label>
+                <input type="number" id="inpModPages" min="0">
+            </div>
+            
+            <button id="btnSaveMod" class="click-btn btn-core" style="width: 100%;">تحديث السجل</button>
+        </div>
+    </div>
+
+    <!-- النافذة الرئيسية (القوائم) -->
+    <div id="popupConfig" class="overlay">
+        <div class="overlay-box">
+            <button class="exit-btn" id="btnExitConfig">✖</button>
+            
+            <div class="menu-nav">
+                <button class="nav-item active-tab" data-target="panel-log">دفتر الإنجاز</button>
+                <button class="nav-item" data-target="panel-add">إدراج خارجي</button>
+                <button class="nav-item" data-target="panel-opts">الخصائص</button>
+            </div>
+
+            <!-- الدفتر -->
+            <div id="panel-log" class="nav-pane active-pane">
+                <div class="grid-wrapper">
+                    <table class="data-grid">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>الوقت</th>
+                                <th>المساق</th>
+                                <th>النمط</th>
+                                <th>كمية الصفحات</th>
+                                <th>تعديل</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gridBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- الإدراج -->
+            <div id="panel-add" class="nav-pane">
+                <div class="input-block">
+                    <label>نمط الدراسة:</label>
+                    <select id="selAddType">
+                        <option value="قراءة بتركيز">قراءة بتركيز عميق</option>
+                        <option value="قراءة سريعة">قراءة سريعة ومراجعة</option>
+                    </select>
+                </div>
+                <div class="input-block">
+                    <label>اسم المادة:</label>
+                    <input type="text" id="inpAddSubj" list="medicalCourses" placeholder="المساق الدراسي...">
+                </div>
+                <div class="input-block">
+                    <label>الكمية المنجزة:</label>
+                    <input type="number" id="inpAddPages" min="0" placeholder="مثال: 5">
+                </div>
+                <button id="btnSaveAdd" class="click-btn btn-core" style="width: 100%;">إضافة للدفتر</button>
+            </div>
+
+            <!-- الخصائص -->
+            <div id="panel-opts" class="nav-pane">
+                <div class="input-block">
+                    <label>زمن الجلسة القياسي (بالدقائق):</label>
+                    <input type="number" id="inpSetupTime" min="1" value="10" style="text-align: center; font-weight: bold;">
+                </div>
+                
+                <div class="refresh-card">
+                    <h4>تنشيط النظام</h4>
+                    <p>في حال واجهت أي تعليق، استخدم هذا الزر لجلب النظام الجديد دون فقدان دفترك.</p>
+                    <button id="btnForceReload" class="click-btn btn-green" style="width: 100%;">إعادة شحن الصفحة</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // تعريف مفاتيح التخزين الجديدة كلياً
+        const MEMORY_KEY_LOG = 'medFocusLog_v2_data';
+        const MEMORY_KEY_STATE = 'medFocusState_v2_status';
+
+        // ربط عناصر الواجهة بأسماء جديدة
+        const uiClock = document.getElementById('txtClock');
+        const uiPlay = document.getElementById('btnPlay');
+        const uiHold = document.getElementById('btnHold');
+        const uiFinish = document.getElementById('btnFinish');
+        
+        const winDone = document.getElementById('popupDone');
+        const winConfig = document.getElementById('popupConfig');
+        const winModify = document.getElementById('popupModify');
+        
+        const fldDonePages = document.getElementById('inpDonePages');
+        const fldDoneSubj = document.getElementById('inpDoneSubj');
+        const fldDoneType = document.getElementById('selDoneType');
+        const cmdSaveDone = document.getElementById('btnSaveDone');
+
+        const fldAddPages = document.getElementById('inpAddPages');
+        const fldAddSubj = document.getElementById('inpAddSubj');
+        const fldAddType = document.getElementById('selAddType');
+        const cmdSaveAdd = document.getElementById('btnSaveAdd');
+
+        const hdnModId = document.getElementById('hdnTargetId');
+        const fldModPages = document.getElementById('inpModPages');
+        const fldModSubj = document.getElementById('inpModSubj');
+        const fldModType = document.getElementById('selModType');
+        const cmdSaveMod = document.getElementById('btnSaveMod');
+        const cmdExitMod = document.getElementById('btnExitModify');
+
+        const cmdOpenConf = document.getElementById('btnConfig');
+        const cmdExitConf = document.getElementById('btnExitConfig');
+        const fldSetupTime = document.getElementById('inpSetupTime');
+        const tableGrid = document.getElementById('gridBody');
+        const cmdReload = document.getElementById('btnForceReload');
+
+        // نظام التبويبات الجديد
+        const navItems = document.querySelectorAll('.nav-item');
+        const navPanes = document.querySelectorAll('.nav-pane');
+
+        navItems.forEach(btn => {
+            btn.addEventListener('click', () => {
+                navItems.forEach(b => b.classList.remove('active-tab'));
+                navPanes.forEach(c => c.classList.remove('active-pane'));
+                btn.classList.add('active-tab');
+                document.getElementById(btn.dataset.target).classList.add('active-pane');
+            });
+        });
+
+        // متغيرات النظام
+        let loopEngine;
+        let baseTimeSecs = 10 * 60;
+        let secondsLeft = baseTimeSecs;
+        let isEngineRunning = false;
+        let isEnginePaused = false;
+        let exactEndTime = 0; 
+        let prevBeepSec = -1;
+        
+        let cycleNum = 1;
+        let sessionRecords = [];
+
+        // معرّف عشوائي مقوى
+        function createSecureId() {
+            return 'sys_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6);
+        }
+
+        // محرك الصوت
+        let soundEngine;
+        function wakeAudio() {
+            if (!soundEngine) soundEngine = new (window.AudioContext || window.webkitAudioContext)();
+            if (soundEngine.state === 'suspended') soundEngine.resume();
+        }
+        function triggerSound(hz, dur) {
+            if (!soundEngine) return;
+            const osc = soundEngine.createOscillator();
+            const gain = soundEngine.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = hz;
+            gain.gain.setValueAtTime(0.1, soundEngine.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, soundEngine.currentTime + dur);
+            osc.connect(gain);
+            gain.connect(soundEngine.destination);
+            osc.start();
+            osc.stop(soundEngine.currentTime + dur);
+        }
+
+        // إدارة الذاكرة الجديدة
+        function commitToMemory() {
+            const currentObj = { secondsLeft, isEngineRunning, isEnginePaused, exactEndTime, baseTimeSecs, cycleNum };
+            localStorage.setItem(MEMORY_KEY_STATE, JSON.stringify(currentObj));
+            localStorage.setItem(MEMORY_KEY_LOG, JSON.stringify(sessionRecords));
+        }
+
+        function pullFromMemory() {
+            const rawLog = localStorage.getItem(MEMORY_KEY_LOG);
+            if (rawLog) {
+                sessionRecords = JSON.parse(rawLog);
+                renderGrid();
+            }
+
+            const rawState = localStorage.getItem(MEMORY_KEY_STATE);
+            if (rawState) {
+                const s = JSON.parse(rawState);
+                baseTimeSecs = s.baseTimeSecs || (10 * 60);
+                fldSetupTime.value = baseTimeSecs / 60;
+                
+                cycleNum = sessionRecords.length === 0 ? 1 : (s.cycleNum || 1);
+                
+                if (s.isEngineRunning) {
+                    const exactNow = Date.now();
+                    secondsLeft = Math.max(0, Math.round((s.exactEndTime - exactNow) / 1000));
+                    exactEndTime = s.exactEndTime;
+                    if (secondsLeft > 0) igniteEngine(true);
+                    else { secondsLeft = 0; refreshScreen(); winDone.style.display = 'flex'; }
+                } else if (s.isEnginePaused) {
+                    secondsLeft = s.secondsLeft;
+                    isEnginePaused = true;
+                    refreshScreen();
+                    uiPlay.textContent = "استكمال";
+                    uiPlay.disabled = false;
+                    uiHold.disabled = true;
+                    uiFinish.disabled = false;
+                } else {
+                    secondsLeft = baseTimeSecs;
+                    refreshScreen();
+                }
+            } else refreshScreen();
+        }
+
+        // منطق التوقيت
+        function refreshScreen() {
+            const m = Math.floor(secondsLeft / 60);
+            const s = secondsLeft % 60;
+            uiClock.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function engineTick() {
+            if (!isEngineRunning) return;
+            const preciseNow = Date.now();
+            secondsLeft = Math.max(0, Math.round((exactEndTime - preciseNow) / 1000));
+            refreshScreen();
+
+            if (secondsLeft <= 10 && secondsLeft > 0 && prevBeepSec !== secondsLeft) {
+                triggerSound(600, 0.1);
+                prevBeepSec = secondsLeft;
+            }
+
+            if (secondsLeft <= 0) {
+                clearInterval(loopEngine);
+                triggerSound(800, 0.8);
+                winDone.style.display = 'flex';
+                resetButtons();
+            }
+            commitToMemory();
+        }
+
+        function igniteEngine(isResume = false) {
+            wakeAudio();
+            if (!isResume) exactEndTime = Date.now() + (secondsLeft * 1000);
+            isEngineRunning = true;
+            isEnginePaused = false;
+            prevBeepSec = -1;
+            
+            uiPlay.textContent = "انطلاق";
+            uiPlay.disabled = true;
+            uiHold.disabled = false;
+            uiFinish.disabled = false;
+
+            clearInterval(loopEngine);
+            loopEngine = setInterval(engineTick, 500);
+            commitToMemory();
+        }
+
+        function haltEngine() {
+            clearInterval(loopEngine);
+            isEngineRunning = false;
+            isEnginePaused = true;
+            uiPlay.textContent = "استكمال";
+            uiPlay.disabled = false;
+            uiHold.disabled = true;
+            commitToMemory();
+        }
+
+        function abortEngine() {
+            clearInterval(loopEngine);
+            resetButtons();
+            secondsLeft = baseTimeSecs;
+            refreshScreen();
+            commitToMemory();
+        }
+
+        function resetButtons() {
+            isEngineRunning = false;
+            isEnginePaused = false;
+            uiPlay.textContent = "انطلاق";
+            uiPlay.disabled = false;
+            uiHold.disabled = true;
+            uiFinish.disabled = true;
+        }
+
+        function fetchTimeStamp() {
+            const d = new Date();
+            const tm = `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+            const dt = `${d.getFullYear()}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getDate().toString().padStart(2, '0')}`;
+            return `${dt} | ${tm}`;
+        }
+
+        // تسجيل البيانات
+        function insertRecord(qty, topic, typeStr, tag = '') {
+            sessionRecords.push({
+                sys_id: createSecureId(),
+                cycle: cycleNum,
+                stamp: fetchTimeStamp(),
+                amount: qty,
+                course: topic || 'بدون تحديد',
+                method: typeStr,
+                label: tag
+            });
+            cycleNum++;
+            renderGrid();
+            commitToMemory();
+        }
+
+        window.removeEntry = function(targetId) {
+            if(confirm("هل أنت متأكد من مسح هذه الجولة؟")) {
+                sessionRecords = sessionRecords.filter(r => String(r.sys_id) !== String(targetId));
+                if (sessionRecords.length === 0) cycleNum = 1;
+                renderGrid();
+                commitToMemory();
+            }
+        }
+
+        window.openEditor = function(targetId) {
+            const rec = sessionRecords.find(r => String(r.sys_id) === String(targetId));
+            if(rec) {
+                hdnModId.value = rec.sys_id;
+                fldModPages.value = rec.amount;
+                fldModSubj.value = rec.course !== 'بدون تحديد' ? rec.course : '';
+                fldModType.value = rec.method || 'قراءة بتركيز';
+                winModify.style.display = 'flex';
+            }
+        }
+
+        cmdSaveMod.addEventListener('click', () => {
+            const idVal = hdnModId.value;
+            const pVal = fldModPages.value;
+            if (pVal === "" || pVal < 0) return; 
+
+            const idx = sessionRecords.findIndex(r => String(r.sys_id) === String(idVal));
+            if (idx !== -1) {
+                sessionRecords[idx].amount = pVal;
+                sessionRecords[idx].course = fldModSubj.value || 'بدون تحديد';
+                sessionRecords[idx].method = fldModType.value;
+                renderGrid();
+                commitToMemory();
+                winModify.style.display = 'none'; 
+            }
+        });
+
+        cmdExitMod.addEventListener('click', () => winModify.style.display = 'none');
+
+        // العمليات الواجهية
+        cmdSaveDone.addEventListener('click', () => {
+            wakeAudio();
+            const val = fldDonePages.value;
+            if (val === "" || val < 0) { alert("أدخل رقم صحيح"); return; }
+
+            insertRecord(val, fldDoneSubj.value, fldDoneType.value);
+            fldAddSubj.value = fldDoneSubj.value;
+            fldAddType.value = fldDoneType.value;
+
+            winDone.style.display = 'none';
+            secondsLeft = baseTimeSecs;
+            refreshScreen();
+            commitToMemory();
+        });
+
+        cmdSaveAdd.addEventListener('click', () => {
+            const val = fldAddPages.value;
+            if (val === "" || val < 0) { alert("أدخل رقم صحيح"); return; }
+
+            insertRecord(val, fldAddSubj.value, fldAddType.value, 'خارجي');
+            fldDoneSubj.value = fldAddSubj.value;
+            fldDoneType.value = fldAddType.value;
+            
+            fldAddPages.value = '';
+            document.querySelector('[data-target="panel-log"]').click();
+        });
+
+        function renderGrid() {
+            tableGrid.innerHTML = '';
+            sessionRecords.slice().reverse().forEach(row => {
+                const tagUi = row.label ? `<span class="badge">${row.label}</span>` : '';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.cycle}</td>
+                    <td dir="ltr" style="font-size:0.75rem;">${row.stamp}</td>
+                    <td>${row.course} ${tagUi}</td>
+                    <td>${row.method || '-'}</td>
+                    <td>${row.amount}</td>
+                    <td class="action-pad">
+                        <button class="click-btn btn-alt btn-mini" onclick="openEditor('${row.sys_id}')">تعديل</button>
+                        <button class="click-btn btn-warn btn-mini" onclick="removeEntry('${row.sys_id}')">مسح</button>
+                    </td>
+                `;
+                tableGrid.appendChild(tr);
+            });
+        }
+
+        // أحداث الأزرار الأساسية
+        uiPlay.addEventListener('click', () => igniteEngine(false));
+        uiHold.addEventListener('click', haltEngine);
+        uiFinish.addEventListener('click', abortEngine);
+
+        cmdOpenConf.addEventListener('click', () => {
+            winConfig.style.display = 'flex';
+            fldDonePages.value = '';
+        });
+
+        cmdExitConf.addEventListener('click', () => {
+            winConfig.style.display = 'none';
+            const reqMins = parseInt(fldSetupTime.value);
+            if (reqMins > 0 && !isEngineRunning && !isEnginePaused) {
+                baseTimeSecs = reqMins * 60;
+                secondsLeft = baseTimeSecs;
+                refreshScreen();
+                commitToMemory();
+            }
+        });
+
+        // زر كسر الكاش الخارق
+        cmdReload.addEventListener('click', () => {
+            commitToMemory(); 
+            const baseUri = window.location.href.split('?')[0];
+            window.location.replace(baseUri + '?bust=' + Date.now());
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === winConfig) cmdExitConf.click();
+            if (e.target === winModify) cmdExitMod.click();
+        });
+
+        // تشغيل التهيئة
+        window.addEventListener('DOMContentLoaded', pullFromMemory);
+    </script>
+</body>
+</html>
