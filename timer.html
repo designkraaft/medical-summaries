@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مؤقت الجولات الاحترافي</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --work-bg: #eef2ff;
+            --work-border: #c7d2fe;
+            
+            --success: #10b981;
+            --rest-bg: #dcfce7;
+            --rest-border: #a7f3d0;
+            
+            --warning: #f59e0b;
+            --long-rest-bg: #fef3c7;
+            --long-rest-border: #fde68a;
+
+            --danger: #ef4444;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            /* هامش إلزامي لحماية التصميم على كافة الأجهزة */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 700px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        /* تنسيق الأقسام المقسمة */
+        .settings-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .setting-card {
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid;
+        }
+
+        .setting-card.work-card {
+            background-color: var(--work-bg);
+            border-color: var(--work-border);
+        }
+
+        .setting-card.rest-card {
+            background-color: var(--rest-bg);
+            border-color: var(--rest-border);
+        }
+
+        .setting-card.long-rest-card {
+            background-color: var(--long-rest-bg);
+            border-color: var(--long-rest-border);
+        }
+
+        .setting-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .inputs-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 120px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            background: white;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .timer-display {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .time {
+            font-size: 4.5rem;
+            font-weight: bold;
+            font-variant-numeric: tabular-nums;
+            color: var(--text);
+            margin: 10px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            background-color: #e0e7ff;
+            color: var(--primary);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 120px;
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-start { background-color: var(--success); }
+        .btn-pause { background-color: var(--warning); color: #000; }
+        .btn-reset { background-color: var(--danger); }
+
+        @media (max-width: 600px) {
+            .time { font-size: 3.5rem; }
+            .container { padding: 15px; }
+            button { width: 100%; margin-bottom: 5px; }
+            .setting-card { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>مؤقت الجولات المتقدم</h1>
+        
+        <div class="settings-container">
+            
+            <!-- إعدادات الجولات الأساسية -->
+            <div class="setting-card work-card">
+                <h3>🔵 إعدادات الجولات العادية</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>عدد الجولات الكلي</label>
+                        <input type="number" id="totalRounds" value="50" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label>دقائق الجولة</label>
+                        <input type="number" id="workMins" value="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>ثواني الجولة</label>
+                        <input type="number" id="workSecs" value="5" min="0" max="59">
+                    </div>
+                </div>
+            </div>
+
+            <!-- إعدادات الاستراحة العادية -->
+            <div class="setting-card rest-card">
+                <h3>🟢 الاستراحة العادية (بين الجولات)</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>دقائق الاستراحة</label>
+                        <input type="number" id="shortRestMins" value="0" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>ثواني الاستراحة</label>
+                        <input type="number" id="shortRestSecs" value="4" min="0" max="59">
+                    </div>
+                </div>
+            </div>
+
+            <!-- إعدادات الاستراحة المطولة -->
+            <div class="setting-card long-rest-card">
+                <h3>🟠 الاستراحة المطولة</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>فاصل الجولات (كل كم جولة؟)</label>
+                        <input type="number" id="longRestInterval" value="5" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label>دقائق الاستراحة المطولة</label>
+                        <input type="number" id="longRestMins" value="15" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label>ثواني الاستراحة المطولة</label>
+                        <input type="number" id="longRestSecs" value="0" min="0" max="59">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="timer-display">
+            <div class="status-badge" id="statusBadge">جاهز للبدء</div>
+            <div class="time" id="timeDisplay">00:00</div>
+            <div id="roundCounter" style="font-size: 1.2rem; font-weight: bold; margin-top: 10px;">الجولة: 0 / 0</div>
+        </div>
+
+        <div class="controls">
+            <button class="btn-start" id="startBtn" onclick="startTimer()">Start (بدء)</button>
+            <button class="btn-pause" id="pauseBtn" onclick="pauseTimer()" disabled>Stop (توقف)</button>
+            <button class="btn-reset" id="resetBtn" onclick="resetTimer()">إعادة ضبط</button>
+        </div>
+    </div>
+
+    <script>
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+
+        let timer;
+        let isRunning = false;
+        let currentMode = 'work'; 
+        let currentRound = 1;
+        let timeLeft = 0;
+        let totalRounds = 0;
+
+        const timeDisplay = document.getElementById('timeDisplay');
+        const statusBadge = document.getElementById('statusBadge');
+        const roundCounter = document.getElementById('roundCounter');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+
+        // جلب الوقت بالثواني من الحقول
+        function getTimeInSeconds(minsId, secsId) {
+            const m = parseInt(document.getElementById(minsId).value) || 0;
+            const s = parseInt(document.getElementById(secsId).value) || 0;
+            return (m * 60) + s;
+        }
+
+        // صوت النقر (نغمة التنبيه)
+        function playBeep() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(850, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
+            
+            oscillator.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+            oscillator.stop(audioCtx.currentTime + 0.3);
+        }
+
+        // النطق الصوتي باللغة الإنجليزية
+        function speakText(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        function initSettings() {
+            totalRounds = parseInt(document.getElementById('totalRounds').value);
+            timeLeft = getTimeInSeconds('workMins', 'workSecs');
+            updateUI();
+        }
+
+        function updateUI() {
+            timeDisplay.innerText = formatTime(timeLeft);
+            roundCounter.innerText = `الجولة: ${currentRound} / ${totalRounds}`;
+            
+            if(currentMode === 'work') {
+                statusBadge.innerText = 'وقت الجولة (العمل)';
+                statusBadge.style.backgroundColor = 'var(--work-bg)';
+                statusBadge.style.color = 'var(--primary)';
+            } else if(currentMode === 'shortRest') {
+                statusBadge.innerText = 'استراحة عادية';
+                statusBadge.style.backgroundColor = 'var(--rest-bg)';
+                statusBadge.style.color = 'var(--success)';
+            } else {
+                statusBadge.innerText = 'استراحة مطولة';
+                statusBadge.style.backgroundColor = 'var(--long-rest-bg)';
+                statusBadge.style.color = '#b45309';
+            }
+        }
+
+        function switchMode() {
+            playBeep(); // التنبيه الصوتي لنهاية الوقت
+
+            if (currentMode === 'work') {
+                const longRestInterval = parseInt(document.getElementById('longRestInterval').value);
+                
+                if (currentRound >= totalRounds) {
+                    speakText('Session Complete');
+                    resetTimer();
+                    statusBadge.innerText = 'اكتملت جميع الجولات!';
+                    return;
+                }
+
+                if (currentRound % longRestInterval === 0) {
+                    currentMode = 'longRest';
+                    timeLeft = getTimeInSeconds('longRestMins', 'longRestSecs');
+                    speakText('Rest'); // ينطق Rest كما طلبت للاستراحة المطولة
+                } else {
+                    currentMode = 'shortRest';
+                    timeLeft = getTimeInSeconds('shortRestMins', 'shortRestSecs');
+                    speakText('Rest'); // ينطق Rest للاستراحة العادية
+                }
+            } else {
+                // العودة للعمل
+                currentMode = 'work';
+                currentRound++;
+                timeLeft = getTimeInSeconds('workMins', 'workSecs');
+                speakText('Start');
+            }
+            updateUI();
+        }
+
+        function timerTick() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateUI();
+            } else {
+                switchMode();
+            }
+        }
+
+        function startTimer() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            if (!isRunning) {
+                // إذا كنا في البداية تماماً
+                if (timeLeft === 0 && currentRound === 1) initSettings();
+                
+                // نطق Start عند ضغط زر البدء
+                speakText('Start');
+
+                timer = setInterval(timerTick, 1000);
+                isRunning = true;
+                
+                startBtn.disabled = true;
+                pauseBtn.disabled = false;
+                
+                // تعطيل الحقول أثناء التشغيل لمنع الخطأ
+                document.querySelectorAll('input').forEach(input => input.disabled = true);
+            }
+        }
+
+        function pauseTimer() {
+            if (isRunning) {
+                clearInterval(timer);
+                isRunning = false;
+                
+                // نطق Stop عند التوقف
+                speakText('Stop');
+                
+                startBtn.disabled = false;
+                pauseBtn.disabled = true;
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+            currentMode = 'work';
+            currentRound = 1;
+            
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            document.querySelectorAll('input').forEach(input => input.disabled = false);
+            
+            initSettings();
+            statusBadge.innerText = 'جاهز للبدء';
+        }
+
+        window.onload = initSettings;
+    </script>
+</body>
+</html>
