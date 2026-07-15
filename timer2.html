@@ -78,10 +78,7 @@
             transition: all 0.2s;
         }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .btn-main { background-color: var(--primary); color: white; }
         .btn-main:hover:not(:disabled) { background-color: var(--primary-hover); }
@@ -92,6 +89,8 @@
         .btn-danger { background-color: #ef4444; color: white; }
         .btn-danger:hover:not(:disabled) { background-color: #dc2626; }
 
+        .btn-small { padding: 6px 12px; font-size: 0.85rem; margin: 2px; }
+
         /* Modals */
         .modal {
             display: none;
@@ -101,7 +100,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            padding: 20px;
+            padding: 15px;
         }
 
         .modal-content {
@@ -109,7 +108,7 @@
             padding: 2rem 1.5rem;
             border-radius: 16px;
             width: 100%;
-            max-width: 450px;
+            max-width: 550px;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
@@ -117,14 +116,23 @@
 
         .modal h3 { margin-top: 0; }
 
-        input[type="number"] {
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input[type="number"], input[type="text"], select {
             width: 100%;
             padding: 10px;
-            margin: 10px 0 20px;
             border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 1rem;
-            text-align: center;
         }
 
         /* Tabs System */
@@ -152,14 +160,8 @@
             border-bottom-color: var(--primary);
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(5px); }
@@ -170,19 +172,21 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            white-space: nowrap;
         }
         
         th, td {
             border: 1px solid var(--border);
-            padding: 10px;
+            padding: 8px;
             text-align: center;
         }
         
-        th { background-color: var(--bg); position: sticky; top: 0; }
+        th { background-color: var(--bg); position: sticky; top: 0; z-index: 1; }
 
         .table-container {
-            max-height: 300px;
+            max-height: 350px;
+            overflow-x: auto;
             overflow-y: auto;
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -209,19 +213,25 @@
             border: 1px solid #bbf7d0;
             border-radius: 8px;
         }
-
         .update-zone h4 { margin: 0 0 10px 0; color: #166534; }
         .update-zone p { font-size: 0.85rem; color: #15803d; margin-bottom: 15px; }
         .btn-update { background-color: #16a34a; color: white; }
         .btn-update:hover { background-color: #15803d; }
 
         .tag-manual {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             background-color: #f1f5f9;
             color: #475569;
-            padding: 2px 6px;
+            padding: 2px 4px;
             border-radius: 4px;
-            margin-right: 5px;
+            display: block;
+            margin-top: 3px;
+        }
+        
+        .action-btns {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
         }
     </style>
 </head>
@@ -239,13 +249,59 @@
         </div>
     </div>
 
-    <!-- End Round Modal -->
+    <!-- End Round Modal (Automatic) -->
     <div id="endModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 400px;">
             <h3 style="text-align: center;">انتهت الجولة! 👏</h3>
-            <label>كم صفحة درست خلال هذه الجولة؟</label>
-            <input type="number" id="pagesInput" min="0" placeholder="أدخل عدد الصفحات...">
-            <button id="saveRoundBtn" class="btn-main" style="width: 100%;">حفظ السجل</button>
+            
+            <div class="form-group">
+                <label>نوع القراءة:</label>
+                <select id="autoReadType">
+                    <option value="قراءة بتركيز">قراءة بتركيز</option>
+                    <option value="قراءة سريعة">قراءة سريعة</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>المادة / الموضوع:</label>
+                <input type="text" id="autoSubject" placeholder="مثال: علم التشريح، فيزيولوجيا...">
+            </div>
+
+            <div class="form-group">
+                <label>عدد الصفحات:</label>
+                <input type="number" id="autoPages" min="0" placeholder="أدخل عدد الصفحات...">
+            </div>
+            
+            <button id="saveAutoRoundBtn" class="btn-main" style="width: 100%;">حفظ السجل</button>
+        </div>
+    </div>
+
+    <!-- Edit Record Modal -->
+    <div id="editModal" class="modal" style="z-index: 1050;">
+        <div class="modal-content" style="max-width: 400px;">
+            <button class="close-modal" id="closeEditBtn" title="إغلاق">✖</button>
+            <h3>تعديل الجولة</h3>
+            <input type="hidden" id="editRecordId">
+            
+            <div class="form-group">
+                <label>نوع القراءة:</label>
+                <select id="editReadType">
+                    <option value="قراءة بتركيز">قراءة بتركيز</option>
+                    <option value="قراءة سريعة">قراءة سريعة</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>المادة / الموضوع:</label>
+                <input type="text" id="editSubject">
+            </div>
+
+            <div class="form-group">
+                <label>عدد الصفحات:</label>
+                <input type="number" id="editPages" min="0">
+            </div>
+            
+            <button id="saveEditBtn" class="btn-main" style="width: 100%;">حفظ التعديلات</button>
         </div>
     </div>
 
@@ -267,8 +323,11 @@
                         <thead>
                             <tr>
                                 <th>الجولة</th>
-                                <th>التاريخ والوقت</th>
+                                <th>التاريخ</th>
+                                <th>المادة</th>
+                                <th>النوع</th>
                                 <th>الصفحات</th>
+                                <th>إجراءات</th>
                             </tr>
                         </thead>
                         <tbody id="historyTableBody">
@@ -280,15 +339,33 @@
 
             <!-- Tab 2: Manual Add -->
             <div id="tab-manual" class="tab-content">
-                <label>عدد الصفحات التي قرأتها (في جولة خارجية):</label>
-                <input type="number" id="manualPagesInput" min="0" placeholder="مثال: 5">
+                <div class="form-group">
+                    <label>نوع القراءة:</label>
+                    <select id="manualReadType">
+                        <option value="قراءة بتركيز">قراءة بتركيز</option>
+                        <option value="قراءة سريعة">قراءة سريعة</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>المادة / الموضوع:</label>
+                    <input type="text" id="manualSubject" placeholder="مثال: علم التشريح، مراجعة...">
+                </div>
+
+                <div class="form-group">
+                    <label>عدد الصفحات المنجزة:</label>
+                    <input type="number" id="manualPages" min="0" placeholder="مثال: 5">
+                </div>
+
                 <button id="saveManualBtn" class="btn-main" style="width: 100%;">إضافة إلى السجل</button>
             </div>
 
             <!-- Tab 3: Settings -->
             <div id="tab-settings" class="tab-content">
-                <label>مدة الجولة الافتراضية (بالدقائق):</label>
-                <input type="number" id="durationInput" min="1" value="10">
+                <div class="form-group">
+                    <label>مدة الجولة الافتراضية (بالدقائق):</label>
+                    <input type="number" id="durationInput" min="1" value="10" style="text-align: center;">
+                </div>
                 
                 <div class="update-zone">
                     <h4>تحديث الإصدار</h4>
@@ -301,28 +378,45 @@
     </div>
 
     <script>
-        // DOM Elements
+        // DOM Elements - Main
         const timeDisplay = document.getElementById('timeDisplay');
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const stopBtn = document.getElementById('stopBtn');
         
+        // Modals
         const endModal = document.getElementById('endModal');
-        const pagesInput = document.getElementById('pagesInput');
-        const saveRoundBtn = document.getElementById('saveRoundBtn');
-        
         const settingsModal = document.getElementById('settingsModal');
+        const editModal = document.getElementById('editModal');
+        
+        // Inputs - Auto End
+        const autoPages = document.getElementById('autoPages');
+        const autoSubject = document.getElementById('autoSubject');
+        const autoReadType = document.getElementById('autoReadType');
+        const saveAutoRoundBtn = document.getElementById('saveAutoRoundBtn');
+
+        // Inputs - Manual Add
+        const manualPages = document.getElementById('manualPages');
+        const manualSubject = document.getElementById('manualSubject');
+        const manualReadType = document.getElementById('manualReadType');
+        const saveManualBtn = document.getElementById('saveManualBtn');
+
+        // Inputs - Edit
+        const editRecordId = document.getElementById('editRecordId');
+        const editPages = document.getElementById('editPages');
+        const editSubject = document.getElementById('editSubject');
+        const editReadType = document.getElementById('editReadType');
+        const saveEditBtn = document.getElementById('saveEditBtn');
+        const closeEditBtn = document.getElementById('closeEditBtn');
+
+        // Settings & History
         const openSettingsBtn = document.getElementById('openSettingsBtn');
         const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-        
         const durationInput = document.getElementById('durationInput');
         const historyTableBody = document.getElementById('historyTableBody');
         const updateAppBtn = document.getElementById('updateAppBtn');
-        
-        const manualPagesInput = document.getElementById('manualPagesInput');
-        const saveManualBtn = document.getElementById('saveManualBtn');
 
-        // Tabs logic
+        // Tabs Logic
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
 
@@ -330,7 +424,6 @@
             btn.addEventListener('click', () => {
                 tabBtns.forEach(b => b.classList.remove('active'));
                 tabContents.forEach(c => c.classList.remove('active'));
-                
                 btn.classList.add('active');
                 document.getElementById(btn.dataset.tab).classList.add('active');
             });
@@ -346,43 +439,31 @@
         let lastBeepedSecond = -1;
         
         let roundCounter = 1;
-        let historyData = [];
+        let historyData = []; // Schema: { id, round, date, pages, subject, readType, note }
 
-        // Audio Context
+        // Audio System
         let audioCtx;
-
         function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
         }
-
         function playBeep(frequency, duration) {
             if (!audioCtx) return;
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
-            
             oscillator.type = 'sine';
             oscillator.frequency.value = frequency;
-            
             gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-            
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-            
             oscillator.start();
             oscillator.stop(audioCtx.currentTime + duration);
         }
 
-        // --- Storage Management ---
+        // Storage Management
         function saveData() {
-            const state = {
-                timeLeft, isRunning, isPaused, endTime, defaultDurationSeconds, roundCounter
-            };
+            const state = { timeLeft, isRunning, isPaused, endTime, defaultDurationSeconds, roundCounter };
             localStorage.setItem('studyTimerState', JSON.stringify(state));
             localStorage.setItem('studyTimerHistory', JSON.stringify(historyData));
         }
@@ -405,14 +486,8 @@
                     const now = Date.now();
                     timeLeft = Math.max(0, Math.round((state.endTime - now) / 1000));
                     endTime = state.endTime;
-                    
-                    if (timeLeft > 0) {
-                        startTimer(true);
-                    } else {
-                        timeLeft = 0;
-                        updateDisplay();
-                        showEndModal();
-                    }
+                    if (timeLeft > 0) startTimer(true);
+                    else { timeLeft = 0; updateDisplay(); showEndModal(); }
                 } else if (state.isPaused) {
                     timeLeft = state.timeLeft;
                     isPaused = true;
@@ -425,12 +500,10 @@
                     timeLeft = defaultDurationSeconds;
                     updateDisplay();
                 }
-            } else {
-                updateDisplay();
-            }
+            } else updateDisplay();
         }
 
-        // --- Timer Logic ---
+        // Timer Logic
         function updateDisplay() {
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
@@ -439,7 +512,6 @@
 
         function tick() {
             if (!isRunning) return;
-            
             const now = Date.now();
             timeLeft = Math.max(0, Math.round((endTime - now) / 1000));
             updateDisplay();
@@ -460,11 +532,7 @@
 
         function startTimer(isResuming = false) {
             initAudio();
-            
-            if (!isResuming) {
-                endTime = Date.now() + (timeLeft * 1000);
-            }
-            
+            if (!isResuming) endTime = Date.now() + (timeLeft * 1000);
             isRunning = true;
             isPaused = false;
             lastBeepedSecond = -1;
@@ -483,7 +551,6 @@
             clearInterval(timerInterval);
             isRunning = false;
             isPaused = true;
-            
             startBtn.textContent = "استئناف";
             startBtn.disabled = false;
             pauseBtn.disabled = true;
@@ -507,65 +574,102 @@
             stopBtn.disabled = true;
         }
 
-        // --- Helper for Date & Time ---
         function getCurrentDateTimeString() {
             const now = new Date();
             const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
             const dateString = `${now.getFullYear()}/${(now.getMonth()+1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')}`;
-            return `${dateString} - ${timeString}`;
+            return `${dateString} ${timeString}`;
         }
 
-        // --- Add Record to History ---
-        function addRecord(pages, note = '') {
+        // Data Operations
+        function addRecord(pages, subject, readType, note = '') {
             historyData.push({
+                id: Date.now(),
                 round: roundCounter,
                 date: getCurrentDateTimeString(),
                 pages: pages,
+                subject: subject || 'غير محدد',
+                readType: readType,
                 note: note
             });
-
             roundCounter++;
             updateHistoryTable();
             saveData();
         }
 
-        // --- Modals & Events ---
-        function showEndModal() {
-            endModal.style.display = 'flex';
-            pagesInput.value = '';
-            pagesInput.focus();
+        window.deleteRecord = function(id) {
+            if(confirm("هل أنت متأكد من حذف هذه الجولة؟")) {
+                historyData = historyData.filter(item => item.id !== id);
+                updateHistoryTable();
+                saveData();
+            }
         }
 
-        // حفظ جولة من المؤقت التلقائي
-        saveRoundBtn.addEventListener('click', () => {
-            initAudio();
-            const pages = pagesInput.value;
-            if (pages === "" || pages < 0) {
-                alert("الرجاء إدخال عدد صفحات صحيح.");
-                return;
+        window.openEditModal = function(id) {
+            const record = historyData.find(item => item.id === id);
+            if(record) {
+                editRecordId.value = record.id;
+                editPages.value = record.pages;
+                editSubject.value = record.subject !== 'غير محدد' ? record.subject : '';
+                editReadType.value = record.readType;
+                editModal.style.display = 'flex';
             }
+        }
 
-            addRecord(pages);
+        saveEditBtn.addEventListener('click', () => {
+            const id = parseInt(editRecordId.value);
+            const pgs = editPages.value;
+            if (pgs === "" || pgs < 0) { alert("الرجاء إدخال صفحات صحيحة."); return; }
+
+            const index = historyData.findIndex(item => item.id === id);
+            if (index !== -1) {
+                historyData[index].pages = pgs;
+                historyData[index].subject = editSubject.value || 'غير محدد';
+                historyData[index].readType = editReadType.value;
+                updateHistoryTable();
+                saveData();
+                editModal.style.display = 'none';
+            }
+        });
+
+        closeEditBtn.addEventListener('click', () => editModal.style.display = 'none');
+
+        // Modals & Events
+        function showEndModal() {
+            endModal.style.display = 'flex';
+            autoPages.value = '';
+            // No reset for subject/type to remember user's last studying session
+            autoPages.focus();
+        }
+
+        saveAutoRoundBtn.addEventListener('click', () => {
+            initAudio();
+            const pgs = autoPages.value;
+            if (pgs === "" || pgs < 0) { alert("الرجاء إدخال عدد صفحات صحيح."); return; }
+
+            addRecord(pgs, autoSubject.value, autoReadType.value);
             
+            // Sync manual fields for convenience
+            manualSubject.value = autoSubject.value;
+            manualReadType.value = autoReadType.value;
+
             endModal.style.display = 'none';
             timeLeft = defaultDurationSeconds;
             updateDisplay();
             saveData();
         });
 
-        // حفظ جولة يدوية من التبويب
         saveManualBtn.addEventListener('click', () => {
-            const pages = manualPagesInput.value;
-            if (pages === "" || pages < 0) {
-                alert("الرجاء إدخال عدد صفحات صحيح.");
-                return;
-            }
+            const pgs = manualPages.value;
+            if (pgs === "" || pgs < 0) { alert("الرجاء إدخال عدد صفحات صحيح."); return; }
 
-            addRecord(pages, 'يدوي');
+            addRecord(pgs, manualSubject.value, manualReadType.value, 'يدوي');
             
-            manualPagesInput.value = '';
+            // Sync auto fields
+            autoSubject.value = manualSubject.value;
+            autoReadType.value = manualReadType.value;
             
-            // الانتقال لتبويب السجل لرؤية النتيجة
+            manualPages.value = '';
             document.querySelector('[data-tab="tab-history"]').click();
         });
 
@@ -575,26 +679,29 @@
                 const noteHtml = entry.note ? `<span class="tag-manual">${entry.note}</span>` : '';
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>الجولة ${entry.round}</td>
-                    <td dir="ltr">${entry.date}</td>
-                    <td>${entry.pages} ${noteHtml}</td>
+                    <td>${entry.round}</td>
+                    <td dir="ltr" style="font-size:0.75rem;">${entry.date}</td>
+                    <td>${entry.subject} ${noteHtml}</td>
+                    <td>${entry.readType}</td>
+                    <td>${entry.pages}</td>
+                    <td class="action-btns">
+                        <button class="btn-secondary btn-small" onclick="openEditModal(${entry.id})">✏️</button>
+                        <button class="btn-danger btn-small" onclick="deleteRecord(${entry.id})">🗑️</button>
+                    </td>
                 `;
                 historyTableBody.appendChild(row);
             });
         }
 
-        // --- Base Events ---
+        // Base Events
         startBtn.addEventListener('click', () => startTimer(false));
         pauseBtn.addEventListener('click', pauseTimer);
         stopBtn.addEventListener('click', stopTimer);
 
-        openSettingsBtn.addEventListener('click', () => {
-            settingsModal.style.display = 'flex';
-        });
+        openSettingsBtn.addEventListener('click', () => settingsModal.style.display = 'flex');
 
         closeSettingsBtn.addEventListener('click', () => {
             settingsModal.style.display = 'none';
-            
             const newMins = parseInt(durationInput.value);
             if (newMins > 0 && !isRunning && !isPaused) {
                 defaultDurationSeconds = newMins * 60;
@@ -604,7 +711,6 @@
             }
         });
 
-        // Update App Force Refresh
         updateAppBtn.addEventListener('click', () => {
             saveData();
             const url = new URL(window.location.href);
@@ -614,11 +720,11 @@
 
         window.addEventListener('click', (e) => {
             if (e.target === settingsModal) closeSettingsBtn.click();
+            if (e.target === editModal) closeEditBtn.click();
         });
 
         // Initialize on Load
         window.addEventListener('DOMContentLoaded', loadData);
-
     </script>
 </body>
 </html>
