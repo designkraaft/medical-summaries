@@ -306,7 +306,7 @@
         </div>
     </div>
 
-    <!-- زر التحديث العائم -->
+    <!-- زر التحديث العائم (طلبك الأخير) -->
     <div class="update-wrapper">
         <button class="update-btn" onclick="applyUpdate(this)">
             تحديث التطبيق <span class="update-dot"></span>
@@ -314,7 +314,9 @@
     </div>
 
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+        
         let sessionPlan = [];
         let currentStepIndex = 0;
         let timeLeft = 0;
@@ -373,22 +375,22 @@
                 longMins: document.getElementById('longMins').value,
                 longSecs: document.getElementById('longSecs').value
             };
-            localStorage.setItem('studyTimerMasterInputs', JSON.stringify(inputs));
+            localStorage.setItem('studyTimerMasterInputsV2', JSON.stringify(inputs));
         }
 
         function saveState() {
             const state = { sessionPlan, currentStepIndex, timeLeft, totalSessionSeconds, elapsedSessionSeconds, isProgrammed };
-            localStorage.setItem('studyTimerMasterState', JSON.stringify(state));
+            localStorage.setItem('studyTimerMasterStateV2', JSON.stringify(state));
         }
 
         function loadSavedData() {
-            const savedInputs = JSON.parse(localStorage.getItem('studyTimerMasterInputs'));
+            const savedInputs = JSON.parse(localStorage.getItem('studyTimerMasterInputsV2'));
             if (savedInputs) {
                 for (const key in savedInputs) {
                     if (document.getElementById(key)) document.getElementById(key).value = savedInputs[key];
                 }
             }
-            const savedState = JSON.parse(localStorage.getItem('studyTimerMasterState'));
+            const savedState = JSON.parse(localStorage.getItem('studyTimerMasterStateV2'));
             if (savedState && savedState.isProgrammed) {
                 sessionPlan = savedState.sessionPlan;
                 currentStepIndex = savedState.currentStepIndex;
@@ -405,17 +407,33 @@
         }
         window.addEventListener('DOMContentLoaded', loadSavedData);
 
-        // الأصوات
+        // نظام الأصوات الدقيق
         function speakText(text) {
             const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; window.speechSynthesis.speak(u);
         }
-        function playTick() {
+        
+        // دالة توليد النقرات (تقبل نوعين: وقت القراءة، وقت الاستراحة)
+        function playTick(type) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.type = 'sine'; osc.frequency.setValueAtTime(950, audioCtx.currentTime);
+            const osc = audioCtx.createOscillator(); 
+            const gain = audioCtx.createGain();
+            
+            osc.connect(gain); 
+            gain.connect(audioCtx.destination);
+            
+            if (type === 'work') {
+                // صوت منخفض وعميق للعمل (القراءة)
+                osc.type = 'triangle'; 
+                osc.frequency.setValueAtTime(500, audioCtx.currentTime); 
+            } else {
+                // صوت حاد وتنبيهي للاستراحة
+                osc.type = 'sine'; 
+                osc.frequency.setValueAtTime(1200, audioCtx.currentTime); 
+            }
+            
             gain.gain.setValueAtTime(1, audioCtx.currentTime);
-            osc.start(); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.start(); 
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
             osc.stop(audioCtx.currentTime + 0.1);
         }
 
@@ -479,7 +497,7 @@
                     } else if (medType !== 'none' && isMed) {
                         sessionPlan.push({ type: 'medRest', duration: medDur, pageNum: i });
                         totalSessionSeconds += medDur;
-                        accTimeLong += medDur; // الاستراحة المطولة تحسب وقت ما قبلها
+                        accTimeLong += medDur; 
                         accTimeMed = 0; accPagesMed = 0;
                         accTimeShort = 0; accPagesShort = 0;
                     } else if (shortType !== 'none' && isShort) {
@@ -551,7 +569,15 @@
         function tick() {
             if (timeLeft > 0) {
                 const cType = sessionPlan[currentStepIndex].type;
-                if ((cType.includes('Rest')) && timeLeft <= 3 && timeLeft > 0) playTick();
+                
+                // 5 نقرات قبل انتهاء القراءة
+                if (cType === 'work' && timeLeft <= 5 && timeLeft > 0) {
+                    playTick('work');
+                } 
+                // 3 نقرات قبل انتهاء أي استراحة
+                else if (cType.includes('Rest') && timeLeft <= 3 && timeLeft > 0) {
+                    playTick('rest');
+                }
                 
                 timeLeft--; elapsedSessionSeconds++;
                 updateUI(); saveState();
@@ -583,7 +609,7 @@
             clearInterval(timer); isRunning = false;
             startBtn.disabled = false; startBtn.innerText = 'بدء (Start)';
             pauseBtn.disabled = true; resetBtn.disabled = true;
-            isProgrammed = false; localStorage.removeItem('studyTimerMasterState');
+            isProgrammed = false; localStorage.removeItem('studyTimerMasterStateV2');
         }
 
         function resetAll() {
