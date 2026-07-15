@@ -5,260 +5,335 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المؤقت الذكي لدراسة المقررات</title>
     <style>
+        /* الألوان العالمية */
         :root {
             --primary: #4f46e5;
-            --work-bg: #eef2ff;
-            --work-border: #c7d2fe;
+            --primary-hover: #4338ca;
+            --primary-ring: rgba(79, 70, 229, 0.3);
             --success: #10b981;
-            --rest-bg: #dcfce7;
-            --rest-border: #a7f3d0;
             --warning: #f59e0b;
-            --long-rest-bg: #fef3c7;
-            --long-rest-border: #fde68a;
             --danger: #ef4444;
             --bg: #f3f4f6;
-            --card-bg: #ffffff;
-            --text: #1f2937;
+            --surface: #ffffff;
+            --border: #e5e7eb;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
         }
 
+        /* إعادة ضبط الهوامش الأساسية */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
+        /* تعديل جذري: منع استخدام Flex على الـ Body لتجنب مشاكل الـ RTL */
         body {
             background-color: var(--bg);
-            color: var(--text);
-            /* هوامش إضافية من الأعلى لترك مساحة لشريط التقدم العائم */
-            padding: 80px 20px 30px 20px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            color: var(--text-main);
+            padding: 80px 15px 40px 15px; 
+            margin: 0;
+            display: block; /* استخدام Block بدلاً من Flex */
+            direction: rtl;
         }
 
-        /* شريط التقدم العائم المحسن (بهوامش من كل الاتجاهات) */
+        /* شريط التقدم العائم */
         #progressContainer {
             position: fixed;
-            top: 25px; /* هامش من الأعلى */
+            top: 20px;
             left: 50%;
-            transform: translateX(-50%); /* إبقاؤه في المنتصف تماماً */
-            width: 90%; /* هوامش يمين ويسار */
+            transform: translateX(-50%);
+            width: 90%;
             max-width: 800px;
-            height: 26px;
-            background-color: #d1d5db;
+            height: 28px;
+            background-color: #e5e7eb;
             z-index: 9999;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            border-radius: 12px; /* حواف دائرية */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 14px;
             overflow: hidden;
-            border: 2px solid white;
+            border: 2px solid var(--surface);
         }
 
         #progressBar {
+            position: absolute;
+            right: 0;
+            top: 0;
             height: 100%;
             width: 0%;
             background-color: var(--success);
             transition: width 1s linear;
+            z-index: 1;
+        }
+
+        #progressText {
+            position: absolute;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 0.95rem;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            white-space: nowrap;
+            color: #111827;
+            font-size: 1rem;
+            font-weight: 800;
+            z-index: 2;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
         }
 
-        .container {
-            background-color: var(--card-bg);
+        /* صندوق التطبيق المركزي المضمون 100% */
+        .app-box {
+            background-color: var(--surface);
             width: 100%;
             max-width: 750px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            margin: 0 auto; /* التوسيط الكلاسيكي المضمون */
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            margin: auto;
+            display: block; /* صندوق صلب */
         }
 
-        h1 { text-align: center; margin-bottom: 25px; font-size: 1.8rem; color: var(--primary); }
+        .app-box h1 { 
+            text-align: center; 
+            margin-bottom: 25px; 
+            font-size: 1.8rem; 
+            color: var(--text-main); 
+            font-weight: 800; 
+        }
 
-        .settings-container { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px; }
+        /* نظام البطاقات المبسط والمستقر */
+        .panel { 
+            background: var(--surface); 
+            padding: 20px; 
+            border-radius: 16px; 
+            border: 1px solid var(--border);
+            margin-bottom: 20px; /* مسافة سفلية بدلاً من Grid Gap */
+            display: block;
+        }
+        
+        .panel-blue { border-top: 5px solid var(--primary); }
+        .panel-green { border-top: 5px solid var(--success); }
+        .panel-orange { border-top: 5px solid var(--warning); }
 
-        .setting-card { padding: 15px; border-radius: 12px; border: 2px solid; transition: all 0.3s ease; }
-        .work-card { background-color: var(--work-bg); border-color: var(--work-border); }
-        .rest-card { background-color: var(--rest-bg); border-color: var(--rest-border); }
-        .long-rest-card { background-color: var(--long-rest-bg); border-color: var(--long-rest-border); }
+        .panel h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--text-main); font-weight: 700; }
 
-        .setting-card h3 { font-size: 1.1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: #374151; }
+        /* ترتيب الحقول (Row and Column) */
+        .form-row { 
+            display: flex; 
+            flex-direction: row; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            align-items: flex-start; 
+        }
 
-        .inputs-row { display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-start; }
-        .input-group { flex: 1; min-width: 130px; display: flex; flex-direction: column; }
-        .input-group label { font-size: 0.85rem; margin-bottom: 8px; font-weight: 600; color: #4b5563; }
+        .form-group { 
+            flex: 1; 
+            min-width: 130px; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .form-group label { 
+            font-size: 0.85rem; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            color: var(--text-muted); 
+        }
         
         input[type="number"]::-webkit-inner-spin-button, 
         input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         input[type="number"] { -moz-appearance: textfield; }
 
-        .input-group input:not(.clock-input), .input-group select { 
-            padding: 12px 10px; border: 1px solid #d1d5db; border-radius: 8px; 
-            font-size: 1rem; outline: none; background: white; text-align: center;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        .form-control { 
+            padding: 12px 14px; 
+            border: 1px solid var(--border); 
+            border-radius: 10px; 
+            font-size: 1rem; 
+            outline: none; 
+            background: #f9fafb; 
+            text-align: right;
+            color: var(--text-main);
+            font-weight: 500;
+            width: 100%;
         }
 
-        .input-group select { cursor: pointer; font-weight: bold; color: var(--primary); }
-
-        /* الأقسام الديناميكية للاستراحة المطولة */
-        .dynamic-settings {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed #d1d5db;
-            animation: fadeIn 0.3s ease-in-out;
+        .form-control:focus {
+            background: var(--surface);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-ring);
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        .dynamic-panel { 
+            margin-top: 15px; 
+            padding-top: 15px; 
+            border-top: 1px dashed var(--border); 
+        }
 
-        /* تصميم عداد الوقت (Clock Style) */
-        .clock-setter { display: flex; align-items: center; justify-content: center; background: white; padding: 10px; border-radius: 12px; border: 1px solid #d1d5db; gap: 15px; width: 100%; }
+        /* عداد الساعة المخصص */
+        .clock-container { 
+            display: flex; 
+            flex-direction: row;
+            align-items: center; 
+            justify-content: center; 
+            background: #f9fafb; 
+            padding: 12px; 
+            border-radius: 10px; 
+            border: 1px solid var(--border); 
+            gap: 15px; 
+            width: 100%; 
+        }
         .clock-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .clock-btn { background: var(--bg); border: 1px solid #d1d5db; color: var(--primary); font-size: 1rem; cursor: pointer; padding: 4px 15px; border-radius: 6px; display: flex; justify-content: center; align-items: center; }
-        .clock-btn:hover { background: #e5e7eb; }
-        .clock-input { width: 50px; text-align: center; font-size: 1.8rem; font-weight: bold; border: none; outline: none; color: var(--text); pointer-events: none; }
-        .clock-separator { font-size: 2rem; font-weight: bold; color: var(--text); margin-bottom: 25px; }
-        .clock-label { font-size: 0.75rem; color: #6b7280; font-weight: bold; }
+        .clock-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; padding: 6px 15px; border-radius: 8px; }
+        .clock-btn:hover { background: #e5e7eb; color: var(--text-main); }
+        .clock-input { width: 55px; text-align: center; font-size: 1.8rem; font-weight: 800; border: none; outline: none; background: transparent; color: var(--text-main); pointer-events: none; }
+        .clock-sep { font-size: 2rem; font-weight: bold; color: var(--text-muted); margin-bottom: 20px; }
+        .clock-lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; }
 
-        /* شاشة العرض الرئيسية */
-        .timer-display { text-align: center; margin: 30px 0; padding: 20px; background: #f8fafc; border-radius: 12px; border: 2px dashed #cbd5e1; }
-        .time { font-size: 5rem; font-weight: bold; font-variant-numeric: tabular-nums; color: var(--text); margin: 10px 0; }
-        
-        .status-badge { display: inline-block; padding: 6px 20px; border-radius: 20px; font-weight: bold; font-size: 1.1rem; }
-        .badge-work { background-color: var(--work-bg); color: var(--primary); }
-        .badge-rest { background-color: var(--rest-bg); color: var(--success); }
-        .badge-long { background-color: var(--long-rest-bg); color: #b45309; }
-
-        .controls { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .main-btn { padding: 14px 28px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; color: white; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1); min-width: 120px; }
-        .main-btn:active { transform: scale(0.96); box-shadow: none; }
-        .main-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-
-        .btn-start { background-color: var(--primary); }
-        .btn-pause { background-color: var(--warning); color: #000; }
-        .btn-reset { background-color: var(--danger); }
-
-        .plan-info { text-align: center; font-size: 0.9rem; color: #6b7280; margin-top: 15px; font-weight: bold; }
-
-        /* التوافق مع الشاشات (الجوال والآيباد) */
-        @media (max-width: 768px) {
-            .inputs-row { flex-direction: column; }
-            .input-group { width: 100%; }
+        /* شاشة العرض */
+        .screen-box { 
+            width: 100%; 
+            text-align: center; 
+            padding: 30px 20px; 
+            background: #f8fafc; 
+            border-radius: 16px; 
+            border: 2px dashed #cbd5e1; 
+            margin-bottom: 25px;
         }
-        @media (max-width: 480px) { 
-            .time { font-size: 4rem; } 
-            .container { padding: 20px; border-radius: 0; box-shadow: none; border: 1px solid #e5e7eb; } 
-            body { padding: 70px 0 0 0; background-color: var(--card-bg); }
-            .main-btn { width: 100%; } 
+        .timer-text { font-size: 5rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--text-main); margin: 10px 0; line-height: 1; }
+        
+        .badge { display: inline-block; padding: 8px 24px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; }
+        .bg-blue { background-color: #e0e7ff; color: var(--primary); }
+        .bg-green { background-color: #d1fae5; color: var(--success); }
+        .bg-orange { background-color: #fef3c7; color: #b45309; }
+
+        /* الأزرار */
+        .btn-group { display: flex; flex-direction: row; gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%; }
+        .btn { 
+            padding: 14px 28px; 
+            border: none; 
+            border-radius: 10px; 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            color: white; 
+            cursor: pointer; 
+            min-width: 130px; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+        
+        .btn-primary { background-color: var(--primary); }
+        .btn-warning { background-color: var(--warning); color: #000; }
+        .btn-danger { background-color: var(--danger); }
+
+        .info-text { text-align: center; font-size: 0.95rem; color: var(--text-muted); margin-top: 15px; font-weight: 600; }
+
+        @media (max-width: 600px) {
+            .form-row { flex-direction: column; }
+            .form-group { width: 100%; }
+            .timer-text { font-size: 4rem; } 
+            .app-box { padding: 20px; border-radius: 0; box-shadow: none; } 
+            body { padding: 70px 0 0 0; background-color: var(--surface); }
+            .btn { width: 100%; } 
             #progressContainer { width: 95%; top: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- شريط التقدم العائم -->
     <div id="progressContainer">
-        <div id="progressBar">0%</div>
+        <div id="progressBar"></div>
+        <div id="progressText">0%</div>
     </div>
 
-    <div class="container">
+    <!-- الحاوية المعزولة بنظام Block -->
+    <div class="app-box">
         <h1>مؤقت الدراسة الذكي</h1>
         
-        <div class="settings-container" id="settingsArea">
+        <div id="settingsArea">
             
-            <div class="setting-card work-card">
+            <div class="panel panel-blue">
                 <h3>📖 إعدادات الصفحات والوقت</h3>
-                <div class="inputs-row" style="flex-direction: row; flex-wrap: wrap;">
-                    <div class="input-group" style="flex: 1; min-width: 100px;">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
                         <label>عدد الصفحات</label>
-                        <input type="number" id="totalPages" value="100" min="1">
+                        <input type="number" id="totalPages" class="form-control" value="100" min="1">
                     </div>
-                    <div class="input-group" style="flex: 2; min-width: 250px;">
-                        <label>وقت دراسة كل صفحة</label>
-                        <div class="clock-setter">
+                    <div class="form-group" style="flex: 2;">
+                        <label style="text-align: center;">وقت دراسة كل صفحة</label>
+                        <div class="clock-container">
                             <div class="clock-col">
                                 <button class="clock-btn" onclick="adjustClock('pageMins', 1)">▲</button>
                                 <input type="number" id="pageMins" class="clock-input" value="1" readonly>
                                 <button class="clock-btn" onclick="adjustClock('pageMins', -1)">▼</button>
-                                <span class="clock-label">دقائق</span>
+                                <span class="clock-lbl">دقائق</span>
                             </div>
-                            <div class="clock-separator">:</div>
+                            <div class="clock-sep">:</div>
                             <div class="clock-col">
                                 <button class="clock-btn" onclick="adjustClock('pageSecs', 1)">▲</button>
                                 <input type="number" id="pageSecs" class="clock-input" value="30" readonly>
                                 <button class="clock-btn" onclick="adjustClock('pageSecs', -1)">▼</button>
-                                <span class="clock-label">ثواني</span>
+                                <span class="clock-lbl">ثواني</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="setting-card rest-card">
+            <div class="panel panel-green">
                 <h3>⚡ الاستراحة بين كل صفحة وصفحة</h3>
-                <div class="inputs-row">
-                    <div class="input-group">
+                <div class="form-row">
+                    <div class="form-group">
                         <label>ثواني الاستراحة القصيرة</label>
-                        <input type="number" id="shortRestSecs" value="10" min="0">
+                        <input type="number" id="shortRestSecs" class="form-control" value="10" min="0" style="text-align: center;">
                     </div>
                 </div>
             </div>
 
-            <!-- الاستراحة المطولة مع القائمة المنسدلة الذكية -->
-            <div class="setting-card long-rest-card">
+            <div class="panel panel-orange">
                 <h3>☕ الاستراحة المطولة التلقائية</h3>
-                <div class="input-group">
+                <div class="form-group">
                     <label>متى تريد الاستراحة المطولة؟</label>
-                    <select id="triggerType" onchange="toggleLongRestUI()">
+                    <select id="triggerType" class="form-control" onchange="toggleLongRestUI()">
                         <option value="time">بحساب الوقت الكلي (استراحات + دراسة)</option>
                         <option value="pages">بعد عدد معين من الصفحات</option>
                         <option value="none">لا أريد استراحة مطولة</option>
                     </select>
                 </div>
 
-                <!-- تظهر إذا اختار (بحساب الوقت الكلي) -->
-                <div id="ui-time" class="dynamic-settings">
-                    <div class="inputs-row" style="flex-direction: row;">
-                        <div class="input-group">
+                <div id="ui-time" class="dynamic-panel">
+                    <div class="form-row">
+                        <div class="form-group">
                             <label>كل كم دقيقة؟</label>
-                            <input type="number" id="triggerTimeValue" value="30" min="1">
+                            <input type="number" id="triggerTimeValue" class="form-control" value="30" min="1">
                         </div>
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>المدة (دقائق)</label>
-                            <input type="number" id="longRestMinsTime" value="5" min="1">
+                            <input type="number" id="longRestMinsTime" class="form-control" value="5" min="1">
                         </div>
                     </div>
                 </div>
 
-                <!-- تظهر إذا اختار (بعد عدد معين من الصفحات) -->
-                <div id="ui-pages" class="dynamic-settings" style="display: none;">
-                    <div class="inputs-row" style="flex-direction: row;">
-                        <div class="input-group">
+                <div id="ui-pages" class="dynamic-panel" style="display: none;">
+                    <div class="form-row">
+                        <div class="form-group">
                             <label>كل كم صفحة؟</label>
-                            <input type="number" id="triggerPagesValue" value="10" min="1">
+                            <input type="number" id="triggerPagesValue" class="form-control" value="10" min="1">
                         </div>
-                        <div class="input-group">
+                        <div class="form-group">
                             <label>المدة (دقائق)</label>
-                            <input type="number" id="longRestMinsPage" value="5" min="1">
+                            <input type="number" id="longRestMinsPage" class="form-control" value="5" min="1">
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
 
-        <div class="timer-display">
-            <div class="status-badge badge-work" id="statusBadge">في انتظار برمجة الخطة...</div>
-            <div class="time" id="timeDisplay">00:00</div>
-            <div id="roundCounter" style="font-size: 1.2rem; font-weight: bold; margin-top: 10px;">الصفحة: 0 / 0</div>
-            <div class="plan-info" id="planInfo"></div>
+        <div class="screen-box">
+            <div class="badge bg-blue" id="statusBadge">في انتظار برمجة الخطة...</div>
+            <div class="timer-text" id="timeDisplay">00:00</div>
+            <div id="roundCounter" style="font-size: 1.2rem; font-weight: bold; margin-top: 10px; color: var(--text-muted);">الصفحة: 0 / 0</div>
+            <div class="info-text" id="planInfo"></div>
         </div>
 
-        <div class="controls">
-            <button class="main-btn btn-start" id="startBtn" onclick="initPlanAndStart()">برمجة الخطة والبدء</button>
-            <button class="main-btn btn-pause" id="pauseBtn" onclick="pauseTimer()" disabled>إيقاف مؤقت</button>
-            <button class="main-btn btn-reset" id="resetBtn" onclick="resetTimer()" disabled>إلغاء الخطة</button>
+        <div class="btn-group">
+            <button class="btn btn-primary" id="startBtn" onclick="initPlanAndStart()">برمجة الخطة والبدء</button>
+            <button class="btn btn-warning" id="pauseBtn" onclick="pauseTimer()" disabled>إيقاف مؤقت</button>
+            <button class="btn btn-danger" id="resetBtn" onclick="resetTimer()" disabled>إلغاء الخطة</button>
         </div>
     </div>
 
@@ -279,20 +354,19 @@
         const roundCounter = document.getElementById('roundCounter');
         const planInfo = document.getElementById('planInfo');
         const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
         const settingsArea = document.getElementById('settingsArea');
         
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const resetBtn = document.getElementById('resetBtn');
 
-        // التحكم بظهور واجهة الاستراحة المطولة
         function toggleLongRestUI() {
             const type = document.getElementById('triggerType').value;
             document.getElementById('ui-time').style.display = (type === 'time') ? 'block' : 'none';
             document.getElementById('ui-pages').style.display = (type === 'pages') ? 'block' : 'none';
         }
 
-        // التحكم بعداد الساعة
         function adjustClock(elementId, change) {
             const el = document.getElementById(elementId);
             let val = parseInt(el.value);
@@ -311,14 +385,12 @@
             document.getElementById('pageSecs').value = document.getElementById('pageSecs').value.padStart(2, '0');
         });
 
-        // النطق الصوتي (فقط ستارت و ستوب كما طلبت)
         function speakText(text) {
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'en-US';
             window.speechSynthesis.speak(utterance);
         }
 
-        // نقرة التنبيه السريعة (تصدر في آخر 3 ثواني)
         function playTick() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
@@ -326,7 +398,7 @@
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(1000, audioCtx.currentTime); // تردد حاد وقصير
+            osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
             gain.gain.setValueAtTime(1, audioCtx.currentTime);
             osc.start();
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
@@ -406,28 +478,30 @@
             if (progressPercent > 100) progressPercent = 100;
             
             progressBar.style.width = `${progressPercent}%`;
-            progressBar.innerText = `${Math.floor(progressPercent)}%`;
+            progressText.innerText = `${Math.floor(progressPercent)}%`;
 
             if (currentStep.type === 'work') {
                 statusBadge.innerText = '📖 وقت الدراسة';
-                statusBadge.className = 'status-badge badge-work';
+                statusBadge.className = 'badge bg-blue';
             } else if (currentStep.type === 'shortRest') {
                 statusBadge.innerText = '⚡ استراحة قصيرة';
-                statusBadge.className = 'status-badge badge-rest';
+                statusBadge.className = 'badge bg-green';
             } else if (currentStep.type === 'longRest') {
                 statusBadge.innerText = '☕ استراحة مطولة';
-                statusBadge.className = 'status-badge badge-long';
+                statusBadge.className = 'badge bg-orange';
             }
         }
 
         function loadNextStep() {
+            const previousStepType = sessionPlan[currentStepIndex].type;
             currentStepIndex++;
 
             if (currentStepIndex >= sessionPlan.length) {
+                if (previousStepType === 'work') speakText('Stop');
                 statusBadge.innerText = '🎉 اكتملت دراسة جميع الصفحات!';
-                statusBadge.className = 'status-badge badge-work';
+                statusBadge.className = 'badge bg-blue';
                 progressBar.style.width = '100%';
-                progressBar.innerText = '100%';
+                progressText.innerText = '100%';
                 resetState();
                 return;
             }
@@ -435,8 +509,9 @@
             const nextStep = sessionPlan[currentStepIndex];
             timeLeft = nextStep.duration;
             
-            // نطق Start فقط عند بدء وقت العمل (الدراسة)
-            if (nextStep.type === 'work') {
+            if (previousStepType === 'work') {
+                speakText('Stop');
+            } else if (nextStep.type === 'work') {
                 speakText('Start');
             }
 
@@ -445,8 +520,6 @@
 
         function timerTick() {
             if (timeLeft > 0) {
-                
-                // إصدار نقرة التنبيه في الثواني 3، 2، 1 إذا كنا في استراحة
                 const currentType = sessionPlan[currentStepIndex].type;
                 if ((currentType === 'shortRest' || currentType === 'longRest') && timeLeft <= 3 && timeLeft > 0) {
                     playTick();
@@ -471,7 +544,6 @@
                 settingsArea.style.opacity = '0.5';
                 settingsArea.style.pointerEvents = 'none';
                 
-                // نطق Start في أول ضغطة
                 speakText('Start');
             }
 
@@ -491,7 +563,7 @@
             if (isRunning) {
                 clearInterval(timer);
                 isRunning = false;
-                speakText('Stop'); // نطق Stop عند التوقف فقط
+                speakText('Stop');
                 
                 startBtn.disabled = false;
                 pauseBtn.disabled = true;
@@ -517,7 +589,7 @@
             roundCounter.innerText = 'الصفحة: 0 / 0';
             planInfo.innerText = '';
             progressBar.style.width = '0%';
-            progressBar.innerText = '0%';
+            progressText.innerText = '0%';
             elapsedSessionSeconds = 0;
         }
     </script>
