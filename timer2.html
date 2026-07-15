@@ -378,30 +378,26 @@
     </div>
 
     <script>
-        // DOM Elements - Main
+        // DOM Elements
         const timeDisplay = document.getElementById('timeDisplay');
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const stopBtn = document.getElementById('stopBtn');
         
-        // Modals
         const endModal = document.getElementById('endModal');
         const settingsModal = document.getElementById('settingsModal');
         const editModal = document.getElementById('editModal');
         
-        // Inputs - Auto End
         const autoPages = document.getElementById('autoPages');
         const autoSubject = document.getElementById('autoSubject');
         const autoReadType = document.getElementById('autoReadType');
         const saveAutoRoundBtn = document.getElementById('saveAutoRoundBtn');
 
-        // Inputs - Manual Add
         const manualPages = document.getElementById('manualPages');
         const manualSubject = document.getElementById('manualSubject');
         const manualReadType = document.getElementById('manualReadType');
         const saveManualBtn = document.getElementById('saveManualBtn');
 
-        // Inputs - Edit
         const editRecordId = document.getElementById('editRecordId');
         const editPages = document.getElementById('editPages');
         const editSubject = document.getElementById('editSubject');
@@ -409,7 +405,6 @@
         const saveEditBtn = document.getElementById('saveEditBtn');
         const closeEditBtn = document.getElementById('closeEditBtn');
 
-        // Settings & History
         const openSettingsBtn = document.getElementById('openSettingsBtn');
         const closeSettingsBtn = document.getElementById('closeSettingsBtn');
         const durationInput = document.getElementById('durationInput');
@@ -439,7 +434,7 @@
         let lastBeepedSecond = -1;
         
         let roundCounter = 1;
-        let historyData = []; // Schema: { id, round, date, pages, subject, readType, note }
+        let historyData = [];
 
         // Audio System
         let audioCtx;
@@ -472,6 +467,14 @@
             const savedHistory = localStorage.getItem('studyTimerHistory');
             if (savedHistory) {
                 historyData = JSON.parse(savedHistory);
+                
+                // ترقيع هام: إعطاء ID للسجلات القديمة التي تم حفظها قبل هذا التحديث
+                historyData.forEach((item, index) => {
+                    if (!item.id) {
+                        item.id = Date.now() + index; 
+                    }
+                });
+                
                 updateHistoryTable();
             }
 
@@ -599,36 +602,48 @@
 
         window.deleteRecord = function(id) {
             if(confirm("هل أنت متأكد من حذف هذه الجولة؟")) {
-                historyData = historyData.filter(item => item.id !== id);
+                // التحويل إلى نصوص لضمان المطابقة
+                historyData = historyData.filter(item => String(item.id) !== String(id));
                 updateHistoryTable();
                 saveData();
             }
         }
 
         window.openEditModal = function(id) {
-            const record = historyData.find(item => item.id === id);
+            // التحويل إلى نصوص لضمان المطابقة
+            const record = historyData.find(item => String(item.id) === String(id));
             if(record) {
                 editRecordId.value = record.id;
                 editPages.value = record.pages;
                 editSubject.value = record.subject !== 'غير محدد' ? record.subject : '';
-                editReadType.value = record.readType;
+                editReadType.value = record.readType || 'قراءة بتركيز';
                 editModal.style.display = 'flex';
+            } else {
+                alert("لم يتم العثور على الجولة!");
             }
         }
 
+        // إصلاح زر حفظ التعديلات
         saveEditBtn.addEventListener('click', () => {
-            const id = parseInt(editRecordId.value);
+            const idStr = editRecordId.value;
             const pgs = editPages.value;
-            if (pgs === "" || pgs < 0) { alert("الرجاء إدخال صفحات صحيحة."); return; }
+            
+            if (pgs === "" || pgs < 0) { 
+                alert("الرجاء إدخال عدد صفحات صحيح."); 
+                return; 
+            }
 
-            const index = historyData.findIndex(item => item.id === id);
+            const index = historyData.findIndex(item => String(item.id) === String(idStr));
+            
             if (index !== -1) {
                 historyData[index].pages = pgs;
                 historyData[index].subject = editSubject.value || 'غير محدد';
                 historyData[index].readType = editReadType.value;
                 updateHistoryTable();
                 saveData();
-                editModal.style.display = 'none';
+                editModal.style.display = 'none'; // إخفاء النافذة بعد الحفظ بنجاح
+            } else {
+                alert("حدث خطأ: لم نتمكن من حفظ التعديل، قد تكون الجولة محذوفة.");
             }
         });
 
@@ -638,7 +653,6 @@
         function showEndModal() {
             endModal.style.display = 'flex';
             autoPages.value = '';
-            // No reset for subject/type to remember user's last studying session
             autoPages.focus();
         }
 
@@ -649,7 +663,6 @@
 
             addRecord(pgs, autoSubject.value, autoReadType.value);
             
-            // Sync manual fields for convenience
             manualSubject.value = autoSubject.value;
             manualReadType.value = autoReadType.value;
 
@@ -665,7 +678,6 @@
 
             addRecord(pgs, manualSubject.value, manualReadType.value, 'يدوي');
             
-            // Sync auto fields
             autoSubject.value = manualSubject.value;
             autoReadType.value = manualReadType.value;
             
@@ -682,11 +694,11 @@
                     <td>${entry.round}</td>
                     <td dir="ltr" style="font-size:0.75rem;">${entry.date}</td>
                     <td>${entry.subject} ${noteHtml}</td>
-                    <td>${entry.readType}</td>
+                    <td>${entry.readType || '-'}</td>
                     <td>${entry.pages}</td>
                     <td class="action-btns">
-                        <button class="btn-secondary btn-small" onclick="openEditModal(${entry.id})">✏️</button>
-                        <button class="btn-danger btn-small" onclick="deleteRecord(${entry.id})">🗑️</button>
+                        <button class="btn-secondary btn-small" onclick="openEditModal('${entry.id}')">✏️</button>
+                        <button class="btn-danger btn-small" onclick="deleteRecord('${entry.id}')">🗑️</button>
                     </td>
                 `;
                 historyTableBody.appendChild(row);
