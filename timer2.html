@@ -152,22 +152,32 @@
             padding: 0;
         }
 
-        .danger-zone {
+        /* Update Zone */
+        .update-zone {
             margin-top: 25px;
             padding: 15px;
-            background-color: #fef2f2;
-            border: 1px solid #fecaca;
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
             border-radius: 8px;
         }
 
-        .danger-zone h4 {
+        .update-zone h4 {
             margin: 0 0 10px 0;
-            color: #991b1b;
+            color: #166534;
         }
-        .danger-zone p {
+        
+        .update-zone p {
             font-size: 0.85rem;
-            color: #7f1d1d;
+            color: #15803d;
             margin-bottom: 15px;
+        }
+
+        .btn-update {
+            background-color: #16a34a;
+            color: white;
+        }
+        .btn-update:hover {
+            background-color: #15803d;
         }
     </style>
 </head>
@@ -221,10 +231,11 @@
                 </table>
             </div>
 
-            <div class="danger-zone">
-                <h4>تحديث النظام بالكامل</h4>
-                <p>استخدم هذا الزر فقط إذا أردت مسح السجل بأكمله وإعادة المؤقت للصفر (لن يتأثر بتحديث الصفحة العادي).</p>
-                <button id="hardResetBtn" class="btn-danger" style="width: 100%;">مسح البيانات والتحديث</button>
+            <!-- Update App Section -->
+            <div class="update-zone">
+                <h4>تحديث الإصدار</h4>
+                <p>انقر هنا لتحديث الصفحة وسحب أحدث إصدار من المؤقت. (سجل الجولات الخاص بك آمن ولن يُمحى).</p>
+                <button id="updateAppBtn" class="btn-update" style="width: 100%;">تحديث الآن</button>
             </div>
         </div>
     </div>
@@ -245,7 +256,7 @@
         const closeSettingsBtn = document.getElementById('closeSettingsBtn');
         const durationInput = document.getElementById('durationInput');
         const historyTableBody = document.getElementById('historyTableBody');
-        const hardResetBtn = document.getElementById('hardResetBtn');
+        const updateAppBtn = document.getElementById('updateAppBtn');
 
         // Variables
         let timerInterval;
@@ -492,13 +503,16 @@
             }
         });
 
-        // Hard Reset Button
-        hardResetBtn.addEventListener('click', () => {
-            if (confirm('هل أنت متأكد أنك تريد مسح جميع البيانات وسجل الجولات بالكامل؟ (هذا الإجراء لا يمكن التراجع عنه)')) {
-                localStorage.removeItem('studyTimerState');
-                localStorage.removeItem('studyTimerHistory');
-                location.reload(); // Refresh the page to reset everything naturally
-            }
+        // --- Update App Button Logic ---
+        updateAppBtn.addEventListener('click', () => {
+            saveData(); // Ensure everything is saved before refreshing
+            
+            // By appending a timestamp to the URL as a query parameter, 
+            // we force the browser to fetch the new file from the server instead of the cache.
+            const url = new URL(window.location.href);
+            url.searchParams.set('v', new Date().getTime()); // e.g. ?v=16873528...
+            
+            window.location.href = url.toString();
         });
 
         // Close modals if clicked outside
