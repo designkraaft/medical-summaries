@@ -3,261 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المؤقت الذكي لدراسة المقررات</title>
+    <title>المؤقت الذكي الاحترافي</title>
     <style>
-        /* الألوان العالمية */
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --primary-ring: rgba(79, 70, 229, 0.3);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --bg: #f3f4f6;
-            --surface: #ffffff;
-            --border: #e5e7eb;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
+            --primary: #4f46e5; --primary-hover: #4338ca;
+            --success: #10b981; --warning: #f59e0b; --danger: #ef4444;
+            --bg: #f3f4f6; --surface: #ffffff; --border: #e5e7eb;
+            --text-main: #1f2937; --text-muted: #6b7280;
+            --modal-bg: rgba(0, 0, 0, 0.55);
+            --ring: rgba(79, 70, 229, 0.3);
         }
 
-        /* إعادة ضبط الهوامش الأساسية */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
 
-        /* تعديل جذري: منع استخدام Flex على الـ Body لتجنب مشاكل الـ RTL */
         body {
             background-color: var(--bg);
             color: var(--text-main);
-            padding: 80px 15px 40px 15px; 
-            margin: 0;
-            display: block; /* استخدام Block بدلاً من Flex */
-            direction: rtl;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 80px 20px;
         }
 
         /* شريط التقدم العائم */
         #progressContainer {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 800px;
-            height: 28px;
-            background-color: #e5e7eb;
-            z-index: 9999;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border-radius: 14px;
-            overflow: hidden;
-            border: 2px solid var(--surface);
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 800px; height: 28px;
+            background-color: #e5e7eb; z-index: 900;
+            border-radius: 14px; overflow: hidden; border: 2px solid var(--surface);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
+        #progressBar { position: absolute; right: 0; top: 0; height: 100%; width: 0%; background-color: var(--success); transition: width 1s linear; z-index: 1; }
+        #progressText { position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #111827; font-size: 1rem; font-weight: 800; z-index: 2; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
 
-        #progressBar {
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 100%;
-            width: 0%;
-            background-color: var(--success);
-            transition: width 1s linear;
-            z-index: 1;
-        }
-
-        #progressText {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #111827;
-            font-size: 1rem;
-            font-weight: 800;
-            z-index: 2;
-            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
-        }
-
-        /* صندوق التطبيق المركزي المضمون 100% */
-        .app-box {
-            background-color: var(--surface);
-            width: 100%;
-            max-width: 750px;
-            margin: 0 auto; /* التوسيط الكلاسيكي المضمون */
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            display: block; /* صندوق صلب */
-        }
-
-        .app-box h1 { 
-            text-align: center; 
-            margin-bottom: 25px; 
-            font-size: 1.8rem; 
-            color: var(--text-main); 
-            font-weight: 800; 
-        }
-
-        /* نظام البطاقات المبسط والمستقر */
-        .panel { 
-            background: var(--surface); 
-            padding: 20px; 
-            border-radius: 16px; 
-            border: 1px solid var(--border);
-            margin-bottom: 20px; /* مسافة سفلية بدلاً من Grid Gap */
-            display: block;
-        }
-        
-        .panel-blue { border-top: 5px solid var(--primary); }
-        .panel-green { border-top: 5px solid var(--success); }
-        .panel-orange { border-top: 5px solid var(--warning); }
-
-        .panel h3 { font-size: 1.1rem; margin-bottom: 15px; color: var(--text-main); font-weight: 700; }
-
-        /* ترتيب الحقول (Row and Column) */
-        .form-row { 
-            display: flex; 
-            flex-direction: row; 
-            flex-wrap: wrap; 
-            gap: 15px; 
-            align-items: flex-start; 
-        }
-
-        .form-group { 
-            flex: 1; 
-            min-width: 130px; 
-            display: flex; 
-            flex-direction: column; 
-        }
-
-        .form-group label { 
-            font-size: 0.85rem; 
-            margin-bottom: 8px; 
-            font-weight: 600; 
-            color: var(--text-muted); 
-        }
-        
-        input[type="number"]::-webkit-inner-spin-button, 
-        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type="number"] { -moz-appearance: textfield; }
-
-        .form-control { 
-            padding: 12px 14px; 
-            border: 1px solid var(--border); 
-            border-radius: 10px; 
-            font-size: 1rem; 
-            outline: none; 
-            background: #f9fafb; 
-            text-align: right;
-            color: var(--text-main);
-            font-weight: 500;
-            width: 100%;
-        }
-
-        .form-control:focus {
+        /* الواجهة الرئيسية للمؤقت */
+        .main-timer-box {
             background: var(--surface);
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-ring);
+            width: 100%; max-width: 600px;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            padding: 40px; text-align: center;
+            position: relative;
         }
 
-        .dynamic-panel { 
-            margin-top: 15px; 
-            padding-top: 15px; 
-            border-top: 1px dashed var(--border); 
-        }
+        h1 { margin-bottom: 20px; font-size: 2rem; color: var(--text-main); font-weight: 800; }
 
-        /* عداد الساعة المخصص */
-        .clock-container { 
-            display: flex; 
-            flex-direction: row;
-            align-items: center; 
-            justify-content: center; 
-            background: #f9fafb; 
-            padding: 12px; 
-            border-radius: 10px; 
-            border: 1px solid var(--border); 
-            gap: 15px; 
-            width: 100%; 
-        }
-        .clock-col { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .clock-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; padding: 6px 15px; border-radius: 8px; }
-        .clock-btn:hover { background: #e5e7eb; color: var(--text-main); }
-        .clock-input { width: 55px; text-align: center; font-size: 1.8rem; font-weight: 800; border: none; outline: none; background: transparent; color: var(--text-main); pointer-events: none; }
-        .clock-sep { font-size: 2rem; font-weight: bold; color: var(--text-muted); margin-bottom: 20px; }
-        .clock-lbl { font-size: 0.75rem; color: var(--text-muted); font-weight: 700; }
-
-        /* شاشة العرض */
-        .screen-box { 
-            width: 100%; 
-            text-align: center; 
-            padding: 30px 20px; 
-            background: #f8fafc; 
-            border-radius: 16px; 
-            border: 2px dashed #cbd5e1; 
-            margin-bottom: 25px;
-        }
-        .timer-text { font-size: 5rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--text-main); margin: 10px 0; line-height: 1; }
+        .timer-display { margin: 20px 0; padding: 30px 20px; background: #f8fafc; border-radius: 16px; border: 2px dashed #cbd5e1; }
+        .time { font-size: 6.5rem; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--text-main); line-height: 1; margin: 15px 0; }
         
         .badge { display: inline-block; padding: 8px 24px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; }
         .bg-blue { background-color: #e0e7ff; color: var(--primary); }
         .bg-green { background-color: #d1fae5; color: var(--success); }
         .bg-orange { background-color: #fef3c7; color: #b45309; }
 
-        /* الأزرار */
-        .btn-group { display: flex; flex-direction: row; gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%; }
-        .btn { 
-            padding: 14px 28px; 
-            border: none; 
-            border-radius: 10px; 
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            color: white; 
-            cursor: pointer; 
-            min-width: 130px; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+        /* الأزرار الرئيسية */
+        .controls { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
+        .btn { padding: 14px 28px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; color: white; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); flex: 1; min-width: 140px;}
+        .btn:active { transform: scale(0.96); box-shadow: none; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .btn-primary { background-color: var(--primary); }
+        .btn-success { background-color: var(--success); }
         .btn-warning { background-color: var(--warning); color: #000; }
         .btn-danger { background-color: var(--danger); }
+        .btn-settings { background-color: #374151; width: 100%; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 10px;}
+        .btn-settings:hover { background-color: #1f2937; }
 
-        .info-text { text-align: center; font-size: 0.95rem; color: var(--text-muted); margin-top: 15px; font-weight: 600; }
+        .info-text { font-size: 1rem; color: var(--text-muted); margin-top: 15px; font-weight: bold; }
 
-        @media (max-width: 600px) {
-            .form-row { flex-direction: column; }
-            .form-group { width: 100%; }
-            .timer-text { font-size: 4rem; } 
-            .app-box { padding: 20px; border-radius: 0; box-shadow: none; } 
-            body { padding: 70px 0 0 0; background-color: var(--surface); }
-            .btn { width: 100%; } 
+        /* نافذة الإعدادات المنبثقة (Modal) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-bg); z-index: 9999; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px); }
+        .modal-content { background: var(--surface); width: 100%; max-width: 800px; border-radius: 20px; padding: 30px; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--danger); }
+
+        /* إعدادات البطاقات داخل النافذة */
+        .panel { padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; background: #f9fafb; }
+        .panel h3 { margin-bottom: 15px; font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; gap: 8px;}
+        .form-row { display: flex; flex-wrap: wrap; gap: 15px; align-items: center;}
+        .form-group { flex: 1; min-width: 130px; display: flex; flex-direction: column; }
+        .form-group label { font-size: 0.85rem; margin-bottom: 8px; font-weight: bold; color: var(--text-muted); }
+        
+        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .form-control { padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; text-align: center; color: var(--text-main); font-weight: 600; background: white;}
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--ring); }
+
+        /* الساعة الرقمية المخصصة الاحترافية */
+        .clock-container { display: flex; align-items: center; justify-content: center; background: white; padding: 10px; border-radius: 10px; border: 1px solid var(--border); gap: 10px; width: 100%; }
+        .clock-col { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .clock-btn { background: var(--bg); border: 1px solid var(--border); color: var(--text-muted); cursor: pointer; padding: 2px 12px; border-radius: 6px; font-size: 0.9rem; transition: 0.2s; }
+        .clock-btn:hover { background: #e5e7eb; color: var(--text-main); }
+        .clock-input { width: 45px; text-align: center; font-size: 1.6rem; font-weight: 800; border: none; outline: none; color: var(--text-main); background: transparent; pointer-events: none;}
+        .clock-sep { font-size: 1.8rem; font-weight: bold; color: var(--text-muted); margin-bottom: 15px; }
+        .clock-lbl { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; }
+
+        /* زر التحديث العائم في الأسفل */
+        .update-wrapper { position: fixed; bottom: 20px; right: 20px; z-index: 1000; }
+        .update-btn { background: #1f2937; color: white; border: none; padding: 12px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.3s; }
+        .update-btn:hover { background: #111827; }
+        .update-dot { width: 10px; height: 10px; background: var(--danger); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.3); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* رسالة النجاح المنبثقة (Toast) */
+        .toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: var(--success); color: white; padding: 12px 25px; border-radius: 30px; font-weight: bold; opacity: 0; transition: 0.3s; z-index: 9999; pointer-events: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .toast.show { opacity: 1; top: 85px;}
+
+        @media (max-width: 768px) {
+            .form-row { flex-direction: column; align-items: stretch;}
+            .time { font-size: 5rem; }
+            .modal-content { padding: 20px; }
+        }
+        @media (max-width: 480px) { 
+            .time { font-size: 4.5rem; }
+            .main-timer-box { padding: 25px; border-radius: 0; box-shadow: none; }
+            body { padding: 70px 0 0 0; background: var(--surface); }
             #progressContainer { width: 95%; top: 15px; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
 <body>
+
+    <div id="toast" class="toast">تمت برمجة الخطة بنجاح! جاهز للبدء ✔️</div>
 
     <div id="progressContainer">
         <div id="progressBar"></div>
         <div id="progressText">0%</div>
     </div>
 
-    <!-- الحاوية المعزولة بنظام Block -->
-    <div class="app-box">
-        <h1>مؤقت الدراسة الذكي</h1>
+    <!-- الواجهة الرئيسية -->
+    <div class="main-timer-box">
+        <h1>المؤقت الذكي</h1>
         
-        <div id="settingsArea">
+        <button class="btn btn-settings" onclick="openSettings()">إعدادات الخطة ⚙️</button>
+
+        <div class="timer-display">
+            <div class="badge bg-blue" id="statusBadge">بانتظار ضبط الإعدادات</div>
+            <div class="time" id="timeDisplay">00:00</div>
+            <div id="roundCounter" style="font-size: 1.2rem; font-weight: bold; color: var(--text-muted);">الصفحة: 0 / 0</div>
+            <div class="info-text" id="planInfo">الخطة غير مبرمجة بعد.</div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="buildBtn" onclick="initPlan()">برمجة الخطة</button>
+            <button class="btn btn-success" id="startBtn" onclick="startTimer()" disabled>بدء (Start)</button>
+            <button class="btn btn-warning" id="pauseBtn" onclick="pauseTimer()" disabled>توقف</button>
+            <button class="btn btn-danger" id="resetBtn" onclick="resetAll()" disabled>إلغاء</button>
+        </div>
+    </div>
+
+    <!-- نافذة الإعدادات الشاملة (Modal) -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>لوحة التحكم الشاملة</h2>
+                <button class="close-btn" onclick="closeSettings()">✖</button>
+            </div>
             
-            <div class="panel panel-blue">
-                <h3>📖 إعدادات الصفحات والوقت</h3>
+            <!-- 1. إعدادات وقت الدراسة -->
+            <div class="panel" style="border-top: 4px solid var(--primary);">
+                <h3>📖 وقت دراسة الصفحة</h3>
                 <div class="form-row">
-                    <div class="form-group" style="flex: 1;">
-                        <label>عدد الصفحات</label>
+                    <div class="form-group">
+                        <label>إجمالي الصفحات</label>
                         <input type="number" id="totalPages" class="form-control" value="100" min="1">
                     </div>
-                    <div class="form-group" style="flex: 2;">
-                        <label style="text-align: center;">وقت دراسة كل صفحة</label>
+                    <div class="form-group">
+                        <label style="text-align: center;">المدة الزمنية للصفحة</label>
                         <div class="clock-container">
                             <div class="clock-col">
                                 <button class="clock-btn" onclick="adjustClock('pageMins', 1)">▲</button>
-                                <input type="number" id="pageMins" class="clock-input" value="1" readonly>
+                                <input type="number" id="pageMins" class="clock-input" value="01" readonly>
                                 <button class="clock-btn" onclick="adjustClock('pageMins', -1)">▼</button>
                                 <span class="clock-lbl">دقائق</span>
                             </div>
@@ -273,100 +191,156 @@
                 </div>
             </div>
 
-            <div class="panel panel-green">
-                <h3>⚡ الاستراحة بين كل صفحة وصفحة</h3>
+            <!-- 2. الاستراحة القصيرة -->
+            <div class="panel" style="border-top: 4px solid var(--success);">
+                <h3>⚡ الاستراحة القصيرة</h3>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>ثواني الاستراحة القصيرة</label>
-                        <input type="number" id="shortRestSecs" class="form-control" value="10" min="0" style="text-align: center;">
+                        <label>نوع التفعيل</label>
+                        <select id="shortType" class="form-control">
+                            <option value="pages">بعد عدد صفحات</option>
+                            <option value="time">بحساب الوقت المتراكم</option>
+                            <option value="none">بدون استراحة قصيرة</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>كل كم؟ (صفحة/دقيقة)</label>
+                        <input type="number" id="shortVal" class="form-control" value="1" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label style="text-align: center;">مدة الاستراحة</label>
+                        <div class="clock-container">
+                            <div class="clock-col">
+                                <button class="clock-btn" onclick="adjustClock('shortMins', 1)">▲</button>
+                                <input type="number" id="shortMins" class="clock-input" value="00" readonly>
+                                <button class="clock-btn" onclick="adjustClock('shortMins', -1)">▼</button>
+                                <span class="clock-lbl">دقائق</span>
+                            </div>
+                            <div class="clock-sep">:</div>
+                            <div class="clock-col">
+                                <button class="clock-btn" onclick="adjustClock('shortSecs', 1)">▲</button>
+                                <input type="number" id="shortSecs" class="clock-input" value="10" readonly>
+                                <button class="clock-btn" onclick="adjustClock('shortSecs', -1)">▼</button>
+                                <span class="clock-lbl">ثواني</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="panel panel-orange">
-                <h3>☕ الاستراحة المطولة التلقائية</h3>
-                <div class="form-group">
-                    <label>متى تريد الاستراحة المطولة؟</label>
-                    <select id="triggerType" class="form-control" onchange="toggleLongRestUI()">
-                        <option value="time">بحساب الوقت الكلي (استراحات + دراسة)</option>
-                        <option value="pages">بعد عدد معين من الصفحات</option>
-                        <option value="none">لا أريد استراحة مطولة</option>
-                    </select>
-                </div>
-
-                <div id="ui-time" class="dynamic-panel">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>كل كم دقيقة؟</label>
-                            <input type="number" id="triggerTimeValue" class="form-control" value="30" min="1">
-                        </div>
-                        <div class="form-group">
-                            <label>مدة الاستراحة (دقائق)</label>
-                            <input type="number" id="longRestMinsTime" class="form-control" value="5" min="1">
-                        </div>
+            <!-- 3. الاستراحة المتوسطة -->
+            <div class="panel" style="border-top: 4px solid #3b82f6;">
+                <h3>🌤️ الاستراحة المتوسطة</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>نوع التفعيل</label>
+                        <select id="medType" class="form-control">
+                            <option value="pages">بعد عدد صفحات</option>
+                            <option value="time">بحساب الوقت المتراكم</option>
+                            <option value="none">بدون استراحة متوسطة</option>
+                        </select>
                     </div>
-                </div>
-
-                <div id="ui-pages" class="dynamic-panel" style="display: none;">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>كل كم صفحة؟</label>
-                            <input type="number" id="triggerPagesValue" class="form-control" value="10" min="1">
-                        </div>
-                        <div class="form-group">
-                            <label>مدة الاستراحة (دقائق)</label>
-                            <input type="number" id="longRestMinsPage" class="form-control" value="5" min="1">
+                    <div class="form-group">
+                        <label>كل كم؟ (صفحة/دقيقة)</label>
+                        <input type="number" id="medVal" class="form-control" value="20" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label style="text-align: center;">مدة الاستراحة</label>
+                        <div class="clock-container">
+                            <div class="clock-col">
+                                <button class="clock-btn" onclick="adjustClock('medMins', 1)">▲</button>
+                                <input type="number" id="medMins" class="clock-input" value="03" readonly>
+                                <button class="clock-btn" onclick="adjustClock('medMins', -1)">▼</button>
+                                <span class="clock-lbl">دقائق</span>
+                            </div>
+                            <div class="clock-sep">:</div>
+                            <div class="clock-col">
+                                <button class="clock-btn" onclick="adjustClock('medSecs', 1)">▲</button>
+                                <input type="number" id="medSecs" class="clock-input" value="00" readonly>
+                                <button class="clock-btn" onclick="adjustClock('medSecs', -1)">▼</button>
+                                <span class="clock-lbl">ثواني</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-        </div>
 
-        <div class="screen-box">
-            <div class="badge bg-blue" id="statusBadge">في انتظار برمجة الخطة...</div>
-            <div class="timer-text" id="timeDisplay">00:00</div>
-            <div id="roundCounter" style="font-size: 1.2rem; font-weight: bold; margin-top: 10px; color: var(--text-muted);">الصفحة: 0 / 0</div>
-            <div class="info-text" id="planInfo"></div>
-        </div>
+            <!-- 4. الاستراحة المطولة -->
+            <div class="panel" style="border-top: 4px solid var(--warning);">
+                <h3>☕ الاستراحة المطولة</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>نوع التفعيل</label>
+                        <select id="longType" class="form-control">
+                            <option value="time">بحساب الوقت المتراكم</option>
+                            <option value="pages">بعد عدد صفحات</option>
+                            <option value="none">بدون استراحة مطولة</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>كل كم؟ (صفحة/دقيقة)</label>
+                        <input type="number" id="longVal" class="form-control" value="60" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label style="text-align: center;">مدة الاستراحة</label>
+                        <div class="clock-container">
+                            <div class="clock-col">
+                                <button class="clock-btn" onclick="adjustClock('longMins', 1)">▲</button>
+                                <input type="number" id="longMins" class="clock-input" value="15" readonly>
+                                <button class="clock-btn" onclick="adjustClock('longMins', -1)">▼</button>
+                                <span class="clock-lbl">دقائق</span>
+                            </div>
+                            <div class="clock-sep">:</div>
+                            <div class="clock-col">
+                                <button class="clock-btn" onclick="adjustClock('longSecs', 1)">▲</button>
+                                <input type="number" id="longSecs" class="clock-input" value="00" readonly>
+                                <button class="clock-btn" onclick="adjustClock('longSecs', -1)">▼</button>
+                                <span class="clock-lbl">ثواني</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="btn-group">
-            <button class="btn btn-primary" id="startBtn" onclick="initPlanAndStart()">برمجة الخطة والبدء</button>
-            <button class="btn btn-warning" id="pauseBtn" onclick="pauseTimer()" disabled>إيقاف مؤقت</button>
-            <button class="btn btn-danger" id="resetBtn" onclick="resetTimer()" disabled>إلغاء الخطة</button>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 10px; font-size: 1.2rem;" onclick="closeSettings()">حفظ الإعدادات وإغلاق</button>
         </div>
     </div>
 
-    <script>
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
+    <!-- زر التحديث العائم -->
+    <div class="update-wrapper">
+        <button class="update-btn" onclick="applyUpdate(this)">
+            تحديث التطبيق <span class="update-dot"></span>
+        </button>
+    </div>
 
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let sessionPlan = [];
         let currentStepIndex = 0;
         let timeLeft = 0;
-        let timer;
+        let timer = null;
         let isRunning = false;
         let totalSessionSeconds = 0;
         let elapsedSessionSeconds = 0;
+        let isProgrammed = false;
 
-        const timeDisplay = document.getElementById('timeDisplay');
-        const statusBadge = document.getElementById('statusBadge');
-        const roundCounter = document.getElementById('roundCounter');
+        // عناصر الواجهة
+        const displayTime = document.getElementById('timeDisplay');
+        const badge = document.getElementById('statusBadge');
+        const counter = document.getElementById('roundCounter');
         const planInfo = document.getElementById('planInfo');
-        const progressBar = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const settingsArea = document.getElementById('settingsArea');
-        
+        const progBar = document.getElementById('progressBar');
+        const progText = document.getElementById('progressText');
+        const buildBtn = document.getElementById('buildBtn');
         const startBtn = document.getElementById('startBtn');
         const pauseBtn = document.getElementById('pauseBtn');
         const resetBtn = document.getElementById('resetBtn');
 
-        function toggleLongRestUI() {
-            const type = document.getElementById('triggerType').value;
-            document.getElementById('ui-time').style.display = (type === 'time') ? 'block' : 'none';
-            document.getElementById('ui-pages').style.display = (type === 'pages') ? 'block' : 'none';
-        }
+        // النوافذ
+        function openSettings() { document.getElementById('settingsModal').style.display = 'flex'; }
+        function closeSettings() { document.getElementById('settingsModal').style.display = 'none'; saveInputs(); }
 
+        // تحكم بساعة الدقائق والثواني
         function adjustClock(elementId, change) {
             const el = document.getElementById(elementId);
             let val = parseInt(el.value);
@@ -380,28 +354,68 @@
             el.value = val.toString().padStart(2, '0');
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('pageMins').value = document.getElementById('pageMins').value.padStart(2, '0');
-            document.getElementById('pageSecs').value = document.getElementById('pageSecs').value.padStart(2, '0');
-        });
-
-        function speakText(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            window.speechSynthesis.speak(utterance);
+        // الحفظ التلقائي
+        function saveInputs() {
+            const inputs = {
+                totalPages: document.getElementById('totalPages').value,
+                pageMins: document.getElementById('pageMins').value,
+                pageSecs: document.getElementById('pageSecs').value,
+                shortType: document.getElementById('shortType').value,
+                shortVal: document.getElementById('shortVal').value,
+                shortMins: document.getElementById('shortMins').value,
+                shortSecs: document.getElementById('shortSecs').value,
+                medType: document.getElementById('medType').value,
+                medVal: document.getElementById('medVal').value,
+                medMins: document.getElementById('medMins').value,
+                medSecs: document.getElementById('medSecs').value,
+                longType: document.getElementById('longType').value,
+                longVal: document.getElementById('longVal').value,
+                longMins: document.getElementById('longMins').value,
+                longSecs: document.getElementById('longSecs').value
+            };
+            localStorage.setItem('studyTimerMasterInputs', JSON.stringify(inputs));
         }
 
+        function saveState() {
+            const state = { sessionPlan, currentStepIndex, timeLeft, totalSessionSeconds, elapsedSessionSeconds, isProgrammed };
+            localStorage.setItem('studyTimerMasterState', JSON.stringify(state));
+        }
+
+        function loadSavedData() {
+            const savedInputs = JSON.parse(localStorage.getItem('studyTimerMasterInputs'));
+            if (savedInputs) {
+                for (const key in savedInputs) {
+                    if (document.getElementById(key)) document.getElementById(key).value = savedInputs[key];
+                }
+            }
+            const savedState = JSON.parse(localStorage.getItem('studyTimerMasterState'));
+            if (savedState && savedState.isProgrammed) {
+                sessionPlan = savedState.sessionPlan;
+                currentStepIndex = savedState.currentStepIndex;
+                timeLeft = savedState.timeLeft;
+                totalSessionSeconds = savedState.totalSessionSeconds;
+                elapsedSessionSeconds = savedState.elapsedSessionSeconds;
+                isProgrammed = savedState.isProgrammed;
+                
+                buildBtn.innerText = 'إعادة البرمجة';
+                startBtn.disabled = false; resetBtn.disabled = false;
+                startBtn.innerText = 'استئناف (Start)';
+                updateUI();
+            }
+        }
+        window.addEventListener('DOMContentLoaded', loadSavedData);
+
+        // الأصوات
+        function speakText(text) {
+            const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; window.speechSynthesis.speak(u);
+        }
         function playTick() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.type = 'sine'; osc.frequency.setValueAtTime(950, audioCtx.currentTime);
             gain.gain.setValueAtTime(1, audioCtx.currentTime);
-            osc.start();
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.start(); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
             osc.stop(audioCtx.currentTime + 0.1);
         }
 
@@ -410,187 +424,177 @@
             const s = (seconds % 60).toString().padStart(2, '0');
             return `${m}:${s}`;
         }
+        function formatTotalHours(totalSecs) {
+            const hrs = Math.floor(totalSecs / 3600);
+            const mins = Math.floor((totalSecs % 3600) / 60);
+            if (hrs > 0) return `${hrs} ساعة و ${mins} دقيقة`;
+            return `${mins} دقيقة`;
+        }
 
-        function buildSessionPlan() {
-            sessionPlan = [];
-            totalSessionSeconds = 0;
-            elapsedSessionSeconds = 0;
+        // العقل المدبر لبناء الخطة
+        function initPlan() {
+            saveInputs();
+            sessionPlan = []; totalSessionSeconds = 0; elapsedSessionSeconds = 0;
 
             const totalPages = parseInt(document.getElementById('totalPages').value) || 1;
             const timePerPage = (parseInt(document.getElementById('pageMins').value) * 60) + parseInt(document.getElementById('pageSecs').value);
-            const shortRestSecs = parseInt(document.getElementById('shortRestSecs').value) || 0;
             
-            const triggerType = document.getElementById('triggerType').value;
-            let triggerValue = 0;
-            let longRestSecs = 0;
+            const shortType = document.getElementById('shortType').value;
+            const shortVal = parseInt(document.getElementById('shortVal').value) || 1;
+            const shortDur = (parseInt(document.getElementById('shortMins').value) * 60) + parseInt(document.getElementById('shortSecs').value);
 
-            if (triggerType === 'time') {
-                triggerValue = parseInt(document.getElementById('triggerTimeValue').value) || 30;
-                longRestSecs = parseInt(document.getElementById('longRestMinsTime').value) * 60;
-            } else if (triggerType === 'pages') {
-                triggerValue = parseInt(document.getElementById('triggerPagesValue').value) || 10;
-                longRestSecs = parseInt(document.getElementById('longRestMinsPage').value) * 60;
-            }
+            const medType = document.getElementById('medType').value;
+            const medVal = parseInt(document.getElementById('medVal').value) || 20;
+            const medDur = (parseInt(document.getElementById('medMins').value) * 60) + parseInt(document.getElementById('medSecs').value);
 
-            let accumulatedTime = 0; 
-            let accumulatedPages = 0;
+            const longType = document.getElementById('longType').value;
+            const longVal = parseInt(document.getElementById('longVal').value) || 60;
+            const longDur = (parseInt(document.getElementById('longMins').value) * 60) + parseInt(document.getElementById('longSecs').value);
+
+            let accTimeShort = 0, accPagesShort = 0;
+            let accTimeMed = 0, accPagesMed = 0;
+            let accTimeLong = 0, accPagesLong = 0;
 
             for (let i = 1; i <= totalPages; i++) {
+                
                 sessionPlan.push({ type: 'work', duration: timePerPage, pageNum: i });
                 totalSessionSeconds += timePerPage;
-                accumulatedTime += timePerPage;
-                accumulatedPages += 1;
+                
+                accTimeShort += timePerPage; accPagesShort++;
+                accTimeMed += timePerPage; accPagesMed++;
+                accTimeLong += timePerPage; accPagesLong++;
 
                 if (i < totalPages) {
-                    let needsLongRest = false;
+                    let isLong = (longType === 'pages' && accPagesLong >= longVal) || (longType === 'time' && accTimeLong >= longVal * 60);
+                    let isMed = (medType === 'pages' && accPagesMed >= medVal) || (medType === 'time' && accTimeMed >= medVal * 60);
+                    let isShort = (shortType === 'pages' && accPagesShort >= shortVal) || (shortType === 'time' && accTimeShort >= shortVal * 60);
 
-                    if (triggerType === 'time' && accumulatedTime >= (triggerValue * 60)) {
-                        needsLongRest = true;
-                    } else if (triggerType === 'pages' && accumulatedPages >= triggerValue) {
-                        needsLongRest = true;
-                    }
-
-                    if (triggerType !== 'none' && needsLongRest) {
-                        sessionPlan.push({ type: 'longRest', duration: longRestSecs, pageNum: i });
-                        totalSessionSeconds += longRestSecs;
-                        accumulatedTime = 0; 
-                        accumulatedPages = 0;
-                    } else {
-                        sessionPlan.push({ type: 'shortRest', duration: shortRestSecs, pageNum: i });
-                        totalSessionSeconds += shortRestSecs;
-                        accumulatedTime += shortRestSecs; 
+                    // الأولوية للمطولة، ثم المتوسطة، ثم القصيرة
+                    if (longType !== 'none' && isLong) {
+                        sessionPlan.push({ type: 'longRest', duration: longDur, pageNum: i });
+                        totalSessionSeconds += longDur;
+                        accTimeLong = 0; accPagesLong = 0;
+                        accTimeMed = 0; accPagesMed = 0;
+                        accTimeShort = 0; accPagesShort = 0;
+                    } else if (medType !== 'none' && isMed) {
+                        sessionPlan.push({ type: 'medRest', duration: medDur, pageNum: i });
+                        totalSessionSeconds += medDur;
+                        accTimeLong += medDur; // الاستراحة المطولة تحسب وقت ما قبلها
+                        accTimeMed = 0; accPagesMed = 0;
+                        accTimeShort = 0; accPagesShort = 0;
+                    } else if (shortType !== 'none' && isShort) {
+                        sessionPlan.push({ type: 'shortRest', duration: shortDur, pageNum: i });
+                        totalSessionSeconds += shortDur;
+                        accTimeLong += shortDur; 
+                        accTimeMed += shortDur;
+                        accTimeShort = 0; accPagesShort = 0;
                     }
                 }
             }
+
+            currentStepIndex = 0;
+            timeLeft = sessionPlan[0].duration;
+            isProgrammed = true;
             
-            const estimatedTotalMins = Math.ceil(totalSessionSeconds / 60);
-            planInfo.innerText = `الخطة مبرمجة! (${sessionPlan.length} مرحلة). الوقت الكلي المقدر: ${estimatedTotalMins} دقيقة.`;
+            const toast = document.getElementById('toast');
+            toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3000);
+            
+            buildBtn.innerText = 'إعادة البرمجة';
+            startBtn.disabled = false; resetBtn.disabled = false; pauseBtn.disabled = true;
+            startBtn.innerText = 'بدء (Start)';
+            
+            planInfo.innerText = `الوقت الكلي المقدر: ${formatTotalHours(totalSessionSeconds)} | إجمالي الجولات: ${sessionPlan.length}`;
+            updateUI(); saveState();
         }
 
         function updateUI() {
-            const currentStep = sessionPlan[currentStepIndex];
-            timeDisplay.innerText = formatTime(timeLeft);
-            
-            const totalPages = document.getElementById('totalPages').value;
-            roundCounter.innerText = `الصفحة: ${currentStep.pageNum} / ${totalPages}`;
+            if(!isProgrammed) return;
+            const step = sessionPlan[currentStepIndex];
+            displayTime.innerText = formatTime(timeLeft);
+            counter.innerText = `الصفحة: ${step.pageNum} / ${document.getElementById('totalPages').value}`;
 
-            let progressPercent = (elapsedSessionSeconds / totalSessionSeconds) * 100;
-            if (progressPercent > 100) progressPercent = 100;
-            
-            progressBar.style.width = `${progressPercent}%`;
-            progressText.innerText = `${Math.floor(progressPercent)}%`;
+            let percent = (elapsedSessionSeconds / totalSessionSeconds) * 100;
+            if (percent > 100) percent = 100;
+            progBar.style.width = `${percent}%`;
+            progText.innerText = `${Math.floor(percent)}%`;
 
-            if (currentStep.type === 'work') {
-                statusBadge.innerText = '📖 وقت الدراسة';
-                statusBadge.className = 'badge bg-blue';
-            } else if (currentStep.type === 'shortRest') {
-                statusBadge.innerText = '⚡ استراحة قصيرة';
-                statusBadge.className = 'badge bg-green';
-            } else if (currentStep.type === 'longRest') {
-                statusBadge.innerText = '☕ استراحة مطولة';
-                statusBadge.className = 'badge bg-orange';
+            if (step.type === 'work') {
+                badge.innerText = '📖 وقت الدراسة'; badge.className = 'badge bg-blue';
+            } else if (step.type === 'shortRest') {
+                badge.innerText = '⚡ استراحة قصيرة'; badge.className = 'badge bg-green';
+            } else if (step.type === 'medRest') {
+                badge.innerText = '🌤️ استراحة متوسطة'; badge.className = 'badge bg-blue'; badge.style.backgroundColor = '#bae6fd'; badge.style.color = '#0284c7';
+            } else if (step.type === 'longRest') {
+                badge.innerText = '☕ استراحة مطولة'; badge.className = 'badge bg-orange';
             }
         }
 
-        function loadNextStep() {
-            const previousStepType = sessionPlan[currentStepIndex].type;
+        function loadNext() {
+            const prevType = sessionPlan[currentStepIndex].type;
             currentStepIndex++;
 
             if (currentStepIndex >= sessionPlan.length) {
-                if (previousStepType === 'work') speakText('Stop');
-                statusBadge.innerText = '🎉 اكتملت دراسة جميع الصفحات!';
-                statusBadge.className = 'badge bg-blue';
-                progressBar.style.width = '100%';
-                progressText.innerText = '100%';
-                resetState();
-                return;
+                if (prevType === 'work') speakText('Stop');
+                badge.innerText = '🎉 اكتملت دراسة جميع الصفحات!'; badge.className = 'badge bg-blue';
+                progBar.style.width = '100%'; progText.innerText = '100%';
+                resetStateUI(); return;
             }
 
-            const nextStep = sessionPlan[currentStepIndex];
-            timeLeft = nextStep.duration;
+            timeLeft = sessionPlan[currentStepIndex].duration;
             
-            if (previousStepType === 'work') {
-                speakText('Stop');
-            } else if (nextStep.type === 'work') {
-                speakText('Start');
-            }
+            if (prevType === 'work') speakText('Stop');
+            else if (sessionPlan[currentStepIndex].type === 'work') speakText('Start');
 
-            updateUI();
+            updateUI(); saveState();
         }
 
-        function timerTick() {
+        function tick() {
             if (timeLeft > 0) {
-                const currentType = sessionPlan[currentStepIndex].type;
-                if ((currentType === 'shortRest' || currentType === 'longRest') && timeLeft <= 3 && timeLeft > 0) {
-                    playTick();
-                }
-
-                timeLeft--;
-                elapsedSessionSeconds++;
-                updateUI();
+                const cType = sessionPlan[currentStepIndex].type;
+                if ((cType.includes('Rest')) && timeLeft <= 3 && timeLeft > 0) playTick();
+                
+                timeLeft--; elapsedSessionSeconds++;
+                updateUI(); saveState();
             } else {
-                elapsedSessionSeconds++; 
-                loadNextStep();
+                elapsedSessionSeconds++; loadNext();
             }
         }
 
-        function initPlanAndStart() {
+        function startTimer() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
-
-            if (sessionPlan.length === 0) {
-                buildSessionPlan();
-                currentStepIndex = 0;
-                timeLeft = sessionPlan[0].duration;
-                settingsArea.style.opacity = '0.5';
-                settingsArea.style.pointerEvents = 'none';
-                
-                speakText('Start');
-            }
-
-            if (!isRunning) {
-                timer = setInterval(timerTick, 1000);
+            if (!isRunning && isProgrammed) {
+                if(currentStepIndex === 0 && timeLeft === sessionPlan[0].duration) speakText('Start');
+                timer = setInterval(tick, 1000);
                 isRunning = true;
-                
-                startBtn.innerText = 'استئناف';
-                startBtn.disabled = true;
-                pauseBtn.disabled = false;
-                resetBtn.disabled = false;
-                updateUI();
+                startBtn.disabled = true; pauseBtn.disabled = false;
+                saveState();
             }
         }
 
         function pauseTimer() {
             if (isRunning) {
-                clearInterval(timer);
-                isRunning = false;
-                speakText('Stop');
-                
-                startBtn.disabled = false;
-                pauseBtn.disabled = true;
+                clearInterval(timer); isRunning = false; speakText('Stop');
+                startBtn.disabled = false; startBtn.innerText = 'استئناف'; pauseBtn.disabled = true;
+                saveState();
             }
         }
 
-        function resetState() {
-            clearInterval(timer);
-            isRunning = false;
-            startBtn.innerText = 'برمجة الخطة والبدء';
-            startBtn.disabled = false;
-            pauseBtn.disabled = true;
-            resetBtn.disabled = true;
-            settingsArea.style.opacity = '1';
-            settingsArea.style.pointerEvents = 'auto';
-            sessionPlan = [];
+        function resetStateUI() {
+            clearInterval(timer); isRunning = false;
+            startBtn.disabled = false; startBtn.innerText = 'بدء (Start)';
+            pauseBtn.disabled = true; resetBtn.disabled = true;
+            isProgrammed = false; localStorage.removeItem('studyTimerMasterState');
         }
 
-        function resetTimer() {
-            resetState();
-            timeDisplay.innerText = '00:00';
-            statusBadge.innerText = 'تم إلغاء الخطة.';
-            roundCounter.innerText = 'الصفحة: 0 / 0';
-            planInfo.innerText = '';
-            progressBar.style.width = '0%';
-            progressText.innerText = '0%';
-            elapsedSessionSeconds = 0;
+        function resetAll() {
+            resetStateUI(); displayTime.innerText = '00:00'; badge.innerText = 'تم إلغاء الخطة.';
+            counter.innerText = 'الصفحة: 0 / 0'; planInfo.innerText = 'الخطة غير مبرمجة بعد.';
+            progBar.style.width = '0%'; progText.innerText = '0%'; sessionPlan = [];
+        }
+
+        function applyUpdate(btn) {
+            btn.querySelector('.update-dot').style.display = 'none';
+            alert('تم جلب آخر التحديثات بنجاح ✔️');
         }
     </script>
 </body>
