@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- أوامر صارمة لمنع تخزين الصفحة في ذاكرة المتصفح (الكاش) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <title>مؤقت الإنجاز القرائي الدقيق</title>
     <style>
         :root {
@@ -237,7 +243,7 @@
 </head>
 <body>
 
-    <!-- Subjects Datalist for Autocomplete -->
+    <!-- قائمة المواد للإكمال التلقائي -->
     <datalist id="prepSubjects">
         <option value="البيولوجيا (علم الخلية)"></option>
         <option value="الفيزياء الطبية"></option>
@@ -251,7 +257,7 @@
         <option value="اللغة الإنجليزية 2"></option>
     </datalist>
 
-    <!-- Main Screen -->
+    <!-- الشاشة الرئيسية -->
     <div class="container">
         <button class="settings-btn-top" id="openSettingsBtn" title="القائمة">⚙️</button>
         <div class="timer-display" id="timeDisplay">10:00</div>
@@ -263,7 +269,7 @@
         </div>
     </div>
 
-    <!-- End Round Modal (Automatic) -->
+    <!-- نافذة انتهاء الجولة التلقائية -->
     <div id="endModal" class="modal">
         <div class="modal-content" style="max-width: 400px;">
             <h3 style="text-align: center;">انتهت الجولة! 👏</h3>
@@ -290,7 +296,7 @@
         </div>
     </div>
 
-    <!-- Edit Record Modal -->
+    <!-- نافذة التعديل -->
     <div id="editModal" class="modal" style="z-index: 1050;">
         <div class="modal-content" style="max-width: 400px;">
             <button class="close-modal" id="closeEditBtn" title="إغلاق">✖</button>
@@ -319,7 +325,7 @@
         </div>
     </div>
 
-    <!-- Settings & History Modal (With Tabs) -->
+    <!-- نافذة القائمة والإعدادات -->
     <div id="settingsModal" class="modal">
         <div class="modal-content">
             <button class="close-modal" id="closeSettingsBtn" title="إغلاق">✖</button>
@@ -330,7 +336,7 @@
                 <button class="tab-btn" data-tab="tab-settings">الضبط</button>
             </div>
 
-            <!-- Tab 1: History -->
+            <!-- تبويب السجل -->
             <div id="tab-history" class="tab-content active">
                 <div class="table-container">
                     <table>
@@ -345,13 +351,13 @@
                             </tr>
                         </thead>
                         <tbody id="historyTableBody">
-                            <!-- Data will be injected here -->
+                            <!-- البيانات ستظهر هنا -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Tab 2: Manual Add -->
+            <!-- تبويب الإضافة اليدوية -->
             <div id="tab-manual" class="tab-content">
                 <div class="form-group">
                     <label>نوع القراءة:</label>
@@ -374,7 +380,7 @@
                 <button id="saveManualBtn" class="btn-main" style="width: 100%;">إضافة إلى السجل</button>
             </div>
 
-            <!-- Tab 3: Settings -->
+            <!-- تبويب الضبط -->
             <div id="tab-settings" class="tab-content">
                 <div class="form-group">
                     <label>مدة الجولة الافتراضية (بالدقائق):</label>
@@ -384,7 +390,7 @@
                 <div class="update-zone">
                     <h4>تحديث الإصدار</h4>
                     <p>انقر هنا لتحديث الصفحة وسحب أحدث إصدار من المؤقت (السجل آمن).</p>
-                    <button id="updateAppBtn" class="btn-update" style="width: 100%;">تحديث الآن</button>
+                    <button id="updateAppBtn" class="btn-update" style="width: 100%;">تحديث إجباري الآن</button>
                 </div>
             </div>
 
@@ -629,7 +635,6 @@
             if(confirm("هل أنت متأكد من حذف هذه الجولة؟")) {
                 historyData = historyData.filter(item => String(item.id) !== String(id));
                 
-                // إعادة العداد للصفر إذا تم حذف كل السجلات
                 if (historyData.length === 0) {
                     roundCounter = 1;
                 }
@@ -751,11 +756,14 @@
             }
         });
 
+        // زر التحديث المطور والمجبَر
         updateAppBtn.addEventListener('click', () => {
-            saveData();
-            const url = new URL(window.location.href);
-            url.searchParams.set('v', new Date().getTime()); 
-            window.location.href = url.toString();
+            saveData(); // حفظ بياناتك
+            
+            // إجبار المتصفح على تحميل الصفحة من جديد متجاهلاً الكاش
+            const cleanUrl = window.location.href.split('?')[0];
+            const forceRefreshUrl = cleanUrl + '?v=' + new Date().getTime();
+            window.location.replace(forceRefreshUrl);
         });
 
         window.addEventListener('click', (e) => {
