@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تحليل وتفكيك أسئلة الفصل الثاني - الفيزيولوجيا الطبية</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Cairo -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f8fafc;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .perspective {
+      perspective: 1000px;
+    }
+    .flip-card-inner {
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      backface-visibility: hidden;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+  <div>
+    <!-- شريط التنقل (الرجوع والرئيسية) - بحجم أصغر وجانباً -->
+    <div class="max-w-6xl mx-auto px-4 pt-4 flex justify-start items-center gap-2 text-xs font-semibold">
+      <a href="./physiology.html" class="flex items-center gap-1.5 text-teal-700 hover:text-teal-900 bg-white px-3 py-1.5 rounded-md shadow-sm border border-slate-200 transition">
+        <span>→</span> الرجوع لصفحة الفسيولوجيا
+      </a>
+      <a href="./index.html" class="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 bg-white px-3 py-1.5 rounded-md shadow-sm border border-slate-200 transition">
+        <span>🏠</span> الصفحة الرئيسية
+      </a>
+    </div>
+
+    <!-- الهيدر الرئيسي -->
+    <header class="max-w-6xl mx-auto px-4 mt-6">
+      <div class="bg-gradient-to-r from-teal-800 via-teal-700 to-cyan-800 text-white rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
+        <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div>
+            <div class="inline-flex items-center gap-2 bg-teal-900/50 backdrop-blur border border-teal-400/30 text-teal-200 text-xs px-3 py-1 rounded-full mb-3">
+              <i data-lucide="brain-circuit" class="w-4 h-4"></i>
+              <span>الفيزيولوجيا الطبية - تحليلات الدورات الشاملة</span>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-black text-white mb-2">
+              الخريطة التفاعلية وتحليل أسئلة الفصل الثاني
+            </h1>
+            <p class="text-teal-100 text-sm max-w-2xl leading-relaxed">
+              تفكيك شامل لـ 92 سؤالاً امتحانياً موزعة على 7 دورات نظامية (2017 - 2024)، مع استخراج أكثر الأفكار تكراراً، الخدع الامتحانية (النكشات)، وبنك المراجعة السريعة.
+            </p>
+          </div>
+          <div class="bg-white/10 backdrop-blur border border-white/20 p-4 rounded-xl text-center min-w-[160px] self-stretch md:self-auto flex flex-col justify-center">
+            <span class="text-teal-200 text-xs font-medium">متوسط الأسئلة/الدورة</span>
+            <span class="text-3xl font-black text-white my-1">13.1</span>
+            <span class="text-teal-300 text-[11px]">من 9 إلى 16 سؤالاً كحد أقصى</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- لوحة الأرقام السريعة والتوزيع الإحصائي -->
+    <section class="max-w-6xl mx-auto px-4 my-8">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center font-bold">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500">إجمالي الأسئلة</p>
+            <p class="text-lg font-extrabold text-slate-800">92 سؤالاً</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-cyan-50 text-cyan-600 flex items-center justify-center font-bold">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500">عدد الدورات</p>
+            <p class="text-lg font-extrabold text-slate-800">7 دورات</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+            <i data-lucide="zap" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500">الأكثر تكراراً</p>
+            <p class="text-lg font-extrabold text-slate-800">العضلات الملساء</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500">نسبة "عدا" والخدع</p>
+            <p class="text-lg font-extrabold text-slate-800">~ 65%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- الرسوم البيانية -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="md:col-span-2 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <i data-lucide="bar-chart-3" class="w-5 h-5 text-teal-600"></i>
+            توزيع عدد الأسئلة حسب الدورات النظامية
+          </h3>
+          <div class="h-64">
+            <canvas id="yearsChart"></canvas>
+          </div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <i data-lucide="pie-chart" class="w-5 h-5 text-cyan-600"></i>
+            توزيع مواضيع الفصل الثاني
+          </h3>
+          <div class="h-64">
+            <canvas id="topicsChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ماذا يركزون عليه أكثر فالأقل؟ (Focus Analysis) -->
+    <section class="max-w-6xl mx-auto px-4 my-8">
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2 border-b pb-3">
+          <i data-lucide="target" class="w-6 h-6 text-teal-600"></i>
+          تحليل ثقل المواضيع: ماذا يركزون عليه أكثر وما هو الأقل؟
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- التركيز العالي جداً -->
+          <div class="bg-teal-50/70 border border-teal-200 rounded-xl p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="bg-teal-600 text-white text-xs font-bold px-2.5 py-1 rounded-md">أعلى تركيز (Hot Topics)</span>
+              <span class="text-xs text-teal-700 font-semibold">تأتي في كل دورة تقريباً!</span>
+            </div>
+            <ul class="space-y-3 text-sm text-slate-700">
+              <li class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-teal-600 shrink-0 mt-0.5"></i>
+                <div>
+                  <strong>العضلات الملساء وآلياتها (28% من الأسئلة):</strong>
+                  <p class="text-xs text-slate-600 mt-0.5">تركز الأسئلة على: آلية المزلاج (توفير الطاقة)، الارتخاء بعد الكرب (Stress-relaxation)، الكالموديولين، مصدر الكالسيوم (خارج الخلية)، والفرق بين وحيدة الوحدة وعديدة الوحدة.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-teal-600 shrink-0 mt-0.5"></i>
+                <div>
+                  <strong>كمون الفعل والأعصاب وقنوات الشوارد (26%):</strong>
+                  <p class="text-xs text-slate-600 mt-0.5">فترة العصيان المطلق (Inactivation gate)، طور زوال وعودة الاستقطاب، ونقص الكالسيوم خارج الخلوي (زيادة الاستثارة وتخفيض العتبة والتكزز).</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-5 h-5 text-teal-600 shrink-0 mt-0.5"></i>
+                <div>
+                  <strong>النقل الغشائي ومضخة الصوديوم-البوتاسيوم (24%):</strong>
+                  <p class="text-xs text-slate-600 mt-0.5">مضخة $Na^+/K^+$ ودورها المعكوس لتركيب $ATP$، النقل الفاعل الأولي vs الثانوي، والانتشار الميسر والسرعة القصوى $V_{max}$.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- التركيز الأقل والمتوسط -->
+          <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="bg-amber-600 text-white text-xs font-bold px-2.5 py-1 rounded-md">تركيز متوسط إلى أقل</span>
+              <span class="text-xs text-amber-700 font-semibold">تأتي بنمط أسئلة دقيقة جداً</span>
+            </div>
+            <ul class="space-y-3 text-sm text-slate-700">
+              <li class="flex items-start gap-2">
+                <i data-lucide="help-circle" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
+                <div>
+                  <strong>العضلات الهيكلية واستقلاب الطاقة (22%):</strong>
+                  <p class="text-xs text-slate-600 mt-0.5">المقارنة بين الألياف البطيئة (Type I) والسريعة (Type II)، مصادر الطاقة بالزمن (ATP تكفي لـ 1-2 ثانية، الفوسفوكرياتين لـ 5-8 ثوانٍ)، والتقلص إسوي المقاسات vs إسوي التوتر.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-2">
+                <i data-lucide="minus-circle" class="w-5 h-5 text-amber-600 shrink-0 mt-0.5"></i>
+                <div>
+                  <strong>الأقل تركيزاً (شبه غائب):</strong>
+                  <p class="text-xs text-slate-600 mt-0.5">الحسابات الرياضية لمعادلات نيرنست وجولد مان، والتفاصيل التشريحية الدقيقة المشبكية جداً دون ربطها بالشوارد.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- الخريطة التفاعلية الشاملة للأفكار (Interactive Mind Map) -->
+    <section class="max-w-6xl mx-auto px-4 my-8">
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b">
+          <div>
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+              <i data-lucide="map" class="w-6 h-6 text-teal-600"></i>
+              الخريطة التفاعلية الشاملة لأفكار الفصل الثاني
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">انقر على أي عقدة للاطلاع على تكرار الأفكار في الدورات والملاحظات الامتحانية</p>
+          </div>
+          <div class="flex flex-wrap gap-1.5" id="topicFilterContainer">
+            <button onclick="filterMap('all')" class="map-btn active text-xs font-semibold px-3 py-1.5 rounded-lg bg-teal-600 text-white transition">الكل</button>
+            <button onclick="filterMap('transport')" class="map-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">النقل الغشائي</button>
+            <button onclick="filterMap('potential')" class="map-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">كمون الفعل والأعصاب</button>
+            <button onclick="filterMap('skeletal')" class="map-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">العضلات الهيكلية</button>
+            <button onclick="filterMap('smooth')" class="map-btn text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">العضلات الملساء</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="mapGrid">
+          <!-- الكروت التفاعلية سيتم إنشاؤها عبر JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- نكشات وخادع ومقارنات امتحانية (Exam Traps & Comparisons) -->
+    <section class="max-w-6xl mx-auto px-4 my-8">
+      <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 shadow-lg">
+        <h2 class="text-xl font-bold mb-6 flex items-center gap-2 text-cyan-400">
+          <i data-lucide="sparkles" class="w-6 h-6"></i>
+          مركز المقارنات والنكشات والخدع الامتحانية (Exam Traps & Nuances)
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- نكشة 1 -->
+          <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl hover:border-cyan-500/50 transition">
+            <span class="text-xs font-bold text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded mb-2 inline-block">خدعة مضخة صوديوم - بوتاسيوم المعكوسة</span>
+            <h4 class="font-bold text-white mb-2">متى تعكس المضخة عملها لتركيب الـ ATP؟</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              المضخة تعمل عادة بالطاقة ($ATP$) لضخ $3 Na^+$ للخارج و $2 K^+$ للداخل. لكن عند زيادة المدروج الكهركيميائي لـ $Na^+$ و $K^+$ بشكل كبير جداً فوق الطبيعي (أو نقص $ATP$)، تتدفق الشوارد مع مدروجها عبر المضخة وتعمل باتجاه عكسي لتركيب $ATP$! (وردت في دورة 2019، 2022، 2023).
+            </p>
+          </div>
+
+          <!-- نكشة 2 -->
+          <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl hover:border-cyan-500/50 transition">
+            <span class="text-xs font-bold text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded mb-2 inline-block">خدعة مدة الفوسفوكرياتين vs الـ ATP</span>
+            <h4 class="font-bold text-white mb-2">مدة الطاقة المخزنة للتقلص المديد</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              انتبه لخيارات الوقت: الـ $ATP$ المباشر يكفي لـ 1 - 2 ثانية فقط! الفوسفوكرياتين يكفي لـ 5 - 8 ثوانٍ فقط (خيار الخاطئ بدورة 2022 قال: يكفي لدقيقة، وهذا غلط!). للتقلص المديد المديد نعتمد على الاستقلاب التأكسدي.
+            </p>
+          </div>
+
+          <!-- نكشة 3 -->
+          <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl hover:border-cyan-500/50 transition">
+            <span class="text-xs font-bold text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded mb-2 inline-block">فك لغز نقص الكالسيوم خارج الخلوي</span>
+            <h4 class="font-bold text-white mb-2">لماذا يسبب نقص الكالسيوم تكزز واستثارة؟</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              الكالسيوم خارج الخلية يثبت قنوات الصوديوم. عند نقصه، تخفض عتبة تنبيه قنوات الصوديوم السريعة، فتصبح الألياف العصبية عالية الاستثارة وتحدث تفريغات عفوية وتكزز عضلي (Tetanus). (تكرر في 2017، 2021، 2024).
+            </p>
+          </div>
+
+          <!-- نكشة 4 -->
+          <div class="bg-slate-800/80 border border-slate-700 p-4 rounded-xl hover:border-cyan-500/50 transition">
+            <span class="text-xs font-bold text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded mb-2 inline-block">فترة العصيان المطلق وبوابة التعطيل</span>
+            <h4 class="font-bold text-white mb-2">ما الذي يحدد فترة العصيان المطلق؟</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              سببها انغلاق بوابة **التعطيل** (Inactivation Gate) لقنوات الصوديوم المبوبة بالفولطاج. لا تعود هذه البوابة للانفتاح إلا بعد عودة كامن الغشاء إلى قيمة الراحة، وتشمل الطور الصاعد والقسم الأول من الطور النازل لكامن الفعل.
+            </p>
+          </div>
+        </div>
+
+        <!-- مقارنات جدولية سريعة -->
+        <div class="mt-8 border-t border-slate-700 pt-6">
+          <h3 class="text-base font-bold text-cyan-300 mb-4">جدول مقارنة حاسم: العضلات الملساء عديدة الوحدة vs وحيدة الوحدة</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-right border-collapse">
+              <thead>
+                <tr class="bg-slate-950/60 text-cyan-400 border-b border-slate-700">
+                  <th class="p-2.5">وجه المقارنة</th>
+                  <th class="p-2.5">العضلات الملساء عديدة الوحدة (Multi-unit)</th>
+                  <th class="p-2.5">العضلات الملساء وحيدة الوحدة (Unitary / Visceral)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-700/60 text-slate-300">
+                <tr>
+                  <td class="p-2.5 font-bold text-white">الاستقلالية في التقلص</td>
+                  <td class="p-2.5">كل ليف يتقلص بشكل مستقل عن الألياف الأخرى</td>
+                  <td class="p-2.5">تتقلص كأنها ليف عضلي واحد (كتلة واحدة)</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold text-white">الموصلات الفجوية (Gap Junctions)</td>
+                  <td class="p-2.5">غير موجودة تقريباً (تعتمد على تنبيه عصبي مستمر)</td>
+                  <td class="p-2.5">غزيرة جداً وتسمح بمرور كمونات الفعل فوراً</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold text-white">أمثلة شائعة في الأسئلة</td>
+                  <td class="p-2.5">عضلة قزحية العين، الأوعية الدموية الكبيرة</td>
+                  <td class="p-2.5">عضلات الأحشاء (الأمعاء، الرحم، الحالب)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- نظام بطاقات المراجعة والاسترجاع السريع (Flashcards & Active Recall) -->
+    <section class="max-w-6xl mx-auto px-4 my-8">
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b">
+          <div>
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+              <i data-lucide="layers" class="w-6 h-6 text-teal-600"></i>
+              بطاقات المراجعة والاسترجاع السريع (Active Recall Flashcards)
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">اضغط على البطاقة لكشف الإجابة والتعليل الرياضي/الفيزيولوجي</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="prevFlashcard()" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+            <span id="flashcardCounter" class="text-xs font-bold text-slate-600 px-2">1 / 10</span>
+            <button onclick="nextFlashcard()" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="max-w-2xl mx-auto perspective cursor-pointer" onclick="flipCard()">
+          <div id="flashcard" class="flip-card min-h-[220px] bg-gradient-to-br from-teal-600 to-cyan-700 text-white rounded-2xl p-8 flex flex-col justify-between shadow-md relative">
+            <div class="flip-card-inner h-full flex flex-col justify-between">
+              <!-- الواجهة الأ do الأسلئة -->
+              <div class="flip-card-front flex flex-col justify-between h-full">
+                <div>
+                  <span id="cardCategory" class="bg-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">سؤال امتحاني متكرر</span>
+                  <h3 id="cardQuestion" class="text-lg font-bold mt-4 leading-relaxed">ما هي الغاية الوظيفية الأساسية من آلية المزلاج (Latch Mechanism) في العضلات الملساء؟</h3>
+                </div>
+                <div class="flex justify-between items-center text-xs text-teal-100 mt-6 pt-4 border-t border-white/20">
+                  <span>انقر لكشف الجواب الدقيق</span>
+                  <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                </div>
+              </div>
+
+              <!-- الخلفية do الإجابة -->
+              <div class="flip-card-back absolute inset-0 bg-slate-900 text-white rounded-2xl p-8 flex flex-col justify-between h-full">
+                <div>
+                  <span class="bg-teal-500 text-slate-950 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">الإجابة النموذجية والنكشة</span>
+                  <p id="cardAnswer" class="text-sm font-medium mt-4 text-slate-200 leading-relaxed">
+                    الحفاظ على تقلص مقوّ مديد في العضلات الملساء باستخدام كمية قليلة جداً من الطاقة (ATP) مع انخفاض سرعة دوران الجسور التصالبية.
+                  </p>
+                </div>
+                <div class="flex justify-between items-center text-xs text-teal-400 mt-6 pt-4 border-t border-slate-800">
+                  <span>تكرر في دورات 2017, 2018, 2019</span>
+                  <span>اضغط للقلب مجدداً</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- بنك أسئلة الدورات المبوب والمصنف (All Cycles Question Explorer) -->
+    <section class="max-w-6xl mx-auto px-4 my-8">
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-4 border-b">
+          <div>
+            <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+              <i data-lucide="database" class="w-6 h-6 text-teal-600"></i>
+              بنك الأسئلة المبوب حسب الدورات والسنوات
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">تصفح الأسئلة مع الإجابات النموذجية والملاحظات الفيزيولوجية</p>
+          </div>
+
+          <!-- خيارات التصفية -->
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="yearSelect" onchange="renderQuestions()" class="text-xs font-semibold bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-700 outline-none focus:border-teal-500">
+              <option value="all">جميع السنوات (2017 - 2024)</option>
+              <option value="2017">دورة 2017</option>
+              <option value="2018">دورة 2018</option>
+              <option value="2019">دورة 2019</option>
+              <option value="2021">دورة 2021</option>
+              <option value="2022">دورة 2022</option>
+              <option value="2023">دورة 2023</option>
+              <option value="2024">دورة 2024</option>
+            </select>
+            <input type="text" id="searchInput" oninput="renderQuestions()" placeholder="بحث عن كلمة (مثل: كالموديولين)..." class="text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-700 outline-none focus:border-teal-500 w-48">
+          </div>
+        </div>
+
+        <div id="questionsContainer" class="space-y-4">
+          <!-- الأسئلة سيتم إدراجها هنا عبر JavaScript -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- الفوتر Footer -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-8 mt-12 border-t border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
+      <p class="font-semibold text-slate-300">صفحة التحليل التفاعلي الشاملة - فسيولوجيا طبية (الفصل الثاني)</p>
+      <p class="text-slate-500">تم التجمع والتفكيك استناداً إلى دورات Med Help النظامية (2017 - 2024)</p>
+    </div>
+  </footer>
+
+  <!-- Scripts Logic -->
+  <script>
+    // تهيئة أيقونات Lucide
+    lucide.createIcons();
+
+    // 1. البيانات الإحصائية للرسوم البيانية
+    const yearsData = {
+      labels: ['2017', '2018', '2019', '2021', '2022', '2023', '2024'],
+      counts: [12, 13, 12, 16, 16, 9, 14]
+    };
+
+    const topicsData = {
+      labels: ['العضلات الملساء', 'كمون الفعل والأعصاب', 'النقل الغشائي', 'العضلات الهيكلية'],
+      percentages: [28, 26, 24, 22]
+    };
+
+    // رسم البياني للسنوات
+    const ctxYears = document.getElementById('yearsChart').getContext('2d');
+    new Chart(ctxYears, {
+      type: 'bar',
+      data: {
+        labels: yearsData.labels,
+        datasets: [{
+          label: 'عدد الأسئلة',
+          data: yearsData.counts,
+          backgroundColor: '#0d9488',
+          borderRadius: 8,
+          hoverBackgroundColor: '#0f766e'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { beginAtZero: true, max: 20, grid: { color: '#f1f5f9' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    // رسم البياني للمواضيع
+    const ctxTopics = document.getElementById('topicsChart').getContext('2d');
+    new Chart(ctxTopics, {
+      type: 'doughnut',
+      data: {
+        labels: topicsData.labels,
+        datasets: [{
+          data: topicsData.percentages,
+          backgroundColor: ['#0d9488', '#06b6d4', '#6366f1', '#f59e0b']
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 11 } } }
+        }
+      }
+    });
+
+    // 2. خريطة الأفكار التفاعلية (Interactive Mind Map Nodes)
+    const mapNodes = [
+      {
+        category: 'transport',
+        title: 'الانتشار الميسر (Facilitated Diffusion)',
+        tag: 'النقل الغشائي',
+        freq: 'تكرر 5 مرات',
+        summary: 'يتميز بوجود السرعة القصوى Vmax بسبب إشباع البروتينات الناقلة. ينقل الغلوكوز والأحماض الأمينية ولا يحتاج طاقة ATP مباشرة.',
+        note: 'دورة 2017: تميز عن البسيط بالسرعة القصوى Vmax. دورة 2018: ينقل الغلوكوز.'
+      },
+      {
+        category: 'transport',
+        title: 'مضخة صوديوم - بوتاسيوم (Na+/K+ Pump)',
+        tag: 'النقل الغشائي',
+        freq: 'تكرر 7 مرات (في كل دورة!)',
+        summary: 'تضخ 3 صوديوم للخارج و 2 بوتاسيوم للداخل. مسؤولة عن التحكم بحجم الخلية وتوطيد الكامن السلبي. تملك فعالية ATPase.',
+        note: 'النكشة الكبرى: تعمل بالاتجاه المعاكس لتركيب ATP عند زيادة المدروج الشاردي جداً أو نقص ATP!'
+      },
+      {
+        category: 'potential',
+        title: 'فترة العصيان / الحران المطلق',
+        tag: 'كمون الفعل',
+        freq: 'تكرر 4 مرات',
+        summary: 'تشمل الطور الصاعد والقسم الأول من الطور النازل. سببها الرئيسي انغلاق بوابة التعطيل (Inactivation gate) لقنوات الصوديوم.',
+        note: 'يكون العصبون عاجزاً تماماً عن توليد كامن فعل آخر مهما كان المنبه.'
+      },
+      {
+        category: 'potential',
+        title: 'نقص الكالسيوم خارج الخلوي (Hypocalcemia)',
+        tag: 'كمون الفعل والأعصاب',
+        freq: 'تكرر 3 مرات',
+        summary: 'يؤدي إلى خفض عتبة تنبيه قنوات الصوديوم السريعة -> زيادة استثارة الألياف العصبية وتفريغات عفوية وتكزز عضلي (Tetanus).',
+        note: 'دورة 2017: سبب التكزز العضلي هو خفض عتبة التنبيه.'
+      },
+      {
+        category: 'smooth',
+        title: 'آلية المزلاج (Latch Mechanism)',
+        tag: 'العضلات الملساء',
+        freq: 'تكرر 5 مرات',
+        summary: 'تسمح بالمحافظة على تقلص مقوّ مديد في العضلات الملساء باستخدام كمية قليلة جداً من الطاقة (ATP) مع انخفاض سرعة الجسور.',
+        note: 'دورة 2017, 2018, 2019: الهدف الأساسي توفير الطاقة أثناء التقلص المديد.'
+      },
+      {
+        category: 'smooth',
+        title: 'بروتين الكالموديولين (Calmodulin)',
+        tag: 'العضلات الملساء',
+        freq: 'تكرر 4 مرات',
+        summary: 'تفتقر العضلات الملساء للتروبونين، فتستخدم بروتين الكالموديولين للارتباط مع الكالسيوم لتفعيل مركب الميوزين كينار.',
+        note: 'تكرر في 2018, 2022, 2024.'
+      },
+      {
+        category: 'smooth',
+        title: 'الارتخاء بعد الكرب (Stress-Relaxation)',
+        tag: 'العضلات الملساء',
+        freq: 'تكرر 3 مرات',
+        summary: 'خاصية للأعضاء المجوفة (مثل المثانة) تسمح بالعودة إلى قوة تقلصها الأصلية بعد التطاول/القصر للحفاظ على ضغط ثابت تقريباً.',
+        note: 'دورة 2022: المحافظة على مقدار الضغط نفسه برغم تغير الحجم.'
+      },
+      {
+        category: 'skeletal',
+        title: 'مصادر الطاقة للتقلص العضلي الزمني',
+        tag: 'العضلات الهيكلية',
+        freq: 'تكرر 4 مرات',
+        summary: 'ATP المخزن (1-2 ثانية)، الفوسفوكرياتين (5-8 ثوانٍ)، التحلل اللاهوائي للغليكوجين (~1 دقيقة)، الاستقلاب التأكسدي (>95% للتقلص المديد).',
+        note: 'دورة 2022: الفوسفوكرياتين لا يكفي لدقيقة بل لثوانٍ فقط!'
+      },
+      {
+        category: 'skeletal',
+        title: 'الألياف العضلية البطيئة vs السريعة',
+        tag: 'العضلات الهيكلية',
+        freq: 'تكرر 4 مرات',
+        summary: 'البطيئة (Type I): قطر صغير، تروية غزيرة، متقدرات كثيرة، ميوغلوبين عالي، مقاومة للتعب. السريعة: شبكة هيولية واسعة وقليلة الميوغلوبين.',
+        note: 'دورة 2017, 2018, 2022, 2023.'
+      }
+    ];
+
+    function renderMapGrid(nodes) {
+      const container = document.getElementById('mapGrid');
+      container.innerHTML = nodes.map(node => `
+        <div class="bg-slate-50 border border-slate-200 hover:border-teal-500 rounded-xl p-4 transition shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-[10px] font-bold bg-teal-100 text-teal-800 px-2 py-0.5 rounded">${node.tag}</span>
+              <span class="text-[10px] font-semibold text-slate-500">${node.freq}</span>
+            </div>
+            <h4 class="font-bold text-slate-800 text-sm mb-1">${node.title}</h4>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">${node.summary}</p>
+          </div>
+          <div class="bg-white border border-slate-200 p-2 rounded-lg text-[11px] text-teal-900 font-medium">
+            💡 <strong>ملاحظة الدورات:</strong> ${node.note}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterMap(cat) {
+      document.querySelectorAll('.map-btn').forEach(btn => btn.classList.remove('bg-teal-600', 'text-white'));
+      event.target.classList.add('bg-teal-600', 'text-white');
+
+      if(cat === 'all') renderMapGrid(mapNodes);
+      else renderMapGrid(mapNodes.filter(n => n.category === cat));
+    }
+
+    renderMapGrid(mapNodes);
+
+    // 3. بطاقات المراجعة والاسترجاع السريع (Flashcards)
+    const flashcardsData = [
+      {
+        cat: 'العضلات الملساء',
+        q: 'ما هي الغاية الوظيفية الأساسية من آلية المزلاج (Latch Mechanism) في العضلات الملساء؟',
+        a: 'الحفاظ على تقلص مقوّ مديد في العضلات الملساء باستخدام كمية قليلة جداً من الطاقة (ATP) مع انخفاض سرعة دوران الجسور التصالبية.'
+      },
+      {
+        cat: 'النقل الغشائي',
+        q: 'متى تعمل مضخة صوديوم - بوتاسيوم بالاتجاه المعاكس لتركيب الطاقة ATP؟',
+        a: 'عند ارتفاع مدروج التركيز الكهركيميائي لشوارد الصوديوم والبوتاسيوم بدرجة كبيرة جداً فوق الراحة أو عند نقص الـ ATP داخل الخلية.'
+      },
+      {
+        cat: 'الأعصاب وكمون الفعل',
+        q: 'ما هو العامل الأساسي المحدد لفترة العصيان المطلق (Absolute Refractory Period)؟',
+        a: 'انغلاق بوابة التعطيل (Inactivation Gate) لقنوات الصوديوم المبوبة بالفولطاج، والتي لا تنفتح إلا بعد عودة الكمون لمستوى الراحة.'
+      },
+      {
+        cat: 'الأعصاب والاستثارة',
+        q: 'كيف يؤدي نقص الكالسيوم خارج الخلوي (Hypocalcemia) إلى التكزز العضلي؟',
+        a: 'عبر خفض عتبة تنبيه قنوات الصوديوم السريعة، مما يجعل الألياف العصبية عالية الاستثارة وتولد تفريغات عفوية.'
+      },
+      {
+        cat: 'العضلات الهيكلية',
+        q: 'كم تبلغ المدة الزمنية التي يكفي فيها الفوسفوكرياتين لإمداد العضلة الهيكلية بالفيزيولوجيا؟',
+        a: 'تكفي لمدة 5 إلى 8 ثوانٍ فقط لتقلص أعظمي (بينما الـ ATP المباشر يكفي لـ 1-2 ثانية).'
+      },
+      {
+        cat: 'العضلات الملساء',
+        q: 'ما البروبين الذي يستعيض به العضلات الملساء عن التروبونين للارتباط بالكالسيوم؟',
+        a: 'بروتين الكالموديولين (Calmodulin).'
+      },
+      {
+        cat: 'النقل الغشائي',
+        q: 'ما هي الصفة المميزة الأساسية للانتشار الميسر مقارنة بالانتشار البسيط؟',
+        a: 'وصوله إلى السرعة القصوى (Vmax) بسبب حدوث إشباع للبروتينات الناقلة (Carriers).'
+      },
+      {
+        cat: 'العضلات الملساء',
+        q: 'ما البنى التي تؤدي وظيفة أقراص Z الهيكلية في العضلات الملساء؟',
+        a: 'الأجسام الكثيفة (Dense Bodies).'
+      },
+      {
+        cat: 'العضلات الهيكلية',
+        q: 'بماذا تتميز الألياف العضلية البطيئة (Type I) مقارنة بالسريعة؟',
+        a: 'قطر أصغر، إمداددموي غزير، متقدرات وميوغلوبين بكميات أكبر، وتعتمد أساساً على الاستقلاب التأكسدي Resistant to fatigue.'
+      },
+      {
+        cat: 'العضلات الملساء',
+        q: 'ما هي الخاصية التي تسمح للأعضاء المجوفة بالحفاظ على نفس الضغط برغم تغير الحجم؟',
+        a: 'خاصية الارتخاء بعد الكرب (Stress-relaxation).'
+      }
+    ];
+
+    let currentCardIndex = 0;
+    function updateCard() {
+      const data = flashcardsData[currentCardIndex];
+      document.getElementById('cardCategory').innerText = data.cat;
+      document.getElementById('cardQuestion').innerText = data.q;
+      document.getElementById('cardAnswer').innerText = data.a;
+      document.getElementById('flashcardCounter').innerText = `${currentCardIndex + 1} / ${flashcardsData.length}`;
+      document.getElementById('flashcard').classList.remove('flipped');
+    }
+
+    function flipCard() {
+      document.getElementById('flashcard').classList.toggle('flipped');
+    }
+
+    function nextFlashcard() {
+      currentCardIndex = (currentCardIndex + 1) % flashcardsData.length;
+      updateCard();
+    }
+
+    function prevFlashcard() {
+      currentCardIndex = (currentCardIndex - 1 + flashcardsData.length) % flashcardsData.length;
+      updateCard();
+    }
+
+    updateCard();
+
+    // 4. بنك الأسئلة الشامل المبوب (Questions Explorer Data)
+    const questionsBank = [
+      // 2017
+      { year: '2017', q: 'يتميز الانتشار الميسر عن الانتشار البسيط بـ:', ans: 'السرعة القصوى Vmax', note: 'السبب: إشباع الحوامل البروتينية.' },
+      { year: '2017', q: 'يحدث التكزز العضلي عند نقص تركيز شوارد الكالسيوم خارج الخلايا بسبب:', ans: 'خفض عتبة تنبيه قنوات الصوديوم السريعة', note: 'نقص Ca2+ يزيد النفوذية للصوديوم فتزداد الاستثارة.' },
+      { year: '2017', q: 'تتميز العضلات البطيئة مقارنة بالعضلات السريعة بكل مما يلي عدا:', ans: 'احتواؤها كمية قليلة من الميوغلوبين', note: 'بالعكس: تحوي كمية كبيرة جداً من الميوغلوبين ولذلك تسمى حمراء.' },
+      { year: '2017', q: 'كل مما يلي يميّز العضلات الملساء عن الهيكلية عدا:', ans: 'قوة تقلصها العظمى أقل', note: 'قوة التقلص العظمى في الملساء قد تكون أكبر من الهيكلية!' },
+      { year: '2017', q: 'الهدف من آلية المزلاج في العضلات الملساء:', ans: 'تحافظ على تقلص مقو مديد باستخدام كمية قليلة جداً من الطاقة', note: 'توفير الطاقة مع ثبات التوتر.' },
+
+      // 2018
+      { year: '2018', q: 'وظائف مضخة صوديوم بوتاسيوم كل مما يلي عدا:', ans: 'منع خروج الجزيئات البروتينية من الخلية', note: 'البروتينات محتجزة داخل الخلية بسبب حجمها وشحنتها وليس بسبب المضخة.' },
+      { year: '2018', q: 'من المواد التي تنتقل عبر الغشاء الخلوي بطريقة الانتشار الميسر:', ans: 'الغلوكوز', note: 'عبر ناقل الغلوكوز GLUT.' },
+      { year: '2018', q: 'الجزء الذي يمتلك فعالية ATPase في العضلة الهيكلية:', ans: 'رؤوس الميوزين', note: 'تفكك الـ ATP لتوفير طاقة ضربة القدرة.' },
+      { year: '2018', q: 'يتميز التقلص العضلي إسوي المقاسات (Isometric) بـ:', ans: 'تحافظ العضلة على طولها أثناء التقلص', note: 'الطول ثابت بينما التوتر يزداد.' },
+      { year: '2018', q: 'للارتباط مع الكالسيوم بدلاً من التروبونين في الملساء تستخدم:', ans: 'الكالموديولين', note: 'تفتقر العضلات الملساء كلياً للتروبونين.' },
+
+      // 2019
+      { year: '2019', q: 'تعمل مضخة الصوديوم - بوتاسيوم بالاتجاهين عند:', ans: 'ارتفاع قيمة المدروج الكهربائي الكيميائي للصوديوم والبوتاسيوم', note: 'تولد ATP بهذه الحالة العكسية.' },
+      { year: '2019', q: 'سبب فترة الحران المطلق:', ans: 'تعطيل فعالية قنوات الصوديوم (Inactivation gate)', note: 'انغلاق بوابة التعطيل.' },
+      { year: '2019', q: 'تأتي أهمية آلية المزلاج في العضلات الملساء من كونها:', ans: 'توفير الطاقة', note: 'استهلاك ATP ضئيل جداً.' },
+
+      // 2021
+      { year: '2021', q: 'خصائص بوابة التعطيل في قنوات الصوديوم المبوبة بالفولطاج عدا:', ans: 'تنغلق عند زيادة السلبية داخل الخلية', note: 'تنفتح عند الاستقطاب وتنغلق عند زوال الاستقطاب (زيادة الإيجابية).' },
+      { year: '2021', q: 'تتقلص العضلات الملساء وحيدة الوحدة كليف عضلي واحد بسبب وجود:', ans: 'الموصلات الفجوية (Gap Junctions)', note: 'تسمح بانتشار كمون الفعل بين الألياف المجاورة بسرعة.' },
+
+      // 2022
+      { year: '2022', q: 'يتصف تقلص العضلات الهيكلية بكل ما يلي عدا:', ans: 'تكفيها الطاقة المخزنة في الفوسفوكرياتين لتقلص أعظمي لمدة دقيقة', note: 'خطأ: الفوسفوكرياتين يكفي لـ 5 - 8 ثوانٍ فقط!' },
+      { year: '2022', q: 'تسمح خاصية الارتخاء بعد الكرب (Stress-relaxation) للأعضاء المجوفة بـ:', ans: 'المحافظة على مقدار الضغط نفسه برغم تغير الحجم', note: 'مثل المثانة عند امتلائها بالبول.' },
+      { year: '2022', q: 'تعتبر القنوات التالية مبوبة بالفولطاج عدا:', ans: 'قنوات الصوديوم في الغشاء الخلوي للخلايا العضلية (المستقبلات النيكوتينية)', note: 'قنوات مبوبة بالربيطة (الأستيل كولين).' },
+
+      // 2023 & 2024
+      { year: '2023', q: 'من المركبات التي تمد العضلة بالطاقة للتقلص المديد المديد:', ans: 'الاستقلاب التأكسدي', note: 'يمد العضلة بأكثر من 95% من الطاقة للتقلص المديد.' },
+      { year: '2024', q: 'العامل الأساسي المحدد لفترة العصيان المطلق في العصبون هو:', ans: 'بوابة تعطيل قناة الصوديوم', note: 'Inactivation gate.' },
+      { year: '2024', q: 'يؤدي نقص شوارد الكالسيوم في السائل خارج الخلية إلى كل مما يلي عدا:', ans: 'حدوث استرخاء في العضلات الهيكلية', note: 'بالعكس يؤدي لتكزز واستثارة عالية.' }
+    ];
+
+    function renderQuestions() {
+      const yearFilter = document.getElementById('yearSelect').value;
+      const searchText = document.getElementById('searchInput').value.toLowerCase();
+      const container = document.getElementById('questionsContainer');
+
+      const filtered = questionsBank.filter(q => {
+        const matchesYear = (yearFilter === 'all' || q.year === yearFilter);
+        const matchesSearch = q.q.toLowerCase().includes(searchText) || q.ans.toLowerCase().includes(searchText);
+        return matchesYear && matchesSearch;
+      });
+
+      if(filtered.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-500 text-xs">لم يتم العثور على أسئلة تطابق البحث.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(q => `
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 hover:border-teal-400 transition">
+          <div class="flex justify-between items-center mb-2">
+            <span class="bg-teal-700 text-white text-[10px] font-bold px-2.5 py-0.5 rounded">دورة ${q.year}</span>
+            <span class="text-[11px] font-semibold text-slate-400">سؤال رسمي</span>
+          </div>
+          <h4 class="font-bold text-slate-800 text-sm mb-2">${q.q}</h4>
+          <div class="bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs p-2.5 rounded-lg mb-2">
+            ✅ <strong>الإجابة الصحيحة:</strong> ${q.ans}
+          </div>
+          <p class="text-[11px] text-slate-500">💡 <strong>التعليل/النكشة:</strong> ${q.note}</p>
+        </div>
+      `).join('');
+    }
+
+    renderQuestions();
+  </script>
+</body>
+</html>
