@@ -51,6 +51,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
+            align-items: start;
         }
 
         .section-box {
@@ -105,7 +106,9 @@
         }
 
         .chapter-link {
-            display: block;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
@@ -120,6 +123,16 @@
             background-color: #f7fafc;
             border-color: #cbd5e0;
             color: #1a202c;
+            transform: translateX(-3px);
+        }
+
+        .chapter-number {
+            background-color: #5c4033;
+            color: #ffffff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -135,18 +148,91 @@
 
         <div class="sections-container">
             
+            <!-- القسم العملي -->
             <div class="section-box">
                 <h2 class="section-title">🧪 القسم العملي</h2>
                 <p style="color: #718096; margin-bottom: 25px;">يحتوي على تفريغ كامل للجلسات المخبرية، الجداول، والنكشات الامتحانية المؤتمتة.</p>
                 <a href="physiology-practical.html" class="btn-link">دخول المرجع الشامل للعملي ←</a>
             </div>
 
+            <!-- القسم النظري -->
             <div class="section-box">
                 <h2 class="section-title">📚 القسم النظري</h2>
-                <p style="color: #718096; margin-bottom: 25px;">الفصول والمحاضرات النظرية المرتبطة بالامتحان:</p>
+                <p style="color: #718096; margin-bottom: 20px;">الفصول والمحاضرات النظرية المقررة:</p>
                 
                 <ul class="chapters-list">
-                    <li style="color: #a0aec0; font-style: italic; text-align: center; padding: 10px;">سيتم إضافة الفصول النظرية فور تجهيزها</li>
+                    <li>
+                        <a href="chapter-01.html" class="chapter-link">
+                            <span>الفصل الأول: مدخل إلى علم وظائف الأعضاء</span>
+                            <span class="chapter-number">01</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-02.html" class="chapter-link">
+                            <span>الفصل الثاني: فيزيولوجية الأنسجة</span>
+                            <span class="chapter-number">02</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-03.html" class="chapter-link">
+                            <span>الفصل الثالث: الدم</span>
+                            <span class="chapter-number">03</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-04.html" class="chapter-link">
+                            <span>الفصل الرابع: الجهاز العصبي</span>
+                            <span class="chapter-number">04</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-05.html" class="chapter-link">
+                            <span>الفصل الخامس: القلب</span>
+                            <span class="chapter-number">05</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-06.html" class="chapter-link">
+                            <span>الفصل السادس: جهاز الدوران</span>
+                            <span class="chapter-number">06</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-07.html" class="chapter-link">
+                            <span>الفصل السابع: جهاز التنفس</span>
+                            <span class="chapter-number">07</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-08.html" class="chapter-link">
+                            <span>الفصل الثامن: الجهاز البولي</span>
+                            <span class="chapter-number">08</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-09.html" class="chapter-link">
+                            <span>الفصل التاسع: الاستقلاب وتوازن الطاقة</span>
+                            <span class="chapter-number">09</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-10.html" class="chapter-link">
+                            <span>الفصل العاشر: جهاز الهضم</span>
+                            <span class="chapter-number">10</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-11.html" class="chapter-link">
+                            <span>الفصل الحادي عشر: الجهاز الغدي</span>
+                            <span class="chapter-number">11</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="chapter-12.html" class="chapter-link">
+                            <span>الفصل الثاني عشر: الجهاز العصبي الذاتي</span>
+                            <span class="chapter-number">12</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
 
