@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل الفصل الثالث - الدم والإرقاء | فيزيولوجيا</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 500px; /* arbitrary max height for animation */
+        }
+        .bg-pattern {
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased bg-pattern pb-20">
+
+    <!-- شريط التنقل (الرجوع والرئيسية) بناء على طلبك مع تصغير الحجم وجعلها بجانب بعض -->
+    <div class="max-w-5xl mx-auto px-4 pt-4 flex gap-3 text-xs md:text-sm font-semibold">
+        <a href="./physiology.html" class="flex items-center gap-1.5 text-teal-700 hover:text-teal-900 bg-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg shadow-sm border border-slate-200 transition hover:shadow-md hover:-translate-y-0.5">
+            <span class="text-lg leading-none">&rarr;</span> الرجوع
+        </a>
+        <a href="./index.html" class="flex items-center gap-1.5 text-slate-700 hover:text-slate-900 bg-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg shadow-sm border border-slate-200 transition hover:shadow-md hover:-translate-y-0.5">
+            <span class="text-lg leading-none">🏠</span> الرئيسية
+        </a>
+    </div>
+
+    <header class="max-w-5xl mx-auto px-4 mt-6 mb-8">
+        <div class="bg-gradient-to-r from-teal-600 to-cyan-700 rounded-2xl p-6 md:p-8 text-white shadow-lg relative overflow-hidden">
+            <div class="absolute top-0 right-0 opacity-10 text-9xl transform translate-x-1/4 -translate-y-1/4">🩸</div>
+            <div class="relative z-10">
+                <div class="inline-block bg-white/20 text-white px-3 py-1 rounded-full text-sm font-bold mb-4 backdrop-blur-sm">
+                    خريطة تفاعلية للتحضير للامتحان
+                </div>
+                <h1 class="text-3xl md:text-4xl font-extrabold mb-4">التحليل الشامل: الفصل الثالث (الدم)</h1>
+                <p class="text-teal-50 text-base md:text-lg max-w-2xl leading-relaxed">
+                    تم استخلاص وتحليل كافة الأفكار من دورات (2017 - 2024). اقرأ هذه الصفحة بتركيز، تصفح البطاقات، ثم راجع الفصل لضمان العلامة التامة بإذن الله.
+                </p>
+            </div>
+            
+            <!-- إحصائيات سريعة -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 relative z-10">
+                <div class="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/20">
+                    <div class="text-3xl font-bold text-yellow-300">~8</div>
+                    <div class="text-xs mt-1 text-teal-50">متوسط الأسئلة للدورة</div>
+                </div>
+                <div class="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/20">
+                    <div class="text-3xl font-bold text-yellow-300">55</div>
+                    <div class="text-xs mt-1 text-teal-50">إجمالي أسئلة الدورات</div>
+                </div>
+                <div class="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/20">
+                    <div class="text-lg font-bold text-yellow-300 leading-tight mt-1">الصفيحات<br>والتخثر</div>
+                    <div class="text-xs mt-1 text-teal-50">القسم الأكثر تركيزاً (40%)</div>
+                </div>
+                <div class="bg-white/10 rounded-xl p-4 text-center backdrop-blur-sm border border-white/20">
+                    <div class="text-xl font-bold text-yellow-300 leading-tight mt-2">نقل الدم</div>
+                    <div class="text-xs mt-1 text-teal-50">القسم الثاني بالأهمية (25%)</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4">
+        <!-- دليل الألوان -->
+        <div class="flex flex-wrap gap-3 mb-6 bg-white p-3 rounded-xl shadow-sm border border-slate-200 text-sm">
+            <span class="font-bold text-slate-700 ml-2">مفتاح الخريطة:</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span> 🔴 نكشة (احذر منها)</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span> ⭐ مكرر بشدة</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span> 🧠 معلومات بصمية</span>
+        </div>
+
+        <!-- أزرار التبويبات -->
+        <div class="flex overflow-x-auto hide-scrollbar gap-2 mb-6 pb-2 border-b-2 border-slate-200" id="tabs">
+            <button onclick="openTab('platelets')" class="tab-btn active bg-teal-600 text-white px-5 py-2.5 rounded-lg font-bold whitespace-nowrap shadow-md transition">1. الصفيحات والإرقاء البدئي ⭐</button>
+            <button onclick="openTab('coagulation')" class="tab-btn bg-white text-slate-600 hover:bg-slate-100 px-5 py-2.5 rounded-lg font-bold whitespace-nowrap border border-slate-200 transition">2. التخثر ومضاداته</button>
+            <button onclick="openTab('blood-type')" class="tab-btn bg-white text-slate-600 hover:bg-slate-100 px-5 py-2.5 rounded-lg font-bold whitespace-nowrap border border-slate-200 transition">3. الزمر ونقل الدم</button>
+            <button onclick="openTab('rbc')" class="tab-btn bg-white text-slate-600 hover:bg-slate-100 px-5 py-2.5 rounded-lg font-bold whitespace-nowrap border border-slate-200 transition">4. الكريات الحمر واللزوجة</button>
+        </div>
+
+        <div id="platelets" class="tab-content active">
+            <h2 class="text-2xl font-bold text-teal-800 mb-4 border-r-4 border-teal-500 pr-3">الصفيحات الدموية والإرقاء (القسم الأهم)</h2>
+            <p class="text-slate-600 mb-6">هذا القسم هو الأكثر تكراراً في كل الدورات. لا تدخل الامتحان دون فهم المقارنة التالية كاسمك!</p>
+
+            <!-- مقارنة ذهبية -->
+            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                <div class="bg-white rounded-xl shadow-sm border-t-4 border-green-500 p-5">
+                    <h3 class="text-xl font-bold text-green-700 flex justify-between items-center mb-3">
+                        <span>البروستاسايكلين (Prostacyclin)</span>
+                        <span class="text-2xl">🛡️</span>
+                    </h3>
+                    <ul class="space-y-2 text-slate-700 font-medium">
+                        <li class="flex items-start gap-2"><span>✅</span> يفرز من <b>الخلايا البطانية السليمة</b> للأوعية.</li>
+                        <li class="flex items-start gap-2"><span>✅</span> <b>مثبط قوي</b> لالتصاق وتجمع الصفيحات.</li>
+                        <li class="flex items-start gap-2"><span>✅</span> <b>موسع وعائي</b> (يمنع التخثر الزائد).</li>
+                        <li class="flex items-start gap-2 text-yellow-600 bg-yellow-50 p-1 rounded"><span>⭐</span> <i>تكرر السؤال عنه في 5 دورات! (2017, 2018, 2019, 2021, 2022)</i></li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm border-t-4 border-red-500 p-5">
+                    <h3 class="text-xl font-bold text-red-700 flex justify-between items-center mb-3">
+                        <span>الثرومبوكسان A2 (Thromboxane A2)</span>
+                        <span class="text-2xl">⚡</span>
+                    </h3>
+                    <ul class="space-y-2 text-slate-700 font-medium">
+                        <li class="flex items-start gap-2"><span>🔴</span> يفرز من <b>الصفيحات الدموية</b> عند تفعيلها.</li>
+                        <li class="flex items-start gap-2"><span>🔴</span> <b>يحرض بقوة</b> التصاق الصفيحات ببعضها البعض.</li>
+                        <li class="flex items-start gap-2"><span>🔴</span> <b>مقبض وعائي</b>.</li>
+                        <li class="flex items-start gap-2 text-blue-600 bg-blue-50 p-1 rounded"><span>🧠</span> <i>تذكره دائماً كمعاكس للبروستاسايكلين.</i></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- معلومات بصمية ونكشات -->
+            <div class="space-y-3">
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 cursor-pointer hover:bg-blue-100 transition" onclick="toggleAccordion('acc1')">
+                    <div class="flex justify-between items-center font-bold text-blue-800">
+                        <span>🧠 مفرزات الصفيحات الدموية (احفظها بصم)</span>
+                        <span id="icon-acc1">▼</span>
+                    </div>
+                    <div id="acc1" class="accordion-content mt-2 text-slate-700">
+                        تفرز الصفيحات عند تنشيطها: <br>
+                        1. <b>الثرومبوكسان A2</b> (يحرض الالتصاق).<br>
+                        2. <b>السيروتونين</b> (مقبض وعائي).<br>
+                        3. <b>ADP</b>.<br>
+                        <span class="text-red-600 font-bold">🔴 نكشة امتحانية (2022, 2024):</span> هل تفرز الصفيحات البروستاسايكلين؟ <b>الجواب: لا!</b> يفرز من البطانة السليمة.
+                    </div>
+                </div>
+
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 cursor-pointer hover:bg-red-100 transition" onclick="toggleAccordion('acc2')">
+                    <div class="flex justify-between items-center font-bold text-red-800">
+                        <span>🔴 نكشة: مراحل الإرقاء وزمن النزف</span>
+                        <span id="icon-acc2">▼</span>
+                    </div>
+                    <div id="acc2" class="accordion-content mt-2 text-slate-700">
+                        <b>الإرقاء يشمل (بالترتيب):</b> التقبض الوعائي ⬅️ تشكل السدادة الصفيحية ⬅️ تخثر الدم.<br>
+                        <span class="text-red-600 font-bold">نكشة (2022, 2024):</span> تشكيل البلازمين <b>ليس</b> من مراحل الإرقاء البدئية (بل هو لحل الخثرة لاحقاً).<br><br>
+                        <b>زمن النزف (Bleeding Time):</b> يعبر عن وظيفة الصفيحات والأوعية.<br>
+                        <span class="text-red-600 font-bold">نكشات (2017, 2023, 2024):</span> <br>
+                        - الهيبارين (مميع) <b>لا يطيل</b> زمن النزف (يطيل زمن التخثر).<br>
+                        - نقص فيتامين K <b>لا يطيل</b> زمن النزف (يؤثر على التخثر).<br>
+                        - <b>نقص فيتامين C</b> (عمق الإصابة، سلامة الأوعية، نقص الصفيحات) <b>يطيل</b> زمن النزف!
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 cursor-pointer hover:bg-yellow-100 transition" onclick="toggleAccordion('acc-platelet-collagen')">
+                    <div class="flex justify-between items-center font-bold text-yellow-800">
+                        <span>⭐ التصاق الصفيحات بالكولاجين (2021, 2023, 2024)</span>
+                        <span id="icon-acc-platelet-collagen">▼</span>
+                    </div>
+                    <div id="acc-platelet-collagen" class="accordion-content mt-2 text-slate-700">
+                        عندما تتأذى البطانة ينكشف <b>الكولاجين</b>:<br>
+                        1. يؤدي تماس الصفيحات مع الكولاجين إلى <b>تنشيط العامل الثاني عشر (XII)</b> بشكل مباشر.<br>
+                        2. يحرض الصفيحات لإفراز محتوياتها (ADP, TxA2).<br>
+                        3. <span class="text-red-600 font-bold">نكشة قوية (2024):</span> التصاق الصفيحات بألياف الكولاجين هي حالة تحدث <b>دون الحاجة إلى الكالسيوم الشاردي!</b> (بينما باقي التفاعلات تحتاجه).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="coagulation" class="tab-content">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-r-4 border-slate-500 pr-3">التخثر وعوامله ومضاداته</h2>
+            <p class="text-slate-600 mb-6">يجب التمييز الدقيق بين عوامل الطريق الداخلي والخارجي، ودور فيتامين K.</p>
+
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                <!-- عوامل التخثر وفيتامين K -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-teal-700 mb-2">🧠 فيتامين K وعوامل التخثر</h3>
+                    <p class="text-sm text-slate-600 mb-3">الفيتامين الأساسي لتشكيل عوامل التخثر في الكبد (2019).</p>
+                    <div class="bg-slate-100 p-3 rounded font-bold text-center text-lg tracking-widest text-slate-800">
+                        1972 <span class="text-sm font-normal text-slate-500">(العوامل: 2, 7, 9, 10)</span>
+                    </div>
+                    <p class="text-xs text-red-600 mt-2 font-bold">نقص الفيتامين K يؤدي لتأخر التخثر (لكن لا يؤثر على زمن النزف البدئي).</p>
+                </div>
+
+                <!-- الجملة المميعة -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-teal-700 mb-2">🛡️ العوامل المبقية للدم سائلاً (مميعات)</h3>
+                    <ul class="text-sm text-slate-700 space-y-1">
+                        <li>- <b>Heparin</b> (الهيبارين).</li>
+                        <li>- <b>Plasmin</b> (البلازمين - يحل الخثرة).</li>
+                        <li>- <b>Anti-Thrombin</b> (مضاد الخثرين).</li>
+                        <li>- <b>Thrombomodulin</b> (الثرومبوموديولين).</li>
+                        <li class="text-red-600 font-bold mt-2">نكشة (2019, 2021): Thromboplastin و Thrombin <u>ليست</u> مميعات بل عوامل تخثر!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- مسارات التخثر -->
+            <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-5 mb-6">
+                <h3 class="text-lg font-bold text-indigo-800 mb-3">⭐ طرق التخثر (أسئلة مكررة)</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-bold text-indigo-700">الطريق الداخلي (Intrinsic):</h4>
+                        <p class="text-sm text-slate-700">يبدأ بتنشيط <b>العامل 12</b> (عند التماس مع سطح خشن/كولاجين/زجاج). يشارك فيه العوامل: 12، 11، 9، 8.</p>
+                        <p class="text-sm text-red-600 font-bold mt-1">نكشة (2019, 2023): العامل السابع (7) <u>لا يشارك</u> في الطريق الداخلي! (هو مقتصر على الخارجي).</p>
+                    </div>
+                    <hr class="border-indigo-200">
+                    <div>
+                        <h4 class="font-bold text-indigo-700">تنشيط العامل العاشر ( المشترك):</h4>
+                        <p class="text-sm text-slate-700">المسؤول عن تنشيط العامل العاشر في الطريق الداخلي هو: <b>العامل التاسع (9) بوجود العامل الثامن (8) وشوارد الكالسيوم.</b> (دورة 2018).</p>
+                        <p class="text-sm text-blue-600 font-bold mt-1">العوامل المشاركة في كلا السبيلين (الداخلي والخارجي): العامل العاشر (10)، والخامس (5). (دورة 2022).</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div id="blood-type" class="tab-content">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-r-4 border-slate-500 pr-3">الزمر الدموية ونقل الدم</h2>
+            <p class="text-slate-600 mb-6">أسئلة هذا القسم مضمونة إذا فهمت "القاعدة الذهبية".</p>
+
+            <!-- القاعدة الذهبية -->
+            <div class="bg-gradient-to-l from-amber-100 to-amber-50 rounded-xl p-6 border border-amber-200 shadow-sm mb-6 text-center">
+                <h3 class="text-xl font-bold text-amber-800 mb-2">⭐ القاعدة العامة الذهبية في نقل الدم ⭐</h3>
+                <p class="text-slate-700 mb-3">لكي يكون النقل آمناً، يجب:</p>
+                <div class="text-2xl font-extrabold text-red-600 bg-white inline-block px-4 py-2 rounded-lg border-2 border-red-200 shadow-inner">
+                    عدم ارتصاص <span class="text-blue-700">كريات المعطي</span> في <span class="text-green-700">مصل المتلقي</span>
+                </div>
+                <p class="text-sm text-slate-500 mt-3">ورد هذا السؤال حرفياً في دورات: 2017, 2018, 2021, 2024!</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-lg border border-slate-200">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 mb-2">🧠 خصائص الزمر (2019, 2022)</h4>
+                    <ul class="space-y-2 text-sm text-slate-700">
+                        <li><b>الزمرة AB (آخذ عام):</b> بسبب وجود مولدات الارتصاص (المستضدات) A و B على الكريات، و<b>غياب الراصات (الأضداد)</b> في المصل.</li>
+                        <li><b>الزمرة A:</b> يوجد لديها مولد الارتصاص A، والراصة b (ضد B).</li>
+                        <li><span class="text-red-600 font-bold">نكشة (2023):</span> النقل الخاطئ لأول مرة في زمرة ABO <b>مميت!</b> (العبارة الخاطئة كانت أنه غير مميت).</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border border-slate-200">
+                    <h4 class="font-bold text-slate-800 border-b pb-2 mb-2">🔴 العامل الريسوسي RH والحمل (2021, 2022)</h4>
+                    <p class="text-sm text-slate-700 mb-2">يعاني الجنين من انحلال دموي قد يؤدي لموته (الداء الانحلالي عند الوليد) في الحالة التالية حصراً:</p>
+                    <div class="bg-red-50 text-red-700 p-2 rounded font-bold text-center">
+                        الأم سالبة (Rh-) والأب موجب (Rh+) 
+                        <br><span class="text-xs">وبالتالي الجنين موجب (Rh+)</span>
+                    </div>
+                    <p class="text-xs text-slate-600 mt-2 font-bold">الحالة <b>الأكثر خطورة</b> هي: امرأة سالبة الـ RH، وهذا هو <b>الحمل الثاني</b> لها بجنين موجب الـ RH (لأن الأضداد تكون قد تشكلت بعد الحمل الأول).</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="rbc" class="tab-content">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-r-4 border-slate-500 pr-3">الكريات الحمر، الخضاب، واللزوجة</h2>
+            
+            <div class="space-y-4">
+                <!-- الكريات الحمراء -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-teal-700 mb-3">🩸 الكريات الحمراء والخضاب</h3>
+                    <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-700">
+                        <div>
+                            <ul class="space-y-2">
+                                <li><b>المرور بالشعيرات (2017, 2019):</b> تتمكن من المرور عبر الشعيرات الصغيرة جداً بسبب <b>رقة ومرونة جدرانها</b>.</li>
+                                <li><b>تنظيم الـ pH (2024):</b> الإنزيم الذي يساعد الكرية في ضبط باهاء الدم هو <b>أنهيدراز الكاربونيك</b>.</li>
+                                <li><b>تشكيل الكريات (2017, 2024):</b> العامل/الهرمون المحرض الأساسي لتكوينها هو <b>الإريثروبويتين</b> (يفرز من الكلية).</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded border border-slate-100">
+                            <h4 class="font-bold text-slate-800 mb-1">متى تزداد كمية الهيموغلوبين؟ (2018, 2019)</h4>
+                            <p class="mb-1">تزداد في: سكان المرتفعات، المدخنين، التجفاف، حديثي الولادة.</p>
+                            <p class="text-red-600 font-bold">نكشة: لا تزداد في معاوضة نقص الحديد! ولا عند المسنين.</p>
+                            
+                            <h4 class="font-bold text-slate-800 mt-3 mb-1">نقص B12 أو الفولات (2018):</h4>
+                            <p>يؤدي إلى: <b>نقص</b> عدد الكريات الحمر، و <b>زيادة</b> حجمها (فقر دم عرطل).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- اللزوجة والضغط الحلولي -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:bg-slate-50 transition" onclick="toggleAccordion('acc-viscosity')">
+                    <div class="flex justify-between items-center font-bold text-slate-800">
+                        <span>⭐ لزوجة الدم وسرعة التثفل (ESR) والضغط الحلولي</span>
+                        <span id="icon-acc-viscosity">▼</span>
+                    </div>
+                    <div id="acc-viscosity" class="accordion-content mt-3 text-slate-700 text-sm space-y-3 border-t pt-3">
+                        <p><b>تزداد لزوجة الدم في:</b> حال زيادة بروتينات البلازما (2017, 2021)، وكثرة الحمرة (2019). <span class="text-red-600">لا تزداد في نقص الكريات!</span></p>
+                        <p><b>ترتفع سرعة التثفل (ESR) في (2024):</b> الالتهابات المختلفة، ارتفاع الكوليسترول، انخفاض الألبومين. <span class="text-red-600 font-bold">نكشة: لا ترتفع في شذوذات شكل الكريات الحمراء (مثل المنجلي).</span></p>
+                        <p><b>الضغط الحلولي (2022):</b> يؤدي انخفاض الضغط الحلولي للدم إلى <b>انفجار الكريات الحمر</b> (بسبب دخول الماء إليها توازناً للضغط).</p>
+                        <div class="bg-blue-50 p-2 rounded">
+                            <b>الألبومين (2019):</b> أكثر بروتينات الدم وفرة، له دور كناقل، ينقص في إصابات الكبد. <span class="text-red-600 font-bold">نكشة: ليس له دور مناعي (الغلوبولينات هي المناعية).</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ارتباط الأكسجين -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-teal-700 mb-2">🧠 ألفة الخضاب للأكسجين (2024)</h3>
+                    <p class="text-sm text-slate-700">يزداد ارتباط الخضاب بالأكسجين (انزياح المنحنى لليسار) في:</p>
+                    <ul class="text-sm text-slate-700 list-disc list-inside ml-2 mt-1">
+                        <li>زيادة الضغط الجزئي للأكسجين (PO2).</li>
+                        <li>نقص الضغط الجزئي لثاني أكسيد الكربون (PCO2).</li>
+                        <li>نقص كمية DPG.</li>
+                    </ul>
+                    <p class="text-sm text-red-600 font-bold mt-2">نكشة: زيادة شوارد الهيدروجين (انخفاض الـ pH / حماض) تؤدي إلى <b>نقص</b> ارتباط الأكسجين (تأثير بور) وليس زيادته!</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <section class="max-w-5xl mx-auto px-4 mt-8">
+        <div class="bg-slate-800 rounded-xl p-6 text-white text-center shadow-lg">
+            <h3 class="text-xl font-bold mb-3">✅ قائمة التحقق قبل الامتحان</h3>
+            <p class="text-slate-300 text-sm mb-4">لا تدخل الامتحان قبل أن تكون قادراً على الإجابة السريعة على:</p>
+            <div class="flex flex-wrap justify-center gap-2 text-xs md:text-sm">
+                <span class="bg-slate-700 px-3 py-1 rounded-full border border-slate-600">وظيفة البروستاسايكلين vs الترومبوكسان</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full border border-slate-600">قاعدة نقل الدم الآمن</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full border border-slate-600">عوامل التخثر المعتمدة على فيتامين K</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full border border-slate-600">الطريق الداخلي vs الخارجي</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full border border-slate-600">متى تزداد اللزوجة / التثفل</span>
+            </div>
+            <div class="mt-6 text-teal-300 font-bold animate-pulse">
+                "اقرأ الفصل الآن من الكتاب لتثبيت هذه الأفكار، فالنجاح حليفك!"
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // دالة تبديل التبويبات (Tabs)
+        function openTab(tabName) {
+            // إخفاء كل المحتوى
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // إزالة التنسيق النشط من كل الأزرار
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-teal-600', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'text-slate-600');
+            });
+
+            // إظهار المحتوى المطلوب وتنسيق الزر
+            document.getElementById(tabName).classList.add('active');
+            const clickedBtn = event.currentTarget;
+            clickedBtn.classList.remove('bg-white', 'text-slate-600');
+            clickedBtn.classList.add('bg-teal-600', 'text-white', 'shadow-md');
+        }
+
+        // دالة تبديل القوائم المنسدلة (Accordions)
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.textContent = '▼';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('open');
+                icon.textContent = '▲';
+            }
+        }
+    </script>
+</body>
+</html>
