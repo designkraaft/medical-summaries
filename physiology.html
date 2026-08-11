@@ -16,7 +16,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
         }
 
@@ -46,11 +46,11 @@
             margin: 0 0 10px 0;
         }
 
-        /* تقسيم الشاشة إلى قسمين عملي ونظري */
+        /* تقسيم الشاشة إلى 3 أقسام: عملي، نظري، ودورات */
         .sections-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
             align-items: start;
         }
 
@@ -58,13 +58,13 @@
             background-color: #fffaf0;
             border: 1px solid #e0d4c3;
             border-radius: 12px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
         .section-title {
             color: #5c4033;
-            font-size: 1.6em;
+            font-size: 1.5em;
             margin-top: 0;
             margin-bottom: 20px;
             border-bottom: 1px solid #e0d4c3;
@@ -94,7 +94,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.08);
         }
 
-        /* قائمة الفصول للنظري */
+        /* قائمة الفصول للنظري والدورات */
         .chapters-list {
             list-style: none;
             padding: 0;
@@ -102,7 +102,7 @@
         }
 
         .chapters-list li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .chapter-link {
@@ -112,10 +112,11 @@
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
-            padding: 12px 15px;
+            padding: 10px 12px;
             color: #4a5568;
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.95em;
             transition: all 0.2s;
         }
 
@@ -129,10 +130,19 @@
         .chapter-number {
             background-color: #5c4033;
             color: #ffffff;
-            padding: 2px 8px;
+            padding: 2px 7px;
             border-radius: 4px;
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-weight: bold;
+        }
+
+        /* تمييز زري الدورات بلون خاص */
+        .quiz-box .chapter-number {
+            background-color: #8c6d58;
+        }
+
+        .quiz-box .chapter-link:hover {
+            border-color: #8c6d58;
         }
     </style>
 </head>
@@ -148,17 +158,17 @@
 
         <div class="sections-container">
             
-            <!-- القسم العملي -->
+            <!-- 🧪 القسم العملي -->
             <div class="section-box">
                 <h2 class="section-title">🧪 القسم العملي</h2>
                 <p style="color: #718096; margin-bottom: 25px;">يحتوي على تفريغ كامل للجلسات المخبرية، الجداول، والنكشات الامتحانية المؤتمتة.</p>
                 <a href="physiology-practical.html" class="btn-link">دخول المرجع الشامل للعملي ←</a>
             </div>
 
-            <!-- القسم النظري -->
+            <!-- 📚 القسم النظري -->
             <div class="section-box">
                 <h2 class="section-title">📚 القسم النظري</h2>
-                <p style="color: #718096; margin-bottom: 20px;">الفصول والمحاضرات النظرية المقررة:</p>
+                <p style="color: #718096; margin-bottom: 15px;">الفصول والمحاضرات النظرية المقررة:</p>
                 
                 <ul class="chapters-list">
                     <li>
@@ -210,12 +220,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="chapter-09.html" class="chapter-link">
-                            <span>الفصل التاسع: الاستقلاب وتوازن الطاقة</span>
-                            <span class="chapter-number">09</span>
-                        </a>
-                    </li>
-                    <li>
                         <a href="chapter-10.html" class="chapter-link">
                             <span>الفصل العاشر: جهاز الهضم</span>
                             <span class="chapter-number">10</span>
@@ -230,6 +234,81 @@
                     <li>
                         <a href="chapter-12.html" class="chapter-link">
                             <span>الفصل الثاني عشر: الجهاز العصبي الذاتي</span>
+                            <span class="chapter-number">12</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 📝 قسم أسئلة الدورات -->
+            <div class="section-box quiz-box">
+                <h2 class="section-title">📝 دورات الفصول</h2>
+                <p style="color: #718096; margin-bottom: 15px;">أسئلة الدورات والنكشات الامتحانية لكل فصل:</p>
+                
+                <ul class="chapters-list">
+                    <li>
+                        <a href="quiz-01.html" class="chapter-link">
+                            <span>دورات الفصل الأول: مدخل للفيزيولوجيا</span>
+                            <span class="chapter-number">01</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-02.html" class="chapter-link">
+                            <span>دورات الفصل الثاني: فيزيولوجية الأنسجة</span>
+                            <span class="chapter-number">02</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-03.html" class="chapter-link">
+                            <span>دورات الفصل الثالث: الدم</span>
+                            <span class="chapter-number">03</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-04.html" class="chapter-link">
+                            <span>دورات الفصل الرابع: الجهاز العصبي</span>
+                            <span class="chapter-number">04</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-05.html" class="chapter-link">
+                            <span>دورات الفصل الخامس: القلب</span>
+                            <span class="chapter-number">05</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-06.html" class="chapter-link">
+                            <span>دورات الفصل السادس: جهاز الدوران</span>
+                            <span class="chapter-number">06</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-07.html" class="chapter-link">
+                            <span>دورات الفصل السابع: جهاز التنفس</span>
+                            <span class="chapter-number">07</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-08.html" class="chapter-link">
+                            <span>دورات الفصل الثامن: الجهاز البولي</span>
+                            <span class="chapter-number">08</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-10.html" class="chapter-link">
+                            <span>دورات الفصل العاشر: جهاز الهضم</span>
+                            <span class="chapter-number">10</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-11.html" class="chapter-link">
+                            <span>دورات الفصل الحادي عشر: الجهاز الغدي</span>
+                            <span class="chapter-number">11</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="quiz-12.html" class="chapter-link">
+                            <span>دورات الفصل الثاني عشر: العصبي الذاتي</span>
                             <span class="chapter-number">12</span>
                         </a>
                     </li>
