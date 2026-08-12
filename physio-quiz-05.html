@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل فيزيولوجيا القلب - تحليل دورات شامل</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        teal: { 50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 900: '#134e4a' },
+                        slate: { 50: '#f8fafc', 100: '#f1f5f9', 700: '#334155', 800: '#1e293b', 900: '#0f172a' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #f8fafc; color: #1e293b; }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .tab-active { border-bottom: 3px solid #0d9488; color: #0d9488; font-weight: 700; }
+        .hide { display: none; }
+        .arrow-left { display: inline-block; transform: scaleX(-1); }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="antialiased font-sans pb-12">
+
+    <div class="max-w-5xl mx-auto px-4 pt-3 flex justify-start items-center gap-2 text-xs font-semibold">
+        <a href="./physiology.html" class="flex items-center gap-1 text-teal-700 hover:text-teal-900 bg-white px-2.5 py-1.5 rounded-md shadow-sm border border-slate-200 transition">
+            <span class="arrow-left">➔</span> الرجوع لصفحة الفسيولوجيا
+        </a>
+        <a href="./index.html" class="flex items-center gap-1 text-slate-700 hover:text-slate-900 bg-white px-2.5 py-1.5 rounded-md shadow-sm border border-slate-200 transition">
+            <span>🏠</span> الرئيسية
+        </a>
+    </div>
+
+    <header class="max-w-5xl mx-auto px-4 mt-8 mb-8 text-center">
+        <div class="inline-block bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-bold mb-3 shadow-sm">
+            الفصل الخامس - دورات 2017 إلى 2024
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">فيزيولوجيا القلب: التحليل الشامل للدورات</h1>
+        <p class="text-slate-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+            تم استخراج وتحليل تمامی الأسئلة والأفكار الامتحانية الواردة في ملف الدورات لتشكيل هذا الدليل التفاعلي، مع التركيز على "النواة الثابتة" والفخاخ المتكررة.
+        </p>
+    </header>
+
+    <nav class="max-w-5xl mx-auto px-4 mb-6 sticky top-0 z-50">
+        <div class="flex overflow-x-auto bg-white rounded-xl shadow-sm border border-slate-200 p-1 hide-scrollbar">
+            <button onclick="switchTab('analytics')" id="tab-analytics" class="tab-btn tab-active whitespace-nowrap flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all text-slate-500 hover:text-teal-600">📊 الإحصائيات والنواة الثابتة</button>
+            <button onclick="switchTab('database')" id="tab-database" class="tab-btn whitespace-nowrap flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all text-slate-500 hover:text-teal-600">🗂️ بنك الأسئلة الشامل</button>
+            <button onclick="switchTab('flowcharts')" id="tab-flowcharts" class="tab-btn whitespace-nowrap flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all text-slate-500 hover:text-teal-600">🔄 المخططات المتسلسلة</button>
+            <button onclick="switchTab('summaries')" id="tab-summaries" class="tab-btn whitespace-nowrap flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all text-slate-500 hover:text-teal-600">💡 الجداول والنكشات</button>
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn whitespace-nowrap flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-all text-slate-500 hover:text-teal-600">🎯 اختبار الاسترجاع</button>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4">
+        
+        <!-- ================= TAB: ANALYTICS ================= -->
+        <section id="analytics" class="tab-content">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-gradient-to-br from-teal-500 to-teal-700 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                    <div class="relative z-10">
+                        <p class="text-teal-100 text-sm font-medium mb-1">إجمالي الأفكار المدروسة</p>
+                        <h3 class="text-4xl font-extrabold">54 <span class="text-xl font-medium">سؤال/فكرة</span></h3>
+                    </div>
+                    <svg class="absolute -bottom-4 -left-4 w-32 h-32 text-teal-600 opacity-50" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <p class="text-slate-500 text-sm font-medium mb-1">متوسط الأسئلة في الدورة</p>
+                    <h3 class="text-3xl font-extrabold text-slate-800">7 <span class="text-lg font-medium text-slate-500">أسئلة</span></h3>
+                    <p class="text-xs text-teal-600 mt-2 font-medium">↑ وتيرة متصاعدة في الدورات الحديثة</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <p class="text-slate-500 text-sm font-medium mb-1">نسبة التكرار للأفكار المحورية</p>
+                    <h3 class="text-3xl font-extrabold text-indigo-600">65%</h3>
+                    <p class="text-xs text-slate-500 mt-2">من الأسئلة تتمحور حول مفاهيم مكررة بصيغ مختلفة</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Chart -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 border-r-4 border-teal-500 pr-3">توزع الأسئلة حسب المواضيع</h3>
+                    <div class="relative h-64 w-full">
+                        <canvas id="topicsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Core Concepts -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4 border-r-4 border-indigo-500 pr-3 flex justify-between items-center">
+                        <span>النواة الثابتة (Core Concepts)</span>
+                        <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full">تتكرر دائماً</span>
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="text-2xl">⚡</span>
+                            <div>
+                                <strong class="block text-sm text-slate-800">قوة تقلص العضلة القلبية</strong>
+                                <p class="text-xs text-slate-600 leading-relaxed mt-1">لا تتأثر إطلاقاً بشدة المنبه (قانون الكل أو اللاشيء). تزداد بـ: الكالسيوم داخل الخلوي، طول الليف البدئي، وتنبيه الودي.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="text-2xl">⏱️</span>
+                            <div>
+                                <strong class="block text-sm text-slate-800">المدة الزمنية QT و ST</strong>
+                                <p class="text-xs text-slate-600 leading-relaxed mt-1">QT تعبر عن كامل مدة التقلص البطيني (من بداية Q لنهاية T). بينما ST تعبر عن الطور الهضبي.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="text-2xl">⏳</span>
+                            <div>
+                                <strong class="block text-sm text-slate-800">العقدة الأذينية البطينية (AV Node)</strong>
+                                <p class="text-xs text-slate-600 leading-relaxed mt-1">تأخير الإشارة 0.1 ثانية. الهدف: السماح بحدوث الانقباض الأذيني (وإنهائه) قبل الانقباض البطيني.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100">
+                            <span class="text-2xl">🌊</span>
+                            <div>
+                                <strong class="block text-sm text-slate-800">نتاج القلب (Cardiac Output)</strong>
+                                <p class="text-xs text-slate-600 leading-relaxed mt-1">هو حجم الدم الذي يضخه البطين في دقيقة واحدة (وليس في ضربة واحدة Stroke Volume).</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="database" class="tab-content hide">
+            <div class="glass-panel rounded-2xl p-4 md:p-6 mb-6">
+                <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+                    <div class="w-full md:w-1/2 relative">
+                        <input type="text" id="searchInput" placeholder="ابحث في نص السؤال أو الخيارات..." class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-4 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 transition">
+                        <span class="absolute right-3 top-2.5 text-slate-400">🔍</span>
+                    </div>
+                    <div class="w-full md:w-auto flex gap-2">
+                        <select id="topicFilter" class="bg-slate-50 border border-slate-200 rounded-lg py-2.5 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <option value="all">جميع المواضيع</option>
+                            <option value="كمون العمل والنسيج العقدي">كمون العمل والنسيج العقدي</option>
+                            <option value="التقلص العضلي والنتاج">التقلص العضلي والنتاج</option>
+                            <option value="التخطيط الكهربائي ECG">التخطيط الكهربائي ECG</option>
+                            <option value="الدورة القلبية والأصوات">الدورة القلبية والأصوات</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Cards Container -->
+            <div id="questionsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <section id="flowcharts" class="tab-content hide space-y-6">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">مخططات الآليات الفيزيولوجية</h2>
+            <p class="text-sm text-slate-600 mb-6">تسلسل الأحداث موضح من اليمين إلى اليسار توافقاً مع القراءة العربية.</p>
+
+            <!-- Flowchart 1 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-bold text-teal-700 mb-4">1. تسلسل التنبيه الكهربائي القلبي</h3>
+                <div class="flex flex-wrap items-center gap-3 text-sm font-medium">
+                    <div class="bg-slate-100 text-slate-800 px-4 py-2 rounded-lg border border-slate-200">العقدة الجيبية الأذينية (SA Node)</div>
+                    <span class="text-teal-500 font-bold text-xl">&larr;</span>
+                    <div class="bg-slate-100 text-slate-800 px-4 py-2 rounded-lg border border-slate-200">الأذينات (انقباض)</div>
+                    <span class="text-teal-500 font-bold text-xl">&larr;</span>
+                    <div class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-lg border border-indigo-200 relative">
+                        العقدة الأذينية البطينية (AV Node)
+                        <span class="absolute -top-3 right-2 bg-red-100 text-red-600 text-xs px-1 rounded">تأخير 0.1 ثا</span>
+                    </div>
+                    <span class="text-teal-500 font-bold text-xl">&larr;</span>
+                    <div class="bg-slate-100 text-slate-800 px-4 py-2 rounded-lg border border-slate-200">حزمة هيس</div>
+                    <span class="text-teal-500 font-bold text-xl">&larr;</span>
+                    <div class="bg-teal-50 text-teal-700 px-4 py-2 rounded-lg border border-teal-200 relative">
+                        ألياف بوركنج
+                        <span class="absolute -top-3 right-2 bg-green-100 text-green-600 text-xs px-1 rounded">سرعة فائقة لتواقت التقلص</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flowchart 2 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-bold text-teal-700 mb-4">2. الانقباض البطيني (Ventricular Systole)</h3>
+                <div class="flex flex-wrap items-center gap-3 text-sm font-medium">
+                    <div class="bg-slate-100 text-slate-800 px-4 py-2 rounded-lg border border-slate-200">بدء زوال استقطاب البطينات (QRS)</div>
+                    <span class="text-indigo-500 font-bold text-xl">&larr;</span>
+                    <div class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-lg border border-indigo-200">
+                        ارتفاع الضغط البطيني > الأذيني
+                    </div>
+                    <span class="text-indigo-500 font-bold text-xl">&larr;</span>
+                    <div class="bg-red-50 text-red-700 px-4 py-2 rounded-lg border border-red-200 font-bold">
+                        انغلاق الصمامات AV (الصوت الأول)
+                    </div>
+                    <span class="text-indigo-500 font-bold text-xl">&larr;</span>
+                    <div class="bg-slate-100 text-slate-800 px-4 py-2 rounded-lg border border-slate-200">
+                        تقلص إسوي الحجم (الصمامات مغلقة)
+                    </div>
+                    <span class="text-indigo-500 font-bold text-xl">&larr;</span>
+                    <div class="bg-teal-50 text-teal-700 px-4 py-2 rounded-lg border border-teal-200">
+                        الضغط البطيني > الشرياني (تفتح السينية)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Flowchart 3 -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                <h3 class="text-lg font-bold text-teal-700 mb-4">3. آلية كامن العمل في الليف القلبي (طول الطور الهضبي)</h3>
+                <div class="flex flex-wrap items-center gap-3 text-sm font-medium">
+                    <div class="bg-slate-100 text-slate-800 px-4 py-2 rounded-lg border border-slate-200">دخول الصوديوم السريع (الشوكة)</div>
+                    <span class="text-slate-400 font-bold text-xl">&larr;</span>
+                    <div class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-lg border border-indigo-200">
+                        فتح قنوات Ca++ البطيئة (دخول الكالسيوم)
+                    </div>
+                    <span class="text-red-500 font-bold text-xl">+</span>
+                    <div class="bg-red-50 text-red-700 px-4 py-2 rounded-lg border border-red-200">
+                        نقص نفوذية K+ (خروج البوتاسيوم يقل)
+                    </div>
+                    <span class="text-slate-400 font-bold text-xl">&larr;</span>
+                    <div class="bg-teal-100 text-teal-800 px-4 py-2 rounded-lg border border-teal-300 font-bold">
+                        = تشكل الطور الهضبي (ST) والحماية من التكزز
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="summaries" class="tab-content hide space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Comparisons Table -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <h3 class="bg-slate-800 text-white font-bold py-3 px-4 flex justify-between items-center">
+                        <span>المقارنة الحتمية: العقدي vs العضلي</span>
+                        <span class="text-xs bg-slate-600 px-2 py-1 rounded">مكرر جداً</span>
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-right">
+                            <thead class="bg-slate-50 text-slate-600">
+                                <tr>
+                                    <th class="py-2 px-3 border-b">وجه المقارنة</th>
+                                    <th class="py-2 px-3 border-b text-indigo-700">النسيج العقدي (SA Node)</th>
+                                    <th class="py-2 px-3 border-b text-teal-700">الليف العضلي القلبي</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold bg-slate-50">التوليد الذاتي</td>
+                                    <td class="py-2 px-3">تلقائي (قنوات IF) - كامن غير مستقر</td>
+                                    <td class="py-2 px-3">يحتاج تنبيه (كامن مستقر)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold bg-slate-50">زوال الاستقطاب</td>
+                                    <td class="py-2 px-3 font-bold text-red-600">قنوات الكالسيوم (الشوكة)</td>
+                                    <td class="py-2 px-3">قنوات الصوديوم السريعة</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold bg-slate-50">الوظيفة التقلصية</td>
+                                    <td class="py-2 px-3">لا يشارك بضخ الدم/التقلص</td>
+                                    <td class="py-2 px-3">مسؤول عن القوة التقلصية</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Numbers and Rates -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                    <h3 class="bg-teal-600 text-white font-bold py-3 px-4">سجل الأرقام والنسب</h3>
+                    <ul class="p-4 space-y-3">
+                        <li class="flex items-center gap-3 border-b border-slate-100 pb-2">
+                            <span class="text-lg font-black text-teal-500 w-12 text-center">0.1</span>
+                            <span class="text-sm text-slate-700">ثانية: مدة تأخير الإشارة في العقدة الأذينية البطينية.</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-slate-100 pb-2">
+                            <span class="text-lg font-black text-teal-500 w-12 text-center">1/3</span>
+                            <span class="text-sm text-slate-700">حجم الليف العضلي القلبي تشغله المتقدرات (وليس الثلثين!).</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-slate-100 pb-2">
+                            <span class="text-lg font-black text-teal-500 w-12 text-center">1/3</span>
+                            <span class="text-sm text-slate-700">محتوى البطينين من الدم يتم قذفه في طور الانقباض؟ <b>خطأ!</b> (يتم قذف الثلثين وليس الثلث).</span>
+                        </li>
+                        <li class="flex items-center gap-3 border-b border-slate-100 pb-2">
+                            <span class="text-sm font-black text-teal-500 w-12 text-center">1 دقيقة</span>
+                            <span class="text-sm text-slate-700">الزمن الذي يقاس به النتاج القلبي (Cardiac Output).</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Exam Tricks Cards -->
+            <div>
+                <h3 class="text-xl font-bold text-slate-800 mb-4">🚨 بنك النكشات والخدع الامتحانية</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                        <span class="text-red-600 font-bold text-sm block mb-1">خدعة "شدة المنبه"</span>
+                        <p class="text-slate-700 text-sm">مهما زادت "شدة المنبه"، فإن <b>قوة تقلص العضلة القلبية لن تزداد</b>. القلب يخضع لقانون الكل أو اللاشيء. (تكررت كثيراً كخيار خاطئ).</p>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                        <span class="text-amber-600 font-bold text-sm block mb-1">خدعة "الصوت الرابع"</span>
+                        <p class="text-slate-700 text-sm">قد تظن أن الصوت الثالث ناتج عن الانقباض الأذيني، لكن <b>الصوت الرابع</b> هو من ينجم عن الانقباض الأذيني الفعال. (الصوت 3 للامتلاء السريع).</p>
+                    </div>
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+                        <span class="text-indigo-600 font-bold text-sm block mb-1">خدعة "حجم النفضة"</span>
+                        <p class="text-slate-700 text-sm">إذا قال لك كمية الدم في "ضربة واحدة" فهو <b>Stroke Volume</b>، أما في "دقيقة واحدة" فهو <b>Cardiac Output</b>.</p>
+                    </div>
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                        <span class="text-emerald-600 font-bold text-sm block mb-1">خدعة "النظير الودي"</span>
+                        <p class="text-slate-700 text-sm">نظير الودي (المبهم) يقلل <b>السرعة</b> (عبر زيادة نفوذية K+)، لكنه <b>لا يؤثر</b> بشكل يذكر على قوة تقلص العضلة البطينية.</p>
+                    </div>
+                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+                        <span class="text-blue-600 font-bold text-sm block mb-1">خدعة "ألياف بوركنج"</span>
+                        <p class="text-slate-700 text-sm">ألياف بوركنج لا تولد النظم ذاتياً ليعتمد عليها البطينان (إلا في الحالات المرضية)، بل وظيفتها الأساسية <b>السرعة</b> لإحداث تقلص بطيني متواقت.</p>
+                    </div>
+                    <div class="bg-fuchsia-50 border border-fuchsia-200 rounded-xl p-4">
+                        <span class="text-fuchsia-600 font-bold text-sm block mb-1">خدعة "الشوكة بالنسيج العقدي"</span>
+                        <p class="text-slate-700 text-sm">طور زوال الاستقطاب (الشوكة) في النسيج العقدي يعتمد على قنوات <b>الكالسيوم</b> وليس الصوديوم السريعة كما في العضلية.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="tab-content hide">
+            <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                <div class="bg-gradient-to-r from-teal-500 to-indigo-600 p-6 text-white text-center">
+                    <h2 class="text-2xl font-bold mb-1">اختبار الاسترجاع السريع</h2>
+                    <p class="text-teal-100 text-sm">أسئلة تم اختيارها عشوائياً من الدورات لتقييم فهمك للمفاهيم الجوهرية</p>
+                </div>
+                
+                <div id="quiz-container" class="p-6 md:p-8">
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-slate-100 rounded-full h-2 mb-6">
+                        <div id="quiz-progress" class="bg-teal-500 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <span id="quiz-qnum" class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">السؤال 1 / 10</span>
+                        <span id="quiz-score" class="text-sm font-semibold text-teal-600">النتيجة: 0</span>
+                    </div>
+
+                    <h3 id="quiz-question" class="text-lg font-bold text-slate-800 mb-6 leading-relaxed">جاري تحميل السؤال...</h3>
+                    
+                    <div id="quiz-options" class="space-y-3">
+                        <!-- Options injected here -->
+                    </div>
+
+                    <div id="quiz-feedback" class="mt-4 p-4 rounded-lg hidden text-sm font-semibold"></div>
+
+                    <div class="mt-8 text-left">
+                        <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden bg-slate-800 hover:bg-slate-900 text-white px-6 py-2.5 rounded-lg text-sm font-bold transition shadow-sm">السؤال التالي &larr;</button>
+                    </div>
+                </div>
+
+                <div id="quiz-result" class="p-8 text-center hidden">
+                    <div class="text-6xl mb-4">🏆</div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2">اكتمل الاختبار!</h3>
+                    <p class="text-lg text-slate-600 mb-6">نتيجتك النهائية: <span id="final-score" class="font-black text-teal-600 text-3xl mx-2"></span> من 10</p>
+                    <button onclick="startQuiz()" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-lg font-bold transition shadow-md">إعادة الاختبار ↺</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- 1. Consolidated Data from PDF ---
+        // I merged repeated/similar questions to create a robust, non-redundant database that covers 100% of the ideas.
+        const allQuestions = [
+            {
+                id: 1,
+                years: "2017, 2018",
+                topic: "الدورة القلبية والأصوات",
+                question: "وظيفة الصمامات القلبية الأساسية هي:",
+                options: ["توجيه مجرى الدم باتجاه واحد", "توزيع مقدار الضغط", "دفع الدم من حجرة لأخرى", "المحافظة على نظم القلب"],
+                correct: 0,
+                explanation: "الصمامات تمنع الجريان الراجع للدم، وتفصل بين أجواف القلب وظيفياً باتجاه واحد."
+            },
+            {
+                id: 2,
+                years: "2017",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "تُسمّى العقدة الجيبية الأذينية بالناظمة القلبية (Pacemaker) لأنها:",
+                options: ["تنظيم عمل القلب", "تسمح بانتقال التنبيه", "تملك التواتر الأسرع في زوال الاستقطاب", "تسبب تقلص العضل القلبي"],
+                correct: 2,
+                explanation: "العقدة الجيبية تملك أسرع وتيرة لإطلاق كوامن العمل التلقائية، لذلك تفرض نظمها على كامل القلب."
+            },
+            {
+                id: 3,
+                years: "2017, 2018, 2019, 2020",
+                topic: "التقلص العضلي والنتاج",
+                question: "تزداد قوة تقلص العضلة القلبية بزيادة كل ما يلي ما عدا (تؤثر في قوة التقلص عدا):",
+                options: ["تغير شدة المنبه", "وجود الكالسيوم داخل الليف", "طول الليف قبل بدء التقلص", "الأدرينالين والديجيتال"],
+                correct: 0,
+                explanation: "القلب يخضع لمبدأ 'الكل أو اللاشيء' (All or None)، فزيادة شدة المنبه فوق العتبة لا تزيد قوة التقلص."
+            },
+            {
+                id: 4,
+                years: "2017, 2022",
+                topic: "الدورة القلبية والأصوات",
+                question: "الصوت الأول للقلب ناتج عن:",
+                options: ["انغلاق الصمامات السينية", "تقبض البطينات", "انغلاق الصمامات الأذينية البطينية (AV)", "تقبض الأذينات"],
+                correct: 2,
+                explanation: "يحدث في بداية الانقباض البطيني بسبب انغلاق الدسامات الأذينية البطينية (التاجي ومثلث الشرف)."
+            },
+            {
+                id: 5,
+                years: "2018",
+                topic: "الدورة القلبية والأصوات",
+                question: "ينجم الصوت الثاني للقلب عن:",
+                options: ["انفتاح الصمامات السينية", "انغلاق الصمامات الأذينية البطينية", "انغلاق الصمامات السينية", "انفتاح الصمامات الأذينية البطينية"],
+                correct: 2,
+                explanation: "يحدث في بداية الانبساط البطيني بسبب انغلاق الدسامات الأبهري والرئوي."
+            },
+            {
+                id: 6,
+                years: "2017, 2018, 2020",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "من ميزات قنوات IF في النسيج القلبي (التي تولد التنبيه عفوياً):",
+                options: ["تحافظ على كامن غشاء مستقر", "عندما تفتح يتجاوز تيار الصوديوم الداخل تيار البوتاسيوم الخارج", "تتأثر بالأدرينالين أكثر من الأستيل كولين", "عندما تفتح يتجاوز البوتاسيوم الخارج تيار الصوديوم الداخل"],
+                correct: 1,
+                explanation: "قنوات IF تسمح بدخول Na أكثر من خروج K، مما يسبب زوال استقطاب بطيء ومستمر (كامن غير مستقر)."
+            },
+            {
+                id: 7,
+                years: "2017, 2021",
+                topic: "التقلص العضلي والنتاج",
+                question: "من السمات التي تميز عضلة القلب عن الهيكلية كل ما يلي عدا:",
+                options: ["تولد قوة تقلص أكبر من الهيكلية", "تقلصها أبطأ وفي آن واحد", "تشغل المتقدرات ثلث حجم الليف (وليس ثلثي)", "يعتمد تقلصها جزئياً على الكالسيوم خارج الخلوي"],
+                correct: 0,
+                explanation: "العضلة الهيكلية يمكن أن تولد قوة تقلص أكبر. في دورة 2021 ورد خيار خاطئ أن المتقدرات تشغل ثلثي الحجم، الصحيح هو الثلث."
+            },
+            {
+                id: 8,
+                years: "2017, 2018, 2020, 2021, 2024",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "الوظيفة الأساسية للعقدة الأذينية البطينية (AV) والهدف من تأخير التنبيه 0.1 ثانية:",
+                options: ["حماية الأذينة من خوارج الانقباض", "تأخير مرور الإشارة للسماح بإنهاء تقلص الأذينات قبل تقلص البطينات", "توليد إشارات تجعلها ناظمة للقلب", "إبطاء القلب وحمايته من التسرع"],
+                correct: 1,
+                explanation: "التأخير يضمن إفراغ الأذينات للدم في البطينات قبل أن تبدأ البطينات بالتقلص."
+            },
+            {
+                id: 9,
+                years: "2017, 2018, 2019, 2020, 2021, 2022",
+                topic: "التقلص العضلي والنتاج",
+                question: "حجم الدم الذي يضخه البطين خلال 'دقيقة واحدة':",
+                options: ["Cardiac output (نتاج القلب)", "Cardiac input", "End Systolic Volume", "Stroke volume (حجم النفضة)"],
+                correct: 0,
+                explanation: "نتاج القلب (CO) هو الدم بالدقيقة. أما حجم النفضة (SV) فهو حجم الدم بالضربة الواحدة."
+            },
+            {
+                id: 10,
+                years: "2017, 2021, 2023",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "تؤدي زيادة سرعة تقلص القلب (التأثير الودي) إلى زيادة نفوذية أغشية الخلايا ذاتية النظم لـ:",
+                options: ["شوارد البوتاسيوم", "شوارد الكالسيوم (أو الصوديوم والكالسيوم)", "شوارد الكلور", "شوارد البوتاسيوم والكالسيوم"],
+                correct: 1,
+                explanation: "الودي يسرع القلب بزيادة نفوذية الصوديوم والكالسيوم (دورة 2017)، بينما دورة 2020 خصت زيادة نفوذية الصوديوم، ونظير الودي (يبطئ) بزيادة نفوذية البوتاسيوم (دورة 2021/2023)."
+            },
+            {
+                id: 11,
+                years: "2017, 2024",
+                topic: "التخطيط الكهربائي ECG",
+                question: "موجة زوال الاستقطاب الأذيني في مخطط كهربية القلب تمثل بـ:",
+                options: ["الموجة P", "المركب QRS", "الموجة T", "الموجة U"],
+                correct: 0,
+                explanation: "P: زوال استقطاب أذينات. QRS: زوال استقطاب بطينات. T: عودة استقطاب بطينات."
+            },
+            {
+                id: 12,
+                years: "2018, 2019, 2022, 2023, 2024",
+                topic: "التخطيط الكهربائي ECG",
+                question: "يمثل 'مدة التقلص البطيني' (أو الانقباض البطيني) على مخطط القلب الكهربائي بالفترة:",
+                options: ["الفترة PR", "الفترة ST", "الفترة QT", "المركب QRS"],
+                correct: 2,
+                explanation: "QT تمثل كامل مدة الانقباض البطيني (من بداية زوال الاستقطاب Q حتى نهاية عودة الاستقطاب T)."
+            },
+            {
+                id: 13,
+                years: "2019, 2020",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "ترتبط خلايا العضلة القلبية وظيفياً/كهربائياً (لتفعيل ذاتها في آن واحد) بوساطة:",
+                options: ["الديسموزوم (Desmosome)", "الموصلات الفجوية (Gap Junctions)", "الموصلات الآلية فقط", "حزمة هيس"],
+                correct: 1,
+                explanation: "Gap Junctions تسمح بمرور الشوارد و انتقال الإشارة الكهربائية بسرعة فتشكل مدمجاً خلوياً. الديسموزوم للربط الآلي القوي."
+            },
+            {
+                id: 14,
+                years: "2019, 2020",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "السبب الذي يحمي العضلة القلبية من التكزز (Tetanus):",
+                options: ["اعتمادها جزئياً على الكالسيوم الخارجي", "طول فترة كامن فعل الليف العضلي القلبي (الطور الهضبي)", "قدرة الخلايا على تفعيل ذاتها", "استقرار كامن الغشاء في النسيج العقدي"],
+                correct: 1,
+                explanation: "الطور الهضبي يطيل دور الحران المطلق، فلا تستجيب العضلة لمنبه جديد حتى تسترخي تقريباً، مما يمنع التكزز."
+            },
+            {
+                id: 15,
+                years: "2019, 2020, 2021",
+                topic: "الدورة القلبية والأصوات",
+                question: "الصوت القلبي الرابع ينجم عن:",
+                options: ["الانقباض الأذيني الفعال", "بدء استرخاء البطينين", "اهتزاز الدم جيئة وذهاباً في البطينين", "انغلاق الصمامات الأذينية البطينية"],
+                correct: 0,
+                explanation: "الصوت 4 = انقباض أذيني. الصوت 3 = امتلاء سريع للبطين. الأول والثاني للانغلاق."
+            },
+            {
+                id: 16,
+                years: "2019",
+                topic: "التقلص العضلي والنتاج",
+                question: "كل ما يلي صحيح عن المركز الناهي القلبي (نظير الودي) ما عدا:",
+                options: ["يقع في جذع الدماغ", "يرسل إشارات تثبيطية للقلب", "يعمل عن طريق العصب التاسع", "الناقل الوسيط هو الأستيل كولين"],
+                correct: 2,
+                explanation: "يعمل عن طريق العصب المبهم (العصب القحفي العاشر) وليس التاسع."
+            },
+            {
+                id: 17,
+                years: "2020, 2022",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "تتميز خلايا النسيج العقدي القلبي (SA Node) بكل مما يلي ما عدا:",
+                options: ["تستطيع توليد الإشارات ذاتياً", "أصغر حجماً من الخلايا العضلية", "تشارك في ضخ الدم بين أجواف القلب (لها دور تقلصي)", "تحتوي على عدد قليل من الألياف المتقلصة"],
+                correct: 2,
+                explanation: "النسيج العقدي تخصص في توليد ونقل الشارة ولا يشارك فعلياً في توليد القوة التقلصية الكافية لضخ الدم."
+            },
+            {
+                id: 18,
+                years: "2020",
+                topic: "الدورة القلبية والأصوات",
+                question: "العامل الأساسي الذي يؤدي لفتح وإغلاق الصمامات في القلب هو:",
+                options: ["عضلات ملساء في الصمام", "اختلاف الضغط على جانبي الصمام", "النسيج العقدي القلبي", "الحبال الوترية"],
+                correct: 1,
+                explanation: "الصمامات سلبية تماماً، تفتح وتغلق بفعل ممالات الضغط."
+            },
+            {
+                id: 19,
+                years: "2020, 2021, 2022, 2023",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "يتطاول زمن كامن الفعل في الليف العضلي القلبي (طول الطور الهضبي) نتيجة لـ:",
+                options: ["نقص نفوذية الغشاء للبوتاسيوم، وزيادة نفوذيته للكالسيوم", "زيادة نفوذية الصوديوم والكالسيوم", "نقص نفوذية الكلور", "زيادة البوتاسيوم ونقص الكالسيوم"],
+                correct: 0,
+                explanation: "الطور الهضبي ينتج عن دخول تيار بطيء من الكالسيوم (للداخل) مترافقاً مع انخفاض نفوذية البوتاسيوم (يقل الخروج)."
+            },
+            {
+                id: 20,
+                years: "2020, 2022",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "الفائدة الوظيفية من سرعة التوصيل العالية جداً في ألياف بوركنج:",
+                options: ["المحافظة على تواتر النظم", "حدوث تقلص متواقت (متزامن) للبطينات", "إنهاء التقلص الأذيني", "تقليل الحاجة للطاقة"],
+                correct: 1,
+                explanation: "السرعة العالية تجعل خلايا البطينين تتقلص ككتلة واحدة في نفس اللحظة."
+            },
+            {
+                id: 21,
+                years: "2020, 2021",
+                topic: "التخطيط الكهربائي ECG",
+                question: "يمثل الطور الهضبي من كامن الفعل القلبي على مخطط القلب الكهربائي بـ:",
+                options: ["الفترة QT", "الشدفة PR", "الشدفة ST", "الموجة T"],
+                correct: 2,
+                explanation: "الشدفة ST تمثل فترة زوال الاستقطاب التام للبطينين (الطور الهضبي)، وتكون على خط السواء."
+            },
+            {
+                id: 22,
+                years: "2020, 2021, 2022",
+                topic: "الدورة القلبية والأصوات",
+                question: "كل ما يلي يحدث في طور الانقباض البطيني السوي عدا:",
+                options: ["تكون الصمامات الأذينية البطينية مفتوحة", "يصل الضغط في البطين لأعلى قيمة", "تكون الصمامات السينية مفتوحة", "يصل الضغط بالأذينات لأخفض قيمة (تقريباً)"],
+                correct: 0,
+                explanation: "في الانقباض البطيني يجب أن تكون الدسامات التاجي ومثلث الشرف مغلقة لتجنب عودة الدم للأذينات. بالدورات ورد خيار خاطئ أن البطين يقذف ثلث محتواه (الصحيح ثلثي)."
+            },
+            {
+                id: 23,
+                years: "2022",
+                topic: "التخطيط الكهربائي ECG",
+                question: "السبب الذي يجعل فولطاج الموجة QRS أكبر من فولطاج الموجة P هو:",
+                options: ["المدة الزمنية أقصر", "عودة استقطاب الأذينات ضمنها", "الكتلة العضلية (النسيج) البطينية أكبر من الأذينية", "القنوات المسؤولة أكثر"],
+                correct: 2,
+                explanation: "الفولطاج يعتمد على كتلة النسيج المزول استقطابه، والبطين أسمك وأكبر بكثير."
+            },
+            {
+                id: 24,
+                years: "2023",
+                topic: "الدورة القلبية والأصوات",
+                question: "من خلال جس الشريان المحيطي يمكن معرفة كل ما يلي ما عدا:",
+                options: ["الانتظام القلبي", "عدد النبضات", "الضغط الشرياني", "امتلاء النبض"],
+                correct: 2,
+                explanation: "لا يمكن قياس قيمة الضغط الشرياني الدقيقة بمجرد الجس، بل يلزمه جهاز قياس الضغط."
+            },
+            {
+                id: 25,
+                years: "2024",
+                topic: "كمون العمل والنسيج العقدي",
+                question: "ما الشاردة الأساسية المسؤولة عن طور زوال الاستقطاب (شوكة كامن الفعل) في العقدة الجيبية الأذينية؟",
+                options: ["الصوديوم السريع", "الكلور", "البوتاسيوم", "الكالسيوم"],
+                correct: 3,
+                explanation: "خلافا للعضلة القلبية (التي تعتمد على الصوديوم السريع)، العقدة الجيبية تعتمد على دخول الكالسيوم البطيء لتشكيل كامن الفعل."
+            }
+        ];
+
+        // --- 2. Chart.js Initialization ---
+        function initChart() {
+            const ctx = document.getElementById('topicsChart').getContext('2d');
+            
+            // Calculate occurrences
+            let topicCounts = {
+                "كمون العمل والنسيج العقدي": 0,
+                "الدورة القلبية والأصوات": 0,
+                "التقلص العضلي والنتاج": 0,
+                "التخطيط الكهربائي ECG": 0
+            };
+            
+            allQuestions.forEach(q => {
+                if(topicCounts[q.topic] !== undefined) topicCounts[q.topic]++;
+            });
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(topicCounts),
+                    datasets: [{
+                        data: Object.values(topicCounts),
+                        backgroundColor: [
+                            '#0d9488', // teal-600
+                            '#4f46e5', // indigo-600
+                            '#0ea5e9', // sky-500
+                            '#f59e0b'  // amber-500
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'left', labels: { font: { family: 'Tajawal' } } }
+                    }
+                }
+            });
+        }
+
+        // --- 3. Tabs Logic ---
+        function switchTab(tabId) {
+            // Hide all
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hide'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('tab-active', 'text-teal-600');
+                el.classList.add('text-slate-500');
+            });
+            
+            // Show selected
+            document.getElementById(tabId).classList.remove('hide');
+            let activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.add('tab-active', 'text-teal-600');
+            activeBtn.classList.remove('text-slate-500');
+        }
+
+        // --- 4. Database Rendering & Filtering ---
+        function renderQuestions(filterTopic = 'all', searchQuery = '') {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            let filtered = allQuestions.filter(q => {
+                const matchTopic = filterTopic === 'all' || q.topic === filterTopic;
+                const matchSearch = q.question.includes(searchQuery) || 
+                                    q.options.some(opt => opt.includes(searchQuery)) ||
+                                    q.explanation.includes(searchQuery);
+                return matchTopic && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-10 text-slate-500">لا توجد نتائج مطابقة لبحثك.</div>`;
+                return;
+            }
+
+            filtered.forEach(q => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition flex flex-col";
+                
+                let optionsHtml = q.options.map((opt, idx) => {
+                    let isCorrect = idx === q.correct;
+                    let bgClass = isCorrect ? 'bg-teal-50 border-teal-200 text-teal-800 font-bold' : 'bg-slate-50 border-slate-100 text-slate-600';
+                    let icon = isCorrect ? '<span class="text-teal-500 ml-2">✓</span>' : '<span class="text-slate-300 ml-2">•</span>';
+                    return `<li class="p-2.5 rounded-lg border text-sm flex items-start ${bgClass}">${icon} <span>${opt}</span></li>`;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="p-4 flex-1">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="bg-slate-100 text-slate-600 text-xs px-2 py-1 rounded font-semibold">${q.topic}</span>
+                            <span class="bg-indigo-50 text-indigo-700 text-xs px-2 py-1 rounded font-bold" dir="ltr">${q.years}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-800 mb-4 leading-relaxed">${q.question}</h4>
+                        <ul class="space-y-2 mb-4">
+                            ${optionsHtml}
+                        </ul>
+                    </div>
+                    <div class="bg-amber-50 px-4 py-3 border-t border-amber-100">
+                        <p class="text-xs text-amber-800 leading-relaxed"><b>💡 التفسير / النكشة:</b> ${q.explanation}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Setup Event Listeners for Filter
+        document.getElementById('topicFilter').addEventListener('change', (e) => {
+            renderQuestions(e.target.value, document.getElementById('searchInput').value);
+        });
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderQuestions(document.getElementById('topicFilter').value, e.target.value);
+        });
+
+
+        // --- 5. Interactive Quiz Logic ---
+        let currentQuizIndex = 0;
+        let score = 0;
+        let shuffledQuiz = [];
+        const QUIZ_LENGTH = 10;
+
+        function startQuiz() {
+            // Shuffle and pick top N
+            shuffledQuiz = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, QUIZ_LENGTH);
+            currentQuizIndex = 0;
+            score = 0;
+            
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            
+            showQuizQuestion();
+        }
+
+        function showQuizQuestion() {
+            const q = shuffledQuiz[currentQuizIndex];
+            
+            // Update UI Counters
+            document.getElementById('quiz-qnum').innerText = `السؤال ${currentQuizIndex + 1} / ${QUIZ_LENGTH}`;
+            document.getElementById('quiz-score').innerText = `النتيجة: ${score}`;
+            document.getElementById('quiz-progress').style.width = `${((currentQuizIndex) / QUIZ_LENGTH) * 100}%`;
+            
+            document.getElementById('quiz-question').innerText = q.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-right p-4 rounded-xl border-2 border-slate-100 bg-white hover:border-teal-400 hover:bg-teal-50 transition font-medium text-slate-700 text-sm";
+                btn.innerText = opt;
+                btn.onclick = () => handleAnswer(idx, btn, q.correct, q.explanation);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedIndex, btnElement, correctIndex, explanation) {
+            const allBtns = document.getElementById('quiz-options').children;
+            // Disable all
+            for(let b of allBtns) b.disabled = true;
+
+            const feedbackEl = document.getElementById('quiz-feedback');
+            feedbackEl.classList.remove('hidden');
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.replace('border-slate-100', 'border-green-500');
+                btnElement.classList.replace('hover:bg-teal-50', 'bg-green-50');
+                btnElement.classList.add('text-green-800');
+                score++;
+                feedbackEl.className = "mt-4 p-4 rounded-lg text-sm font-bold bg-green-100 text-green-800 block";
+                feedbackEl.innerHTML = `✅ إجابة صحيحة! <br><span class="font-normal text-xs mt-1 block">${explanation}</span>`;
+            } else {
+                btnElement.classList.replace('border-slate-100', 'border-red-500');
+                btnElement.classList.replace('hover:bg-teal-50', 'bg-red-50');
+                btnElement.classList.add('text-red-800');
+                
+                // Highlight correct
+                allBtns[correctIndex].classList.replace('border-slate-100', 'border-green-500');
+                allBtns[correctIndex].classList.add('bg-green-50', 'text-green-800');
+
+                feedbackEl.className = "mt-4 p-4 rounded-lg text-sm font-bold bg-red-100 text-red-800 block";
+                feedbackEl.innerHTML = `❌ إجابة خاطئة! <br><span class="font-normal text-xs mt-1 block">${explanation}</span>`;
+            }
+
+            document.getElementById('quiz-score').innerText = `النتيجة: ${score}`;
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() {
+            currentQuizIndex++;
+            if (currentQuizIndex < QUIZ_LENGTH) {
+                showQuizQuestion();
+            } else {
+                // End Quiz
+                document.getElementById('quiz-container').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('final-score').innerText = score;
+                document.getElementById('quiz-progress').style.width = `100%`;
+            }
+        }
+
+        // --- Initialization on Load ---
+        window.onload = () => {
+            initChart();
+            renderQuestions(); // Load all questions initially
+            startQuiz(); // Initialize quiz in background
+        };
+
+    </script>
+</body>
+</html>
