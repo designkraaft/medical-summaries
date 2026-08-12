@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الفصل السادس: فيزيولوجيا جهاز الدوران | منصة التحضيرية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        heading: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        blood: {
+                            50: '#fdf2f2',
+                            100: '#fbe5e5',
+                            500: '#ef4444',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-size: 1.125rem; /* text-lg baseline for comfortable reading */
+            line-height: 1.8;
+        }
+        
+        .mcq-highlight {
+            background-color: #fde047; /* أصفر فاقع يشبه قلم التحديد */
+            color: #1e293b; 
+            font-weight: 800;
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.375rem;
+            display: inline-block;
+            line-height: 1.4;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .exam-trap {
+            background-color: #fef2f2; /* أحمر فاتح جداً */
+            border: 1px solid #fee2e2;
+            box-shadow: 0 4px 6px -1px rgba(225, 29, 72, 0.05);
+        }
+
+        .english-term {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+            color: #64748b;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* Flashcard Animations */
+        .flashcard {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .flashcard-front {
+            background: white;
+            border: 2px solid #e2e8f0;
+        }
+        .flashcard-back {
+            background: #7f1d1d;
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Flowchart styling */
+        .flow-box {
+            background: white;
+            border: 2px solid #b91c1c;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+        }
+        .flow-arrow {
+            color: #b91c1c;
+            font-size: 1.5rem;
+            animation: pulse-arrow 2s infinite;
+        }
+        @keyframes pulse-arrow {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="antialiased font-sans">
+
+    <div class="max-w-4xl mx-auto px-4 pt-4 flex justify-between items-center text-sm font-semibold">
+        <a href="./physiology.html" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+            <span>&rarr;</span> الرجوع لصفحة الفسيولوجيا
+        </a>
+        <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+            <span>🏠</span> الصفحة الرئيسية
+        </a>
+    </div>
+
+    <header class="max-w-5xl mx-auto mt-6 px-4">
+        <div class="bg-gradient-to-l from-blood-900 via-blood-800 to-blood-700 rounded-3xl p-8 shadow-2xl relative overflow-hidden text-white flex flex-col md:flex-row items-center justify-between">
+            <!-- Decorative background elements -->
+            <div class="absolute top-0 right-0 -mr-16 -mt-16 opacity-10">
+                <i class="fas fa-heartbeat text-9xl"></i>
+            </div>
+            <div class="absolute bottom-0 left-0 -ml-10 -mb-10 opacity-10">
+                <i class="fas fa-lungs text-9xl"></i>
+            </div>
+
+            <div class="relative z-10 w-full md:w-2/3 mb-6 md:mb-0">
+                <span class="inline-block bg-white text-blood-900 text-sm font-bold px-3 py-1 rounded-full mb-4 shadow-sm">
+                    الفيزيولوجيا الطبية - السنة التحضيرية
+                </span>
+                <h1 class="text-4xl md:text-5xl font-heading font-black mb-4 leading-tight">
+                    الفصل السادس:<br> <span class="text-blood-100">فيزيولوجيا جهاز الدوران</span>
+                </h1>
+                <p class="text-blood-50 text-lg opacity-90 border-r-4 border-blood-500 pr-3">
+                    ملخص شامل وتفاعلي، مدقق، ومُعد خصيصاً لاجتياز امتحان الأتمتة بفهم واقتدار.
+                </p>
+                <div class="mt-4 flex gap-2">
+                    <span class="bg-black bg-opacity-20 px-3 py-1 rounded-md text-sm"><i class="fas fa-check-circle text-green-400 ml-1"></i> شامل للمحذوفات والتصويبات</span>
+                </div>
+            </div>
+
+            <div class="relative z-10 bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 p-6 rounded-2xl text-center md:w-1/3">
+                <div class="text-5xl mb-3 text-blood-100"><i class="fas fa-burn"></i></div>
+                <h3 class="font-bold text-xl mb-1">محرك الحياة</h3>
+                <p class="text-sm opacity-80">التدفق، المقاومة، التنظيم</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-16">
+
+        <!-- Section 1: Hemodynamics -->
+        <section id="hemodynamics">
+            <h2 class="text-3xl font-heading font-bold text-slate-800 pb-2 mb-6 flex items-center gap-3">
+                <i class="fas fa-water text-slate-700"></i>
+                ١. فيزيولوجية الدوران الدموي
+            </h2>
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-8">
+                
+                <p class="text-slate-500 italic border-r-4 border-slate-300 pr-3 text-sm">
+                    ملاحظة هامة: تم استبعاد فقرة "المراجعة التشريحية" بناءً على ملف التصويبات الرسمي للسنة التحضيرية، والبدء مباشرة بالفيزيولوجيا.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center md:text-right flex flex-col justify-center">
+                        <h3 class="font-bold text-slate-700 mb-3 text-lg">تدفق الدم <span class="english-term">(Blood Flow)</span></h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">هو كمية الدم المارة في نقطة معينة خلال فترة محددة.</p>
+                        <p class="text-slate-800 font-semibold bg-white p-3 rounded-xl border border-slate-200 inline-block">
+                            <i class="fas fa-key text-yellow-500 ml-1"></i> مفتاح أتمتة: التدفق الدموي الإجمالي <span class="mcq-highlight">يعادل النتاج القلبي</span> (كمية الدم المضخوخة في الدقيقة).
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center md:text-right flex flex-col justify-center">
+                        <h3 class="font-bold text-slate-700 mb-3 text-lg">ضغط الدم <span class="english-term">(Blood Pressure)</span></h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">القوة المطبقة من الدم على وحدة المساحة من جدار الوعاء. يُقدر بالـ <span class="mcq-highlight">mmHg</span>.</p>
+                        <p class="text-slate-600 text-sm">حركة الدم تخضع لقوتين: مدروج الضغط (يدفع الدم) ومقاومة الجريان (تمنع التدفق).</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6 mt-8 pt-6 border-t border-slate-100">
+                    <h3 class="font-bold text-2xl text-slate-800 border-r-4 border-red-500 pr-3">محددات المقاومة الوعائية <span class="english-term">(Vascular Resistance)</span></h3>
+                    <ul class="space-y-5 pr-4 text-slate-700">
+                        <li class="flex items-start gap-3">
+                            <span class="text-slate-400 mt-1"><i class="fas fa-circle text-[8px]"></i></span>
+                            <div>تتناسب المقاومة <span class="mcq-highlight">عكساً</span> مع نصف قطر الوعاء (أهم عامل).</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-slate-400 mt-1"><i class="fas fa-circle text-[8px]"></i></span>
+                            <div><strong>الجريان الطبيعي:</strong> <span class="mcq-highlight">صفائحي (انسيابي)</span>، السرعة في المركز أكبر من المحيط (بسبب الاحتكاك بالجدار).</div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-slate-400 mt-1"><i class="fas fa-circle text-[8px]"></i></span>
+                            <div class="leading-loose">
+                                <strong>اللزوجة <span class="english-term">(Viscosity)</span>:</strong> الدم أكثر لزوجة من الماء بسبب الكريات الحمر والبروتينات. <br>
+                                زيادة الكريات (احمرار الدم) <span class="text-red-500 font-bold mx-2">&larr;</span> <span class="mcq-highlight">تزيد اللزوجة والمقاومة</span>. <br>
+                                نقص الكريات (فاقات الدم) <span class="text-green-500 font-bold mx-2">&larr;</span> <span class="mcq-highlight">تنخفض اللزوجة والمقاومة</span>.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="arterial-pressure">
+            <h2 class="text-3xl font-heading font-bold text-slate-800 pb-2 mb-6 flex items-center gap-3 mt-12">
+                <i class="fas fa-heartbeat text-slate-700"></i>
+                ٢. الضغط الشرياني <span class="english-term font-normal ml-2">(Arterial Pressure)</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-center">
+                <!-- Data Cards -->
+                <div class="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm flex flex-col justify-center items-center gap-4">
+                    <div class="text-slate-600 font-bold">الضغط الانقباضي (الأعظمي)</div>
+                    <div class="flex items-baseline justify-center gap-2">
+                        <span class="text-red-500 font-semibold text-lg">mmHg</span>
+                        <span class="text-5xl font-black"><span class="mcq-highlight">120</span></span>
+                    </div>
+                    <div class="text-sm text-slate-500 bg-slate-50 py-1.5 px-4 rounded-full border border-slate-100">المجال السوي: <span class="mcq-highlight text-xs py-0.5">110 - 150</span></div>
+                </div>
+                
+                <div class="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm flex flex-col justify-center items-center gap-4">
+                    <div class="text-slate-600 font-bold">الضغط الانبساطي (الأصغري)</div>
+                    <div class="flex items-baseline justify-center gap-2">
+                        <span class="text-blue-500 font-semibold text-lg">mmHg</span>
+                        <span class="text-5xl font-black"><span class="mcq-highlight">70</span></span>
+                    </div>
+                    <div class="text-sm text-slate-500 bg-slate-50 py-1.5 px-4 rounded-full border border-slate-100">المجال السوي: <span class="mcq-highlight text-xs py-0.5">60 - 90</span></div>
+                </div>
+
+                <div class="bg-white border border-slate-100 p-8 rounded-3xl shadow-sm flex flex-col justify-center items-center gap-4">
+                    <div class="text-slate-600 font-bold mb-2">ضغط النبضة <span class="english-term">(Pulse Pressure)</span></div>
+                    <div class="text-xl font-bold text-purple-700 mb-1">الانقباضي - الانبساطي</div>
+                    <div class="text-sm text-slate-500 leading-relaxed">يتعلق بـ: حجم الضربة، مطاوعة الشرايين، وسرعة القذف. يزداد في <span class="mcq-highlight py-0.5">التصلب العصيدي</span>.</div>
+                </div>
+            </div>
+
+            <!-- Exam Trap Card -->
+            <div class="exam-trap p-8 rounded-3xl mb-12 flex flex-col items-center text-center gap-5">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white text-red-600 p-3 rounded-full shadow-sm w-12 h-12 flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle text-xl"></i>
+                    </div>
+                    <h4 class="font-bold text-red-800 text-xl">خدعة امتحانية (الضغط الشرياني الوسطي - MAP)</h4>
+                </div>
+                <p class="text-slate-700 text-lg">الضغط الوسطي <strong>ليس</strong> المتوسط الحسابي البسيط (لأن الانبساط يدوم أطول من الانقباض). بل هو أقرب للضغط الانبساطي!</p>
+                <div class="mt-2 bg-white px-8 py-4 rounded-full border border-red-200 font-bold text-red-800 shadow-sm w-full md:w-auto text-lg">
+                    الضغط الشرياني الوسطي = الضغط الانبساطي + (1/3 × ضغط النبضة)
+                </div>
+            </div>
+
+            <!-- Regulation Mechanism (Interactive Flowchart) -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="font-bold text-xl text-slate-800 mb-6 text-center">التنظيم العصبي السريع للضغط (الجهاز الدارئ للضغط)</h3>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-sm w-full">
+                    <div class="flow-box w-full md:w-1/4">
+                        ارتفاع الضغط الدموي
+                    </div>
+                    <i class="fas fa-arrow-left flow-arrow hidden md:block"></i>
+                    <i class="fas fa-arrow-down flow-arrow md:hidden"></i>
+                    
+                    <div class="flow-box w-full md:w-1/4">
+                        <span class="mcq-highlight">تمدد</span> مستقبلات الضغط<br>
+                        <span class="text-xs text-slate-500">(القوس الأبهرية، الجيب السباتي)</span>
+                    </div>
+                    <i class="fas fa-arrow-left flow-arrow hidden md:block"></i>
+                    <i class="fas fa-arrow-down flow-arrow md:hidden"></i>
+
+                    <div class="flow-box w-full md:w-1/4">
+                        نقل عبر الأعصاب:<br>
+                        <span class="mcq-highlight">البلعومي اللساني (9) + المبهم (10)</span>
+                    </div>
+                    <i class="fas fa-arrow-left flow-arrow hidden md:block"></i>
+                    <i class="fas fa-arrow-down flow-arrow md:hidden"></i>
+
+                    <div class="flow-box w-full md:w-1/4 !border-green-600">
+                        <strong>المركز القلبي الوعائي (البصلة):</strong><br>
+                        <span class="text-red-500">تثبيط</span> الودي والمسرع<br>
+                        <span class="text-green-500">تفعيل</span> المبهم (الناهي)<br>
+                        = هبوط الضغط
+                    </div>
+                </div>
+                <div class="mt-4 text-center text-sm text-slate-500">
+                    * ملاحظة: هذه الآلية سريعة جداً لكنها <span class="mcq-highlight">تتكيف خلال 2-3 أيام</span>، لذا لا تفيد في التنظيم المديد.
+                </div>
+            </div>
+        </section>
+
+        <section id="humoral-regulation">
+            <h2 class="text-2xl font-heading font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fas fa-vials text-blood-600"></i> التنظيم الخلطي (الهرموني) للضغط
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Raises BP -->
+                <div class="bg-red-50 p-5 rounded-2xl border border-red-100">
+                    <h3 class="font-bold text-red-800 mb-4 text-center border-b border-red-200 pb-2"><i class="fas fa-arrow-up"></i> عوامل ترفع الضغط الشرياني</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-red-500 mt-1"></i>
+                            <div><strong>رينين - أنجيوتنسين II:</strong> الأنجيوتنسين II (الشكل الفعال) يقبض الأوعية بشدة، ويحرض الألدوسترون.</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-red-500 mt-1"></i>
+                            <div><strong>الألدوسترون و ADH:</strong> حبس الملح والسوائل.</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-red-500 mt-1"></i>
+                            <div><strong>الأدرينالين (لب الكظر):</strong> ينبه مستقبلات <span class="mcq-highlight">بيتا 1 (قلب)</span> فيزيد النتاج. <span class="mcq-highlight">مقبض وعائي عدا الإكليلية</span>.</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-red-500 mt-1"></i>
+                            <div><strong>النور أدرينالين:</strong> مقبض وعائي شديد.</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-red-500 mt-1"></i>
+                            <div><strong>هرمونات أخرى:</strong> الدرق (تسرع القلب)، الجنسية والقشرانيات/كورتيزول (حبس ماء وملح).</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Lowers BP -->
+                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100">
+                    <h3 class="font-bold text-blue-800 mb-4 text-center border-b border-blue-200 pb-2"><i class="fas fa-arrow-down"></i> عوامل تخفض الضغط الشرياني</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                            <div><strong>المركبات الموسعة:</strong> <span class="mcq-highlight">البراديكينين، الهستامين، البروستاغلاندينات</span>.</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                            <div><strong>فضلات الاستقلاب:</strong> <span class="mcq-highlight">حمض اللبن، CO2</span> (تعمل كموسعات موضعية).</div>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-blue-500 mt-1"></i>
+                            <div><strong>الشوارد:</strong> <span class="mcq-highlight">البوتاسيوم، المغنيزيوم</span> (تأثير موسع للأوعية).</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="capillaries">
+            <h2 class="text-3xl font-heading font-bold text-slate-800 border-b-2 border-blood-200 pb-2 mb-6 flex items-center gap-3">
+                <i class="fas fa-network-wired text-blood-600"></i>
+                ٣. الدوران الشعيري وقوى ستارلينغ
+            </h2>
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <p class="mb-4">الجدار مكون من طبقة مفردة من خلايا بطانية نفوذة. الأكسجين و CO2 (ذوابة بالشحوم) تعبر من <span class="mcq-highlight">أي مكان</span> بالجدار (لذا انتشارها أسرع)، بينما المواد الذوابة بالماء تعبر عبر <span class="mcq-highlight">الثقوب</span>.</p>
+                
+                <h3 class="font-bold text-lg text-slate-800 mb-3 text-center">حركة السائل (قوى ستارلينغ الأربع)</h3>
+                
+                <!-- Starling Forces Diagram using Tailwind Grid -->
+                <div class="relative bg-slate-50 border border-slate-200 p-8 rounded-xl mb-6">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                        <i class="fas fa-exchange-alt text-9xl"></i>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                        
+                        <!-- Arterial End -->
+                        <div class="bg-red-100 p-4 rounded-lg text-center border-2 border-red-300">
+                            <h4 class="font-bold text-red-800 mb-2">النهاية الشريانية (الدانية)</h4>
+                            <p class="text-sm mb-3">محصلة القوى تدفع السائل نحو <span class="font-bold underline text-red-900">الخارج</span></p>
+                            <div class="bg-white p-2 rounded text-xl font-bold text-red-600 shadow-inner">
+                                + 11 mmHg<br>
+                                <span class="text-sm font-normal text-slate-500">(ترشيح صافٍ)</span>
+                            </div>
+                        </div>
+
+                        <!-- Venous End -->
+                        <div class="bg-blue-100 p-4 rounded-lg text-center border-2 border-blue-300">
+                            <h4 class="font-bold text-blue-800 mb-2">النهاية الوريدية (القاصية)</h4>
+                            <p class="text-sm mb-3">محصلة القوى تسحب السائل نحو <span class="font-bold underline text-blue-900">الداخل</span></p>
+                            <div class="bg-white p-2 rounded text-xl font-bold text-blue-600 shadow-inner">
+                                - 9 mmHg<br>
+                                <span class="text-sm font-normal text-slate-500">(امتصاص صافٍ)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Forces List -->
+                    <div class="mt-6 bg-white p-4 rounded-lg border border-slate-200 text-sm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <strong class="text-red-700">قوى الدفع نحو الخارج (ترشيح):</strong>
+                                <ul class="list-disc list-inside">
+                                    <li>الضغط المائي السكوني داخل الشعيرة.</li>
+                                    <li>الضغط التناضحي الغرواني للسائل الخلالي.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <strong class="text-blue-700">قوى السحب نحو الداخل (امتصاص):</strong>
+                                <ul class="list-disc list-inside">
+                                    <li>الضغط التناضحي الغرواني لبلازما الدم (بسبب البروتينات).</li>
+                                    <li>الضغط المائي السكوني للسائل الخلالي (إذا كان موجباً).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exam-trap p-4 rounded-xl flex items-start gap-3">
+                    <i class="fas fa-lightbulb text-yellow-500 text-2xl mt-1"></i>
+                    <div>
+                        <strong class="text-slate-800">تغير النفوذية الشعيرية:</strong> تزداد بتأثير (الهستامين، الحماض، عوز الفيتامين C)، وتنقص بتأثير (الستيروئيدات، مضادات الهستامين، الكالسيوم، القلاء).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="venous-lymphatic">
+            <h2 class="text-3xl font-heading font-bold text-slate-800 border-b-2 border-blood-200 pb-2 mb-6 flex items-center gap-3">
+                <i class="fas fa-stream text-blood-600"></i>
+                ٤. الدوران الوريدي واللمفاوي
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Venous -->
+                <div class="space-y-4">
+                    <div class="bg-slate-800 text-white p-5 rounded-2xl shadow-md">
+                        <h3 class="font-bold text-xl mb-3 border-b border-slate-600 pb-2">الدوران الوريدي</h3>
+                        <ul class="space-y-2 text-slate-200 text-sm">
+                            <li><i class="fas fa-caret-left text-blood-400 ml-1"></i> <strong>خزان للدم:</strong> يحتوي على أكثر من <span class="mcq-highlight !text-white !bg-red-600">60%</span> من الدم بسبب مطاوعته الكبيرة. مخازن نوعية: (الطحال، الكبد، الأوردة البطنية).</li>
+                            <li><i class="fas fa-caret-left text-blood-400 ml-1"></i> <strong>الضغط المنخفض:</strong> <span class="mcq-highlight !text-white !bg-red-600">15 mmHg</span> في الوريدات، يهبط إلى <span class="mcq-highlight !text-white !bg-red-600">الصفر</span> قرب القلب.</li>
+                            <li><i class="fas fa-caret-left text-blood-400 ml-1"></i> <strong>عوامل العود الوريدي:</strong> فرق الضغط، الحركات التنفسية (الشهيق يزيده)، النبض الشرياني، <strong>المضخة العضلية</strong> (المشي)، و<strong>الصمامات الوريدية</strong> (تمنع العود العكسي، اضطرابها يسبب دوالي).</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Spleen (الطحال) -->
+                    <div class="bg-blood-50 border border-blood-200 p-4 rounded-xl">
+                        <h4 class="font-bold text-blood-800 mb-2"><i class="fas fa-shield-alt"></i> وظائف الطحال</h4>
+                        <ul class="list-disc list-inside text-sm space-y-1 text-slate-700">
+                            <li>إنتاج الكريات الحمر (في الجنين فقط).</li>
+                            <li>تكوين الخلايا اللمفية.</li>
+                            <li>خزان مهم للدم (في الجهد/النزف).</li>
+                            <li>تحطيم الكريات الحمر الهرمة.</li>
+                            <li>دور دفاعي (بلعمة وأضداد).</li>
+                            <li>تخزين الحديد (من تحطيم الكريات).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Lymphatic -->
+                <div class="bg-white border-2 border-green-200 p-5 rounded-2xl shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 p-4 opacity-10">
+                        <i class="fas fa-leaf text-8xl text-green-500"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-green-800 border-b border-green-100 pb-2 relative z-10">الدوران اللمفاوي <span class="english-term">(Lymphatic)</span></h3>
+                    <div class="relative z-10 text-slate-700 text-sm space-y-3">
+                        <p>يعيد السوائل والبروتينات التي لا تعود للوريد. تركيز البروتين في السائل الخلالي ولمف معظم النسج حوالي <span class="mcq-highlight">2 غ / ديسي لتر</span>. (لمف الكبد عالي البروتين، لمف الأمعاء غني بالدسم).</p>
+                        
+                        <div class="bg-green-50 p-3 rounded-lg border border-green-100 mt-2">
+                            <strong class="text-green-900 block mb-1">عوامل تزيد العود البلغمي (اللمفاوي):</strong>
+                            <ol class="list-decimal list-inside space-y-1">
+                                <li><strong>ارتفاع ضغط السائل الخلالي</strong> (بسبب: ارتفاع ضغط الشعيرة، نقص بروتين الدم، زيادة النفوذية).</li>
+                                <li><strong>المضخة اللمفية</strong> (التقلص الآلي للعضلة الملساء في الوعاء).</li>
+                                <li><strong>الانضغاط الخارجي</strong> (عضلات، حركات جسم، نبض الشرايين المحاذية).</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="local-circulation">
+            <h2 class="text-2xl font-heading font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fas fa-map-marker-alt text-blood-600"></i> التنظيم الذاتي للدوران الموضعي
+            </h2>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-bold text-blood-700 border-b border-blood-100 pb-1 mb-2">1. تحكم سريع (ثوانٍ - دقائق)</h4>
+                        <p class="text-sm text-slate-600">زيادة الاستقلاب أو <span class="mcq-highlight">نقص الأكسجة</span> يوسع المعصرات قبل الشعيرية مباشرة، ويحرض إفراز مواد موسعة (حمض اللبن، CO2، الأدينوزين، البوتاسيوم). <br>تتوسع الشرايين الأكبر بتأثير <strong>العامل البطاني المرخي (NO - أكسيد النتريك)</strong> المتحرر بتأثير الأستيل كولين.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-blood-700 border-b border-blood-100 pb-1 mb-2">2. تحكم مديد (أيام - أشهر)</h4>
+                        <p class="text-sm text-slate-600">يتم عبر زيادة <span class="mcq-highlight">عدد وحجم الأوعية</span> (تولّد الأوعية Angiogenesis). نقص الأكسجة المديد يفرز عوامل نمو (VEGF, Angiogenin) تزيد كثافة الشعيرات.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-12 py-8 bg-slate-800 -mx-4 px-4 sm:mx-0 sm:px-8 sm:rounded-3xl shadow-xl text-white">
+            <h2 class="text-2xl font-heading font-bold mb-6 text-center">أدوات الاستذكار السريع (Flashcards)</h2>
+            <p class="text-center text-slate-400 text-sm mb-8">اضغط على البطاقة لقلبها ومعرفة الجواب</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="flashcard h-32" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front text-slate-800">
+                            <span class="font-bold">ما هو تأثير زيادة الكريات الحمر على المقاومة الوعائية؟</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span>تزيد اللزوجة ← فتزيد المقاومة المحيطية.</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="flashcard h-32" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front text-slate-800">
+                            <span class="font-bold">من أين يُفرز الرينين وما وظيفته؟</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="text-sm">يفرز من الكلية (عند نقص التروية)، يحول مولد الأنجيوتنسين إلى أنجيوتنسين I.</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="flashcard h-32" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front text-slate-800">
+                            <span class="font-bold">ما هو تركيز البروتين في السائل الخلالي لمعظم النسج؟</span>
+                        </div>
+                        <div class="flashcard-back">
+                            <span class="font-bold text-2xl">2 غ / ديسي لتر</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="zubda" class="mt-16">
+            <div class="bg-gradient-to-br from-yellow-50 to-orange-50 border-2 border-yellow-400 p-8 rounded-3xl shadow-lg">
+                <h2 class="text-3xl font-heading font-black text-yellow-800 mb-6 text-center">
+                    <i class="fas fa-crown text-yellow-500 mr-2"></i> زبدة الفصل (Core Summary)
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Numbers Bank -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-lg text-slate-800 mb-4 border-b-2 border-slate-100 pb-2">بنك الأرقام الامتحانية</h3>
+                        <ul class="space-y-3 font-mono text-sm">
+                            <li class="flex justify-between items-center border-b border-dashed border-slate-200 pb-1">
+                                <span class="font-sans font-semibold">الضغط الانقباضي السوي</span>
+                                <span class="bg-yellow-200 text-yellow-900 px-2 py-0.5 rounded font-bold">120 (110-150) mmHg</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-dashed border-slate-200 pb-1">
+                                <span class="font-sans font-semibold">الضغط الانبساطي السوي</span>
+                                <span class="bg-yellow-200 text-yellow-900 px-2 py-0.5 rounded font-bold">70 (60-90) mmHg</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-dashed border-slate-200 pb-1">
+                                <span class="font-sans font-semibold">نسبة الدم في الأوردة</span>
+                                <span class="bg-yellow-200 text-yellow-900 px-2 py-0.5 rounded font-bold">> 60%</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-dashed border-slate-200 pb-1">
+                                <span class="font-sans font-semibold">الضغط في الوريدات</span>
+                                <span class="bg-yellow-200 text-yellow-900 px-2 py-0.5 rounded font-bold">15 mmHg</span>
+                            </li>
+                            <li class="flex justify-between items-center border-b border-dashed border-slate-200 pb-1">
+                                <span class="font-sans font-semibold">تركيز بروتين السائل الخلالي</span>
+                                <span class="bg-yellow-200 text-yellow-900 px-2 py-0.5 rounded font-bold">2 g/dL</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-sans font-semibold">محصلة الترشيح (دانية الشعيرة)</span>
+                                <span class="bg-red-100 text-red-900 px-2 py-0.5 rounded font-bold">+11 mmHg</span>
+                            </li>
+                            <li class="flex justify-between items-center">
+                                <span class="font-sans font-semibold">محصلة الامتصاص (قاصية الشعيرة)</span>
+                                <span class="bg-blue-100 text-blue-900 px-2 py-0.5 rounded font-bold">-9 mmHg</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Golden Rules -->
+                    <div class="space-y-4">
+                        <div class="bg-white border border-green-200 p-4 rounded-xl border-r-4 border-r-green-500 shadow-sm">
+                            <strong class="text-green-800 block mb-1">القاعدة الذهبية 1: المقاومة الوعائية</strong>
+                            <p class="text-sm text-slate-600">العامل الأهم في تحديد المقاومة هو <span class="font-bold underline text-slate-900">نصف قطر الوعاء</span>. تتناسب عكساً معه بقوة.</p>
+                        </div>
+                        <div class="bg-white border border-red-200 p-4 rounded-xl border-r-4 border-r-red-500 shadow-sm">
+                            <strong class="text-red-800 block mb-1">القاعدة الذهبية 2: التنظيم العصبي</strong>
+                            <p class="text-sm text-slate-600">المستقبلات الضغطية (Baroreceptors) مسؤولة عن التنظيم <span class="font-bold underline text-slate-900">سريع الأمد</span>، وتفقد أهميتها في التنظيم المديد لأنها تتكيف خلال أيام.</p>
+                        </div>
+                        <div class="bg-white border border-blue-200 p-4 rounded-xl border-r-4 border-r-blue-500 shadow-sm">
+                            <strong class="text-blue-800 block mb-1">القاعدة الذهبية 3: الأكسجة والدوران</strong>
+                            <p class="text-sm text-slate-600"><span class="font-bold text-slate-900">نقص الأكسجة</span> هو المنبه الأقوى لتوسع المعصرات قبل الشعيرية (موضعياً)، وهو المحرض لتولّد أوعية جديدة (في التنظيم المديد).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 text-center mt-12 border-t-4 border-blood-700">
+        <p class="text-sm">تطبيق الفيزيولوجيا التفاعلي - السنة التحضيرية &copy; 2026</p>
+        <p class="text-xs mt-2 opacity-75">تم التنقيح بناءً على ملف التصويبات الرسمي</p>
+    </footer>
+
+</body>
+</html>
