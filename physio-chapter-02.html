@@ -3,705 +3,609 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الفصل الثاني | فيزيولوجية الأنسجة المستثارة</title>
+    <title>فيزيولوجية الأنسجة المستثارة | الدليل التفاعلي الشامل</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800;900&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Tajawal', 'Inter', 'sans-serif'],
-                        en: ['Inter', 'sans-serif']
-                    },
-                    colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            800: '#3730a3',
-                            900: '#312e81',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #f8fafc; color: #0f172a; font-family: 'Tajawal', sans-serif; }
-        .glass-panel { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); border: 1px solid #e2e8f0; box-shadow: 0 4px 12px -2px rgba(0,0,0,0.05); }
-        
-        /* Flashcard Styles */
-        .perspective { perspective: 1000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #818cf8; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
-        
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        :root {
+            --primary: #0f766e; /* Teal 700 */
+            --secondary: #be123c; /* Rose 700 */
+            --bg-light: #f8fafc;
+            --bg-dark: #0f172a;
+            --text-light: #334155;
+            --text-dark: #cbd5e1;
+            --mark-bg: #fef08a;
+            --mark-text: #b91c1c;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.8;
+            user-select: text; /* Rule: Text selection allowed */
+        }
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            --mark-bg: #7f1d1d;
+            --mark-text: #fde047;
+        }
 
-        /* Formula and Ion tags */
-        .ion-tag { display: inline-block; direction: ltr; font-family: 'Inter', sans-serif; font-weight: 700; color: #1e1b4b; background: #e0e7ff; padding: 1px 6px; border-radius: 6px; }
+        mark {
+            background-color: var(--mark-bg);
+            color: var(--mark-text);
+            padding: 0 4px;
+            border-radius: 4px;
+            font-weight: 700;
+            border-bottom: 2px solid #ef4444;
+            transition: all 0.3s ease;
+        }
         
-        /* Chart SVG interactions */
-        .chart-point { transition: all 0.3s ease; cursor: pointer; }
-        .chart-point:hover { transform: scale(1.4); filter: drop-shadow(0 0 6px rgba(99, 102, 241, 0.8)); }
-        .phase-btn.active { background-color: #4f46e5; color: white; border-color: #4f46e5; shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        /* 👁️ Test Mode Magic */
+        body.test-mode mark {
+            background-color: #475569 !important;
+            color: #475569 !important;
+            border-bottom: 2px dashed #cbd5e1 !important;
+            cursor: help;
+        }
+        body.test-mode.dark-mode mark {
+            background-color: #cbd5e1 !important;
+            color: #cbd5e1 !important;
+            border-bottom: 2px dashed #475569 !important;
+        }
+        body.test-mode mark:hover {
+            color: white !important;
+            background-color: var(--secondary) !important;
+        }
+
+        /* Scroll Progress */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #14b8a6, #be123c);
+            transform-origin: 0% 50%;
+            transform: scaleX(0);
+            z-index: 1000;
+        }
+
+        /* Vertical Cascades */
+        .cascade-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin: 2rem 0;
+        }
+        .cascade-container::before {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0; left: 50%;
+            width: 4px;
+            background-color: #cbd5e1;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        .cascade-step {
+            position: relative;
+            z-index: 1;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .dark-mode .cascade-step { background: #1e293b; border-color: #14b8a6; }
+        .cascade-step:hover { transform: scale(1.02); }
+        .cascade-arrow {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            animation: bounceDown 1.5s infinite;
+            z-index: 1;
+            background: var(--bg-light);
+            padding: 0 10px;
+        }
+        .dark-mode .cascade-arrow { background: var(--bg-dark); }
+        @keyframes bounceDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+
+        /* Side Cards for Traps/Clinical */
+        .side-card {
+            position: relative; /* التعديل الجوهري: جعلها من ضمن التدفق الطبيعي لمنع أي تداخل */
+            display: block;
+            width: 100%;
+            margin-top: 1.5rem;
+            background: #fff1f2;
+            border-top: 4px solid #be123c;
+            border-right: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .dark-mode .side-card { background: #4c1d95; border-top-color: #a78bfa; border-right: none; color: white; }
+        
+        @media (min-width: 1024px) {
+            .side-card { 
+                width: calc(100% + 2.5rem); 
+                margin-right: -1.25rem; /* سحب البطاقة للخارج قليلاً لتعطي تأثير الملاحظة الجانبية البارزة */
+                border-top: none;
+                border-right: 4px solid #be123c;
+            }
+            .dark-mode .side-card { border-top: none; border-right: 4px solid #a78bfa; }
+        }
+
+        /* Simulators CSS */
+        .ion-animation {
+            display: inline-block;
+            transition: all 0.5s ease-in-out;
+        }
+        .pump-active .na-ion { transform: translateY(-40px); opacity: 0; }
+        .pump-active .k-ion { transform: translateY(40px); opacity: 0; }
+        
+        .glow-flow {
+            box-shadow: 0 0 15px #10b981;
+            border-color: #10b981 !important;
+            transition: all 0.3s;
+        }
+
+        /* Fixed Layout Button */
+        .btn-fixed-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80px; height: 80px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        /* Typography specifics */
+        .text-base-custom { font-size: 16px; leading-loose; }
+        sup { font-size: 0.75em; line-height: 0; vertical-align: super; }
+        
+        /* Filters */
+        body.traps-only-mode .content-paragraph { opacity: 0.2; }
+        body.traps-only-mode .core-anchor, body.traps-only-mode .mcq-trap { opacity: 1 !important; transform: scale(1.02); z-index: 10; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); }
+
     </style>
 </head>
-<body class="antialiased font-sans leading-relaxed text-slate-800 text-base selection:bg-brand-200 selection:text-brand-900">
+<body class="relative pb-20 text-[15px] sm:text-base leading-loose">
+    
+    <div id="progress-bar"></div>
 
-    <!-- 1️⃣ شريط التنقل العلوي الإلزامي (بدون أي تعديل) -->
+    <!-- 1️⃣ شريط التنقل العلوي الثابت (مطلوب حرفياً) -->
     <div class="max-w-4xl mx-auto px-4 pt-4 flex justify-between items-center text-sm font-semibold">
-      <a href="./physiology.html" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
-        <span>→</span> الرجوع لصفحة الفسيولوجيا
-      </a>
-      <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
-        <span>🏠</span> الصفحة الرئيسية
-      </a>
+        <a href="./physiology.html" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+            <span>→</span> الرجوع لصفحة الفسيولوجيا
+        </a>
+        <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+            <span>🏠</span> الصفحة الرئيسية
+        </a>
     </div>
 
-    <!-- 2️⃣ البنر العلوي المدمج المطور (Compact Hero Banner) -->
-    <header class="max-w-5xl mx-auto px-4 mt-4 mb-6">
-        <div class="relative rounded-2xl overflow-hidden shadow-lg bg-gradient-to-r from-brand-900 via-brand-800 to-indigo-950 text-white px-6 py-5 sm:px-8 sm:py-6">
-            <div class="absolute top-0 right-0 -mt-12 -mr-12 w-48 h-48 bg-brand-500/20 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                <div>
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <span class="py-0.5 px-2.5 rounded-full bg-indigo-500/30 border border-indigo-300/30 text-xs font-bold tracking-wide text-indigo-100">الفصل الثاني</span>
-                        <span class="text-xs font-en text-indigo-200 font-semibold tracking-wider">PHYSIOLOGY OF EXCITABLE TISSUES</span>
-                    </div>
-                    <h1 class="text-2xl sm:text-3xl font-black leading-tight text-white tracking-tight">فيزيولوجية الأنسجة المستثارة</h1>
-                    <p class="text-indigo-200 text-sm sm:text-base font-medium mt-1 max-w-3xl">
-                        دليل تفاعلي شامل لاحتراف آليات النقل الخلوي، كوامن الغشاء، وفيزيولوجية العضلات الهيكلية والملساء.
-                    </p>
-                </div>
+    <!-- Hero Banner -->
+    <header class="max-w-4xl mx-auto mt-6 bg-slate-900 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden flex justify-between items-center">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500 rounded-full blur-3xl opacity-20"></div>
+        
+        <div class="z-10 flex-1 pr-4">
+            <span class="bg-rose-600 text-white text-xs font-bold px-2 py-1 rounded mb-2 inline-block">الفصل الثاني</span>
+            <h1 class="text-3xl font-extrabold mb-2 text-teal-300">فيزيولوجية الأنسجة المستثارة</h1>
+            <p class="text-sm text-slate-300 leading-relaxed max-w-2xl">
+                ⚡ <mark class="bg-transparent text-white border-b border-teal-400">نواة الفصل:</mark> آليات نقل الشوارد، توليد كوامن الراحة والفعل، فيزيولوجيا النقل العصبي، والآلية الجزيئية الدقيقة لتقلص العضلات (الهيكلية والملساء).
+            </p>
+            
+            <div class="mt-4 flex gap-3 flex-wrap">
+                <button id="trapsFilterBtn" class="text-xs bg-slate-800 hover:bg-rose-900 border border-slate-700 px-3 py-1.5 rounded-lg transition" onclick="toggleTrapsMode()">
+                    🎯 تصفية النكشات الامتحانية
+                </button>
+                <button id="darkModeBtn" class="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3 py-1.5 rounded-lg transition" onclick="toggleDarkMode()">
+                    🌙 الوضع الداكن
+                </button>
             </div>
         </div>
+
+        <!-- زر الاختبار المعزول والمستقل أبعادياً -->
+        <button id="testModeBtn" class="btn-fixed-layout hover:bg-teal-700 transition shadow-lg" onclick="toggleTestMode()" title="إخفاء التظليل للمراجعة">
+            <i class="fas fa-brain text-2xl mb-1"></i>
+            <span class="text-[10px] font-bold text-center leading-tight">وضع الاختبار<br>الذاتي</span>
+        </button>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 pb-16">
+    <main class="max-w-4xl mx-auto px-4 mt-8">
         
-        <!-- Table of Contents / Tabs -->
-        <div class="flex overflow-x-auto gap-2 mb-6 pb-2 border-b border-slate-200 sticky top-2 z-50 bg-[#f8fafc]/95 backdrop-blur-md">
-            <button onclick="openTab('transport')" class="tab-btn active px-4 py-2 rounded-xl font-bold text-base transition-all bg-brand-100 text-brand-800 shadow-sm whitespace-nowrap">1. النقل عبر الغشاء</button>
-            <button onclick="openTab('rmp')" class="tab-btn px-4 py-2 rounded-xl font-bold text-base transition-all hover:bg-slate-200 text-slate-700 whitespace-nowrap">2. كامن الراحة والفعل</button>
-            <button onclick="openTab('skeletal')" class="tab-btn px-4 py-2 rounded-xl font-bold text-base transition-all hover:bg-slate-200 text-slate-700 whitespace-nowrap">3. العضلات الهيكلية</button>
-            <button onclick="openTab('smooth')" class="tab-btn px-4 py-2 rounded-xl font-bold text-base transition-all hover:bg-slate-200 text-slate-700 whitespace-nowrap">4. العضلات الملساء</button>
-            <button onclick="openTab('yield')" class="tab-btn px-4 py-2 rounded-xl font-bold text-base transition-all bg-amber-100 text-amber-800 hover:bg-amber-200 whitespace-nowrap">🔥 الخلاصة الامتحانية</button>
+        <!-- Prerequisites -->
+        <div class="bg-blue-50 border-r-4 border-blue-500 p-4 rounded-lg mb-8 shadow-sm text-sm dark:bg-slate-800 dark:border-blue-400 content-paragraph">
+            <h3 class="font-bold text-blue-800 dark:text-blue-300 mb-2">💡 قبل أن تبدأ (المفاهيم الجوهرية):</h3>
+            <p>تعتمد الأنسجة المستثارة (Excitable Tissues) وهي <mark>الأعصاب والعضلات</mark> على فروق تراكيز الشوارد (خاصة <mark>Na<sup>+</sup></mark> و <mark>K<sup>+</sup></mark>) عبر الغشاء الخلوي. تذكر دائماً: الصوديوم تركيزه أعلى <mark>خارج</mark> الخلية، والبوتاسيوم تركيزه أعلى <mark>داخل</mark> الخلية.</p>
         </div>
 
-        <!-- ==================== القسم الأول: النقل عبر الغشاء الخلوي ==================== -->
-        <section id="transport" class="tab-content active space-y-6">
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-brand-500 pb-2 mb-3">نقل المواد عبر الغشاء الخلوي</h2>
-                <p class="text-slate-700 text-base leading-relaxed">
-                    يتألف الغشاء الخلوي من طبقة شحمية مضاعفة تنغرس فيها بروتينات غشائية. تفصل بين السائل خارج الخلايا (<span class="font-en font-bold text-indigo-700">ECF</span>) والسائل داخل الخلايا (<span class="font-en font-bold text-indigo-700">ICF</span>). 
-                    تتم عملية نقل المواد بطريقتين رئيسيتين: <strong>الانتشار (النقل المنفعل)</strong> و <strong>النقل الفاعل</strong>.
-                </p>
+        <!-- المبحث الأول -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-teal-600 pb-2 mb-4 text-teal-800 dark:text-teal-400">🌊 أولاً: نقل الجزيئات والشوارد عبر الغشاء الخلوي</h2>
+            
+            <!-- Tree Map -->
+            <div class="flex flex-wrap gap-2 mb-6 text-xs font-bold justify-center bg-slate-100 dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700">
+                <span class="bg-white dark:bg-slate-700 px-2 py-1 rounded shadow-sm text-teal-700">النقل عبر الغشاء</span> ➔
+                <span class="bg-white dark:bg-slate-700 px-2 py-1 rounded shadow-sm text-slate-600">1. انتشار (منفعل)</span> ➔
+                <span class="bg-white dark:bg-slate-700 px-2 py-1 rounded shadow-sm text-slate-600">2. نقل فاعل (يستهلك طاقة)</span>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- الانتشار (النقل المنفعل) -->
-                <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-3 mb-4 border-b pb-3">
-                            <span class="text-3xl">🌊</span>
-                            <div>
-                                <h3 class="text-xl font-bold text-brand-900">1. الانتشار (النقل المنفعل)</h3>
-                                <span class="font-en text-xs font-semibold text-slate-500 uppercase tracking-wider">Passive Transport</span>
-                            </div>
+            <div class="content-paragraph mb-6">
+                <h3 class="font-bold text-lg mb-2">1. الانتشار (النقل المنفعل - Passive Transport)</h3>
+                <p>يتم دون صرف طاقة، باتجاه مدروج التركيز. ينقسم إلى:</p>
+                <ul class="list-disc list-inside mt-2 space-y-3">
+                    <li>
+                        <strong>الانتشار البسيط (Simple Diffusion):</strong> 
+                        تتناسب سرعة الانتشار <mark>طردياً مع تركيز المادة</mark> (وليس مدروج التركيز). يعتمد على درجة <mark>الذوبان الشحمي</mark>. 
+                        مواد ذوابة (O<sub>2</sub>, N<sub>2</sub>, CO<sub>2</sub>, الكحول) تعبر كما لو أن الغشاء غير موجود. 
+                        الماء (غير ذواب بالشحم) يعبر بسرعة مذهلة عبر القنوات البروتينية.
+                        <div class="mcq-trap bg-rose-50 border border-rose-200 p-2 rounded mt-2 text-sm dark:bg-rose-900/30 dark:border-rose-700">
+                            🚨 <strong>خدعة امتحانية:</strong> جزيئات اليوريا قطرها أكبر بـ <mark>20% فقط</mark> من الماء، لكن نفاذيتها أقل بـ <mark>1000 مرة</mark>. النفاذية تنقص بشدة مع زيادة الحجم.
                         </div>
-                        <p class="text-slate-700 mb-4 text-base leading-relaxed">يحدث التباعد التلقائي للمواد دون صرف طاقة (مع مدروج التركيز). ينقسم إلى:</p>
+                    </li>
+                    <li>
+                        <strong>الانتشار الميسر (Facilitated Diffusion):</strong> 
+                        يتوسطه بروتين حامل (Carrier). 
+                        <div class="core-anchor bg-amber-50 border border-amber-200 p-3 rounded mt-2 dark:bg-amber-900/30 dark:border-amber-700">
+                            🎯 <strong>نواة السؤال:</strong> يختلف عن البسيط بوجود <mark>سرعة قصوى (Vmax)</mark>. زيادة التركيز لا تزيد السرعة بعد بلوغ العتبة بسبب <mark>إشباع البروتين الحامل</mark> (التبدل الشكلي يحتاج وقتاً). أمثلة: <mark>الغلوكوز والحموض الأمينية</mark>.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-paragraph mb-6">
+                <h3 class="font-bold text-lg mb-2">2. النقل الفاعل (Active Transport) 🔋</h3>
+                <p>نقل المواد <mark>عكس</mark> مدروج التركيز، يحتاج طاقة (ATP). يقسم إلى أولي وثانوي.</p>
+                
+                <!-- Interactive Simulator: Na/K Pump -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-md border border-slate-200 mt-4 text-center">
+                    <h4 class="font-bold mb-2">🔋 محاكي النقل الفاعل الأولي: مضخة الصوديوم-بوتاسيوم (Na<sup>+</sup>/K<sup>+</sup> Pump)</h4>
+                    <p class="text-sm mb-4">اضغط على الزر لتفعيل المضخة ومراقبة استهلاك ATP وحركة الشوارد (3 صوديوم للخارج، 2 بوتاسيوم للداخل).</p>
+                    
+                    <div class="relative h-40 bg-blue-50 dark:bg-slate-700 rounded-lg overflow-hidden flex items-center justify-center border-y-4 border-slate-400" id="pump-container">
+                        <div class="absolute top-2 left-2 text-xs font-bold text-slate-500">خارج الخلية (سائل خلالي)</div>
+                        <div class="absolute bottom-2 left-2 text-xs font-bold text-slate-500">داخل الخلية (هيولى)</div>
                         
-                        <div class="space-y-4">
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                                <h4 class="font-bold text-slate-900 text-base mb-2">أ. الانتشار البسيط (Simple Diffusion)</h4>
-                                <ul class="list-disc list-inside text-base text-slate-700 space-y-2">
-                                    <li><strong class="text-brand-700">المواد الذوابة في الشحم:</strong> تتناسب سرعة انتشارها طردياً مع درجة ذوبانها الشحمي (مثل <span class="ion-tag">O<sub>2</sub></span>, <span class="ion-tag">N<sub>2</sub></span>, <span class="ion-tag">CO<sub>2</sub></span>, والكحول). تعبر وكأن الغشاء غير موجود!</li>
-                                    <li><strong class="text-brand-700">الماء والمواد غير الذوابة الشحمية:</strong> تمر عبر "قنوات بروتينية". سرعة عبور الماء مذهلة عبر الأكوابورينات (تعبر الكرية الحمراء كل ثانية كمية ماء تعادل حجم الخلية 100 مرة). تنقص سرعة الانتشار شديداً بزيادة حجم الجزيء (مثال: قطر اليوريا أكبر بـ 20% فقط من الماء لكن نفاذيتها أقل بـ 1000 مرة).</li>
-                                </ul>
+                        <!-- Cell Membrane -->
+                        <div class="w-full h-8 bg-orange-200 dark:bg-orange-900 absolute top-1/2 -translate-y-1/2 flex justify-center items-center opacity-70">
+                            <!-- Pump Protein -->
+                            <div class="w-16 h-20 bg-purple-500 rounded-2xl flex items-center justify-center z-10 shadow-lg text-white font-bold text-xs flex-col">
+                                <span>ATPase</span>
+                                <span id="atp-indicator" class="text-[8px] bg-yellow-400 text-black px-1 rounded mt-1 opacity-0 transition-opacity">ATP مستهلك</span>
                             </div>
-                            
-                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 relative overflow-hidden">
-                                <div class="absolute top-0 right-0 w-1.5 h-full bg-amber-500"></div>
-                                <h4 class="font-bold text-slate-900 text-base mb-2">ب. الانتشار الميسر (Facilitated Diffusion)</h4>
-                                <p class="text-base text-slate-700 mb-2">يحتاج لـ <strong class="text-brand-700">بروتين حامل (حشائي/حمال)</strong>. يشمل نقل الغلوكوز ومعظم الحموض الأمينية.</p>
-                                <div class="bg-amber-50 border border-amber-300 text-amber-900 p-3 rounded-lg text-sm font-semibold">
-                                    💡 <strong>نكشة امتحانية مصححة:</strong> في الانتشار الميسر تزداد السرعة طردياً مع <span class="underline decoration-amber-600 font-bold">مدروج تركيز المادة</span> حتى تبلغ حداً أقصى يدعى (السرعة القصوى V<sub>max</sub>) نتيجة تشبع الحوامل، بينما في البسيط تزداد السرعة باستمرار.
-                                </div>
-                            </div>
+                        </div>
+
+                        <!-- Ions (Dynamic) -->
+                        <div id="ions-container" class="absolute inset-0 pointer-events-none"></div>
+                    </div>
+                    
+                    <button onclick="activatePump()" class="mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-full shadow-lg transition transform hover:scale-105">
+                        ▶️ تفعيل المضخة (ضخ دورة واحدة)
+                    </button>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-right text-sm">
+                        <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded">
+                            <span class="font-bold text-purple-700 dark:text-purple-400">وظائف المضخة:</span>
+                            <ol class="list-decimal list-inside">
+                                <li>الحفاظ على تراكيز Na/K وتوطيد <mark>الكامن السلبي</mark> (مولدة للكهرباء).</li>
+                                <li>التحكم بـ <mark>حجم الخلية</mark> (تمنع انتفاخها وانفجارها بطرد Na+ والماء يتبعه).</li>
+                            </ol>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded">
+                            <span class="font-bold text-purple-700 dark:text-purple-400">النقل الفاعل الثانوي:</span>
+                            يستغل طاقة <mark>مدروج الصوديوم</mark> (المتولد من النقل الأولي).
+                            <br>- مساير (Co-transport): مثل <mark>الغلوكوز والحموض الأمينية</mark> مع الصوديوم للداخل.
+                            <br>- معاكس (Counter): مثل نقل <mark>الكالسيوم أو الهيدروجين</mark> للخارج مقابل دخول الصوديوم.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المبحث الثاني -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-teal-600 pb-2 mb-4 text-teal-800 dark:text-teal-400">⚡ ثانياً: كوامن الغشاء وفعل العصب</h2>
+            
+            <div class="content-paragraph mb-6">
+                <h3 class="font-bold text-lg mb-2">1. كامن الغشاء في أثناء الراحة (RMP)</h3>
+                <p>تبلغ قيمة كامن الراحة في الألياف العصبية الضخمة <mark>-90 ميلي فولط</mark>. تسهم فيه العوامل التالية:</p>
+                <div class="flex flex-wrap gap-4 mt-2 justify-center">
+                    <div class="border border-slate-300 p-2 rounded text-center"><mark>-94 mV</mark><br><span class="text-xs">انتشار البوتاسيوم وحده</span></div>
+                    <span class="self-center font-bold">+</span>
+                    <div class="border border-slate-300 p-2 rounded text-center"><mark>-86 mV</mark><br><span class="text-xs">محصلة انتشار K<sup>+</sup> و Na<sup>+</sup> معاً</span></div>
+                    <span class="self-center font-bold">+</span>
+                    <div class="border border-slate-300 p-2 rounded text-center"><mark>-4 mV</mark><br><span class="text-xs">مضخة Na/K (مولدة للكهرباء)</span></div>
+                    <span class="self-center font-bold">=</span>
+                    <div class="border-2 border-red-500 p-2 rounded text-center bg-red-50 dark:bg-red-900/30 font-bold"><mark>-90 mV</mark><br><span class="text-xs">كامن الراحة النهائي</span></div>
+                </div>
+            </div>
+
+            <div class="content-paragraph mb-6">
+                <h3 class="font-bold text-lg mb-2">2. كامن فعل العصب (Action Potential) 📈</h3>
+                <p>تبدل سريع ينقل الغشاء من القطبية السالبة للموجبة ثم يعود للراحة. ينشأ عند وصول التنبيه لمستوى العتبة <mark>-65 ميلي فولط</mark>.</p>
+                
+                <!-- Interactive Action Potential Slider -->
+                <div class="bg-slate-900 text-white p-5 rounded-xl shadow-lg mt-4 relative">
+                    <h4 class="font-bold mb-4 text-teal-400">⏱️ شريط السحب الزمني: مراحل كامن الفعل وقنوات الفولطاج</h4>
+                    
+                    <div class="flex justify-between items-center mb-2 text-xs font-mono">
+                        <span>-90 mV (راحة)</span>
+                        <span id="ap-voltage-display" class="text-xl font-bold text-yellow-400">-90 mV</span>
+                        <span>+35 mV (ذروة)</span>
+                    </div>
+
+                    <input type="range" min="0" max="4" value="0" class="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer mb-6" id="ap-slider" oninput="updateActionPotential()">
+                    
+                    <div class="grid grid-cols-3 gap-2 text-center text-sm" id="ap-state-panels">
+                        <div class="bg-slate-800 p-2 rounded border border-slate-600" id="panel-stage">
+                            <span class="block text-slate-400 text-xs">الطور الحالي</span>
+                            <span class="font-bold text-green-400">دور الراحة</span>
+                        </div>
+                        <div class="bg-slate-800 p-2 rounded border border-slate-600" id="panel-na">
+                            <span class="block text-slate-400 text-xs">قنوات Na<sup>+</sup> السريعة</span>
+                            <span class="font-bold text-rose-400">بوابة التفعيل مغلقة</span>
+                        </div>
+                        <div class="bg-slate-800 p-2 rounded border border-slate-600" id="panel-k">
+                            <span class="block text-slate-400 text-xs">قنوات K<sup>+</sup> البطيئة</span>
+                            <span class="font-bold text-blue-400">مغلقة</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- النقل الفاعل -->
-                <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center gap-3 mb-4 border-b pb-3">
-                            <span class="text-3xl">⚡</span>
-                            <div>
-                                <h3 class="text-xl font-bold text-brand-900">2. النقل الفاعل</h3>
-                                <span class="font-en text-xs font-semibold text-slate-500 uppercase tracking-wider">Active Transport</span>
-                            </div>
-                        </div>
-                        <p class="text-slate-700 mb-4 text-base leading-relaxed">تحريك المواد "عكس" مدروج التركيز بصرف طاقة كيميائية.</p>
+                <div class="core-anchor bg-amber-50 border border-amber-200 p-3 rounded mt-4 dark:bg-amber-900/30 dark:border-amber-700">
+                    🎯 <strong>نواة السؤال حول بوابات الفولطاج:</strong>
+                    <ul class="list-disc list-inside text-sm mt-2">
+                        <li>قناة الصوديوم لها بوابتان: <mark>تفعيل (خارجية)</mark> تفتح بسرعة عند زوال الاستقطاب، و <mark>تعطيل (داخلية)</mark> تغلق ببطء بعد أجزاء من الميلي ثانية. <strong>لا تفتح قناة الصوديوم المعطلة مجدداً حتى يعود كامن الراحة!</strong></li>
+                        <li>قناة البوتاسيوم لها بوابة واحدة، تفتح ببطء شديد وتتوافق عملية انفتاحها مع بدء انغلاق قنوات الصوديوم (مما يسرع عودة الاستقطاب).</li>
+                    </ul>
+                </div>
+            </div>
 
-                        <div class="space-y-4">
-                            <div class="bg-indigo-50/70 p-4 rounded-xl border border-indigo-200">
-                                <h4 class="font-bold text-indigo-950 text-base mb-2">أ. النقل الفاعل الأولي (Primary Active Transport)</h4>
-                                <p class="text-base text-slate-800 mb-2">الطاقة تستمد مباشرة من حلمهة الـ <span class="font-en font-bold">ATP</span>. أشهر مثال:</p>
-                                <div class="bg-white p-3.5 rounded-lg shadow-sm border border-slate-200 mb-2">
-                                    <strong class="text-brand-800 text-base block mb-1">مضخة الصوديوم-بوتاسيوم (<span class="ion-tag">Na<sup>+</sup> / K<sup>+</sup> Pump</span>):</strong>
-                                    <ul class="list-disc list-inside text-sm text-slate-700 space-y-1.5">
-                                        <li>تضخ <strong class="text-red-600 font-bold">3 <span class="ion-tag">Na<sup>+</sup></span> للخارج</strong> مقابل <strong class="text-blue-600 font-bold">2 <span class="ion-tag">K<sup>+</sup></span> للداخل</strong>.</li>
-                                        <li>البروتين الكروي الأكبر يحوي: 3 مواقع لـ <span class="ion-tag">Na<sup>+</sup></span> (بالداخل)، موقعين لـ <span class="ion-tag">K<sup>+</sup></span> (بالخارج)، وفعالية <span class="font-en font-bold">ATPase</span> في الجزء الداخلي.</li>
-                                        <li><strong>أهميتها القصوى:</strong> التحكم بحجم الخلية (تتفعل عند انتفاخ الخلية لتضخ الشوارد للخارج وتسحب الماء معها وتمنع انفجارها)، وتوليد كهرسلبية داخلية (-4 mV).</li>
-                                        <li>تستهلك <strong>60 - 70%</strong> من طاقة الخلايا العصبية النشيطة!</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="bg-blue-50/70 p-4 rounded-xl border border-blue-200">
-                                <h4 class="font-bold text-blue-950 text-base mb-2">ب. النقل الفاعل الثانوي (Secondary Active Transport)</h4>
-                                <p class="text-base text-slate-800 mb-2">تستمد الطاقة من مدروج التركيز المخزون لـ <span class="ion-tag">Na<sup>+</sup></span> الناتج عن النقل الأولي.</p>
-                                <ul class="text-sm space-y-2 text-slate-800">
-                                    <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
-                                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span> 
-                                        <span><strong>النقل المساير (Co-transport):</strong> بنفس الاتجاه. مثل سحب الغلوكوز والحموض الأمينية مع <span class="ion-tag">Na<sup>+</sup></span> للداخل.</span>
-                                    </li>
-                                    <li class="flex items-start gap-2 bg-white p-2 rounded border border-slate-200">
-                                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500 mt-1.5 shrink-0"></span> 
-                                        <span><strong>النقل المعاكس (Counter-transport):</strong> باتجاهين متعاكسين. مثل (<span class="ion-tag">Na<sup>+</sup> / Ca<sup>2+</sup></span> في معظم الأغشية) و (<span class="ion-tag">Na<sup>+</sup> / H<sup>+</sup></span> في النبيبات الكلوية).</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+            <!-- Cascade: Calcium Role & Stabilizers -->
+            <div class="cascade-container content-paragraph">
+                <div class="cascade-step">
+                    <strong>🩺 دور الكالسيوم (Ca<sup>++</sup>) واستثارية الغشاء:</strong><br>
+                    ترتبط شوارد الكالسيوم بالسطح الخارجي لقناة الصوديوم وتعدل الفولطاج اللازم لفتحها.
+                </div>
+                <i class="fas fa-arrow-down cascade-arrow"></i>
+                <div class="cascade-step relative">
+                    <span class="text-rose-600 font-bold">نقص كالسيوم الدم (Hypocalcemia):</span><br>
+                    تفتح قنوات الصوديوم بزيادة طفيفة بالكامن ⟸ الليف عالي الاستثارة ⟸ تفريغ عفوي ⟸ <mark>تكزز عضلي (Tetanus)</mark> قد يكون مميتاً إذا أصاب عضلات التنفس. نقص 50% كافٍ لحدوثه.
+                    
+                    <div class="side-card">
+                        💊 <strong>المثبتات الغشائية (Stabilizers):</strong>
+                        العوامل التي <i>تنقص</i> الاستثارية:
+                        1. <mark>فرط الكالسيوم</mark>.
+                        2. المبنجات الموضعية (بروكائين، تتراكائين) ⟸ تؤثر مباشرة في بوابات <mark>التفعيل</mark> لقنوات Na وتجعل انفتاحها صعباً.
                     </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- المبحث الثالث -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-teal-600 pb-2 mb-4 text-teal-800 dark:text-teal-400">🚀 ثالثاً: توصيل الإشارات في الأعصاب وفترة الحران</h2>
+            
+            <div class="content-paragraph mb-6">
+                <h3 class="font-bold text-lg mb-2">النقل القفزي (Saltatory Conduction)</h3>
+                <p>في الألياف النخاعينية، لا تتدفق الشوارد عبر غمد النخاعين (عازل كهربائي)، بل حصراً عبر <mark>عقد رانفييه</mark>. يقفز الكامن من عقدة لأخرى.</p>
+                
+                <!-- Simple SVG kinetic simulator for conduction -->
+                <div class="flex flex-col md:flex-row gap-4 mt-4">
+                    <div class="flex-1 bg-white dark:bg-slate-800 p-4 rounded border border-slate-200">
+                        <h4 class="font-bold text-center text-sm mb-2 text-teal-600">ألياف نخاعينية (نقل قفزي)</h4>
+                        <div class="relative h-12 bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-between px-2 overflow-hidden">
+                            <!-- Nodes -->
+                            <div class="w-2 h-full bg-slate-400 z-10"></div>
+                            <div class="w-16 h-8 bg-orange-300 dark:bg-orange-700 rounded mx-1"></div>
+                            <div class="w-2 h-full bg-slate-400 z-10"></div>
+                            <div class="w-16 h-8 bg-orange-300 dark:bg-orange-700 rounded mx-1"></div>
+                            <div class="w-2 h-full bg-slate-400 z-10"></div>
+                            <div class="w-16 h-8 bg-orange-300 dark:bg-orange-700 rounded mx-1"></div>
+                            <div class="w-2 h-full bg-slate-400 z-10"></div>
+                            <!-- Tracer -->
+                            <div class="absolute w-4 h-4 bg-red-500 rounded-full shadow-[0_0_10px_red]" style="animation: jump 2s infinite steps(3, end);"></div>
+                        </div>
+                        <ul class="text-xs mt-2 space-y-1 list-disc list-inside">
+                            <li>يزيد السرعة <mark>5-50 ضعفاً</mark> (تصل 100 م/ث).</li>
+                            <li><mark>يحافظ على طاقة المحوار</mark> (زوال استقطاب بالعقد فقط).</li>
+                        </ul>
+                    </div>
+                    <div class="flex-1 bg-white dark:bg-slate-800 p-4 rounded border border-slate-200">
+                        <h4 class="font-bold text-center text-sm mb-2 text-slate-500">ألياف عديمة النخاعين (نقل مستمر)</h4>
+                        <div class="relative h-12 bg-yellow-100 dark:bg-yellow-900/30 flex items-center px-2 overflow-hidden">
+                            <div class="w-full h-8 bg-orange-100 dark:bg-orange-900/30 rounded border border-orange-200"></div>
+                            <!-- Tracer -->
+                            <div class="absolute w-4 h-4 bg-red-500 rounded-full shadow-[0_0_10px_red] left-0" style="animation: slide 3s infinite linear;"></div>
+                        </div>
+                        <ul class="text-xs mt-2 space-y-1 list-disc list-inside">
+                            <li>سرعة بطيئة (0.5 م/ث).</li>
+                            <li>تتناسب السرعة مع <mark>الجذر التربيعي</mark> لقطر الليف.</li>
+                        </ul>
+                    </div>
+                </div>
+                <style>
+                    @keyframes jump { 0% { left: 5%; top:5px; } 33% { left: 35%; top:5px;} 66% { left: 65%; top:5px;} 100% { left: 95%; top:5px;} }
+                    @keyframes slide { from { left: 0; } to { left: 100%; } }
+                </style>
+            </div>
+
+            <div class="content-paragraph mb-6">
+                <h3 class="font-bold text-lg mb-2">فترة الحران (Refractory Period) 🚫</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="border-t-4 border-rose-500 bg-white dark:bg-slate-800 p-3 shadow-sm rounded">
+                        <strong class="text-rose-600">1. فترة الحران المطلق:</strong><br>
+                        العصبون عاجز تماماً عن توليد كامن جديد مهما بلغت قوة التنبيه.<br>
+                        <strong>السبب:</strong> بوابات الصوديوم مفتوحة أصلاً أو معطلة.<br>
+                        <strong>الزمن:</strong> الطور الصاعد وقسم من الطور النازل (تعادل <mark>1/2500 ثانية</mark> بالألياف الكبيرة ⟸ الحد الأقصى 2500 دفعة/ثانية).
+                    </div>
+                    <div class="border-t-4 border-amber-500 bg-white dark:bg-slate-800 p-3 shadow-sm rounded">
+                        <strong class="text-amber-600">2. فترة الحران النسبي:</strong><br>
+                        يمكن توليد كامن جديد إذا كان التنبيه <mark>أقوى من العتبة</mark>.<br>
+                        <strong>السبب:</strong> انعتاق بعض قنوات Na من التعطيل، وانغلاق بعض قنوات K.<br>
+                        <strong>الزمن:</strong> القسم الأخير من الطور النازل وطور فرط الاستقطاب.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المبحث الرابع -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-teal-600 pb-2 mb-4 text-teal-800 dark:text-teal-400">💪 رابعاً: النسيج العضلي الهيكلي</h2>
+            
+            <div class="content-paragraph mb-6">
+                <h3 class="font-bold text-lg mb-2">البنية والتشريح الوظيفي</h3>
+                <p>تشكل 40% من وزن الجسم. الليف محاط بغمد، يحوي لييفات عضلية (خيوط <mark>أكتين رفيعة</mark> و <mark>ميوزين ثخينة</mark>). تتداخل لتشكل شرائط فاتحة (I - أكتين فقط) وقاتمة (A - ميوزين ونهايات أكتين). القسيم العضلي (Sarcomere) يقع بين قرصي Z متتاليين، وطوله <mark>2 ميكرومتر</mark> عند التقلص الأعظمي.</p>
+            </div>
+
+            <!-- Cascade: Excitation-Contraction Coupling -->
+            <div class="cascade-container content-paragraph mt-8">
+                <h3 class="font-bold text-center w-full mb-4">⚡ اقتران الاستثارة - التقلص (الآلية العامة)</h3>
+                
+                <div class="cascade-step" id="step-nmj" onmouseenter="glowStep(this)">
+                    <strong>1. الوصل العصبي العضلي:</strong><br>
+                    يصل كامن الفعل للنهاية العصبية، يحرر الناقل <mark>الأستيل كولين</mark> ⟸ يفتح قنوات بروتينية بالغشاء ⟸ يدخل الصوديوم بشدة ⟸ يبدأ كامن فعل العضلة.
+                </div>
+                <i class="fas fa-arrow-down cascade-arrow"></i>
+                
+                <div class="cascade-step relative" id="step-ttubule" onmouseenter="glowStep(this)">
+                    <strong>2. الأنابيب المستعرضة (T-Tubules):</strong><br>
+                    يسير كامن الفعل على الغشاء ويدخل لأعماق الليف عبر الأنابيب المعترضة (ضرورية لأن الليف كبير الحجم).
+                    
+                    <div class="side-card">
+                        📌 <strong>الشبكة الهيولية العضلية (SR):</strong>
+                        مخزن الكالسيوم. الألياف السريعة تملك شبكة واسعة جداً للتحرير السريع!
+                    </div>
+                </div>
+                <i class="fas fa-arrow-down cascade-arrow"></i>
+
+                <div class="cascade-step" id="step-ca" onmouseenter="glowStep(this)">
+                    <strong>3. تحرر الكالسيوم والتقلص:</strong><br>
+                    تُطلق الشبكة الهيولية شوارد Ca<sup>++</sup> ⟸ تحدث قوى جذب بين الأكتين والميوزين (آلية الانزلاق) ⟸ يحدث التقلص.
+                </div>
+                <i class="fas fa-arrow-down cascade-arrow"></i>
+
+                <div class="cascade-step relative" id="step-relax" onmouseenter="glowStep(this)">
+                    <strong>4. الاسترخاء:</strong><br>
+                    تُضخ شوارد Ca<sup>++</sup> عودةً للشبكة الهيولية بواسطة <mark>مضخة الكالسيوم (تحتاج ATP)</mark> وتبقى هناك بانتظار كامن فعل جديد.
+                </div>
+            </div>
+
+            <!-- Molecular Mechanism -->
+            <div class="content-paragraph mb-6 bg-indigo-50 border-r-4 border-indigo-500 p-4 rounded dark:bg-indigo-900/30">
+                <h3 class="font-bold text-lg mb-2 text-indigo-800 dark:text-indigo-300">الآلية الجزيئية: خيوط الأكتين والميوزين 🔬</h3>
+                <ul class="list-disc list-inside space-y-2 text-sm">
+                    <li><strong>الميوزين:</strong> الخيط الثخين. يتألف من ذيل ورؤوس (جسور تصالبية قابلة للثني عند مفصلات). رأس الميوزين يملك فعالية <mark>إنزيم ATPase</mark> لشطر ATP واستخدام طاقته في ضربة القدرة.</li>
+                    <li><strong>الأكتين:</strong> الخيط الرفيع. مكون من:
+                        <ol class="list-decimal list-inside ml-4 mt-1">
+                            <li><mark>أكتين F</mark>: يحوي المواقع الفعالة (كل 2.7 نانومتر).</li>
+                            <li><mark>تروبوميوزين</mark>: يغطي المواقع الفعالة في أثناء الراحة ليمنع التقلص.</li>
+                            <li><mark>تروبونين</mark>: معقد من 3 بروتينات (I للأكتين, T للتروبوميوزين, <mark>C للكالسيوم</mark>). ارتباط Ca++ بالتروبونين C يزيح التروبوميوزين ويكشف المواقع الفعالة لتبدأ ضربة القدرة.</li>
+                        </ol>
+                    </li>
+                </ul>
+                <div class="mcq-trap bg-white p-2 border border-rose-300 rounded mt-3">
+                    🚨 <strong>خدعة امتحانية (دور ATP):</strong> ارتباط جزيئة ATP <i>جديدة</i> برأس الميوزين هو ما يسبب <mark>انفصال الرأس عن الأكتين</mark> (وليس التقلص). شطر الـ ATP يوفر طاقة لإعادة الرأس لوضعه العمودي الجاهز.
+                </div>
+            </div>
+
+            <!-- Mechanics & Energetics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 content-paragraph">
+                <!-- Energetics -->
+                <div class="bg-white dark:bg-slate-800 p-4 shadow-sm border border-slate-200 rounded">
+                    <h4 class="font-bold mb-2">⚡ مصادر طاقة العضلة</h4>
+                    <ul class="text-sm space-y-1">
+                        <li><strong>1. ATP المخزن:</strong> يكفي <mark>1-2 ثانية</mark> فقط!</li>
+                        <li><strong>2. فوسفوكرياتين:</strong> طاقته 5 أضعاف ATP، يكفي <mark>8 ثوانٍ</mark>.</li>
+                        <li><strong>3. تحلل الغليكوجين (لاهوائي):</strong> سريع جداً (2.5x التأكسدي)، يكفي <mark>1 دقيقة</mark>. يسبب تراكم حمض اللبن.</li>
+                        <li><strong>4. الاستقلاب التأكسدي:</strong> المصدر الرئيس لـ <mark>>95%</mark> من طاقة التقلص المديد. يستهلك الشحوم أساساً.</li>
+                    </ul>
+                    <p class="text-xs text-rose-600 mt-2 font-bold">نسبة الفعالية العظمى < 25%. يُهدر <mark>75%</mark> كحرارة.</p>
+                </div>
+                <!-- Fiber types -->
+                <div class="bg-white dark:bg-slate-800 p-4 shadow-sm border border-slate-200 rounded overflow-x-auto">
+                    <h4 class="font-bold mb-2">أنماط الألياف</h4>
+                    <table class="w-full text-xs text-right border-collapse">
+                        <tr class="bg-slate-100 dark:bg-slate-700">
+                            <th class="p-1 border">الميزة</th>
+                            <th class="p-1 border">الألياف السريعة (البيضاء)</th>
+                            <th class="p-1 border">الألياف البطيئة (الحمراء)</th>
+                        </tr>
+                        <tr><td class="p-1 border font-bold">الحجم وقوة التقلص</td><td class="p-1 border">كبيرة، قوة هائلة</td><td class="p-1 border">أصغر</td></tr>
+                        <tr><td class="p-1 border font-bold">الشبكة الهيولية (Ca)</td><td class="p-1 border">نامية وواسعة جداً</td><td class="p-1 border">أقل</td></tr>
+                        <tr><td class="p-1 border font-bold">متقدرات وشعيرات</td><td class="p-1 border">قليلة</td><td class="p-1 border">غزيرة جداً (أكسجين)</td></tr>
+                        <tr><td class="p-1 border font-bold">الميوغلوبين (لون)</td><td class="p-1 border">قليل (شاحبة)</td><td class="p-1 border"><mark>كثير (حمراء)</mark></td></tr>
+                    </table>
                 </div>
             </div>
             
-            <!-- قنوات البروتين وبواباتها -->
-            <div class="glass-panel p-6 rounded-2xl bg-gradient-to-br from-white to-slate-50 border-r-4 border-brand-600">
-                <h3 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">🚪 تنظيم وبوابات قنوات البروتين الغشائية</h3>
-                <div class="grid sm:grid-cols-2 gap-4">
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-200">
-                        <strong class="text-brand-800 text-base block mb-1">1. بوابة الفولطاج (Voltage Gating)</strong>
-                        <p class="text-sm text-slate-700 leading-relaxed">تستجيب للتغير الكهربائي لغشاء الخلية. مثال: بوابات الصوديوم تفتح عند فقدان باطن الغشاء لشحنته السلبية (زوال الاستقطاب)، وقنوات البوتاسيوم تفتح عند الإيجابية.</p>
-                    </div>
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-200">
-                        <strong class="text-brand-800 text-base block mb-1">2. بوابة الربيطة (Ligand Gating)</strong>
-                        <p class="text-sm text-slate-700 leading-relaxed">تفتح عند ارتباط مادة كيميائية (ربيطة). مثال: بوابة الأستيل كولين (قطر مدخلها 0.65 نانومتر، مشحون سلبياً ليسمح بعبور الشوارد الموجبة والجزيئات غير المشحونة الأصغر حجماً).</p>
-                    </div>
-                </div>
+            <div class="mt-4 text-sm content-paragraph text-center bg-slate-50 dark:bg-slate-800 py-2 rounded">
+                <strong>التقلص أسوي الأبعاد (Isometric):</strong> طول ثابت، توتر يتغير (مثال: دفع حائط).<br>
+                <strong>التقلص أسوي التوتر (Isotonic):</strong> طول يقصر، توتر ثابت (مثال: رفع وزن).
             </div>
+
         </section>
 
-        <!-- ==================== القسم الثاني: كوامن الغشاء الخلوي وكامن الفعل ==================== -->
-        <section id="rmp" class="tab-content space-y-6">
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-brand-500 pb-2 mb-3">كامن الغشاء الخلوي وكامن الفعل العصبي</h2>
-                <p class="text-slate-700 text-base">
-                    تتميز الخلايا المستثارة (العصبية والعضلية) بوجود كمون كهربائي عبر أغشيتها وبمقدرتها على توليد ودفع إشارات كهرومغناطيسية متسلسلة.
-                </p>
-            </div>
-
-            <!-- كامن الراحة -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-xl font-bold text-brand-900 mb-3 border-b pb-2">كامن الراحة الغشائي (<span class="font-en text-base text-slate-600">RMP = -90 mV</span>)</h3>
-                <p class="text-slate-700 text-base mb-4">تبلغ قيمة كامن الراحة في الألياف العصبية الكبيرة <strong class="text-indigo-900">-90 ميلي فولط</strong> (الداخل أشد سلبية بـ 90 mV مقارنة بالمحيط الخارجي)، وينشأ عن محصلة إسهامات العوامل التالية:</p>
-
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 text-right">
-                        <div class="text-2xl mb-1">1️⃣</div>
-                        <h4 class="font-bold text-indigo-950 text-base">انتشار البوتاسيوم (<span class="ion-tag">K<sup>+</sup></span>)</h4>
-                        <p class="text-sm text-slate-700 mt-2 leading-relaxed">نفوذية الغشاء للبوتاسيوم في الراحة أعلى بـ 100 مرة من الصوديوم (عبر قنوات التسريب). لو كان هو المسبب الوحيد لكان الكامن <strong>-94 mV</strong>.</p>
-                    </div>
-                    <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 text-right">
-                        <div class="text-2xl mb-1">2️⃣</div>
-                        <h4 class="font-bold text-blue-950 text-base">انتشار الصوديوم (<span class="ion-tag">Na<sup>+</sup></span>)</h4>
-                        <p class="text-sm text-slate-700 mt-2 leading-relaxed">تسريب ضئيل للصوديوم نحو الداخل يضيف شحنات موجبة، فينخفض الكامن قليلاً ليصبح <strong>-86 mV</strong>.</p>
-                    </div>
-                    <div class="bg-purple-50/50 p-4 rounded-xl border border-purple-100 text-right">
-                        <div class="text-2xl mb-1">3️⃣</div>
-                        <h4 class="font-bold text-purple-950 text-base">مضخة <span class="ion-tag">Na<sup>+</sup>/K<sup>+</sup></span></h4>
-                        <p class="text-sm text-slate-700 mt-2 leading-relaxed">تضخ شحنات موجبة للخارج أكثر من الداخل (3 صوديوم مقابل 2 بوتاسيوم)، فتضيف درجة سلبية إضافية مقدارها <strong>-4 mV</strong>. المحصلة: <strong>-90 mV</strong>.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 🌟 المخطط التفاعلي المطور لكامن الفعل (Action Potential Interactive SVG Chart) -->
-            <div class="glass-panel p-6 rounded-2xl border-2 border-brand-200">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 border-b pb-3">
-                    <div>
-                        <h3 class="text-xl font-bold text-brand-900">📊 مخطط منحنى كامن الفعل التفاعلي (<span class="font-en text-sm text-slate-600">Action Potential Curve</span>)</h3>
-                        <p class="text-sm text-slate-600">انقر على أي مرحلة في المنحنى أو الأزرار التفاعلية لاستكشاف التفاصيل وحالة القنوات الشاردية:</p>
-                    </div>
-                </div>
-
-                <!-- أزرار اختيار الأطوار -->
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <button onclick="selectAPPhase('rest')" id="btn-rest" class="phase-btn active px-3 py-1.5 rounded-lg border text-sm font-bold transition">1. دور الراحة (-90 mV)</button>
-                    <button onclick="selectAPPhase('thresh')" id="btn-thresh" class="phase-btn px-3 py-1.5 rounded-lg border text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition">2. العتبة (-65 mV)</button>
-                    <button onclick="selectAPPhase('depol')" id="btn-depol" class="phase-btn px-3 py-1.5 rounded-lg border text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition">3. زوال الاستقطاب (+35 mV)</button>
-                    <button onclick="selectAPPhase('repol')" id="btn-repol" class="phase-btn px-3 py-1.5 rounded-lg border text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition">4. عودة الاستقطاب</button>
-                    <button onclick="selectAPPhase('hyper')" id="btn-hyper" class="phase-btn px-3 py-1.5 rounded-lg border text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 transition">5. فرط الاستقطاب</button>
-                </div>
-
-                <!-- SVG Graph Area -->
-                <div class="bg-slate-900 rounded-xl p-4 text-white relative shadow-inner overflow-hidden">
-                    <svg id="ap-svg" viewBox="0 0 700 280" class="w-full h-auto overflow-visible select-none">
-                        <!-- Grid Lines -->
-                        <line x1="60" y1="40" x2="660" y2="40" stroke="#334155" stroke-dasharray="4" />
-                        <text x="50" y="44" fill="#f87171" text-anchor="end" font-size="12" font-weight="bold">+35 mV</text>
-
-                        <line x1="60" y1="105" x2="660" y2="105" stroke="#475569" stroke-dasharray="2" />
-                        <text x="50" y="109" fill="#94a3b8" text-anchor="end" font-size="12">0 mV</text>
-
-                        <line x1="60" y1="170" x2="660" y2="170" stroke="#fbbf24" stroke-dasharray="4" />
-                        <text x="50" y="174" fill="#fbbf24" text-anchor="end" font-size="12" font-weight="bold">-65 mV (العتبة)</text>
-
-                        <line x1="60" y1="220" x2="660" y2="220" stroke="#3b82f6" stroke-dasharray="4" />
-                        <text x="50" y="224" fill="#60a5fa" text-anchor="end" font-size="12" font-weight="bold">-90 mV (الراحة)</text>
-
-                        <!-- Action Potential Path -->
-                        <path id="ap-path" d="M 60 220 L 160 220 Q 200 220 220 170 L 290 40 L 380 220 Q 420 240 460 220 L 660 220" 
-                              fill="none" stroke="#818cf8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-
-                        <!-- Interactive Clickable Points -->
-                        <!-- 1. Rest -->
-                        <circle cx="110" cy="220" r="9" fill="#3b82f6" class="chart-point" onclick="selectAPPhase('rest')" />
-                        <!-- 2. Threshold -->
-                        <circle cx="220" cy="170" r="9" fill="#fbbf24" class="chart-point" onclick="selectAPPhase('thresh')" />
-                        <!-- 3. Depol -->
-                        <circle cx="290" cy="40" r="9" fill="#ef4444" class="chart-point" onclick="selectAPPhase('depol')" />
-                        <!-- 4. Repol -->
-                        <circle cx="380" cy="220" r="9" fill="#10b981" class="chart-point" onclick="selectAPPhase('repol')" />
-                        <!-- 5. Hyper -->
-                        <circle cx="430" cy="235" r="9" fill="#a855f7" class="chart-point" onclick="selectAPPhase('hyper')" />
-
-                        <!-- Highlight Ring Indicator -->
-                        <circle id="indicator-ring" cx="110" cy="220" r="15" fill="none" stroke="#ffffff" stroke-width="3" class="transition-all duration-300" />
-                    </svg>
-
-                    <!-- Time Axis Legend -->
-                    <div class="flex justify-between text-xs text-slate-400 mt-1 px-8">
-                        <span>الزمن: 0 ms</span>
-                        <span>0.5 ms</span>
-                        <span>1.0 ms</span>
-                        <span>1.5 ms</span>
-                        <span>2.0 ms</span>
-                    </div>
-                </div>
-
-                <!-- Dynamic Explanation Panel -->
-                <div id="ap-details-box" class="mt-4 p-5 bg-indigo-50 border border-indigo-200 rounded-xl text-slate-900 transition-all">
-                    <!-- Default State filled by JS -->
-                </div>
-            </div>
-
-            <!-- تفاصيل بوابات القنوات وفترة الحران -->
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- حالة البوابات -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-900 text-lg mb-3 flex items-center gap-2">🔑 القنوات الفولطية وحالتها التشريحية</h4>
-                    <ul class="space-y-3 text-sm text-slate-800">
-                        <li class="bg-red-50 p-3 rounded-lg border border-red-200">
-                            <strong class="text-red-900 text-base block mb-1">قنوات الصوديوم (Na<sup>+</sup> Channels):</strong>
-                            تحوي بوابتين: بوابة تفعيل (خارجية) وبوابة تعطيل الفعالية (داخلية).
-                            <ul class="list-disc list-inside mt-1 space-y-1 text-slate-700">
-                                <li><strong>في الراحة (-90 mV):</strong> بوابة التفعيل مغلقة، وبوابة التعطيل مفتوحة.</li>
-                                <li><strong>عند زوال الاستقطاب (-65 to +35 mV):</strong> تفتح بوابة التفعيل بسرعة هائلة وتنفذ الشوارد.</li>
-                                <li><strong>عند الذروة (+35 mV):</strong> تنغلق بوابة التعطيل (بطيئة) وتتوقف نفوذية <span class="ion-tag">Na<sup>+</sup></span>. ولا تفتح ثانية حتى يستعيد الليف كامن الراحة!</li>
-                            </ul>
-                        </li>
-                        <li class="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                            <strong class="text-blue-900 text-base block mb-1">قنوات البوتاسيوم (K<sup>+</sup> Channels):</strong>
-                            تحوي بوابة واحدة فقط عند النهاية الداخلية.
-                            <ul class="list-disc list-inside mt-1 space-y-1 text-slate-700">
-                                <li><strong>في الراحة (-90 mV):</strong> تكون البوابة مغلقة.</li>
-                                <li><strong>عند ارتفاع الكامن نحو الصفر:</strong> تنفتح ببطء شديد، وتزامن فتحها التام مع انغلاق بوابات تعطيل الصوديوم، فيخرج البوتاسيوم بسرعة محققة عودة الاستقطاب.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- الحران والمثبتات -->
-                <div class="space-y-4">
-                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                        <div class="absolute right-0 top-0 w-1.5 h-full bg-rose-500"></div>
-                        <h4 class="font-bold text-slate-900 text-lg mb-2">🛑 فترة الحران (العصيان - Refractory)</h4>
-                        <ul class="text-sm text-slate-800 space-y-3">
-                            <li class="bg-rose-50 p-2.5 rounded border border-rose-200">
-                                <strong class="text-rose-900 text-base block">1. الحران المطلق (Absolute):</strong> 
-                                عجز تام عن توليد كامن فعل جديد مهما بلغت قوة المنبه! يشمل الطور الصاعد وبداية النازل. السبب: قنوات <span class="ion-tag">Na<sup>+</sup></span> إما مفتوحة بالكامل أو في حالة تعطيل الفعالية. مدته 1/2500 ثانية للألياف الضخمة (تسمح بنقل 2500 دفعة/ثانية كحد أقصى).
-                            </li>
-                            <li class="bg-amber-50 p-2.5 rounded border border-amber-200">
-                                <strong class="text-amber-900 text-base block">2. الحران النسبي (Relative):</strong> 
-                                يمكن توليد كامن فعل جديد شرط تطبيق منبه أشد من العتبة السوية. يشمل نهاية الطور النازل وفرط الاستقطاب. السبب: تحرر بعض قنوات الصوديوم وعودتها لحالة الإغلاق الراحي، مع بقاء قنوات البوتاسيوم مفتوحة.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-gradient-to-r from-teal-50 to-emerald-50 p-4 rounded-xl border border-teal-200">
-                        <strong class="text-teal-950 text-base block mb-1">🧪 المثبتات الغشائية ودور شوارد الكالسيوم (<span class="ion-tag">Ca<sup>2+</sup></span>):</strong>
-                        <p class="text-sm text-teal-900 leading-relaxed">
-                            نقص <span class="ion-tag">Ca<sup>2+</sup></span> (بمقدار 50%) يجعل قنوات الصوديوم تفتح بسهولة فائقة، فيصبح الليف عالي الاستثارة ويفرغ تنبيهات تلقائية محدثاً <strong>التكزز (Tetanus)</strong> المُميت لعضلات التنفس. 
-                            بالمقابل، ارتفاع <span class="ion-tag">Ca<sup>2+</sup></span> أو استخدام المبنجات الموضعية (كالبروكائين والتتراكائين) تصعّب فتح بوابات الصوديوم فتعمل كـ <strong>مثبتات غشائية</strong> تنقص الاستثارية.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- التوصيل القفزي -->
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h4 class="font-bold text-slate-900 text-lg mb-2">🏃 توصيل الإشارات في الأعصاب والتوصيل القفزي (<span class="font-en text-sm text-slate-600">Saltatory Conduction</span>)</h4>
-                <p class="text-base text-slate-700 leading-relaxed mb-3">
-                    تتألف الأعصاب من ألياف نخاعينية وعديمة النخاعين. في الألياف النخاعينية، الشوراد لا تعبر صفائح النخاعين العازلة (التي تنقص سعة الغشاء 50 ضعفاً)، بل تتدفق فقط عبر <strong>عقد رانفييه (Nodes of Ranvier)</strong>.
-                </p>
-                <div class="grid sm:grid-cols-3 gap-3 text-sm">
-                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                        <strong class="text-brand-800 block mb-1">🚀 سرعة فائقة</strong>
-                        <span>يرفع سرعة النقل العصبي بمقدار 5 إلى 50 ضعفاً مقارنة بالعديمة.</span>
-                    </div>
-                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                        <strong class="text-brand-800 block mb-1">🔋 توفير الطاقة</strong>
-                        <span>يحافظ على طاقة المحوار لأن زوال الاستقطاب محصور بالعقد فقط (نقل شوارد أقل).</span>
-                    </div>
-                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                        <strong class="text-brand-800 block mb-1">📏 سرعة النقل</strong>
-                        <span>0.5 م/ث (في الألياف العديمة) وتصل إلى 100 م/ث (في الألياف النخاعينية الضخمة).</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== القسم الثالث: العضلات الهيكلية ==================== -->
-        <section id="skeletal" class="tab-content space-y-6">
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-brand-500 pb-2 mb-2">النسيج العضلي الهيكلي</h2>
-                <p class="text-slate-700 text-base leading-relaxed">
-                    تشكل العضلات الهيكلية نحو 40% من وزن الجسم. تعصب حركياً بألياف حركية جسدية، ويتراوح قطر أليافها بين 10 - 80 ميكرومتر.
-                </p>
-            </div>
-
-            <!-- البنية التشريحية الجزيئية -->
-            <div class="glass-panel p-6 rounded-2xl">
-                <h3 class="text-xl font-bold text-brand-900 mb-4 border-b pb-2">البنية التشريحية الجزيئية للألياف والخيوط</h3>
-                
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <!-- خيوط الميوزين والأكتين -->
-                    <div class="space-y-4">
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <strong class="text-brand-900 text-lg block mb-1">1. خيوط الميوزين (Myosin Filaments)</strong>
-                            <p class="text-sm text-slate-800 leading-relaxed">
-                                الخيوط الثخينة (طولها الثابت <strong>1.6 ميكرومتر</strong>). يتألف الخيط من 200 جزيء ميوزين أو أكثر. كل جزيء يحوي 6 سلاسل ببتيدية (سلسلتان ثقيلتان تشكلان الذيل الحلزوني، و4 سلاسل خفيفة تدخل في تركيب الرأسين).
-                                <br>• يبرز ذراع ورأس ممفصلان عند نقطتين (المفصلات). 
-                                <br>• يمتاز رأس الميوزين بفعالية إنزيمية حالمة لـ <span class="font-en font-bold">ATPase</span>.
-                                <br>• لا توجد رؤوس جسور في المركز لمسافة <strong>0.2 ميكرومتر</strong>.
-                            </p>
-                        </div>
-
-                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                            <strong class="text-brand-900 text-lg block mb-1">2. خيوط الأكتين (Actin Filaments)</strong>
-                            <p class="text-sm text-slate-800 leading-relaxed">
-                                الخيوط الرفيعة (طولها <strong>1.0 ميكرومتر</strong>). تنغرز في أقراص Z وتتكون من 3 بروتينات:
-                                <br>• <strong>الأكتين الخيطي F:</strong> حلزون مضاعف يمتلك مواقع فعالة مرتبطة بـ <span class="font-en font-bold">ADP</span> (تتفعل كل 2.7 نانومتر).
-                                <br>• <strong>التروبوميوزين:</strong> خيط يلتف حول الأكتين ليغطي المواقع الفعالة وقت الراحة.
-                                <br>• <strong>التروبونين:</strong> معقد من 3 مكونات: (I) يربط أكتين، (T) يربط تروبوميوزين، و <strong class="text-rose-600">(C) يربط حتى 4 شوارد كالسيوم Ca<sup>2+</sup></strong>.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- القسيم العضلي -->
-                    <div class="bg-indigo-50/60 rounded-xl p-5 border border-indigo-200 flex flex-col justify-between">
-                        <div>
-                            <h4 class="font-bold text-indigo-950 text-lg mb-3 text-center border-b border-indigo-200 pb-2">القسيم العضلي (Sarcomere)</h4>
-                            <p class="text-sm text-slate-800 mb-3 leading-relaxed">هو الجزء المتوضع بين قرصي Z متعاقبين. طوله المثالي للتقلص السوي العظمي يساوي <strong class="text-indigo-900 text-base">2 ميكرومتر</strong>.</p>
-                            
-                            <div class="space-y-2 text-sm">
-                                <div class="flex justify-between items-center p-2.5 bg-white rounded-lg border border-slate-200">
-                                    <span class="font-bold text-slate-800">شريط فاتح (I-band)</span>
-                                    <span class="text-slate-600 font-medium">أكتين فقط (متجانس)</span>
-                                </div>
-                                <div class="flex justify-between items-center p-2.5 bg-white rounded-lg border border-slate-200">
-                                    <span class="font-bold text-slate-800">شريط قاتم (A-band)</span>
-                                    <span class="text-slate-600 font-medium">ميوزين + نهايات أكتين</span>
-                                </div>
-                                <div class="flex justify-between items-center p-2.5 bg-white rounded-lg border border-slate-200">
-                                    <span class="font-bold text-slate-800">القرص Z (Z-disc)</span>
-                                    <span class="text-slate-600 font-medium">بروتينات خيطية تربط الأكتين عبر الليف</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 p-3 bg-white text-brand-900 text-sm font-bold text-center rounded-lg border border-indigo-300">
-                            ⚡ الأنابيب المعترضة (T-tubules) والشبكة الهيولية: تضمن النقل السريع لكامن الفعل لأعماق الليف وتحرير الكالسيوم.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- آلية التقلص ومصادر الطاقة -->
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- آلية الانزلاق وضربة القدرة -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-900 text-lg mb-3 flex items-center gap-2">⚙️ آلية الانزلاق وضربة القدرة (<span class="font-en text-sm text-slate-600">Power Stroke</span>)</h4>
-                    <ol class="list-decimal list-inside text-sm text-slate-800 space-y-2 leading-relaxed">
-                        <li>وصول كامن الفعل وتحرير <span class="ion-tag">Ca<sup>2+</sup></span> من الشبكة الهيولية العضلية.</li>
-                        <li>ارتباط <span class="ion-tag">Ca<sup>2+</sup></span> بالتروبونين C يزيل تثبيط التروبوميوزين ويكشف مواقع الأكتين الفعالة.</li>
-                        <li>ترتبط رؤوس الميوزين (التي شطرت الـ ATP سلفاً وتحمل الطاقة) بمواقع الأكتين.</li>
-                        <li><strong class="text-brand-800">ضربة القدرة:</strong> يميل رأس الجسر ساحباً خيط الأكتين والقرص Z نحو المركز.</li>
-                        <li>تحرر <span class="font-en font-bold">ADP</span> و <span class="font-en font-bold">P<sub>i</sub></span>، ثم يرتبط <strong>ATP جديد</strong> بالرأس مما يسبب <strong>انفصال الرأس</strong> عن الأكتين.</li>
-                        <li>يُشطر الـ ATP الجديد لإعادة الرأس لوضعيته العمودية استعداداً لضربة جديدة.</li>
-                    </ol>
-                    <div class="mt-3 bg-rose-50 text-rose-900 p-3 rounded-lg text-xs font-bold border border-rose-200">
-                        ❗ ارتباط ATP جديد ضروري لفك ارتباط الرأس (الارتخاء)، بينما شطر ATP ضروري لتزويد ضغط ضربة القدرة القادمة بالطاقة.
-                    </div>
-                </div>
-
-                <!-- مصادر الطاقة والفعالية -->
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                    <div class="absolute right-0 top-0 w-1.5 h-full bg-emerald-500"></div>
-                    <h4 class="font-bold text-slate-900 text-lg mb-2 flex items-center gap-2">🔋 مصادر طاقة التقلص والفعالية</h4>
-                    <p class="text-sm text-slate-700 mb-2">مخزون الـ ATP يكفي لـ 1 - 2 ثانية فقط. يتم تجديده عبر:</p>
-                    
-                    <ul class="space-y-2 text-sm text-slate-800">
-                        <li class="bg-slate-50 p-2.5 rounded border border-slate-200"><strong>1. الفوسفوكرياتين:</strong> طاقته 5 أضعاف الـ ATP. يكفي لمدة 8 ثوانٍ فقط.</li>
-                        <li class="bg-slate-50 p-2.5 rounded border border-slate-200"><strong>2. تحلل الغليكوجين:</strong> تفكك لاهوائي، سريع جداً (ضعفي ونصف التأكسدي). يكفي لمدة دقيقة.</li>
-                        <li class="bg-emerald-50 p-2.5 rounded border border-emerald-200 text-emerald-950"><strong>3. الاستقلاب التأكسدي:</strong> يشكل <strong>> 95%</strong> من طاقة التقلص المديد. يعتمد أساساً على الشحوم.</li>
-                    </ul>
-
-                    <div class="mt-3 p-3 bg-amber-50 text-amber-950 rounded-lg text-xs font-bold border border-amber-300">
-                        🔥 <strong>تصويب امتحاني هام:</strong> الفعالية العظمى للتقلص العضلي تكون أقل من <strong>25%</strong> فقط، لأن نحو <span class="underline decoration-red-600 font-bold text-red-700">75% من الطاقة يهدر كحرارة</span>. وتتحقق الفعالية العظمى عند 30% من السرعة العظمى للتقلص.
-                    </div>
-                </div>
-            </div>
-
-            <!-- أنماط التقلص والألياف -->
-            <div class="glass-panel p-6 rounded-2xl">
-                <h3 class="text-xl font-bold text-brand-900 mb-4 border-b pb-2">أنماط التقلص وأنواع الألياف العضلية</h3>
-                
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <!-- أسوي المقاسات والتنظيم -->
-                    <div>
-                        <strong class="block text-slate-900 text-base mb-2">أنماط التقلص الميكانيكي</strong>
-                        <div class="space-y-3">
-                            <div class="border-r-4 border-blue-600 pr-3 bg-white p-3.5 rounded-xl shadow-sm border border-slate-200">
-                                <strong class="text-base text-blue-900 block">أسوي المقاسات / الطول (Isometric)</strong>
-                                <p class="text-sm text-slate-700 mt-1">لا تقصر العضلة ولا يتغير طولها أثناء التقلص (مثل دفع حائط). يقيس تغيرات قوة تقلص العضلة نفسها تماماً.</p>
-                            </div>
-                            <div class="border-r-4 border-emerald-600 pr-3 bg-white p-3.5 rounded-xl shadow-sm border border-slate-200">
-                                <strong class="text-base text-emerald-900 block">أسوي التوتر (Isotonic)</strong>
-                                <p class="text-sm text-slate-700 mt-1">تقصر العضلة ويتغير طولها مع ثبات التوتر (مثل رفع وزن). تعتمد ميزاته على الحمل وعطالة الحمل.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- السريعة والبطيئة -->
-                    <div>
-                        <strong class="block text-slate-900 text-base mb-2">أنماط الألياف العضلية (السريعة والبطيئة)</strong>
-                        <div class="space-y-2 text-sm">
-                            <div class="bg-white border border-slate-200 rounded-xl p-3 shadow-sm">
-                                <strong class="text-slate-900 text-base block mb-1">⚪ ألياف سريعة (بيض/شاحبة):</strong>
-                                <p class="text-slate-700 text-xs sm:text-sm">كبيرة القطر، شبكة هيولية واسعة، إنزيمات تحلل السكر عالية جداً. التروية الدموية والمتقدرات والميوغلوبين <span class="text-rose-600 font-bold">أقل</span>. مخصصة للحركات القوية السريعة.</p>
-                            </div>
-                            <div class="bg-rose-50/60 border border-rose-200 rounded-xl p-3 shadow-sm">
-                                <strong class="text-rose-950 text-base block mb-1">🔴 ألياف بطيئة (حمراء):</strong>
-                                <p class="text-slate-700 text-xs sm:text-sm">أصغر قطراً معصبة بألياف أصغر، تروية ومتقدرات غزيرة جداً. غنية بـ <strong>الميوغلوبين (خضاب العضلات الحاوي على الحديد الذي يخزن O<sub>2</sub> ويعطي اللون الأحمر)</strong>. مخصصة للتقلص المديد التأكسدي.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== القسم الرابع: العضلات الملساء ==================== -->
-        <section id="smooth" class="tab-content space-y-6">
-            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-                <h2 class="text-2xl font-bold text-slate-900 border-b-2 border-brand-500 pb-2 mb-2">النسيج العضلي الأملس</h2>
-                <div class="mt-2 bg-amber-50 inline-block px-3.5 py-1.5 rounded-lg border border-amber-300 text-amber-950 text-sm font-bold">
-                    ⚠️ <strong>قياسات مصححة:</strong> قطر الليف العضلي الأملس 1 - 5 ميكرومتر، وطوله 20 - 500 ميكرومتر.
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white p-5 rounded-2xl border-t-4 border-indigo-600 shadow-sm border border-slate-200">
-                    <h3 class="font-bold text-indigo-950 text-lg mb-2">1. عديدة الوحدة (Multi-Unit Smooth Muscles)</h3>
-                    <p class="text-sm text-slate-700 mb-3 leading-relaxed">يتألف من ألياف مستقلة تماماً معزولة بغشاء قاعدي. يعمل كل ليف بمفرده ويتحدد التحكم بها أساساً بالإشارات العصبية.</p>
-                    <p class="text-xs sm:text-sm text-slate-800 bg-indigo-50 p-2.5 rounded-lg border border-indigo-100">
-                        📍 <strong>أمثلة امتحانية:</strong> العضلة الهدبية للعين، حدقة العين، والعضلة الناصبة للشعرة.
-                    </p>
-                </div>
-                
-                <div class="bg-white p-5 rounded-2xl border-t-4 border-pink-600 shadow-sm border border-slate-200">
-                    <h3 class="font-bold text-pink-950 text-lg mb-2">2. وحيدة الوحدة (Single-Unit / الحشوية)</h3>
-                    <p class="text-sm text-slate-700 mb-3 leading-relaxed">تترابط ملايين الألياف في حزم، وتلتصق أغشيتها بمواصل فجوية (Gap Junctions) تنقل الشوارد وكامن الفعل بحرية، فتتقلص الكتلة كـ <strong>وحدة واحدة</strong>.</p>
-                    <p class="text-xs sm:text-sm text-slate-800 bg-pink-50 p-2.5 rounded-lg border border-pink-100">
-                        📍 <strong>أمثلة امتحانية:</strong> جدر الأحشاء (الأمعاء، الرحم، الحالبان، الأوعية الدموية).
-                    </p>
-                </div>
-            </div>
-
-            <!-- الأساس الفيزيائي والتنظيم -->
-            <div class="glass-panel p-6 rounded-2xl">
-                <h3 class="text-xl font-bold text-brand-900 mb-4 border-b pb-2">الأساس الفيزيائي ومقارنة التقلص مع الهيكلية</h3>
-                
-                <div class="grid lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-1 space-y-3 text-sm text-slate-800 leading-relaxed">
-                        <p>لا تمتلك العضلات الملساء تخطيطاً عرضياً. ترتبط خيوط الأكتين بـ <strong class="text-brand-800">الأجسام الكثيفة (Dense Bodies)</strong> التي تؤدي دور (القرص Z).</p>
-                        <p>تنتشر الأجسام الكثيفة بالغشاء وداخل الخلية، وتنقل قوة التقلص بين الخلايا عبر جسور بروتينية.</p>
-                        <p>خيوط الميوزين تتبعثر بين الأكتين (قطرها ضعف الأكتين وعددها أقل بـ 5-10 أضعاف).</p>
-                    </div>
-                    
-                    <div class="lg:col-span-2 bg-slate-900 p-5 rounded-xl text-white shadow-inner">
-                        <h4 class="font-bold text-indigo-300 mb-3 text-center border-b border-slate-800 pb-2 text-base">خصائص تقلص العضلة الملساء</h4>
-                        <ul class="space-y-2.5 text-xs sm:text-sm leading-relaxed">
-                            <li class="flex gap-2"><span class="text-amber-400 font-bold">⚡ دوران الجسور:</span> أبطأ بـ 10 إلى 300 مرة (لضعف فاعلية ATPase الميوزين).</li>
-                            <li class="flex gap-2"><span class="text-amber-400 font-bold">🔋 استهلاك الطاقة:</span> يحتاج 1/10 إلى 1/300 فقط من طاقة العضلات الهيكلية!</li>
-                            <li class="flex gap-2"><span class="text-amber-400 font-bold">⏱️ زمن التقلص:</span> بطيء البدء والاسترخاء (كلياً 1 - 3 ثانية، أطول بـ 30 مرة من الهيكلية).</li>
-                            <li class="flex gap-2"><span class="text-emerald-400 font-bold">💪 القوة الأعظمية:</span> أعلى في الملساء! (4 - 6 كغ/سم<sup>2</sup> مقابل 3 - 4 للهيكلية) لطول فترة ارتباط الجسور.</li>
-                            <li class="flex gap-2"><span class="text-rose-400 font-bold">🔒 آلية المزلاج (Latch Mechanism):</span> الحفاظ على تقلص مقوٍ مديد بساعات بأقل طاقة ومصادر استثارة طفيفة.</li>
-                            <li class="flex gap-2"><span class="text-teal-300 font-bold">🎈 الارتخاء بعد الكرب:</span> مقدرة الأحشاء (كالمثانة) على العودة لضغطها الأصلي بعد تمدد حجمها.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- تنظيم الكالسيوم في الملساء -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-xl font-bold text-brand-900 mb-2 text-center">آلية تفعيل التقلص بوساطة شوارد الكالسيوم</h3>
-                <p class="text-base text-center text-slate-700 mb-6">لا تحوي الملساء تروبونين، بل بروتين منظم يدعى <strong class="text-brand-800">الكالموديولين (Calmodulin)</strong>.</p>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-sm font-bold text-slate-800">
-                    <div class="bg-indigo-50 p-3.5 rounded-xl text-center border border-indigo-200">
-                        1. ارتباط 4 شوارد <span class="ion-tag">Ca<sup>2+</sup></span><br><span class="text-xs font-normal text-slate-600">مع بروتين الكالموديولين</span>
-                    </div>
-                    <div class="bg-indigo-50 p-3.5 rounded-xl text-center border border-indigo-200">
-                        2. اندماج وتفعيل إنزيم<br><span class="text-xs font-normal text-slate-600">كيناز الميوزين (MLCK)</span>
-                    </div>
-                    <div class="bg-indigo-50 p-3.5 rounded-xl text-center border border-indigo-200">
-                        3. فسفرة السلسلة المنظمة<br><span class="text-xs font-normal text-slate-600">لرأس جزيء الميوزين</span>
-                    </div>
-                    <div class="bg-emerald-50 p-3.5 rounded-xl text-center border border-emerald-300 text-emerald-950">
-                        4. ارتباط بالأكتين<br><span class="text-xs font-normal text-slate-600">وإتمام دورة التقلص</span>
-                    </div>
-                </div>
-                
-                <div class="mt-5 text-center text-sm text-rose-950 bg-rose-50 p-3 rounded-xl border border-rose-200">
-                    <strong>الارتخاء في العضلة الملساء:</strong> يستلزم إنزيم <strong>فسفاتاز الميوزين (Myosin Phosphatase)</strong> لفصل الفسفات عن السلسلة المنظمة. زمن الارتخاء يتناسب مع كمية هذا الإنزيم!
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== القسم الخامس: الخلاصة الامتحانية ==================== -->
-        <section id="yield" class="tab-content space-y-8">
+        <!-- المبحث الخامس -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-teal-600 pb-2 mb-4 text-teal-800 dark:text-teal-400">🌊 خامساً: النسيج العضلي الأملس</h2>
             
-            <div class="bg-gradient-to-br from-amber-600 via-orange-600 to-amber-700 p-6 sm:p-8 rounded-3xl text-white shadow-xl">
-                <h2 class="text-3xl font-extrabold mb-4 text-center drop-shadow">ليلة الامتحان 🎯</h2>
-                <p class="text-center text-amber-100 mb-6 text-base font-medium">أهم الأرقام والحدود القياسية وفخوخ أسئلة الأتمتة (MCQs) المصححة رسمياً.</p>
-                
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- أرقام هامة -->
-                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20">
-                        <h3 class="text-xl font-bold mb-4 border-b border-white/20 pb-2 text-amber-200">🔢 أرقام وقياسات ذهبية</h3>
-                        <ul class="space-y-2.5 text-sm sm:text-base">
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>كامن الراحة (ليف عصبي):</span> <strong class="text-amber-300 font-en font-bold">-90 mV</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>إسهام البوتاسيوم في RMP:</span> <strong class="text-amber-300 font-en font-bold">-86 mV</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>إسهام مضخة Na+/K+ في RMP:</span> <strong class="text-amber-300 font-en font-bold">-4 mV</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>عتبة التنبيه (ليف عصبي كبير):</span> <strong class="text-amber-300 font-en font-bold">-65 mV</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>طول القسيم العضلي المثالي:</span> <strong class="text-amber-300 font-bold">2 μm</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>المركز الخالي من الجسور:</span> <strong class="text-amber-300 font-bold">0.2 μm</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>طول خيط الميوزين الثابت:</span> <strong class="text-amber-300 font-bold">1.6 μm</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>طول خيط الأكتين:</span> <strong class="text-amber-300 font-bold">1.0 μm</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>طاقة تهدر كحرارة في التقلص:</span> <strong class="text-amber-300 text-lg font-bold">75%</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>أطوال ألياف العضلات الملساء:</span> <strong class="text-amber-300 font-bold">20 - 500 μm</strong></li>
-                            <li class="flex justify-between border-b border-white/10 pb-1"><span>قطر ألياف العضلات الملساء:</span> <strong class="text-amber-300 font-bold">1 - 5 μm</strong></li>
-                        </ul>
+            <div class="content-paragraph mb-6">
+                <p>ألياف صغيرة (قطر 1-5 ميكرومتر، طول 2-500 ميكرومتر). لا تملك تخطيطاً (غياب أقراص Z)، بدلاً منها يوجد <mark>أجسام كثيفة (Dense Bodies)</mark> ترتبط بها خيوط الأكتين.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-sm">
+                    <div class="border border-slate-300 p-3 rounded">
+                        <strong class="text-teal-600">عديدة الوحدة (Multi Unit):</strong> ألياف مستقلة، تعصيب مفرد، تحكم عصبي أساساً. (أمثلة: عضلة هدبية للعين، حدقة العين، ناصبة الشعرة).
                     </div>
-
-                    <!-- نكشات امتحانية -->
-                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20">
-                        <h3 class="text-xl font-bold mb-4 border-b border-white/20 pb-2 text-amber-200">🚨 فخوخ امتحانية احذرها</h3>
-                        <ul class="space-y-3.5 text-sm sm:text-base leading-relaxed">
-                            <li class="bg-black/20 p-3 rounded-xl">
-                                <span class="text-rose-300 font-bold block">❌ فخ:</span> 
-                                شطر الـ ATP يفصل رأس الميوزين عن الأكتين.<br>
-                                <span class="text-emerald-300 font-bold">✅ الصحيح:</span> <strong>ارتباط ATP جديد</strong> هو ما يفصل الرأس، بينما الشطر يجهز الرأس لضربة القدرة القادمة.
-                            </li>
-                            <li class="bg-black/20 p-3 rounded-xl">
-                                <span class="text-rose-300 font-bold block">❌ فخ:</span> 
-                                في النقل الميسر تزداد السرعة طردياً مع التركيز بلا حدود.<br>
-                                <span class="text-emerald-300 font-bold">✅ الصحيح:</span> تزداد مع "مدروج التركيز" حتى تصل لسرعة قصوى (V<sub>max</sub>) بسب تشبع الحوامل.
-                            </li>
-                            <li class="bg-black/20 p-3 rounded-xl">
-                                <span class="text-rose-300 font-bold block">❌ فخ:</span> 
-                                نقص الكالسيوم يعمل كمثبت غشائي.<br>
-                                <span class="text-emerald-300 font-bold">✅ الصحيح:</span> <strong>زيادة الكالسيوم</strong> هي المثبت. نقصه بـ 50% يسبب فرط استثارة وتكزز مميت.
-                            </li>
-                        </ul>
+                    <div class="border border-slate-300 p-3 rounded">
+                        <strong class="text-teal-600">وحيدة الوحدة (الحشوية):</strong> تتقلص ككتلة واحدة مدمجة. تتواصل بـ <mark>مواصل فجوية (Gap Junctions)</mark>. تحكم غير عصبي غالباً. (أمثلة: أمعاء، رحم، أوعية).
                     </div>
                 </div>
             </div>
 
-            <!-- Flashcards Section -->
-            <div class="mt-8">
-                <h3 class="text-xl font-bold text-slate-900 text-center mb-4">بطاقات الاستذكار السريع (Flashcards)</h3>
-                <p class="text-center text-sm text-slate-600 mb-6">انقر على البطاقة لقلبها واختبار معلوماتك</p>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-                    <!-- Card 1 -->
-                    <div class="perspective h-44 cursor-pointer" onclick="this.querySelector('.flip-card-inner').classList.toggle('rotate-y-180')">
-                        <div class="flip-card-inner relative w-full h-full transition-transform duration-500 preserve-3d shadow-md rounded-2xl">
-                            <div class="absolute w-full h-full backface-hidden bg-white border-2 border-brand-200 rounded-2xl flex items-center justify-center p-4 text-center font-bold text-brand-950 text-base">
-                                ما هو دور الأجسام الكثيفة في العضلة الملساء؟
-                            </div>
-                            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-brand-700 text-white rounded-2xl flex items-center justify-center p-4 text-center font-medium text-sm sm:text-base">
-                                تقوم بدور مماثل لـ (القرص Z) في الهيكلية لربط خيوط الأكتين ونقل قوة التقلص.
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card 2 -->
-                    <div class="perspective h-44 cursor-pointer" onclick="this.querySelector('.flip-card-inner').classList.toggle('rotate-y-180')">
-                        <div class="flip-card-inner relative w-full h-full transition-transform duration-500 preserve-3d shadow-md rounded-2xl">
-                            <div class="absolute w-full h-full backface-hidden bg-white border-2 border-brand-200 rounded-2xl flex items-center justify-center p-4 text-center font-bold text-brand-950 text-base">
-                                ما البروتين المنظم للتقلص في الملساء بدلاً من التروبونين؟
-                            </div>
-                            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-brand-700 text-white rounded-2xl flex items-center justify-center p-4 text-center font-medium text-sm sm:text-base">
-                                الكالموديولين (Calmodulin)، والذي يرتبط مع 4 شوارد كالسيوم لتفعيل MLCK.
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card 3 -->
-                    <div class="perspective h-44 cursor-pointer" onclick="this.querySelector('.flip-card-inner').classList.toggle('rotate-y-180')">
-                        <div class="flip-card-inner relative w-full h-full transition-transform duration-500 preserve-3d shadow-md rounded-2xl">
-                            <div class="absolute w-full h-full backface-hidden bg-white border-2 border-brand-200 rounded-2xl flex items-center justify-center p-4 text-center font-bold text-brand-950 text-base">
-                                متى تتفتح قنوات البوتاسيوم الفولطية أثناء كامن الفعل؟
-                            </div>
-                            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-brand-700 text-white rounded-2xl flex items-center justify-center p-4 text-center font-medium text-sm sm:text-base">
-                                تتفعل ببطء، وتتزامن مع إغلاق قنوات الصوديوم لتبدأ عودة الاستقطاب.
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Card 4 -->
-                    <div class="perspective h-44 cursor-pointer" onclick="this.querySelector('.flip-card-inner').classList.toggle('rotate-y-180')">
-                        <div class="flip-card-inner relative w-full h-full transition-transform duration-500 preserve-3d shadow-md rounded-2xl">
-                            <div class="absolute w-full h-full backface-hidden bg-white border-2 border-brand-200 rounded-2xl flex items-center justify-center p-4 text-center font-bold text-brand-950 text-base">
-                                في فترة الحران المطلق، ما حالة بوابات الصوديوم؟
-                            </div>
-                            <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-brand-700 text-white rounded-2xl flex items-center justify-center p-4 text-center font-medium text-sm sm:text-base">
-                                إما مفتوحة تماماً أو في حالة (تعطيل الفعالية) المغلقة التي لا تستجيب لأي منبه.
-                            </div>
-                        </div>
+            <!-- Kinetic Simulator / Comparison -->
+            <div class="content-paragraph bg-white dark:bg-slate-800 p-4 rounded border border-slate-200 mb-6 shadow-sm">
+                <h3 class="font-bold text-center mb-4">مقارنة العضلة الملساء مع الهيكلية ⚖️</h3>
+                <ul class="space-y-2 text-sm list-decimal list-inside">
+                    <li><mark>دوران الجسور التصالبية أبطأ بكثير</mark> (1/10 إلى 1/300) لضعف فعالية ATPase.</li>
+                    <li><mark>استهلاك الطاقة أقل بكثير</mark> (تحافظ على التقلص بأقل طاقة).</li>
+                    <li><mark>قوة التقلص العظمى أكبر!</mark> (4-6 كغ/سم² مقابل 3-4 للهيكلية) بسبب فترة ارتباط الجسور الطويلة.</li>
+                    <li><mark>آلية المزلاج (Latch Mechanism):</mark> تحافظ على التقلص المديد المقوي باستهلاك طاقة يقارب الصفر.</li>
+                    <li><mark>الارتخاء بعد الكرب (Stress Relaxation):</mark> قدرة العضو المجوف (المثانة) على إعادة ضغطه للأصلي بعد التمدد أو الانكماش المفاجئ.</li>
+                </ul>
+            </div>
+
+            <!-- Cascade: Smooth Muscle Contraction -->
+            <div class="cascade-container content-paragraph">
+                <h3 class="font-bold text-center w-full mb-4">🧪 تنظيم التقلص بالكالسيوم (الخلو من التروبونين!)</h3>
+                <div class="cascade-step">
+                    <strong>1. غياب التروبونين:</strong><br>
+                    تمتلك العضلة الملساء بروتين <mark>كالموديولين (Calmodulin)</mark> يربط 4 شوارد كالسيوم.
+                </div>
+                <i class="fas fa-arrow-down cascade-arrow"></i>
+                <div class="cascade-step">
+                    <strong>2. التفعيل الإنزيمي:</strong><br>
+                    معقد (كالسيوم-كالموديولين) يفعل إنزيم <mark>كيناز الميوزين (MLCK)</mark>.
+                </div>
+                <i class="fas fa-arrow-down cascade-arrow"></i>
+                <div class="cascade-step relative">
+                    <strong>3. فسفرة الميوزين والتقلص:</strong><br>
+                    يقوم الكيناز بفسفرة (السلسلة الخفيفة المنظمة) لرأس الميوزين ⟸ يرتبط بالأكتين ⟸ يحدث التقلص.
+                    <div class="side-card">
+                        🛑 <strong>لإيقاف التقلص:</strong>
+                        لا يكفي انخفاض الكالسيوم! يجب تدخل إنزيم <mark>فسفاتاز الميوزين</mark> لنزع الفسفات عن رأس الميوزين (هو الذي يحدد زمن الارتخاء).
                     </div>
                 </div>
             </div>
@@ -710,106 +614,176 @@
 
     </main>
 
+    <!-- زبدة الفصل والتوقيع الرسمي -->
+    <footer class="bg-slate-900 text-slate-300 py-8 border-t-4 border-teal-600 mt-12 content-paragraph">
+        <div class="max-w-4xl mx-auto px-4">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <!-- بنك الأرقام -->
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-3 border-b border-slate-700 pb-2">🔢 بنك الأرقام الامتحاني</h3>
+                    <ul class="text-sm space-y-1">
+                        <li>كامن الراحة للعصب: <mark>-90 mV</mark></li>
+                        <li>عتبة التنبيه: <mark>-65 mV</mark></li>
+                        <li>إسهام مضخة Na/K في الكامن: <mark>-4 mV</mark></li>
+                        <li>سرعة النقل: الألياف المستمرة (0.5 م/ث) - القفزي (تصل 100 م/ث).</li>
+                        <li>استهلاك حرارة العضلة: <mark>75%</mark> (فعالية < 25%).</li>
+                        <li>قوة تقلص الملساء: <mark>4-6 كغ/سم²</mark> (أقوى من الهيكلية 3-4).</li>
+                    </ul>
+                </div>
+
+                <!-- Glossary -->
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-3 border-b border-slate-700 pb-2">📚 مسرد المصطلحات (Glossary)</h3>
+                    <ul class="text-sm space-y-1">
+                        <li>Resting Membrane Potential: كامن الراحة</li>
+                        <li>Action Potential: كامن الفعل</li>
+                        <li>Depolarization / Repolarization: زوال / عودة الاستقطاب</li>
+                        <li>Absolute Refractory Period: فترة الحران المطلق</li>
+                        <li>Sarcomere: القسيم العضلي</li>
+                        <li>Cross Bridges: الجسور التصالبية (المعترضة)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- التوقيع الرسمي (إلزامي) -->
+            <div class="mt-8 text-center bg-black/30 py-3 rounded-lg border border-slate-800">
+                <p class="text-teal-400 font-bold text-sm">
+                    🎓 إعداد وتطوير: طالب طب في جامعة إدلب - السنة التحضيرية | 2026 ©
+                </p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Tab switching logic
-        function openTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-            
-            const buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('bg-brand-100', 'text-brand-800', 'shadow-sm', 'font-black');
-                if(!btn.classList.contains('bg-amber-100')){
-                    btn.classList.add('text-slate-700');
-                }
-            });
-            
-            document.getElementById(tabId).classList.add('active');
-            
-            const clickedBtn = event.currentTarget;
-            if(!clickedBtn.classList.contains('bg-amber-100')){
-                clickedBtn.classList.add('bg-brand-100', 'text-brand-800', 'shadow-sm', 'font-black');
-                clickedBtn.classList.remove('text-slate-700');
-            }
-        }
-
-        // Action Potential SVG Interactive Graph Data & Logic
-        const apPhases = {
-            rest: {
-                title: "1. دور الراحة (Resting Membrane Potential: -90 mV)",
-                cx: 110, cy: 220,
-                voltage: "-90 mV",
-                channels: "قنوات Na<sup>+</sup>: بوابة التفعيل مغلقة. قنوات K<sup>+</sup>: مغلقة. مضخة Na<sup>+</sup>/K<sup>+</sup> تعمل باستمرار.",
-                desc: "يكون الغشاء مستقتطباً تماماً. القوى الكهربائية والكيميائية متوازنة. نفوذية الغشاء للبوتاسيوم أعلى بـ 100 مرة من الصوديوم عبر قنوات التسريب."
-            },
-            thresh: {
-                title: "2. عتبة التنبيه (Threshold Level: -65 mV)",
-                cx: 220, cy: 170,
-                voltage: "-65 mV",
-                channels: "قنوات Na<sup>+</sup> الفولطية تبدأ بالانفتاح التلقائي السريع.",
-                desc: "ارتفاع مفاجئ بمقدار 15 - 30 mV فوق كامن الراحة يطلق دارة ارتجاع إيجابي (Positive Feedback Loop) تفتح جميع قنوات الصوديوم الفولطية المجاورة فجأة."
-            },
-            depol: {
-                title: "3. طور زوال الاستقطاب (Depolarization & Overshoot: +35 mV)",
-                cx: 290, cy: 40,
-                voltage: "+35 mV",
-                channels: "قنوات Na<sup>+</sup>: بوابات التفعيل والتعطيل مفتوحة. تدفق هائل لـ Na<sup>+</sup> للداخل (زيادة النفوذية 500 - 5000 ضعف).",
-                desc: "ينعدم الاستقطاب ويتجاوز الكامن مستوى الصفر ليصبح إيجابياً (+35 mV في الألياف الكبيرة). يتوقف الارتفاع عند انغلاق بوابات تعطيل الصوديوم البطيئة."
-            },
-            repol: {
-                title: "4. طور عودة الاستقطاب (Repolarization)",
-                cx: 380, cy: 220,
-                voltage: "من +35 mV إلى -90 mV",
-                channels: "قنوات Na<sup>+</sup>: بوابة التعطيل مغلقة تماماً. قنوات K<sup>+</sup>: تنفتح بواباتها بالكامل.",
-                desc: "يتوقف دخول الصوديوم تماماً ويدفق البوتاسيوم بكثرة نحو الخارج، مما يعيد الكامن السلبي للغشاء بسرعة فائقة خلال أجزاء من الميلي ثانية."
-            },
-            hyper: {
-                title: "5. فرط الاستقطاب والحجم الشاردي (After-Hyperpolarization)",
-                cx: 430, cy: 235,
-                voltage: "أكثر سلبية من -90 mV",
-                channels: "بطء انغلاق قنوات K<sup>+</sup> يسبب خروجاً إضافياً للبوتاسيوم، ثم تعيد مضخة Na<sup>+</sup>/K<sup>+</sup> التوازن الشاردي.",
-                desc: "ينخفض الكامن مؤقتاً لأكثر سلبية من الراحة. تعود قنوات الصوديوم لحالتها الراحية (جاهزة لمنبه جديد خلال فترة الحران النسبي)."
-            }
-        };
-
-        function selectAPPhase(phaseKey) {
-            const phase = apPhases[phaseKey];
-            if (!phase) return;
-
-            // Move SVG ring
-            const ring = document.getElementById('indicator-ring');
-            ring.setAttribute('cx', phase.cx);
-            ring.setAttribute('cy', phase.cy);
-
-            // Update buttons style
-            document.querySelectorAll('.phase-btn').forEach(btn => {
-                btn.classList.remove('active');
-                btn.classList.add('bg-white', 'text-slate-700');
-            });
-            const activeBtn = document.getElementById(`btn-${phaseKey}`);
-            if (activeBtn) {
-                activeBtn.classList.add('active');
-                activeBtn.classList.remove('bg-white', 'text-slate-700');
-            }
-
-            // Update explanation panel
-            const box = document.getElementById('ap-details-box');
-            box.innerHTML = `
-                <div class="flex items-center justify-between border-b border-indigo-200 pb-2 mb-2">
-                    <h4 class="font-bold text-indigo-950 text-base sm:text-lg">${phase.title}</h4>
-                    <span class="bg-indigo-600 text-white text-xs font-bold font-en px-2.5 py-1 rounded-full">${phase.voltage}</span>
-                </div>
-                <div class="space-y-1 text-sm sm:text-base text-slate-800">
-                    <p><strong>⚡ حالة القنوات:</strong> ${phase.channels}</p>
-                    <p class="text-slate-700 leading-relaxed mt-1"><strong>🔍 الآلية الفيزيولوجية:</strong> ${phase.desc}</p>
-                </div>
-            `;
-        }
-
-        // Initialize AP Chart with 'rest'
-        window.addEventListener('DOMContentLoaded', () => {
-            selectAPPhase('rest');
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height);
+            document.getElementById('progress-bar').style.transform = `scaleX(${scrolled})`;
         });
+
+        // Test Mode Toggle
+        let testMode = false;
+        function toggleTestMode() {
+            testMode = !testMode;
+            if (testMode) {
+                document.body.classList.add('test-mode');
+                document.getElementById('testModeBtn').classList.replace('bg-transparent', 'bg-teal-700');
+            } else {
+                document.body.classList.remove('test-mode');
+                document.getElementById('testModeBtn').classList.replace('bg-teal-700', 'bg-transparent');
+            }
+        }
+
+        // Dark Mode Toggle
+        let darkMode = false;
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('dark-mode');
+            const btn = document.getElementById('darkModeBtn');
+            btn.innerHTML = darkMode ? '☀️ الوضع النهاري' : '🌙 الوضع الداكن';
+        }
+
+        // Traps Only Filter
+        let trapsMode = false;
+        function toggleTrapsMode() {
+            trapsMode = !trapsMode;
+            document.body.classList.toggle('traps-only-mode');
+            const btn = document.getElementById('trapsFilterBtn');
+            if (trapsMode) {
+                btn.classList.add('bg-rose-600', 'text-white');
+                btn.classList.remove('bg-slate-800');
+            } else {
+                btn.classList.remove('bg-rose-600', 'text-white');
+                btn.classList.add('bg-slate-800');
+            }
+        }
+
+        // Pump Simulator
+        function activatePump() {
+            const container = document.getElementById('ions-container');
+            container.innerHTML = ''; // Clear old
+            
+            // Generate 3 Na ions moving out
+            for(let i=0; i<3; i++) {
+                const ion = document.createElement('div');
+                ion.className = 'absolute w-5 h-5 bg-blue-500 rounded-full text-white text-[8px] font-bold flex items-center justify-center top-[60%] na-ion transition-all duration-1000';
+                ion.style.left = `calc(50% - 30px + ${i * 20}px)`;
+                ion.innerText = 'Na+';
+                container.appendChild(ion);
+                
+                setTimeout(() => {
+                    ion.style.top = '10%';
+                    ion.style.opacity = '0';
+                }, 50);
+            }
+
+            // Generate 2 K ions moving in
+            for(let i=0; i<2; i++) {
+                const ion = document.createElement('div');
+                ion.className = 'absolute w-5 h-5 bg-green-500 rounded-full text-white text-[8px] font-bold flex items-center justify-center top-[20%] k-ion transition-all duration-1000';
+                ion.style.left = `calc(50% - 15px + ${i * 25}px)`;
+                ion.innerText = 'K+';
+                container.appendChild(ion);
+                
+                setTimeout(() => {
+                    ion.style.top = '80%';
+                    ion.style.opacity = '0';
+                }, 50);
+            }
+
+            // Show ATP consumed
+            const atp = document.getElementById('atp-indicator');
+            atp.style.opacity = '1';
+            setTimeout(() => { atp.style.opacity = '0'; }, 1000);
+        }
+
+        // Action Potential Slider
+        function updateActionPotential() {
+            const val = document.getElementById('ap-slider').value;
+            const display = document.getElementById('ap-voltage-display');
+            const pStage = document.getElementById('panel-stage');
+            const pNa = document.getElementById('panel-na');
+            const pK = document.getElementById('panel-k');
+
+            if(val == 0) {
+                display.innerText = "-90 mV"; display.className = "text-xl font-bold text-yellow-400";
+                pStage.innerHTML = `<span class="block text-slate-400 text-xs">الطور الحالي</span><span class="font-bold text-green-400">دور الراحة</span>`;
+                pNa.innerHTML = `<span class="block text-slate-400 text-xs">قنوات Na<sup>+</sup></span><span class="font-bold text-rose-400">مغلقة (تفعيل مغلق)</span>`;
+                pK.innerHTML = `<span class="block text-slate-400 text-xs">قنوات K<sup>+</sup></span><span class="font-bold text-blue-400">مغلقة</span>`;
+            } 
+            else if(val == 1) {
+                display.innerText = "تنبيه بدئي..."; display.className = "text-xl font-bold text-orange-400";
+                pStage.innerHTML = `<span class="block text-slate-400 text-xs">الطور الحالي</span><span class="font-bold text-orange-400">بدء التنبيه</span>`;
+            }
+            else if(val == 2) {
+                display.innerText = "-65 mV (عتبة)"; display.className = "text-xl font-bold text-red-500";
+                pStage.innerHTML = `<span class="block text-slate-400 text-xs">الطور الحالي</span><span class="font-bold text-red-400">زوال استقطاب متسارع</span>`;
+                pNa.innerHTML = `<span class="block text-slate-400 text-xs">قنوات Na<sup>+</sup></span><span class="font-bold text-red-500">تُفتح بشدة (دخول Na)</span>`;
+            }
+            else if(val == 3) {
+                display.innerText = "+35 mV (ذروة)"; display.className = "text-xl font-bold text-white bg-red-600 px-2 rounded";
+                pStage.innerHTML = `<span class="block text-slate-400 text-xs">الطور الحالي</span><span class="font-bold text-white">ذروة الكامن</span>`;
+                pNa.innerHTML = `<span class="block text-slate-400 text-xs">قنوات Na<sup>+</sup></span><span class="font-bold text-slate-400">بوابة التعطيل تُغلق ببطء</span>`;
+                pK.innerHTML = `<span class="block text-slate-400 text-xs">قنوات K<sup>+</sup></span><span class="font-bold text-blue-300">تبدأ بالانفتاح</span>`;
+            }
+            else if(val == 4) {
+                display.innerText = "عودة استقطاب"; display.className = "text-xl font-bold text-blue-400";
+                pStage.innerHTML = `<span class="block text-slate-400 text-xs">الطور الحالي</span><span class="font-bold text-blue-400">عودة استقطاب سريع</span>`;
+                pNa.innerHTML = `<span class="block text-slate-400 text-xs">قنوات Na<sup>+</sup></span><span class="font-bold text-slate-500">معطلة (لا تفتح)</span>`;
+                pK.innerHTML = `<span class="block text-slate-400 text-xs">قنوات K<sup>+</sup></span><span class="font-bold text-blue-500">مفتوحة تماماً (خروج K)</span>`;
+            }
+        }
+
+        // Hover Micro-animations for Cascade
+        function glowStep(element) {
+            element.classList.add('glow-flow');
+            setTimeout(() => {
+                element.classList.remove('glow-flow');
+            }, 800);
+        }
     </script>
 </body>
 </html>
