@@ -1,686 +1,815 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الفيزيولوجيا | الفصل الأول - تفاعلي</title>
+    <title>تحليل دورات الفيزيولوجيا | الفصل 1</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        heading: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        physio: {
+                            light: '#e0f2fe',
+                            main: '#0284c7',
+                            dark: '#0c4a6e',
+                            accent: '#f59e0b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Typography & Base */
-        body {
-            font-family: 'Cairo', sans-serif;
-            font-size: 16px;
-            line-height: 2;
-            user-select: text;
-            -webkit-user-select: text;
-            background-color: #f8fafc;
-            color: #0f172a;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #0f172a;
-            color: #f8fafc;
-        }
-        body.dark-mode .card-bg { background-color: #1e293b; border-color: #334155; }
-        body.dark-mode .nav-bg { background-color: #1e293b; border-color: #334155; }
-        body.dark-mode .text-slate-700 { color: #cbd5e1; }
-        body.dark-mode .text-slate-600 { color: #94a3b8; }
+        body { font-size: 16px; line-height: 1.8; user-select: text !important; }
         
-        /* High Density Highlighting */
-        mark {
-            background-color: #fef08a; /* Yellow-200 */
-            color: #0f172a;
-            padding: 0 4px;
-            border-radius: 4px;
-            font-weight: 700;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            transition: all 0.2s;
-        }
-        body.dark-mode mark { background-color: #b45309; color: #f8fafc; }
+        /* High-Density Highlighting Rules */
+        mark.core-concept { background-color: #fef08a; color: #b91c1c; font-weight: 800; padding: 0 4px; border-radius: 4px; border-bottom: 2px solid #ef4444; }
+        mark.number-badge { background-color: #dbeafe; color: #1d4ed8; font-weight: 700; padding: 2px 6px; border-radius: 6px; border: 1px solid #bfdbfe; }
+        mark.clinical-trap { background-color: #fce7f3; color: #be185d; font-weight: 700; padding: 0 4px; border-radius: 4px; text-decoration: underline wavy #f43f5e; }
+        .dark mark.core-concept { background-color: #7f1d1d; color: #fef08a; border-bottom-color: #fca5a5; }
+        .dark mark.number-badge { background-color: #1e3a8a; color: #bfdbfe; border-color: #3b82f6; }
+        .dark mark.clinical-trap { background-color: #831843; color: #fbcfe8; }
 
-        .hl-red { color: #dc2626; font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
-        body.dark-mode .hl-red { color: #ef4444; }
-        
-        .hl-blue { color: #2563eb; font-weight: 800; }
-        body.dark-mode .hl-blue { color: #60a5fa; }
-
-        .hl-green { color: #059669; font-weight: 800; }
-        body.dark-mode .hl-green { color: #34d399; }
-
-        /* Stable Self-Testing Mode */
-        /* CRITICAL: Hides content without changing width/height (No layout shift) */
-        body.self-test-mode .testable {
+        /* Self-Testing Mode: Layout-Stable Blurring */
+        .test-mode .revealable {
             color: transparent !important;
-            background-color: #94a3b8 !important; /* Slate-400 */
+            text-shadow: 0 0 10px rgba(0,0,0,0.6) !important;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dark .test-mode .revealable {
+            text-shadow: 0 0 10px rgba(255,255,255,0.5) !important;
+            background-color: #334155;
+        }
+        .test-mode .revealable:hover {
+            color: inherit !important;
             text-shadow: none !important;
-            text-decoration: none !important;
-            cursor: help;
-        }
-        body.dark-mode.self-test-mode .testable {
-            background-color: #475569 !important;
-        }
-        body.self-test-mode .testable:hover {
-            color: #0f172a !important; /* Reveal on hover */
-            background-color: #fef08a !important;
-        }
-        body.dark-mode.self-test-mode .testable:hover {
-            color: #f8fafc !important;
-            background-color: #b45309 !important;
+            background-color: transparent;
         }
 
-        /* Exam Traps Mode Filter */
-        body.traps-only .normal-content {
-            opacity: 0.15;
-            filter: grayscale(100%);
-            transition: all 0.4s ease;
-        }
-        body.traps-only .trap-card {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.3);
-            z-index: 10;
-            position: relative;
-        }
-
-        /* Animations */
-        @keyframes pulse-red {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.05); color: #dc2626; }
-        }
-        .anim-feedback-loop { animation: pulse-red 2s infinite; }
-
-        @keyframes flow-glow {
-            0% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); border-color: #0ea5e9; }
-            70% { box-shadow: 0 0 15px 10px rgba(14, 165, 233, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0); }
-        }
-        .step-active {
-            animation: flow-glow 1.5s infinite;
-            background-color: #f0f9ff !important;
-            border-color: #0ea5e9 !important;
-        }
-        body.dark-mode .step-active { background-color: #0c4a6e !important; }
-
-        .hover-grow { transition: transform 0.2s; }
-        .hover-grow:hover { transform: scale(1.03); }
-
-        /* Progress Bar */
+        /* Scroll Progress Bar */
         #scroll-progress {
-            position: fixed; top: 0; left: 0; width: 0%; height: 4px;
-            background: linear-gradient(to right, #0ea5e9, #3b82f6);
-            z-index: 9999; transition: width 0.1s;
+            position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(to right, #0284c7, #38bdf8); z-index: 1000; width: 0%; transition: width 0.1s;
         }
 
-        /* Compact Tree Map */
-        .tree-line::before {
-            content: ''; position: absolute; top: 0; bottom: 0; right: 15px;
-            width: 2px; background-color: #cbd5e1;
-        }
-        
-        /* Floating Control Panel */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        body.dark-mode .glass-panel { background: rgba(30, 41, 59, 0.85); border-color: #334155; }
+        /* Hide Scrollbar but keep functionality */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+        /* Sticky Drawer */
+        #comparison-drawer { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+        #comparison-drawer.open { transform: translateX(0); }
     </style>
 </head>
-<body class="relative pb-20">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-200 transition-colors duration-300">
 
     <!-- Scroll Progress -->
     <div id="scroll-progress"></div>
 
-    <!-- 1️⃣ Navbar (Mandatory Code) -->
-    <div class="max-w-4xl mx-auto px-4 pt-4 flex justify-between items-center text-sm font-semibold">
-      <a href="./physiology.html" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 bg-white nav-bg px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
-        <span>→</span> الرجوع لصفحة الفسيولوجيا
-      </a>
-      <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 bg-white nav-bg px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
-        <span>🏠</span> الصفحة الرئيسية
-      </a>
-    </div>
-
-    <!-- Floating Tools (Filters & Modes) -->
-    <div class="fixed left-4 top-24 flex flex-col gap-3 z-50">
-        <button onclick="toggleDarkMode()" class="glass-panel p-3 rounded-full shadow-lg hover:scale-110 transition group" title="الوضع الداكن/النهاري">
-            <span class="text-xl group-hover:rotate-180 transition duration-500 inline-block">🌓</span>
+    <nav class="max-w-5xl mx-auto px-4 pt-4 pb-2 flex justify-between items-center text-sm font-semibold sticky top-0 z-50 bg-slate-50/90 dark:bg-slate-900/90 backdrop-blur-md">
+        <div class="flex gap-2">
+            <a href="./physiology.html" class="flex items-center gap-2 text-physio-main hover:text-physio-dark dark:text-sky-400 dark:hover:text-sky-300 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition">
+                <i class="fas fa-arrow-right"></i> الرجوع للفيزيولوجيا
+            </a>
+            <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 dark:text-slate-300 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 transition hidden sm:flex">
+                <i class="fas fa-home"></i> الرئيسية
+            </a>
+        </div>
+        <button id="theme-toggle" class="p-2 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600 transition">
+            <i class="fas fa-moon dark:hidden"></i>
+            <i class="fas fa-sun hidden dark:block"></i>
         </button>
-        <button onclick="toggleTrapsMode()" id="trap-btn" class="glass-panel p-3 rounded-full shadow-lg hover:scale-110 transition border-2 border-red-500 group" title="تصفية النكشات الامتحانية فقط">
-            <span class="text-xl">🚨</span>
-        </button>
-    </div>
+    </nav>
 
-    <main class="max-w-5xl mx-auto px-4 mt-6">
-
-        <!-- 🎯 Hero Banner -->
-        <header class="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-2xl shadow-xl overflow-hidden mb-8 relative border border-slate-700">
-            <div class="p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div class="flex-1">
-                    <div class="flex items-center gap-3 mb-2">
-                        <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">الفصل الأول</span>
-                        <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">🧬 أساسيات</span>
-                    </div>
-                    <h1 class="text-3xl md:text-4xl font-extrabold mb-3">مدخل إلى علم وظائف الأعضاء</h1>
-                    <h2 class="text-slate-300 text-sm md:text-base font-semibold leading-relaxed">
-                        🎯 <mark class="bg-transparent text-emerald-300 p-0 shadow-none">نواة الفصل:</mark> فهم مستويات التعضي، توزيع سوائل الجسم (ICF/ECF)، استيعاب جوهر <span class="hl-red text-red-400">الاستتباب (Homeostasis)</span>، والتمييز الدقيق بين آليات الضبط ذات التلقيم الراجع <span class="hl-blue text-blue-300">السلبي</span> و <span class="hl-red text-red-400">الإيجابي</span>.
-                    </h2>
+    <header class="max-w-5xl mx-auto px-4 mt-4 relative">
+        <div class="bg-gradient-to-l from-sky-900 to-physio-main dark:from-slate-800 dark:to-sky-900 rounded-2xl shadow-lg p-6 relative overflow-hidden">
+            <!-- Background Decoration -->
+            <div class="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl"></div>
+            
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-sky-200/20 text-sky-100 rounded-full text-xs font-bold mb-2 border border-sky-300/30">تحليل شامل 100% (2017-2024)</span>
+                    <h1 class="text-2xl md:text-3xl font-heading font-bold text-white mb-2 tracking-tight">
+                        تحليل ودورات الفصل الأول: <span class="text-physio-accent">مدخل للفيزيولوجيا وسوائل الجسم</span>
+                    </h1>
+                    <p class="text-sky-100 text-sm md:text-base max-w-2xl leading-relaxed">
+                        <mark class="bg-white/20 text-white px-1 rounded">23 سؤال دورة مؤتمت</mark>. التركيز الأكبر امتحانيًا ينصب على: <mark class="bg-white/20 text-white px-1 rounded">نسب وتوزع سوائل الجسم</mark>، <mark class="bg-white/20 text-white px-1 rounded">الاستتباب</mark>، والمقارنة الجوهرية بين <mark class="bg-white/20 text-white px-1 rounded">التلقيم الراجع السلبي والإيجابي</mark>.
+                    </p>
                 </div>
                 
-                <!-- 👁️ Stable Self-Testing Toggle -->
-                <button onclick="toggleSelfTest()" id="self-test-btn" class="bg-slate-700 hover:bg-slate-600 border border-slate-500 px-5 py-4 rounded-xl flex flex-col items-center justify-center gap-2 transition flex-shrink-0 group w-32 shadow-inner">
-                    <span class="text-3xl group-hover:scale-110 transition">🧠</span>
-                    <span class="text-[11px] font-bold text-slate-300 text-center uppercase tracking-wide">وضع الاختبار<br>الذاتي</span>
-                </button>
-            </div>
-        </header>
-
-        <!-- 🧠 Before You Start Prerequisites -->
-        <div class="bg-blue-50 border-r-4 border-blue-500 p-4 rounded-l-xl mb-8 card-bg shadow-sm normal-content flex gap-4 items-start">
-            <span class="text-3xl">💡</span>
-            <div>
-                <h3 class="font-bold text-blue-800 mb-1">قبل أن تبدأ (Prerequisites):</h3>
-                <p class="text-sm text-slate-700">تذكر أن الخلية تتواجد في بيئة سائلة، وأن العمليات الحيوية تعتمد على حركة المواد عبر غشاء شبه نفوذ. مصطلحات كـ <span class="hl-blue font-bold">الضغط التناضحي (Osmotic Pressure)</span> تعني "قوة سحب الماء" نحو التركيز الأعلى للمذابات.</p>
+                <!-- Layout-Stable Self-Testing Toggle -->
+                <div class="shrink-0 relative self-end md:self-center">
+                    <button id="test-mode-toggle" class="group flex flex-col items-center justify-center w-24 h-20 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 rounded-xl transition-all shadow-[0_0_15px_rgba(0,0,0,0.1)] hover:scale-105 active:scale-95">
+                        <i id="test-icon" class="fas fa-eye text-2xl text-white mb-1 transition-transform group-hover:rotate-12"></i>
+                        <span class="text-white text-[10px] font-bold tracking-wider text-center w-full leading-tight">وضع الاختبار<br>الذاتي</span>
+                    </button>
+                    <!-- Status Dot -->
+                    <span id="test-status-dot" class="absolute -top-1 -right-1 w-3 h-3 bg-slate-400 rounded-full border-2 border-sky-900 shadow-[0_0_8px_rgba(255,255,255,0.5)]"></span>
+                </div>
             </div>
         </div>
+    </header>
 
-        <!-- Section 1: Introduction -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-slate-200 pb-2 mb-6 flex items-center gap-2">
-                <span>أولاً وثانياً: الفيزيولوجيا وعلاقتها بالعلوم</span> <span>🌊</span>
-            </h2>
+    <div class="max-w-5xl mx-auto px-4 mt-6">
+        <div class="flex overflow-x-auto bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-1 no-scrollbar gap-1 relative z-10">
+            <button onclick="switchTab('tab-analytics')" id="btn-tab-analytics" class="tab-btn active-tab flex-1 min-w-[140px] py-2.5 px-4 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition whitespace-nowrap">
+                <i class="fas fa-chart-pie ml-1 text-physio-main"></i> معطيات وإحصائيات
+            </button>
+            <button onclick="switchTab('tab-qbank')" id="btn-tab-qbank" class="tab-btn flex-1 min-w-[140px] py-2.5 px-4 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition whitespace-nowrap">
+                <i class="fas fa-database ml-1 text-physio-main"></i> قاعدة الأسئلة (23)
+            </button>
+            <button onclick="switchTab('tab-mechanisms')" id="btn-tab-mechanisms" class="tab-btn flex-1 min-w-[140px] py-2.5 px-4 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition whitespace-nowrap">
+                <i class="fas fa-project-diagram ml-1 text-physio-main"></i> المخططات والآليات
+            </button>
+            <button onclick="switchTab('tab-interactive')" id="btn-tab-interactive" class="tab-btn flex-1 min-w-[140px] py-2.5 px-4 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition whitespace-nowrap">
+                <i class="fas fa-sliders-h ml-1 text-physio-main"></i> تفاعل ومقارنات
+            </button>
+            <button onclick="switchTab('tab-summary')" id="btn-tab-summary" class="tab-btn flex-1 min-w-[140px] py-2.5 px-4 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition whitespace-nowrap">
+                <i class="fas fa-star ml-1 text-physio-main"></i> الخلاصة والأرقام
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="max-w-5xl mx-auto px-4 mt-6 mb-20">
+        
+        <!-- ========================================== -->
+        <!-- TAB 1: Analytics & Pre-reqs -->
+        <!-- ========================================== -->
+        <section id="tab-analytics" class="tab-content block">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 normal-content">
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 card-bg">
-                    <h3 class="font-bold text-lg mb-3">ماهية الفيزيولوجيا</h3>
-                    <p class="mb-3">
-                        <mark class="testable">علم وظائف الأعضاء (Physiology)</mark> هو فرع من علم الحياة (Biology) يدرس طبيعة الأحداث والأنشطة الحيوية <mark class="testable">الطبيعية</mark>، آليات حدوثها، والعوامل المؤثرة فيها.
-                    </p>
-                    <p>
-                        تستهدف العمليات الفيزيولوجية أمرين: 
-                        ١. <mark class="testable">المحافظة على النوع</mark> (بالتوالد). 
-                        ٢. <mark class="testable">إدامة الحياة</mark> (الملاءمة مع الوسط).
-                    </p>
+            <!-- Key Prerequisites Badge -->
+            <div class="bg-amber-50 dark:bg-amber-900/30 border-r-4 border-amber-500 rounded-l-xl p-4 mb-6 shadow-sm">
+                <h3 class="font-bold text-amber-800 dark:text-amber-400 flex items-center gap-2 mb-2">
+                    <i class="fas fa-key"></i> قبل أن تبدأ (الأساسيات):
+                </h3>
+                <p class="text-sm text-slate-700 dark:text-slate-300">
+                    لحفظ الدورات بسلاسة، تذكر أن: <mark class="core-concept">الاستتباب Homeostasis</mark> هو الهدف الأسمى للجسم. لتحقيقه نستخدم <mark class="core-concept">التلقيم الراجع السلبي</mark> (يعاكس التغير، شائع). أما <mark class="core-concept">الإيجابي</mark> فهو خطير (يعزز التغير) ولا يحدث إلا في حالات نادرة جداً (تخثر، إباضة). سوائل الجسم تتناسب <mark class="clinical-trap">عكساً مع النسيج الشحمي</mark>.
+                </p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 text-center">
+                    <div class="text-3xl font-black text-physio-main mb-1">23</div>
+                    <div class="text-xs text-slate-500 font-bold">إجمالي أسئلة الفصل</div>
                 </div>
-                
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 card-bg relative trap-card">
-                    <div class="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow animate-bounce">🚨 فخ امتحاني</div>
-                    <h3 class="font-bold text-lg mb-3">الفرق عن علوم المورفولوجيا</h3>
-                    <p class="mb-3">يرتبط علمنا بعلوم الأشكال (Morphology) كالتشريح والأنسجة والخلية. <span class="hl-red">ولكن الحذر من الفرق الجوهري:</span></p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>علوم الشكل: هي علوم <mark class="testable">سكونية (Static)</mark> تعتمد على الوصف وتثبيت العينات.</li>
-                        <li>الفيزيولوجيا: علوم <mark class="testable">دينامية متغيرة (Dynamic)</mark> ترتبط بـ <mark class="testable hl-blue">الوقت</mark> وتستخدم عينات <mark class="testable hl-green">حية</mark>.</li>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 text-center">
+                    <div class="text-3xl font-black text-emerald-600 mb-1">3.3</div>
+                    <div class="text-xs text-slate-500 font-bold">متوسط الأسئلة/الدورة</div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 text-center">
+                    <div class="text-3xl font-black text-purple-600 mb-1">50%</div>
+                    <div class="text-xs text-slate-500 font-bold">تركز على آليات التلقيم</div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 text-center">
+                    <div class="text-3xl font-black text-rose-600 mb-1">0</div>
+                    <div class="text-xs text-slate-500 font-bold">أسئلة محذوفة/خارجية</div>
+                </div>
+            </div>
+
+            <!-- Compact Sub-Section Tree Map -->
+            <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 mb-6">
+                <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-4 border-b border-slate-100 dark:border-slate-700 pb-2 flex items-center gap-2">
+                    <i class="fas fa-sitemap text-physio-main"></i> الخريطة الشجرية لتوزع أسئلة الدورات
+                </h3>
+                <div class="flex flex-col md:flex-row gap-2 h-auto md:h-20">
+                    <div class="flex-1 bg-sky-100 dark:bg-sky-900/40 rounded-lg p-2 flex flex-col justify-center items-center border border-sky-200 dark:border-sky-800 relative group">
+                        <span class="text-xs font-bold text-sky-800 dark:text-sky-300">مفهوم الفيزيولوجيا ومستوياتها</span>
+                        <span class="absolute -top-2 -right-2 bg-physio-main text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">5</span>
+                    </div>
+                    <div class="flex-none flex items-center justify-center text-slate-300 md:-rotate-90">
+                        <i class="fas fa-arrow-down md:fa-arrow-left"></i>
+                    </div>
+                    <div class="flex-1 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg p-2 flex flex-col justify-center items-center border border-emerald-200 dark:border-emerald-800 relative group">
+                        <span class="text-xs font-bold text-emerald-800 dark:text-emerald-300">سوائل الجسم (التجفاف/النسب)</span>
+                        <span class="absolute -top-2 -right-2 bg-emerald-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">6</span>
+                    </div>
+                    <div class="flex-none flex items-center justify-center text-slate-300 md:-rotate-90">
+                        <i class="fas fa-arrow-down md:fa-arrow-left"></i>
+                    </div>
+                    <div class="flex-[1.5] bg-rose-100 dark:bg-rose-900/40 rounded-lg p-2 flex flex-col justify-center items-center border border-rose-200 dark:border-rose-800 relative group shadow-[inset_0_0_0_2px_rgba(225,29,72,0.3)]">
+                        <span class="text-xs font-bold text-rose-800 dark:text-rose-300">الاستتباب وآليات التلقيم الراجع</span>
+                        <span class="text-[10px] text-rose-600 dark:text-rose-400 mt-1">(النواة الامتحانية الأضخم)</span>
+                        <span class="absolute -top-2 -right-2 bg-rose-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">12</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Anchors & Traps -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2"><i class="fas fa-bullseye text-red-500"></i> النواة الثابتة (تتكرر دائماً)</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-emerald-500 mt-1"></i> <span><mark class="core-concept">التلقيم الراجع السلبي</mark> ⟸ <span class="revealable">يعاكس المتغير البدئي / يحافظ على الاستتباب / معظم الأجهزة.</span></span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-emerald-500 mt-1"></i> <span><mark class="core-concept">التلقيم الراجع الإيجابي</mark> ⟸ <span class="revealable">يعزز قوة المنبه / يخضع للسلبي ليوقفه / (تخثر، إباضة، تفعيل تائيات).</span></span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check-circle text-emerald-500 mt-1"></i> <span>النسيج <mark class="clinical-trap">الدهني</mark> ⟸ <span class="revealable">هو الأقل احتواءً على الماء (<mark class="number-badge">20%</mark>).</span></span></li>
+                    </ul>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <h4 class="font-bold text-slate-800 dark:text-slate-200 mb-3 flex items-center gap-2"><i class="fas fa-skull-crossbones text-rose-500"></i> الخدع الامتحانية (Traps)</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2"><i class="fas fa-exclamation-triangle text-rose-500 mt-1"></i> <span>تكوّن الكمونات الغشائية ⟸ <mark class="clinical-trap">ليس من وظائف الماء</mark> (بل وظيفة الشوارد). (تكررت مرتين).</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-exclamation-triangle text-rose-500 mt-1"></i> <span>المسنين ⟸ لديهم <mark class="clinical-trap">كمية ماء أقل</mark> (بسبب زيادة النسيج الشحمي مع العمر).</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-exclamation-triangle text-rose-500 mt-1"></i> <span>مستويات الدراسة ⟸ انتبه: (القلب = <mark class="core-concept">عضو</mark>)، (ضخ الدم = <mark class="core-concept">جهاز</mark>)، (تقلص العضلات = <mark class="core-concept">نسيج</mark>، ⚠️ تنويه: الدكتور شهلا اعتبرها نسيج).</span></li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: Levels of Organization -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-slate-200 pb-2 mb-6 flex items-center gap-2">
-                <span>ثالثاً: مستويات التعضي الحيوي</span> <span>🪜</span>
-            </h2>
+        <!-- ========================================== -->
+        <!-- TAB 2: Question Database (100% Coverage) -->
+        <!-- ========================================== -->
+        <section id="tab-qbank" class="tab-content hidden">
             
-            <!-- Compact Tree Map -->
-            <div class="bg-slate-100 p-3 rounded-lg mb-6 flex flex-wrap gap-2 items-center justify-center text-sm font-bold card-bg normal-content">
-                <span class="text-slate-500">ذرات</span> <span>&larr;</span>
-                <span class="text-slate-600">جزيئات صغيرة</span> <span>&larr;</span>
-                <span class="text-slate-700">معقدات جزيئية كبيرة</span> <span>&larr;</span>
-                <span class="text-slate-800">عضيات</span> <span>&larr;</span>
-                <span class="text-blue-600">خلايا</span> <span>&larr;</span>
-                <span class="text-blue-700">نسج</span> <span>&larr;</span>
-                <span class="text-blue-800">أعضاء</span> <span>&larr;</span>
-                <span class="text-blue-900">أجهزة</span>
+            <div class="mb-4 flex items-center justify-between bg-sky-50 dark:bg-sky-900/20 p-3 rounded-lg border border-sky-100 dark:border-sky-800">
+                <p class="text-sm font-bold text-sky-800 dark:text-sky-300"><i class="fas fa-info-circle"></i> تم تصنيف وتجميع جميع أسئلة الدورات الـ 23 حسب المواضيع لسهولة الحفظ. اضغط على زر (وضع الاختبار) في الأعلى لإخفاء الإجابات.</p>
             </div>
 
-            <!-- Vertical Cascade with Data (Silent Corrections Applied) -->
-            <div class="relative pl-0 pr-6 tree-line space-y-6 normal-content">
-                
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 card-bg relative z-10 mr-4 flex flex-col md:flex-row gap-4 items-center">
-                    <div class="bg-teal-100 text-teal-800 font-bold p-3 rounded-lg w-full md:w-1/3 text-center">المستوى الكيميائي</div>
-                    <div class="w-full md:w-2/3 text-sm">
-                        <span class="font-bold">ذرات</span> (O, H, C) &larr; <span class="font-bold">جزيئات صغيرة</span> (عضوية كالحموض الأمينية/السكريات، ولاعضوية كالماء وكلور الصوديوم) &larr; <span class="font-bold hl-red">معقدات جزيئية كبيرة (Large molecular complexes)</span> (كالغشاء البلاسمي).
+            <!-- Topic 1: Basics -->
+            <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100 mt-6 mb-3 border-r-4 border-physio-main pr-2">المبحث الأول: مفهوم الفيزيولوجيا والمستويات</h3>
+            
+            <div class="space-y-4">
+                <!-- Q1, Q2, Q4 (2017, 2020, 2023) -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 يتصف علم الفيزيولوجيا بأنه / يتميز بـ: <span class="text-xs text-slate-400 font-normal">(مكرر 2017، 2020، 2023)</span></p>
+                    <div class="pr-4 space-y-1 text-sm">
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">A. نتائجه ثابتة وغير متغيرة</div>
+                        <div class="p-2 rounded bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"><i class="fas fa-check text-emerald-500 ml-2"></i> <span class="revealable font-bold text-emerald-700 dark:text-emerald-400">B. يرتبط بالوقت ويتغير بتغيره (Dynamic)</span></div>
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">C. يعتمد على دراسات وصفية (Static)</div>
                     </div>
+                    <div class="mt-3 text-xs bg-amber-50 dark:bg-amber-900/20 p-2 rounded text-amber-800 dark:text-amber-300">🎯 <strong class="text-amber-900 dark:text-amber-100">نواة السؤال:</strong> الفيزيولوجيا علم <mark class="core-concept">حركي Dynamic</mark> وليس سكوني Static.</div>
                 </div>
 
-                <div class="text-center text-slate-400 font-bold mr-4">&darr;</div>
-
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 card-bg relative z-10 mr-4 flex flex-col md:flex-row gap-4 items-center">
-                    <div class="bg-blue-100 text-blue-800 font-bold p-3 rounded-lg w-full md:w-1/3 text-center">الخلوي &larr; النسيجي</div>
-                    <div class="w-full md:w-2/3 text-sm">
-                        <span class="font-bold">العضيات</span> (متقدرات، جسيمات حالة) تشكل <span class="font-bold">الخلية</span>. 
-                        اجتماع خلايا متماثلة (شكل+وظيفة) يشكل <mark class="testable">النسيج</mark> (عضلي للحركة، غدي للإفراز، عصبي للتنسيق).
-                    </div>
-                </div>
-
-                <div class="text-center text-slate-400 font-bold mr-4">&darr;</div>
-
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 card-bg relative z-10 mr-4 flex flex-col md:flex-row gap-4 items-center">
-                    <div class="bg-indigo-100 text-indigo-800 font-bold p-3 rounded-lg w-full md:w-1/3 text-center">العضوي &larr; الجهازي</div>
-                    <div class="w-full md:w-2/3 text-sm">
-                        نسيجان أو أكثر يشكلان <mark class="testable">عضواً</mark> (كالقلب). مجموعة أعضاء تتكامل لتشكل <mark class="testable">جهازاً</mark> (كالدوران).
-                    </div>
+                <!-- Q3 (2017, 2020, 2021, 2023) - Levels of study grouped -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 أسئلة مستويات الدراسة (تجميعية): <span class="text-xs text-slate-400 font-normal">(2017, 2020, 2021, 2023)</span></p>
+                    <ul class="list-disc list-inside space-y-2 text-sm pr-2">
+                        <li>يُعتبر ضخ القلب للدم مثالاً على دراسة وفق المستوى: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">مستوى الأجهزة (System)</span> (دورة 2017)</li>
+                        <li>ضبط الحرارة المركزية للجسم: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">مستوى الأجهزة (System)</span> (دورة 2020)</li>
+                        <li>دراسة آلية إفراز النخامة لهرمون النمو: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">مستوى العضو (Organ)</span> (دورة 2021)</li>
+                        <li>دراسة آلية تقلص العضلات الهيكلية: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">مستوى نسيجي (Tissue)</span> (دورة 2023)</li>
+                    </ul>
+                    <div class="mt-3 text-xs bg-rose-50 dark:bg-rose-900/20 p-2 rounded text-rose-800 dark:text-rose-300">⚠️ <strong class="text-rose-900 dark:text-rose-100">تصويب هام:</strong> في سؤال العضلات (2023)، النسيج العضلي هو أحد النسج الأربعة الأساسية، والدكتور شهلا نبّه أن الإجابة هي (نسيجي).</div>
                 </div>
             </div>
-        </section>
 
-        <!-- Section 3: Systems -->
-        <section class="mb-12 normal-content">
-            <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-slate-200 pb-2 mb-6 flex items-center gap-2">
-                <span>رابعاً: أجهزة الجسم ووظائفها (10 أجهزة)</span> <span>⚙️</span>
-            </h2>
+            <!-- Topic 2: Body Fluids -->
+            <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100 mt-8 mb-3 border-r-4 border-physio-main pr-2">المبحث الثاني: سوائل ونسب الجسم والتجفاف</h3>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- Contact Systems -->
-                <div class="bg-orange-50 border border-orange-200 p-4 rounded-xl card-bg">
-                    <h3 class="font-bold text-orange-800 mb-2 border-b border-orange-200 pb-1">أجهزة التماس (مع البيئة)</h3>
-                    <ul class="text-sm space-y-2">
-                        <li><span class="font-bold">الجلد:</span> الحد الفاصل، يساهم بالدفاع والتحسس.</li>
-                        <li><span class="font-bold">التنفسي:</span> تماس مباشر مع <mark class="testable">الهواء الجوي</mark>.</li>
-                        <li><span class="font-bold">الهضمي:</span> تماس مباشر مع <mark class="testable">الطعام/الشراب</mark>.</li>
-                        <li class="text-xs text-slate-500 mt-2">💡 لذلك تكثر فيها آليات الدفاع الوقائية، واضطرابات فرط التحسس (الأرجية).</li>
+            <div class="space-y-4">
+                <!-- Functions of water -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 كل ما يلي من وظائف الماء في الجسم عدا: <span class="text-xs text-slate-400 font-normal">(مكرر 2017، 2020)</span></p>
+                    <div class="pr-4 space-y-1 text-sm">
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">A. يسهم في التنظيم الحراري</div>
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">B. ضروري لحدوث تفاعلات الحلمهة</div>
+                        <div class="p-2 rounded bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"><i class="fas fa-check text-emerald-500 ml-2"></i> <span class="revealable font-bold text-emerald-700 dark:text-emerald-400">C. ضروري لتشكيل الكمونات الغشائية (أو لوجودها)</span></div>
+                    </div>
+                    <div class="mt-3 text-xs bg-amber-50 dark:bg-amber-900/20 p-2 rounded text-amber-800 dark:text-amber-300">🎯 <strong class="text-amber-900 dark:text-amber-100">نواة السؤال:</strong> الكمونات الغشائية تعتمد على <mark class="core-concept">توزع الشوارد (Na<sup>+</sup>, K<sup>+</sup>)</mark> وليس على الماء نفسه.</div>
+                </div>
+
+                <!-- Water Percentages -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 أسئلة نسب الماء وتركيب الجسم (تجميعية): <span class="text-xs text-slate-400 font-normal">(2018, 2019, 2020, 2021, 2022, 2023, 2024)</span></p>
+                    <ul class="list-disc list-inside space-y-2 text-sm pr-2">
+                        <li>أقل أنسجة الجسم احتواء على الماء: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">النسيج الدهني (<mark class="number-badge">20%</mark>)</span> (2018, 2019)</li>
+                        <li>تكون كمية الماء <mark class="clinical-trap">أكبر</mark> عند: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">الأطفال حديثي الولادة (<mark class="number-badge">75-80%</mark>)</span> (2023)</li>
+                        <li>الآلية التي تؤدي إلى <mark class="clinical-trap">نقص</mark> كمية الماء مع التقدم في العمر (أو الحالات التي تنقص الماء): ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">زيادة كمية النسيج الشحمي</span> (2020, 2021, 2024)</li>
+                        <li>الإجابة الصحيحة لنسب مكونات الجسم: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">تشكل البروتينات <mark class="number-badge">15-18%</mark> من الوزن</span> (2022)</li>
                     </ul>
                 </div>
 
-                <!-- Control Systems -->
-                <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl card-bg trap-card">
-                    <h3 class="font-bold text-blue-800 mb-2 border-b border-blue-200 pb-1">أجهزة المراقبة والتحكم 🎯</h3>
-                    <ul class="text-sm space-y-2">
-                        <li><span class="font-bold">العصبي:</span> سريع، يتعامل بـ <mark class="testable hl-blue">الإشارات الكهربائية</mark>.</li>
-                        <li><span class="font-bold">الغدد الصم:</span> أبطأ، يتعامل بـ <mark class="testable hl-red">الهرمونات</mark> عبر الدم.</li>
-                        <li class="bg-white p-2 border border-slate-200 rounded mt-2 text-xs shadow-sm font-bold">
-                            يعملان لتصحيح تأثيرات البيئتين الخارجية والداخلية.
-                        </li>
+                <!-- Dehydration vs Overhydration -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 يؤدي التجفاف (خسارة الماء) إلى كل ما يأتي باستثناء: <span class="text-xs text-slate-400 font-normal">(2018, 2019, 2022)</span></p>
+                    <div class="pr-4 space-y-1 text-sm">
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">A. طلب الماء وتحريض النخامى العصبية</div>
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">B. ارتفاع الضغط التناضحي (الحلولي) للسائل خارج الخلوي (ECF)</div>
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">C. انخفاض إفراغ الكلية للماء</div>
+                        <div class="p-2 rounded bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"><i class="fas fa-check text-emerald-500 ml-2"></i> <span class="revealable font-bold text-emerald-700 dark:text-emerald-400">D. انخفاض الـ ADH (خطأ، بل يرتفع ADH لحبس الماء)</span></div>
+                    </div>
+                </div>
+
+                <!-- Excess water -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 عند تناول كمية زائدة من الماء يزداد: <span class="text-xs text-slate-400 font-normal">(2021)</span></p>
+                    <div class="pr-4 space-y-1 text-sm">
+                        <div class="p-2 rounded bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"><i class="fas fa-check text-emerald-500 ml-2"></i> <span class="revealable font-bold text-emerald-700 dark:text-emerald-400">A. حجم البول</span></div>
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">B. الضغط التناضحي (ينخفض)</div>
+                        <div class="p-2 rounded bg-slate-50 dark:bg-slate-700/50">C. تحرر ADH (ينخفض) / D. تركيز الصوديوم (يتمدد وينخفض)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3: Homeostasis & Feedback -->
+            <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100 mt-8 mb-3 border-r-4 border-physio-main pr-2">المبحث الثالث: الاستتباب وآليات التلقيم الراجع (النواة الكبرى)</h3>
+            
+            <div class="space-y-4">
+                <!-- Control systems & Adaptation -->
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 أسئلة أجهزة الضبط والمقارنة والاستتباب: <span class="text-xs text-slate-400 font-normal">(متفرقة)</span></p>
+                    <ul class="list-disc list-inside space-y-2 text-sm pr-2">
+                        <li>أجهزة التحكم والضبط والمراقبة في الجسم: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">الجهاز العصبي + الصماوي</span> (2017, 2019)</li>
+                        <li>جهاز المقارنة لدرجة حرارة الجسم المركزية موجود في: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">الوطاء (Hypothalamus)</span> (2024)</li>
+                        <li>من أجهزة التماس عدا: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">جهاز الدوران</span> (2019 - التماس هي الهضم، التنفس، الجلد)</li>
+                        <li>نموذج يُظهر تلاؤماً (Adaptation) يحافظ على الوظائف: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">زيادة نشاط الدرق لدى سكان المناطق الباردة</span> (2024)</li>
                     </ul>
                 </div>
 
-                <!-- Transport & Output -->
-                <div class="bg-green-50 border border-green-200 p-4 rounded-xl card-bg">
-                    <h3 class="font-bold text-green-800 mb-2 border-b border-green-200 pb-1">أجهزة التوزيع والمخرجات</h3>
-                    <ul class="text-sm space-y-2">
-                        <li><span class="font-bold">الدوران:</span> نقل المغذيات والحرارة والفضلات.</li>
-                        <li><span class="font-bold">البولي (الكلية):</span> صون التركيب الكيميائي للبيئة الداخلية وإطراح البولة (Urea).</li>
-                        <li><span class="font-bold">الحركي (عضلات):</span> تحويل الطاقة الكيميائية لعمل آلي.</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Health Definition -->
-            <div class="mt-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-sm card-bg flex gap-3 items-center">
-                <span class="text-2xl">🌍</span>
-                <p><strong>تعريف WHO للصحة:</strong> ليست مجرد غياب الداء، بل اكتمال المقومات <mark class="testable">الجسدية، والعقلية، والاجتماعية</mark>. الطب يمارس دوراً علاجياً (Therapeutic) ووقائياً (Preventive).</p>
-            </div>
-        </section>
-
-        <!-- Section 4: Homeostasis & Fluids -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-slate-200 pb-2 mb-6 flex items-center gap-2">
-                <span>خامساً: الاستتباب وسوائل الجسم</span> <span>⚖️💧</span>
-            </h2>
-
-            <!-- Homeostasis Core -->
-            <div class="bg-gradient-to-l from-slate-800 to-slate-900 text-white p-6 rounded-xl mb-6 shadow-lg trap-card">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="text-3xl">⚖️</span>
-                    <h3 class="text-xl font-bold text-yellow-400">الاستتباب (Homeostasis)</h3>
-                </div>
-                <p class="mb-3 text-sm">وفقاً للعالم <mark class="testable bg-yellow-400 text-slate-900">كلود برنار (Claude Bernard)</mark>: هو المحافظة على ثبات الخصائص الفيزيائية والكيميائية للبيئة السائلة المحيطة بخلايا الجسم (البيئة الداخلية).</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <div class="bg-slate-700 p-3 rounded border border-slate-600">
-                        <span class="text-blue-300 font-bold block mb-1">البيئة الداخلية (Internal Env):</span>
-                        <span class="text-sm">الوسط السائل المحيط بالخلايا (السائل خارج الخلوي).</span>
-                    </div>
-                    <div class="bg-slate-700 p-3 rounded border border-slate-600">
-                        <span class="text-red-300 font-bold block mb-1">البيئة الخارجية (External Env):</span>
-                        <span class="text-sm">يفصلها عن الداخلية <mark class="testable bg-red-400 text-white">ظهائر (Epithelia)</mark>. تشمل: لمعة الهضم، لمعة البولي/التناسلي!</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Fluids Flow & Numbers -->
-            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 card-bg relative">
-                <div class="absolute -top-4 right-4 bg-teal-500 text-white px-4 py-1 rounded-full font-bold shadow-md">📊 بنك أرقام السوائل</div>
-                
-                <p class="text-center font-bold mb-4">في شخص يزن <mark class="testable">65 كغ</mark>، حجم الماء الكلي = <mark class="testable hl-blue">40 لتراً</mark>.</p>
-                
-                <!-- Distribution Tree -->
-                <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-8 text-center normal-content">
-                    
-                    <div class="bg-blue-50 border-2 border-blue-200 p-4 rounded-xl w-full md:w-1/3 shadow-sm hover-grow">
-                        <h4 class="font-bold text-blue-800 mb-1">السائل داخل الخلايا (ICF)</h4>
-                        <div class="text-3xl font-extrabold text-blue-600 mb-2"><mark class="testable bg-transparent shadow-none text-blue-600 p-0">25</mark> <span class="text-lg">لتراً</span></div>
-                        <p class="text-xs text-slate-500">الجزء الأكبر من السوائل.</p>
-                    </div>
-
-                    <div class="text-2xl text-slate-400">↔</div>
-
-                    <div class="bg-emerald-50 border-2 border-emerald-200 p-4 rounded-xl w-full md:w-1/3 shadow-sm hover-grow relative trap-card">
-                        <div class="absolute -top-2 -left-2 bg-red-500 text-white text-[10px] px-1 rounded animate-pulse">هام</div>
-                        <h4 class="font-bold text-emerald-800 mb-1">السائل خارج الخلايا (ECF)</h4>
-                        <div class="text-3xl font-extrabold text-emerald-600 mb-2"><mark class="testable bg-transparent shadow-none text-emerald-600 p-0">15</mark> <span class="text-lg">لتراً</span></div>
-                        <div class="text-xs text-right mt-2 space-y-1">
-                            <div class="flex justify-between border-b border-emerald-200 pb-1"><span>خلالي (محيط بالخلايا):</span> <mark class="testable text-emerald-700 bg-emerald-200">14-15%</mark> من الوزن</div>
-                            <div class="flex justify-between border-b border-emerald-200 pb-1"><span>وعائي (بلازما):</span> <mark class="testable text-emerald-700 bg-emerald-200">5%</mark> من الوزن</div>
-                            <div class="flex justify-between"><span>أحياز خاصة (مفصلي/دماغي):</span> <mark class="testable text-emerald-700 bg-emerald-200">&lt; 1%</mark> من الوزن</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Correlation Table -->
-                <div class="overflow-x-auto normal-content">
-                    <table class="w-full text-sm text-center border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-700">
-                                <th class="border p-2">الفئة</th>
-                                <th class="border p-2">نسبة الماء من الوزن</th>
-                                <th class="border p-2">السبب الفيزيولوجي (🎯 نواة)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="border p-2 font-bold">النسيج الدهني</td>
-                                <td class="border p-2 text-red-600 font-bold"><mark class="testable">20%</mark> (منخفضة)</td>
-                                <td class="border p-2 text-right">تناسب <span class="hl-red">عكسي</span>: زيادة الدهون = نقص الماء.</td>
-                            </tr>
-                            <tr class="bg-slate-50">
-                                <td class="border p-2 font-bold">العضلات اللينة</td>
-                                <td class="border p-2 text-blue-600 font-bold"><mark class="testable">65%</mark> (مرتفعة)</td>
-                                <td class="border p-2 text-right">تحتفظ بنسبة ماء أعلى.</td>
-                            </tr>
-                            <tr>
-                                <td class="border p-2 font-bold">الذكور اليافعين</td>
-                                <td class="border p-2 font-bold"><mark class="testable">60%</mark></td>
-                                <td class="border p-2 text-right">كتلة عضلية أكبر.</td>
-                            </tr>
-                            <tr class="bg-slate-50">
-                                <td class="border p-2 font-bold">الإناث اليافعات</td>
-                                <td class="border p-2 font-bold"><mark class="testable">50%</mark></td>
-                                <td class="border p-2 text-right">طبيعياً يمتلكن كمية <mark class="testable">أكبر من الدهن</mark> وأقل من العضلات.</td>
-                            </tr>
-                            <tr>
-                                <td class="border p-2 font-bold">الأطفال حديثي الولادة</td>
-                                <td class="border p-2 font-bold hl-blue">الأكثر ارتفاعاً</td>
-                                <td class="border p-2 text-right">أعلى نسبة ماء على الإطلاق.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Water Functions Micro-cards -->
-                <div class="mt-6 flex flex-wrap gap-2 text-sm justify-center normal-content">
-                    <span class="bg-slate-100 px-3 py-1 rounded-full border border-slate-200">🌡️ <b>تنظيم حراري:</b> تبخر، تبريد</span>
-                    <span class="bg-slate-100 px-3 py-1 rounded-full border border-slate-200">🛡️ <b>تخميد وتزليق:</b> سائل أمنيوسي، دماغي، مفصلي</span>
-                    <span class="bg-slate-100 px-3 py-1 rounded-full border border-slate-200">🧪 <b>متفاعل:</b> تفاعلات الحلمهة (Hydrolysis)</span>
-                    <span class="bg-slate-100 px-3 py-1 rounded-full border border-slate-200">🧊 <b>مذيب:</b> يحل الأيونات والبروتينات</span>
-                    <span class="bg-slate-100 px-3 py-1 rounded-full border border-slate-200">🚚 <b>ناقل:</b> البلازما تنقل المغذيات والفضلات</span>
-                </div>
-            </div>
-            
-            <div class="text-xs text-slate-400 mt-2 text-center normal-content">*تم استبعاد فقرات كهارل السوائل وشروط الاستتباب الخلوي بناءً على ملف المحذوفات الرسمي.*</div>
-        </section>
-
-        <!-- Section 6 & 7: Control Mechanisms & Feedback -->
-        <section class="mb-12">
-            <h2 class="text-2xl font-bold text-slate-800 border-b-2 border-slate-200 pb-2 mb-6 flex items-center gap-2">
-                <span>سادساً: آليات الضبط والمراقبة</span> <span>🎛️</span>
-            </h2>
-
-            <!-- Control Theory -->
-            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-6 card-bg normal-content">
-                <h3 class="font-bold text-lg mb-4 text-center">أجزاء جهاز الضبط (نظرية الضبط)</h3>
-                <div class="flex flex-col md:flex-row justify-between items-center gap-2 text-center text-sm">
-                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg w-full">
-                        <div class="font-bold text-blue-800">1. مستقبل (حساس)</div>
-                        <div class="text-xs mt-1">يتحرى التغيرات في البيئة (كضغط الدم).</div>
-                    </div>
-                    <span class="text-slate-400">&larr;</span>
-                    <div class="p-3 bg-purple-50 border border-purple-200 rounded-lg w-full">
-                        <div class="font-bold text-purple-800">2. جهاز المقارنة</div>
-                        <div class="text-xs mt-1">يمثله عادة <mark class="testable">CNS</mark>. يقارن مع القيمة المعيارية ويصدر <mark class="testable">إشارة خطأ</mark>.</div>
-                    </div>
-                    <span class="text-slate-400">&larr;</span>
-                    <div class="p-3 bg-orange-50 border border-orange-200 rounded-lg w-full">
-                        <div class="font-bold text-orange-800">3. الجهاز المراقب (المنفذ)</div>
-                        <div class="text-xs mt-1">يستجيب للإشارة (كالقلب/الأوعية).</div>
-                    </div>
-                    <span class="text-slate-400">&larr;</span>
-                    <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-lg w-full">
-                        <div class="font-bold text-emerald-800">4. المتغير المنظم</div>
-                        <div class="text-xs mt-1">النتيجة النهائية التي يجب ضبطها.</div>
-                    </div>
-                </div>
-                
-                <!-- Math Formula Correction -->
-                <div class="mt-6 text-center trap-card">
-                    <span class="bg-yellow-100 border-2 border-yellow-400 text-yellow-900 px-6 py-3 rounded-lg font-bold text-lg inline-block shadow-sm">
-                        <span class="text-sm block mb-1 text-slate-500">مجسد رياضي لمتغير (تصويب رسمي 🎯):</span>
-                        <mark class="testable bg-transparent p-0 shadow-none text-xl">ضغط الدم = نتاج القلب × مقاومة جريان الدم</mark>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Feedback Loops Interactive View -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                
                 <!-- Negative Feedback -->
-                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-500 card-bg relative overflow-hidden group">
-                    <div class="absolute top-2 left-2 text-4xl opacity-10 group-hover:rotate-180 transition duration-700">🔄</div>
-                    <h3 class="font-bold text-xl text-blue-700 mb-2 flex items-center gap-2">
-                        التلقيم الراجع السلبي <span>📉</span>
-                    </h3>
-                    <p class="text-sm font-bold text-slate-600 mb-4 bg-blue-50 p-2 rounded">الآلية الأكثر شيوعاً. تعمل على <mark class="testable hl-blue">معاكسة المتغير البدئي</mark> ورده للقيمة السوية لتحقيق الاستتباب.</p>
-                    
-                    <div class="space-y-4">
-                        <!-- Example 1: CO2 -->
-                        <div class="border border-slate-200 rounded-lg p-3 text-sm hover-grow trap-card">
-                            <strong class="text-slate-800 block mb-1">🎯 تنظيم CO<sub>2</sub>:</strong>
-                            ارتفاع CO<sub>2</sub> &larr; ينبه مراكز التنفس &larr; <mark class="testable hl-green">زيادة التهوية</mark> &larr; انخفاض CO<sub>2</sub>.
-                        </div>
-                        
-                        <!-- Example 2: Water (Simulator) -->
-                        <div class="border border-slate-200 rounded-lg p-3 text-sm">
-                            <div class="flex justify-between items-center mb-2">
-                                <strong class="text-slate-800">💧 تنظيم المدخول المائي (مضاد الإبالة ADH):</strong>
-                                <button onclick="runWaterSim()" class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold hover:bg-blue-200 transition">▶ تشغيل المسار</button>
-                            </div>
-                            <!-- Flow Simulator -->
-                            <div class="flex flex-col items-center gap-1 text-xs font-bold">
-                                <div id="sim1-step1" class="w-full bg-slate-50 border border-slate-200 p-2 rounded text-center transition-all duration-300">
-                                    تجفاف &larr; <mark class="testable">ارتفاع الضغط التناضحي</mark> (> 290 mOsm/L)
-                                </div>
-                                <div>&darr;</div>
-                                <div id="sim1-step2" class="w-full bg-slate-50 border border-slate-200 p-2 rounded text-center transition-all duration-300">
-                                    تنبيه <mark class="testable text-orange-600">المستقبلات التناضحية</mark> (بالوطاء)
-                                </div>
-                                <div>&darr;</div>
-                                <div class="flex w-full gap-2">
-                                    <div id="sim1-step3a" class="flex-1 bg-slate-50 border border-slate-200 p-2 rounded text-center transition-all duration-300">
-                                        تفعيل <mark class="testable">مركز العطش</mark> (شرب)
-                                    </div>
-                                    <div id="sim1-step3b" class="flex-1 bg-slate-50 border border-slate-200 p-2 rounded text-center transition-all duration-300">
-                                        النخامى الخلفية تحرر <mark class="testable hl-blue">ADH</mark> للدم
-                                    </div>
-                                </div>
-                                <div>&darr;</div>
-                                <div id="sim1-step4" class="w-full bg-slate-50 border border-slate-200 p-2 rounded text-center transition-all duration-300">
-                                    الكلية: <mark class="testable hl-red">إعاقة إفراغ الماء</mark> (بول مركز) &larr; عودة التوازن
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 خصائص التلقيم الراجع السلبي (Negative Feedback): <span class="text-xs text-slate-400 font-normal">(مكرر جداً بكل الدورات)</span></p>
+                    <ul class="list-disc list-inside space-y-2 text-sm pr-2">
+                        <li>يعمل على <mark class="core-concept">معاكسة</mark> المتغير البدئي وتصحيحه / مقاومة التغير. (2017, 2019, 2020, 2021)</li>
+                        <li>يحافظ على <mark class="core-concept">استتباب</mark> الكائن الحي / يعيد المتغير لقيمته السوية.</li>
+                        <li>تعمل بها <mark class="core-concept">معظم</mark> أجهزة الجسم.</li>
+                        <li>كل ما يلي يخضع للسلبي عدا: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">عملية الإباضة (LH surge) / تخثر الدم</span> (تخضع للإيجابي) (2019, 2024)</li>
+                    </ul>
                 </div>
 
                 <!-- Positive Feedback -->
-                <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-red-500 card-bg relative overflow-hidden group">
-                    <div class="absolute top-2 left-2 text-4xl opacity-10 group-hover:scale-125 transition duration-500">📈</div>
-                    <h3 class="font-bold text-xl text-red-700 mb-2 flex items-center gap-2">
-                        التلقيم الراجع الإيجابي <span>🚀</span>
-                    </h3>
-                    <p class="text-sm font-bold text-slate-600 mb-4 bg-red-50 p-2 rounded trap-card">نادر. التنبيه البدئي يؤدي إلى <mark class="testable bg-red-200 text-red-800">تعزيز المتغير البدئي</mark> (تصويب: لا تقل زيادة أو نقصاناً). يسبب عدم الاستقرار لولا كبحه بآليات سلبية.</p>
-                    
-                    <ul class="space-y-3 text-sm normal-content">
-                        <li class="bg-slate-50 border border-slate-200 p-2 rounded hover-grow">
-                            <strong class="text-slate-800">🩸 تخثر الدم:</strong> تفعيل <mark class="testable">الثرومبين (Thrombin)</mark> يعزز تشكل المزيد منه (يوقفه الليفين لاحقاً).
-                        </li>
-                        <li class="bg-slate-50 border border-slate-200 p-2 rounded hover-grow">
-                            <strong class="text-slate-800">🛡️ المناعة:</strong> اللمفاويات التائية المساعدة (T-helper) تفعل كامل الجهاز (تكبحها التائية الكابتة).
-                        </li>
-                        <li class="bg-slate-50 border border-slate-200 p-2 rounded hover-grow">
-                            <strong class="text-slate-800">🥚 الإباضة والولادة:</strong> نضج الجريب المبيضي، وتقلصات الرحم أثناء المخاض.
-                        </li>
+                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition hover:border-physio-main">
+                    <p class="font-bold mb-2">📌 خصائص التلقيم الراجع الإيجابي (Positive Feedback): <span class="text-xs text-slate-400 font-normal">(مكرر جداً)</span></p>
+                    <ul class="list-disc list-inside space-y-2 text-sm pr-2">
+                        <li>يعمل على <mark class="core-concept">تعزيز (Amplification)</mark> التغير البدئي أو قوة المنبه. (2019, 2021, 2022)</li>
+                        <li><mark class="clinical-trap">لا يسعى للاستقرار</mark> بحد ذاته، بل يجب أن <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">يُراقب بواسطة التلقيم الراجع السلبي لإيقافه</span> في اللحظة المناسبة لتجنب الكارثة. (2022, 2023, 2024)</li>
+                        <li>مثال عليه: ⟸ <span class="revealable font-bold text-emerald-600 dark:text-emerald-400">تفعيل اللمفاويات التائية المساعدة (T-cells)</span>. (2020)</li>
                     </ul>
-
-                    <!-- Pathological Simulator -->
-                    <div class="mt-4 border-2 border-red-200 bg-red-50 p-3 rounded-lg text-sm trap-card">
-                        <strong class="text-red-800 block mb-2">💔 حالة إمراضية (قصور القلب):</strong>
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1 text-center">
-                                احتشاء &larr; نقص نتاج القلب &larr; <mark class="testable">زيادة عمل القلب كمعاوضة</mark>
-                            </div>
-                            <div class="text-2xl text-red-500 anim-feedback-loop px-2">&larr;</div>
-                            <div class="flex-1 text-center">
-                                زيادة الحاجة للـ O<sub>2</sub> &larr; <mark class="testable hl-red">تفاقم نقص التروية</mark> (حلقة معيبة)
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
             </div>
+
         </section>
 
-        <!-- Final Section: Exam Essentials -->
-        <section class="mb-12">
-            <div class="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-2xl p-6 md:p-8 text-white shadow-2xl relative overflow-hidden">
-                <div class="absolute -right-10 -bottom-10 text-9xl opacity-5">🎓</div>
-                <h2 class="text-3xl font-extrabold mb-6 text-center text-indigo-300">الخلاصة الامتحانية الذهبية</h2>
+        <!-- ========================================== -->
+        <!-- TAB 3: Flowcharts & Mechanisms -->
+        <!-- ========================================== -->
+        <section id="tab-mechanisms" class="tab-content hidden">
+            
+            <div class="bg-slate-800 rounded-xl p-6 shadow-lg mb-6 border border-slate-700 text-white">
+                <h3 class="font-bold text-xl mb-4 text-sky-400 border-b border-slate-600 pb-2"><i class="fas fa-tint"></i> شلال الاستجابة للتجفاف (نقص الماء)</h3>
+                <p class="text-sm text-slate-300 mb-6">اقرأ المخطط باتجاه السهم (من اليمين إلى اليسار):</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Numbers Bank -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 text-yellow-400 border-b border-indigo-700 pb-2">🔢 بنك الأرقام</h3>
-                        <ul class="space-y-3 text-sm">
-                            <li class="flex justify-between border-b border-indigo-800 pb-1">
-                                <span>وزن الشخص القياسي:</span> <span class="font-bold text-yellow-300">65 كغ</span>
-                            </li>
-                            <li class="flex justify-between border-b border-indigo-800 pb-1">
-                                <span>حجم الماء الكلي (TBW):</span> <span class="font-bold text-yellow-300">40 لتر</span>
-                            </li>
-                            <li class="flex justify-between border-b border-indigo-800 pb-1">
-                                <span>حجم السائل داخل الخلوي (ICF):</span> <span class="font-bold text-yellow-300">25 لتر</span>
-                            </li>
-                            <li class="flex justify-between border-b border-indigo-800 pb-1">
-                                <span>حجم السائل خارج الخلوي (ECF):</span> <span class="font-bold text-yellow-300">15 لتر</span>
-                            </li>
-                            <li class="flex justify-between border-b border-indigo-800 pb-1">
-                                <span>حرارة الجسم المركزية السوية:</span> <span class="font-bold text-yellow-300">37° مئوية</span>
-                            </li>
-                            <li class="flex justify-between pb-1">
-                                <span>الضغط التناضحي لبلازما الدم:</span> <span class="font-bold text-yellow-300">290 mOsm/L</span>
-                            </li>
-                        </ul>
+                <div class="flex flex-col md:flex-row items-center justify-start gap-2 overflow-x-auto pb-4 custom-scrollbar">
+                    
+                    <!-- Step 1 -->
+                    <div class="flex-none bg-rose-900/50 border border-rose-500 rounded-lg p-3 w-40 text-center shrink-0 shadow-[0_0_10px_rgba(225,29,72,0.2)]">
+                        <div class="text-xs text-rose-300 mb-1">الخطوة 1</div>
+                        <div class="font-bold text-sm">نقص حجم الماء</div>
+                        <div class="text-xs text-slate-300 mt-1">(تعرق، إسهال...)</div>
+                    </div>
+                    
+                    <i class="fas fa-arrow-left text-slate-400 md:rotate-0 rotate-90 my-2 md:my-0"></i>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex-none bg-amber-900/50 border border-amber-500 rounded-lg p-3 w-40 text-center shrink-0">
+                        <div class="text-xs text-amber-300 mb-1">الخطوة 2</div>
+                        <div class="font-bold text-sm">ارتفاع الضغط التناضحي</div>
+                        <div class="text-xs text-slate-300 mt-1">للسائل خارج الخلوي</div>
                     </div>
 
-                    <!-- Glossary -->
+                    <i class="fas fa-arrow-left text-slate-400 md:rotate-0 rotate-90 my-2 md:my-0"></i>
+
+                    <!-- Step 3 -->
+                    <div class="flex-none bg-indigo-900/50 border border-indigo-500 rounded-lg p-3 w-40 text-center shrink-0">
+                        <div class="text-xs text-indigo-300 mb-1">الخطوة 3</div>
+                        <div class="font-bold text-sm">تنبيه الوطاء</div>
+                        <div class="text-xs text-slate-300 mt-1">وطلب الماء (العطش)</div>
+                    </div>
+
+                    <i class="fas fa-arrow-left text-slate-400 md:rotate-0 rotate-90 my-2 md:my-0"></i>
+
+                    <!-- Step 4 -->
+                    <div class="flex-none bg-fuchsia-900/50 border border-fuchsia-500 rounded-lg p-3 w-40 text-center shrink-0">
+                        <div class="text-xs text-fuchsia-300 mb-1">الخطوة 4</div>
+                        <div class="font-bold text-sm">زيادة إفراز ADH</div>
+                        <div class="text-xs text-slate-300 mt-1">من النخامى الخلفية</div>
+                    </div>
+
+                    <i class="fas fa-arrow-left text-slate-400 md:rotate-0 rotate-90 my-2 md:my-0"></i>
+
+                    <!-- Step 5 (Result) -->
+                    <div class="flex-none bg-emerald-900/50 border border-emerald-500 rounded-lg p-3 w-40 text-center shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                        <div class="text-xs text-emerald-300 mb-1">النتيجة (الاستتباب)</div>
+                        <div class="font-bold text-sm">انخفاض إفراغ الكلية للماء</div>
+                        <div class="text-[10px] text-emerald-200 mt-1">حجم بول قليل وعالي التركيز</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Negative Feedback Loop -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700">
+                    <h4 class="font-bold text-sky-700 dark:text-sky-400 mb-4 text-center border-b pb-2">🔄 حلقة التلقيم الراجع السلبي (تنظيم الحرارة)</h4>
+                    <div class="flex flex-col items-center gap-3">
+                        <div class="bg-slate-100 dark:bg-slate-700 p-2 rounded text-sm w-full text-center">ارتفاع حرارة الجسم (متغير بدئي)</div>
+                        <i class="fas fa-arrow-down text-slate-400"></i>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-2 rounded text-sm w-full text-center">تحسس الوطاء (جهاز المقارنة)</div>
+                        <i class="fas fa-arrow-down text-slate-400"></i>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-2 rounded text-sm w-full text-center">توسع وعائي وتعرق (آلية تصحيح)</div>
+                        <i class="fas fa-arrow-down text-slate-400"></i>
+                        <div class="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 font-bold p-2 rounded text-sm w-full text-center border border-emerald-300 border-dashed">⬇️ انخفاض الحرارة (<mark class="core-concept bg-transparent border-0 text-inherit">معاكسة المتغير</mark>)</div>
+                    </div>
+                </div>
+
+                <!-- Positive Feedback Loop -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700">
+                    <h4 class="font-bold text-rose-700 dark:text-rose-400 mb-4 text-center border-b pb-2">⚠️ حلقة التلقيم الراجع الإيجابي (تخثر الدم)</h4>
+                    <div class="flex flex-col items-center gap-3">
+                        <div class="bg-slate-100 dark:bg-slate-700 p-2 rounded text-sm w-full text-center">تمزق وعاء دموي (منبه)</div>
+                        <i class="fas fa-arrow-down text-slate-400"></i>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-2 rounded text-sm w-full text-center">تفعيل عوامل التخثر</div>
+                        <i class="fas fa-arrow-down text-slate-400"></i>
+                        <div class="bg-slate-100 dark:bg-slate-700 p-2 rounded text-sm w-full text-center">العوامل المفعلة تفعّل المزيد من العوامل</div>
+                        <i class="fas fa-arrow-down text-slate-400"></i>
+                        <div class="bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300 font-bold p-2 rounded text-sm w-full text-center border border-rose-300 border-dashed">⬆️ تشكل الخثرة (<mark class="core-concept bg-transparent border-0 text-inherit">تعزيز المنبه</mark>) ⟸ يوقفها السلبي</div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: Interactive Toggles & Comparisons -->
+        <!-- ========================================== -->
+        <section id="tab-interactive" class="tab-content hidden">
+            
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 mb-6">
+                <h3 class="font-bold text-xl mb-4 text-slate-800 dark:text-slate-100 flex items-center justify-between">
+                    <span><i class="fas fa-balance-scale text-physio-main"></i> محاكي الحالات المتعاكسة (سوائل الجسم)</span>
+                    <button onclick="toggleDrawer()" class="text-xs bg-slate-200 dark:bg-slate-700 px-3 py-1.5 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition"><i class="fas fa-columns"></i> فتح نافذة المقارنة السريعة</button>
+                </h3>
+                
+                <div class="flex justify-center mb-8 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl w-fit mx-auto border border-slate-200 dark:border-slate-700">
+                    <button id="toggle-dehydration" class="toggle-param active-param px-6 py-2 rounded-lg font-bold text-sm transition-all bg-rose-500 text-white shadow-md">حالة التجفاف (نقص الماء)</button>
+                    <button id="toggle-overhydration" class="toggle-param px-6 py-2 rounded-lg font-bold text-sm transition-all text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">حالة فرط الإماهة (زيادة الماء)</button>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 transition-colors" id="param-osmolarity">
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-bold mb-2">الضغط التناضحي</div>
+                        <div class="text-2xl font-black text-rose-600 dark:text-rose-400 param-val"><i class="fas fa-arrow-up"></i> يرتفع</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 transition-colors" id="param-adh">
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-bold mb-2">إفراز هرمون ADH</div>
+                        <div class="text-2xl font-black text-rose-600 dark:text-rose-400 param-val"><i class="fas fa-arrow-up"></i> يرتفع</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 transition-colors" id="param-urine">
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-bold mb-2">حجم البول</div>
+                        <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400 param-val"><i class="fas fa-arrow-down"></i> ينخفض</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 transition-colors" id="param-thirst">
+                        <div class="text-xs text-slate-500 dark:text-slate-400 font-bold mb-2">تنبيه مركز العطش</div>
+                        <div class="text-2xl font-black text-rose-600 dark:text-rose-400 param-val"><i class="fas fa-check-circle"></i> مُفَعّل</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization of Water % -->
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+                <h3 class="font-bold text-xl mb-4 text-slate-800 dark:text-slate-100"><i class="fas fa-percentage text-physio-main"></i> نسبة الماء في الأنسجة (دورات مكررة)</h3>
+                
+                <div class="space-y-4 max-w-2xl mx-auto">
                     <div>
-                        <h3 class="text-xl font-bold mb-4 text-emerald-400 border-b border-indigo-700 pb-2">📚 مصطلحات مفصلية</h3>
-                        <div class="grid grid-cols-2 gap-2 text-sm">
-                            <div class="bg-indigo-800/50 p-2 rounded"><b>Morphology:</b> علم الأشكال (سكوني)</div>
-                            <div class="bg-indigo-800/50 p-2 rounded"><b>Homeostasis:</b> الاستتباب (كلود برنار)</div>
-                            <div class="bg-indigo-800/50 p-2 rounded"><b>Epithelia:</b> الظهائر (حد فاصل)</div>
-                            <div class="bg-indigo-800/50 p-2 rounded"><b>ICF/ECF:</b> داخل/خارج خلوي</div>
-                            <div class="bg-indigo-800/50 p-2 rounded"><b>Hypothalamus:</b> الوطاء (مركز مقارنة)</div>
-                            <div class="bg-indigo-800/50 p-2 rounded"><b>ADH:</b> هرمون مضاد الإبالة</div>
-                            <div class="bg-indigo-800/50 p-2 rounded col-span-2 text-center text-red-300"><b>Positive Feedback:</b> تلقيم راجع إيجابي (يعزز)</div>
+                        <div class="flex justify-between text-sm font-bold mb-1">
+                            <span>النسيج العضلي (الأعلى)</span>
+                            <span class="text-sky-600">90%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-4 overflow-hidden relative">
+                            <div class="bg-sky-500 h-4 rounded-full" style="width: 90%"></div>
+                            <!-- RTL Animation flow visual -->
+                            <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iMiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjUpIi8+PC9zdmc+')] animate-[slideRight_3s_linear_infinite] opacity-50"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between text-sm font-bold mb-1">
+                            <span>النسيج الدهني (الأقل - <mark class="clinical-trap bg-transparent text-rose-500 p-0">سؤال متكرر</mark>)</span>
+                            <span class="text-amber-500">20%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-4 overflow-hidden relative">
+                            <div class="bg-amber-400 h-4 rounded-full" style="width: 20%"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex justify-between text-sm font-bold mb-1">
+                            <span>النسيج العظمي الخالي من النقي</span>
+                            <span class="text-slate-500">5%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-4 overflow-hidden relative">
+                            <div class="bg-slate-400 h-4 rounded-full" style="width: 5%"></div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- TAB 5: Summary & Numbers -->
+        <!-- ========================================== -->
+        <section id="tab-summary" class="tab-content hidden">
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Numbers Bank -->
+                <div class="bg-sky-50 dark:bg-slate-800 rounded-xl p-5 border border-sky-200 dark:border-sky-900 shadow-sm">
+                    <h3 class="font-bold text-sky-800 dark:text-sky-300 mb-4 text-lg border-b border-sky-200 dark:border-sky-800 pb-2"><i class="fas fa-sort-numeric-up-alt"></i> بنك الأرقام والنسب الحتمية</h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between items-center bg-white dark:bg-slate-700 p-2 rounded shadow-sm">
+                            <span class="text-sm font-bold">نسبة البروتينات من وزن الجسم</span>
+                            <mark class="number-badge">15 - 18 %</mark>
+                        </li>
+                        <li class="flex justify-between items-center bg-white dark:bg-slate-700 p-2 rounded shadow-sm border-l-4 border-rose-500">
+                            <span class="text-sm font-bold">الماء عند حديثي الولادة (الأكبر)</span>
+                            <mark class="number-badge">75 - 80 %</mark>
+                        </li>
+                        <li class="flex justify-between items-center bg-white dark:bg-slate-700 p-2 rounded shadow-sm">
+                            <span class="text-sm font-bold">نسبة الدسم (الشحوم) من الوزن</span>
+                            <mark class="number-badge">15 - 30 %</mark>
+                        </li>
+                        <li class="flex justify-between items-center bg-white dark:bg-slate-700 p-2 rounded shadow-sm">
+                            <span class="text-sm font-bold">المعادن (الشوارد)</span>
+                            <mark class="number-badge">2 - 12 %</mark>
+                        </li>
+                        <li class="flex justify-between items-center bg-white dark:bg-slate-700 p-2 rounded shadow-sm border-l-4 border-rose-500">
+                            <span class="text-sm font-bold">الماء في النسيج الدهني (الأقل)</span>
+                            <mark class="number-badge">20 %</mark>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Glossary -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
+                    <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-4 text-lg border-b border-slate-100 dark:border-slate-700 pb-2"><i class="fas fa-language text-physio-main"></i> مسرد المصطلحات الامتحانية (Glossary)</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-right">
+                            <thead class="text-xs text-slate-500 bg-slate-50 dark:bg-slate-700 dark:text-slate-400">
+                                <tr>
+                                    <th class="px-4 py-2 rounded-tr-lg">المصطلح (En)</th>
+                                    <th class="px-4 py-2 rounded-tl-lg">المعنى والمغزى (Ar)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b dark:border-slate-700">
+                                    <td class="px-4 py-2 font-bold text-physio-main" dir="ltr">Homeostasis</td>
+                                    <td class="px-4 py-2">الاستتباب (حفظ ثبات البيئة الداخلية)</td>
+                                </tr>
+                                <tr class="border-b dark:border-slate-700">
+                                    <td class="px-4 py-2 font-bold text-physio-main" dir="ltr">Negative Feedback</td>
+                                    <td class="px-4 py-2">التلقيم الراجع السلبي (<mark class="clinical-trap bg-transparent p-0">مقاوم للتغير</mark>)</td>
+                                </tr>
+                                <tr class="border-b dark:border-slate-700">
+                                    <td class="px-4 py-2 font-bold text-physio-main" dir="ltr">Positive Feedback</td>
+                                    <td class="px-4 py-2">التلقيم الراجع الإيجابي (<mark class="clinical-trap bg-transparent p-0">معزز للتغير</mark>)</td>
+                                </tr>
+                                <tr class="border-b dark:border-slate-700">
+                                    <td class="px-4 py-2 font-bold text-physio-main" dir="ltr">Dynamic</td>
+                                    <td class="px-4 py-2">حركي (صفة علم الفيزيولوجيا)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 font-bold text-physio-main" dir="ltr">Osmosis / Osmolarity</td>
+                                    <td class="px-4 py-2">التناضح (الحلولية) - يتعلق بتركيز الشوارد</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Golden Rules -->
+            <div class="mt-6 bg-gradient-to-r from-amber-100 to-amber-50 dark:from-amber-900/40 dark:to-amber-800/20 p-5 rounded-xl border border-amber-200 dark:border-amber-700/50 shadow-sm">
+                <h3 class="font-bold text-amber-800 dark:text-amber-400 mb-3 text-lg"><i class="fas fa-crown"></i> القواعد الذهبية لليلة الامتحان:</h3>
+                <ol class="list-decimal list-inside space-y-2 text-sm text-slate-800 dark:text-slate-200 font-semibold">
+                    <li>أي سؤال يحتوي على (معاكسة، تصحيح، حفاظ على استتباب، تنظيم سكر/ضغط) ⟸ اختر فوراً <span class="text-physio-main">التلقيم الراجع السلبي</span>.</li>
+                    <li>أي سؤال يحتوي على (تعزيز، إباضة، تخثر، تفعيل تائيات) ⟸ اختر فوراً <span class="text-rose-600 dark:text-rose-400">التلقيم الراجع الإيجابي</span>.</li>
+                    <li>الماء يتناسب <span class="underline decoration-wavy decoration-rose-500">عكساً</span> مع الشحوم. (مسن/أنثى بدينة = شحوم أكثر = ماء أقل).</li>
+                    <li>تذكر: <span dir="ltr" class="inline-block px-1">Heart = Organ</span>، بينما <span dir="ltr" class="inline-block px-1">Pumping Blood = System</span>.</li>
+                </ol>
             </div>
         </section>
 
     </main>
 
-    <!-- Interactive Scripts -->
+    <aside id="comparison-drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white dark:bg-slate-900 shadow-[-10px_0_30px_rgba(0,0,0,0.1)] z-[100] border-l border-slate-200 dark:border-slate-800 overflow-y-auto">
+        <div class="p-5">
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-3 mb-4">
+                <h2 class="font-bold text-lg text-physio-main"><i class="fas fa-balance-scale-right"></i> مقارنة سريعة</h2>
+                <button onclick="toggleDrawer()" class="text-slate-400 hover:text-rose-500 transition text-xl"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <table class="w-full text-sm text-right border-collapse">
+                <thead>
+                    <tr class="bg-slate-100 dark:bg-slate-800">
+                        <th class="p-2 border border-slate-200 dark:border-slate-700">وجه المقارنة</th>
+                        <th class="p-2 border border-slate-200 dark:border-slate-700 text-emerald-600">السلبي</th>
+                        <th class="p-2 border border-slate-200 dark:border-slate-700 text-rose-600">الإيجابي</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700 font-bold">الهدف</td>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700">يعاكس المتغير</td>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700">يعزز المنبه</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700 font-bold">الشيوع</td>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700">شائع جداً</td>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700">نادر الحدوث</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700 font-bold">الاستقرار</td>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700">يحقق الاستتباب</td>
+                        <td class="p-2 border border-slate-200 dark:border-slate-700">لا يحقق استقرار (يحتاج لسلبي ليوقفه)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </aside>
+
+    <!-- Overlay for drawer -->
+    <div id="drawer-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[90] hidden transition-opacity" onclick="toggleDrawer()"></div>
+
     <script>
-        // Scroll Progress
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("scroll-progress").style.width = scrolled + "%";
-        };
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block', 'animate-[fadeIn_0.3s_ease-in-out]');
+            });
+            // Reset all buttons
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-physio-light', 'dark:bg-slate-700', 'text-physio-dark', 'dark:text-white', 'border-b-2', 'border-physio-main');
+                el.classList.add('text-slate-600', 'dark:text-slate-400');
+            });
 
-        // Dark Mode Toggle
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
+            // Show selected tab
+            const content = document.getElementById(tabId);
+            content.classList.remove('hidden');
+            content.classList.add('block');
+            
+            // Allow browser reflow before adding animation class
+            void content.offsetWidth;
+            content.classList.add('animate-[fadeIn_0.3s_ease-in-out]');
+
+            // Highlight selected button
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.remove('text-slate-600', 'dark:text-slate-400');
+            btn.classList.add('bg-physio-light', 'dark:bg-slate-700', 'text-physio-dark', 'dark:text-white', 'border-b-2', 'border-physio-main');
         }
 
-        // Exam Traps Mode
-        function toggleTrapsMode() {
-            document.body.classList.toggle('traps-only');
-            const btn = document.getElementById('trap-btn');
-            if(document.body.classList.contains('traps-only')){
-                btn.classList.add('bg-red-100');
-                btn.classList.add('border-red-600');
+        // Initialize first tab
+        switchTab('tab-analytics');
+
+        // Dark/Light Mode Toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        
+        // Check system preference or localStorage
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
             } else {
-                btn.classList.remove('bg-red-100');
-                btn.classList.remove('border-red-600');
+                localStorage.theme = 'light';
             }
-        }
+        });
 
-        // Self-Test Mode Toggle (Absolute Layout Stability)
-        function toggleSelfTest() {
-            document.body.classList.toggle('self-test-mode');
-            const btn = document.getElementById('self-test-btn');
-            if(document.body.classList.contains('self-test-mode')){
-                btn.classList.replace('bg-slate-700', 'bg-emerald-600');
-                btn.classList.replace('border-slate-500', 'border-emerald-500');
-                btn.innerHTML = `<span class="text-3xl group-hover:scale-110 transition">🫣</span><span class="text-[11px] font-bold text-white text-center uppercase tracking-wide">الاختبار مفعل<br>مرر للإظهار</span>`;
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        // Self-Testing Mode Toggle (Layout Stable)
+        const testModeToggle = document.getElementById('test-mode-toggle');
+        const testIcon = document.getElementById('test-icon');
+        const testDot = document.getElementById('test-status-dot');
+        let isTestMode = false;
+
+        testModeToggle.addEventListener('click', () => {
+            isTestMode = !isTestMode;
+            if(isTestMode) {
+                document.body.classList.add('test-mode');
+                testIcon.classList.replace('fa-eye', 'fa-eye-slash');
+                testIcon.classList.replace('text-white', 'text-rose-400');
+                testDot.classList.replace('bg-slate-400', 'bg-emerald-400');
+                testModeToggle.classList.add('ring-2', 'ring-emerald-400', 'ring-offset-2', 'ring-offset-sky-900');
             } else {
-                btn.classList.replace('bg-emerald-600', 'bg-slate-700');
-                btn.classList.replace('border-emerald-500', 'border-slate-500');
-                btn.innerHTML = `<span class="text-3xl group-hover:scale-110 transition">🧠</span><span class="text-[11px] font-bold text-slate-300 text-center uppercase tracking-wide">وضع الاختبار<br>الذاتي</span>`;
+                document.body.classList.remove('test-mode');
+                testIcon.classList.replace('fa-eye-slash', 'fa-eye');
+                testIcon.classList.replace('text-rose-400', 'text-white');
+                testDot.classList.replace('bg-emerald-400', 'bg-slate-400');
+                testModeToggle.classList.remove('ring-2', 'ring-emerald-400', 'ring-offset-2', 'ring-offset-sky-900');
             }
-        }
+        });
 
-        // ADH Flow Simulator Sequence
-        async function runWaterSim() {
-            const steps = ['sim1-step1', 'sim1-step2', 'sim1-step3a', 'sim1-step3b', 'sim1-step4'];
+        // Interactive Toggles (Dehydration vs Overhydration)
+        const btnDehyd = document.getElementById('toggle-dehydration');
+        const btnOverhyd = document.getElementById('toggle-overhydration');
+        
+        // Params IDs
+        const pOsmo = document.getElementById('param-osmolarity');
+        const pAdh = document.getElementById('param-adh');
+        const pUrine = document.getElementById('param-urine');
+        const pThirst = document.getElementById('param-thirst');
+
+        btnDehyd.addEventListener('click', () => {
+            btnDehyd.classList.replace('text-slate-500', 'text-white');
+            btnDehyd.classList.replace('dark:text-slate-400', 'text-white');
+            btnDehyd.classList.add('bg-rose-500', 'shadow-md');
             
-            // Reset
-            steps.forEach(id => document.getElementById(id).classList.remove('step-active'));
+            btnOverhyd.classList.remove('bg-sky-500', 'text-white', 'shadow-md');
+            btnOverhyd.classList.add('text-slate-500', 'dark:text-slate-400');
+
+            updateParams('dehyd');
+        });
+
+        btnOverhyd.addEventListener('click', () => {
+            btnOverhyd.classList.replace('text-slate-500', 'text-white');
+            btnOverhyd.classList.replace('dark:text-slate-400', 'text-white');
+            btnOverhyd.classList.add('bg-sky-500', 'shadow-md');
             
-            // Run Sequence
-            for (let i = 0; i < steps.length; i++) {
-                if(i === 2) {
-                    // Activate 3a and 3b together
-                    document.getElementById(steps[i]).classList.add('step-active');
-                    document.getElementById(steps[i+1]).classList.add('step-active');
-                    i++; // skip next since it's handled
-                } else {
-                    document.getElementById(steps[i]).classList.add('step-active');
-                }
-                
-                await new Promise(r => setTimeout(r, 800)); // wait 800ms
-                
-                // Keep the last one glowing, turn off others
-                if(i !== steps.length - 1) {
-                   if(i===3){
-                        document.getElementById(steps[i]).classList.remove('step-active');
-                        document.getElementById(steps[i-1]).classList.remove('step-active');
-                   } else {
-                        document.getElementById(steps[i]).classList.remove('step-active');
-                   }
-                }
-            }
+            btnDehyd.classList.remove('bg-rose-500', 'text-white', 'shadow-md');
+            btnDehyd.classList.add('text-slate-500', 'dark:text-slate-400');
+
+            updateParams('overhyd');
+        });
+
+        function updateParams(state) {
+            const vals = document.querySelectorAll('.param-val');
+            vals.forEach(v => v.classList.add('opacity-0')); // fade out
             
-            // Turn off final after a delay
             setTimeout(() => {
-                document.getElementById('sim1-step4').classList.remove('step-active');
-            }, 2000);
+                if(state === 'dehyd') {
+                    pOsmo.querySelector('.param-val').innerHTML = '<i class="fas fa-arrow-up"></i> يرتفع';
+                    pOsmo.querySelector('.param-val').className = 'text-2xl font-black text-rose-600 dark:text-rose-400 param-val transition-opacity duration-300 opacity-100';
+                    
+                    pAdh.querySelector('.param-val').innerHTML = '<i class="fas fa-arrow-up"></i> يرتفع';
+                    pAdh.querySelector('.param-val').className = 'text-2xl font-black text-rose-600 dark:text-rose-400 param-val transition-opacity duration-300 opacity-100';
+                    
+                    pUrine.querySelector('.param-val').innerHTML = '<i class="fas fa-arrow-down"></i> ينخفض';
+                    pUrine.querySelector('.param-val').className = 'text-2xl font-black text-emerald-600 dark:text-emerald-400 param-val transition-opacity duration-300 opacity-100';
+                    
+                    pThirst.querySelector('.param-val').innerHTML = '<i class="fas fa-check-circle"></i> مُفَعّل';
+                    pThirst.querySelector('.param-val').className = 'text-2xl font-black text-rose-600 dark:text-rose-400 param-val transition-opacity duration-300 opacity-100';
+                } else {
+                    pOsmo.querySelector('.param-val').innerHTML = '<i class="fas fa-arrow-down"></i> ينخفض';
+                    pOsmo.querySelector('.param-val').className = 'text-2xl font-black text-emerald-600 dark:text-emerald-400 param-val transition-opacity duration-300 opacity-100';
+                    
+                    pAdh.querySelector('.param-val').innerHTML = '<i class="fas fa-arrow-down"></i> ينخفض (يتثبط)';
+                    pAdh.querySelector('.param-val').className = 'text-2xl font-black text-emerald-600 dark:text-emerald-400 param-val transition-opacity duration-300 opacity-100';
+                    
+                    pUrine.querySelector('.param-val').innerHTML = '<i class="fas fa-arrow-up"></i> يرتفع (يتمدد)';
+                    pUrine.querySelector('.param-val').className = 'text-2xl font-black text-sky-600 dark:text-sky-400 param-val transition-opacity duration-300 opacity-100';
+                    
+                    pThirst.querySelector('.param-val').innerHTML = '<i class="fas fa-times-circle"></i> مُثَبّط';
+                    pThirst.querySelector('.param-val').className = 'text-2xl font-black text-emerald-600 dark:text-emerald-400 param-val transition-opacity duration-300 opacity-100';
+                }
+            }, 150);
+        }
+
+        // Drawer Logic
+        function toggleDrawer() {
+            const drawer = document.getElementById('comparison-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+            
+            if (drawer.classList.contains('open')) {
+                drawer.classList.remove('open');
+                overlay.classList.add('hidden');
+            } else {
+                drawer.classList.add('open');
+                overlay.classList.remove('hidden');
+            }
         }
     </script>
+    
+    <!-- Custom Animations -->
+    <style>
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideRight { from { background-position: 100% 0; } to { background-position: 0 0; } }
+    </style>
 </body>
 </html>
