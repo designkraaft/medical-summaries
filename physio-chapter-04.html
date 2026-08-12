@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص شامل - الفصل الثالث: الدم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0f766e', // Teal 700
+                        secondary: '#be123c', // Rose 700 (Blood theme)
+                        dark: '#1e293b', // Slate 800
+                        light: '#f8fafc', // Slate 50
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f1f5f9; }
+        .number-font { font-family: 'Inter', sans-serif; }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .exam-tip { border-right: 4px solid #be123c; }
+        .smooth-scroll { scroll-behavior: smooth; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased smooth-scroll">
+
+<div class="max-w-7xl mx-auto px-4 pt-4 flex justify-between items-center text-sm font-semibold mb-6">
+  <a href="./physiology.html" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition duration-300">
+    <span>&rarr;</span> الرجوع لصفحة الفسيولوجيا
+  </a>
+  <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition duration-300">
+    <span>🏠</span> الصفحة الرئيسية
+  </a>
+</div>
+
+<header class="max-w-7xl mx-auto px-4 mb-8">
+    <div class="bg-gradient-to-l from-secondary to-rose-900 rounded-2xl shadow-xl p-8 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTEwIDEwQTIwIDIwIDAgMCAxIDMwIDEwQTIwIDIwIDAgMCAxIDEwIDEwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==')] bg-repeat"></div>
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+                <h1 class="text-3xl md:text-5xl font-bold mb-3 drop-shadow-md">الفصل الثالث: الدم (The Blood)</h1>
+                <p class="text-rose-100 text-lg md:text-xl font-medium">ملخص شامل، مدقق، ومُعد خصيصاً لامتحان الأتمتة (يتضمن جميع التصويبات الرسمية)</p>
+            </div>
+            <div class="bg-white/20 p-4 rounded-xl backdrop-blur-sm text-center min-w-[150px]">
+                <span class="block text-3xl mb-1">🩸</span>
+                <span class="font-bold text-lg">الفيزيولوجيا الطبية</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-4 pb-16 flex flex-col lg:flex-row gap-8">
+    
+    <!-- Sidebar / TOC -->
+    <aside class="lg:w-1/4 flex-shrink-0">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 sticky top-6">
+            <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">فهرس المحتويات</h3>
+            <nav class="space-y-2 text-sm font-semibold">
+                <a href="#general" class="block p-2 rounded hover:bg-slate-50 text-slate-700 hover:text-secondary transition">أولاً: معطيات عامة ووظائف الدم</a>
+                <a href="#physical" class="block p-2 rounded hover:bg-slate-50 text-slate-700 hover:text-secondary transition">ثانياً: الخصائص الفيزيائية</a>
+                <a href="#components" class="block p-2 rounded hover:bg-slate-50 text-slate-700 hover:text-secondary transition">ثالثاً: مكونات الدم (العناصر الخلوية)</a>
+                <a href="#hemostasis" class="block p-2 rounded hover:bg-slate-50 text-slate-700 hover:text-secondary transition">رابعاً: الإرقاء (Hemostasis)</a>
+                <a href="#tests" class="block p-2 rounded hover:bg-slate-50 text-slate-700 hover:text-secondary transition">خامساً: اختبارات الدم</a>
+                <a href="#golden-summary" class="block p-2 rounded bg-rose-50 text-secondary font-bold hover:bg-rose-100 transition mt-4">الخلاصة (النقاط الذهبية للامتحان)</a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="lg:w-3/4 space-y-8">
+
+        <section id="general" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-6">
+            <div class="flex items-center gap-3 mb-6 pb-3 border-b-2 border-slate-100">
+                <span class="bg-secondary text-white w-10 h-10 flex items-center justify-center rounded-lg text-xl font-bold">1</span>
+                <h2 class="text-2xl font-bold text-dark">معطيات عامة ووظائف الدم</h2>
+            </div>
+            
+            <p class="text-slate-600 mb-4 leading-relaxed">
+                الدم هو شكل من أشكال النسيج الضام. يتراوح حجمه في جسم إنسان يزن <span class="number-font font-bold text-primary">70</span> كغ نحو <span class="number-font font-bold text-primary">5 - 6</span> لترات، أي ما يعادل <span class="number-font font-bold text-primary">8%</span> من وزن الجسم.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <h4 class="font-bold text-primary mb-3">الوظائف النقلية والترابطية</h4>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700">
+                        <li>نقل الأكسجين للنسج و CO2 للرئتين.</li>
+                        <li>نقل المواد الغذائية من الأمعاء للكبد ثم لأنحاء الجسم.</li>
+                        <li>نقل الفضلات الاستقلابية لأجهزة الإطراح.</li>
+                        <li>التأمين الخلطي بنقل الهرمونات لمواقع تأثيرها.</li>
+                    </ul>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <h4 class="font-bold text-primary mb-3">الوظائف الدفاعية والتنظيمية</h4>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700">
+                        <li>الدفاع عن الجسم عبر الكريات البيض والأضداد.</li>
+                        <li>تنظيم حرارة الجسم (نقل الحرارة من العمق للسطح).</li>
+                        <li>تنظيم درجة الحموضة <span class="number-font">pH</span>.</li>
+                        <li>المساهمة في الإرقاء (تخثر الدم).</li>
+                        <li>الحفاظ على التوازن الحلولي (توزيع الماء بين الدم والنسج).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="physical" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-6">
+            <div class="flex items-center gap-3 mb-6 pb-3 border-b-2 border-slate-100">
+                <span class="bg-secondary text-white w-10 h-10 flex items-center justify-center rounded-lg text-xl font-bold">2</span>
+                <h2 class="text-2xl font-bold text-dark">الخصائص الفيزيائية للدم</h2>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Color -->
+                <div class="flex gap-4 items-start">
+                    <div class="bg-red-100 text-red-600 p-2 rounded-lg">🎨</div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-1">اللون</h4>
+                        <p class="text-sm text-slate-600">أحمر قرمزي (شرياني مؤكسج) - أحمر داكن مائل للأزرق (وريدي غير مؤكسج).</p>
+                    </div>
+                </div>
+
+                <!-- Viscosity -->
+                <div class="flex gap-4 items-start">
+                    <div class="bg-blue-100 text-blue-600 p-2 rounded-lg">💧</div>
+                    <div class="w-full">
+                        <h4 class="font-bold text-lg mb-1">اللزوجة</h4>
+                        <p class="text-sm text-slate-600 mb-2">تؤثر في ضغط الدم وتحدد سرعة جريانه، وتعتمد على عدد الكريات الحمر ونسبة بروتينات البلازما.</p>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm text-center border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100">
+                                        <th class="border p-2">العنصر</th>
+                                        <th class="border p-2">الذكور</th>
+                                        <th class="border p-2">الإناث</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="border p-2 font-bold">العناصر الخلوية</td>
+                                        <td class="border p-2 number-font">4.5</td>
+                                        <td class="border p-2 number-font">3.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border p-2 font-bold">البلازما</td>
+                                        <td class="border p-2 number-font">2.2</td>
+                                        <td class="border p-2 number-font">1.8</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mt-3">
+                            <div class="bg-rose-50 p-3 rounded border border-rose-100 text-sm">
+                                <span class="font-bold text-rose-700">ارتفاع اللزوجة:</span> يسبب بطء جريان، جلطات، ارتفاع ضغط. (بسبب كثرة الحمر/البروتينات).
+                            </div>
+                            <div class="bg-teal-50 p-3 rounded border border-teal-100 text-sm">
+                                <span class="font-bold text-teal-700">انخفاض اللزوجة:</span> يسبب انخفاض الضغط. (كما في فقر الدم/الإصابات الكبدية).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ESR -->
+                <div class="flex gap-4 items-start">
+                    <div class="bg-amber-100 text-amber-600 p-2 rounded-lg">⏳</div>
+                    <div class="w-full">
+                        <h4 class="font-bold text-lg mb-1">سرعة التثفل (ESR)</h4>
+                        <p class="text-sm text-slate-600 mb-2">سرعة تثفل الكريات الحمر للدم الممنوع من التخثر في ساعة واحدة. تفيد في كشف الأمراض العضوية وتطورها (لا تحدد هوية المرض).</p>
+                        
+                        <div class="flex flex-wrap gap-4 mt-2">
+                            <div class="flex-1 min-w-[200px] bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                <h5 class="font-bold text-xs text-slate-500 mb-2">القيم الطبيعية (مم/سا)</h5>
+                                <ul class="text-sm space-y-1">
+                                    <li>الذكور < 50 سنة: <span class="number-font font-bold">2 - 10</span></li>
+                                    <li>الذكور > 50 سنة: <span class="number-font font-bold">2 - 20</span></li>
+                                    <li>الإناث < 50 سنة: <span class="number-font font-bold">2 - 20</span></li>
+                                    <li>الإناث > 50 سنة: <span class="number-font font-bold">2 - 30</span></li>
+                                </ul>
+                            </div>
+                            <div class="flex-1 min-w-[200px]">
+                                <div class="bg-red-50 p-2 border-r-4 border-red-500 rounded-l mb-2 text-sm">
+                                    <span class="font-bold">تزداد السرعة:</span> نقص الألبومين، زيادة الكوليستيرول، الالتهابات (لزيادة الغلوبولينات ومولد الليفين).
+                                </div>
+                                <div class="bg-green-50 p-2 border-r-4 border-green-500 rounded-l text-sm">
+                                    <span class="font-bold">تنقص السرعة:</span> زيادة الألبومين، شذوذ شكل الكريات الحمر (فقر الدم المنجلي).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- pH -->
+                <div class="flex gap-4 items-start">
+                    <div class="bg-purple-100 text-purple-600 p-2 rounded-lg">⚖️</div>
+                    <div class="w-full">
+                        <h4 class="font-bold text-lg mb-1">درجة الحموضة (pH)</h4>
+                        <div class="exam-tip bg-rose-50 p-3 rounded-l-lg mb-2">
+                            <p class="text-sm text-slate-800 font-semibold">
+                                <span class="text-secondary font-bold">تنبيه وتصويب هام:</span> قيمة الـ pH للدم هي <span class="number-font font-bold text-xl text-primary mx-1">7.40</span>. وقيم الغازات التنفسية والـ pH تؤخذ من قيم الدم <span class="underline">الشرياني</span>.
+                            </p>
+                        </div>
+                        <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
+                            <li>تبقى ثابتة بفضل الجمل الدارئة (البيكربونات والهيموغلوبين).</li>
+                            <li><span class="font-bold">ارتفاع pH (قلوية):</span> تهيج الغشاء الخلوي ⟵ اضطرابات الجملة العصبية.</li>
+                            <li><span class="font-bold">انخفاض pH (حموضة):</span> يقلل تهيج الغشاء ⟵ يثبط العقدة الجيبية الأذينية في القلب ويؤدي لتباطئه.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="components" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-6">
+            <div class="flex items-center gap-3 mb-6 pb-3 border-b-2 border-slate-100">
+                <span class="bg-secondary text-white w-10 h-10 flex items-center justify-center rounded-lg text-xl font-bold">3</span>
+                <h2 class="text-2xl font-bold text-dark">العناصر الخلوية للدم</h2>
+            </div>
+
+            <!-- RBCs -->
+            <div class="mb-10">
+                <h3 class="text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+                    <span class="text-2xl">🔴</span> الكريات الحمر (Erythrocytes)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <ul class="list-disc list-inside space-y-2 text-sm text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <li><span class="font-bold">الشكل:</span> قرصية مقعرة الوجهين، عديمة النواة (عند الثدييات)، غير قادرة على الانقسام.</li>
+                        <li><span class="font-bold">الأبعاد:</span> القطر <span class="number-font">8</span> ميكرومتر، الثخانة عند الحواف <span class="number-font">2</span> ميكرومتر، في المركز < <span class="number-font">1</span> ميكرومتر.</li>
+                        <li><span class="font-bold">المرونة:</span> غشاؤها فضفاض، تمر عبر أوعية الطحال الشعرية (أقل من قطرها) دون أن تنفجر.</li>
+                        <li><span class="font-bold">المحتوى:</span> 60% ماء، 30% خضاب، كوليسترول، شوارد بوتاسيوم، إنزيمات (كربونيك أنهيدراز، الهكسوز أحادي الفوسفات لاختزال الحديد).</li>
+                    </ul>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm">
+                        <h4 class="font-bold mb-2">التعداد والتخريب:</h4>
+                        <p class="mb-2"><span class="number-font font-bold">4.5 - 5.5</span> مليون/ملم³. أعلى عند الأطفال وسكان المرتفعات والذكور.</p>
+                        <p class="mb-2 border-t pt-2"><span class="font-bold text-primary">العمر:</span> <span class="number-font">120</span> يوماً.</p>
+                        <div class="exam-tip bg-rose-50 p-2 rounded-l mt-2">
+                            <span class="font-bold text-secondary">تصويب هام:</span> تتحطم الكريات الحمر داخل <span class="font-bold underline">الطحال بشكل رئيسي</span> وبشكل أقل في الكبد، تبتلعها البالعات.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Factors affecting RBCs -->
+                <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm mb-6">
+                    <h4 class="font-bold text-lg mb-3 border-b pb-2">العوامل المؤثرة في إنتاج الكريات الحمر</h4>
+                    <div class="space-y-4 text-sm">
+                        <div class="flex gap-2">
+                            <span class="font-bold text-primary w-24 flex-shrink-0">سلامة النقي:</span>
+                            <p>أذيته بالإشعاع/الجراثيم تسبب <span class="font-bold">فقر دم لا تنسجي</span> (حجم وصباغ سوي، لكن العدد قليل).</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="font-bold text-primary w-24 flex-shrink-0">الفيتامينات:</span>
+                            <p>B12 وحمض الفوليك (لتركيب DNA). نقصهما يسبب <span class="font-bold">فقر دم ضخم الأرومات</span> (حجم كبير، صباغ زائد). نقص إفراز العامل الداخلي بالمعدة يمنع امتصاص B12.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="font-bold text-primary w-24 flex-shrink-0">الحديد:</span>
+                            <p>الزائد يخزن بالكبد (فيرتين) أو النقي (هيموسيدرين). نقصه يسبب <span class="font-bold">فقر دم ناقص الصباغ</span> (حجم صغير). <br> <i>ملاحظة: حموضة المعدة وفيتامين C يزيدان امتصاصه. قلوية الدم والهيموسيدرين تعيقه.</i></p>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="font-bold text-primary w-24 flex-shrink-0">الهرمونات:</span>
+                            <div>
+                                <p>التيروكسين، هرمون النمو، التستوستيرون منشطات.</p>
+                                <div class="exam-tip bg-rose-50 p-2 rounded-l mt-1 inline-block">
+                                    <span class="font-bold text-secondary">تصويب:</span> لا يوجد تأثير مثبط عموماً للهرمونات الأنثوية.
+                                </div>
+                                <p class="mt-1"><span class="font-bold">الأريثروبيويتين:</span> نقص O2 يحث <span class="font-bold underline text-secondary">الكلية</span> على إفرازه مباشرة ليحفز انقسام وتمايز الكريات.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hemoglobin & O2 -->
+                <div class="bg-slate-800 text-white rounded-xl p-5 shadow-md">
+                    <h4 class="font-bold text-lg mb-2 text-rose-300">خضاب الدم (Hemoglobin) والحسابات</h4>
+                    <p class="text-sm text-slate-300 mb-3">يتألف من بروتين (غلوبين: 4 سلاسل ببتيدية) وصباغ (هيم: 4 حلقات بيرولية + حديدي). جزيئة الخضاب تحمل 4 جزيئات أكسجين بارتباط ضعيف عكوس.</p>
+                    
+                    <div class="bg-slate-700 p-4 rounded-lg border-l-4 border-rose-500">
+                        <h5 class="font-bold text-white mb-2 text-sm flex justify-between">
+                            <span>تصويب ومعادلة هامة جداً للامتحان:</span>
+                        </h5>
+                        <p class="text-sm mb-2 text-slate-200">يجب أن يكون متوسط الخضاب <span class="number-font font-bold text-rose-300">15</span> غ/100سم³ (وليس 14.5).</p>
+                        <div class="bg-slate-900 text-center p-3 rounded font-bold number-font text-xl text-green-400 tracking-wider">
+                            15 × 1.34 = 20
+                        </div>
+                        <p class="text-xs text-center mt-2 text-slate-400">أي: كمية الأكسجين المحمولة في كل 100 سم³ من الدم هي 20 مل أكسجين.</p>
+                    </div>
+                </div>
+
+                <!-- Blood Groups -->
+                <div class="mt-6 border border-slate-200 rounded-xl p-4">
+                     <h4 class="font-bold text-lg mb-2 text-primary">الزمر الدموية (Blood Groups)</h4>
+                     <p class="text-sm text-slate-600 mb-2">مولد الارتصاص (مستضد Antigen) على الكرية، والراصة (الضد Antibody) في البلازما. O مُعطٍ عام، AB آخذ عام.</p>
+                     <div class="bg-rose-50 p-3 rounded-lg text-sm border border-rose-100">
+                         <span class="font-bold text-secondary">زمرة Rh وحالة الحمل:</span> إذا حملت امرأة <span class="number-font font-bold">Rh-</span> بجنين <span class="number-font font-bold">Rh+</span>، الحمل الأول يمر بسلام. أثناء الولادة يتسرب دم الجنين للأم فتشكل أضداد <span class="number-font font-bold">Anti-D (IgG)</span>. لتفادي انحلال دم الجنين في الحمل الثاني، تحقن الأم بـ <span class="number-font">Anti-D</span> خلال 24-48 ساعة بعد كل ولادة لجنين <span class="number-font font-bold">Rh+</span>.
+                     </div>
+                </div>
+            </div>
+
+            <!-- WBCs -->
+            <div class="mb-10">
+                <h3 class="text-xl font-bold text-primary mb-4 flex items-center gap-2">
+                    <span class="text-2xl">⚪</span> الكريات البيض (Leukocytes)
+                </h3>
+                <div class="exam-tip bg-yellow-50 p-3 rounded-l-lg mb-4 text-sm text-slate-700">
+                    <span class="font-bold text-yellow-700">توجيه:</span> تم حذف فقرات تصنيف الكريات البيض (المحببة واللامحببة) من المقرر، والمطلوب فقط المعطيات العامة وتكونها.
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm space-y-2">
+                    <ul class="list-disc list-inside">
+                        <li>خلايا حقيقية (تحوي نواة، متقدرات، جهاز غولجي).</li>
+                        <li>نشاطها الفعلي في النسيج الضام، تستخدم الدم فقط كطريق عبور (حياتها فيه < <span class="number-font">10</span> ساعات).</li>
+                        <li><span class="font-bold">العدد:</span> <span class="number-font">4000 - 10000</span> /ملم³. يزداد بعد الظهر، بالجهد، والشدة والإنتانات. ينقص بسوء التغذية والصيام وفقر الدم اللاتنسجي.</li>
+                        <li class="border-t mt-2 pt-2"><span class="font-bold">المنشأ:</span> من خلايا جذعية نقوية بوجود عوامل نمو (الإنترلوكين) التي <span class="font-bold text-secondary underline">تشكلها اللمفاويات والخلايا البلعمية</span> (تصويب هام).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Platelets -->
+            <div>
+                <h3 class="text-xl font-bold text-slate-700 mb-4 flex items-center gap-2">
+                    <span class="text-2xl">🧩</span> الصفيحات الدموية (Blood Platelets)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm">
+                        <ul class="list-disc list-inside space-y-2 text-slate-700">
+                            <li><span class="font-bold">التشكل:</span> تبدأ بالشهر الثالث من (النواءات) بتأثير محرضات وعامل النمو <span class="font-bold text-secondary underline">ترومبوبويتين الذي يشكله الكبد</span> (تصويب هام).</li>
+                            <li><span class="font-bold">القطر:</span> <span class="number-font">2 - 3</span> ميكرون. عديمة النواة، غير قادرة على الانقسام.</li>
+                            <li><span class="font-bold">العدد:</span> <span class="number-font font-bold">150 - 350</span> ألف/ملم³. عمرها <span class="number-font">8 - 10</span> أيام.</li>
+                            <li>> 1 مليون ⟵ خثرات.</li>
+                            <li>< 50 ألف ⟵ فرفرية (نزف تحت الجلد).</li>
+                            <li>< 20 ألف ⟵ نزف تلقائي من اللثة والفم.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 text-sm">
+                        <h4 class="font-bold text-blue-800 mb-2">محتويات سيتوبلاسما الصفيحة ووظائفها:</h4>
+                        <ul class="list-disc list-inside space-y-2 text-slate-700">
+                            <li><span class="font-bold">الأكتين والميوزين:</span> انكماش الخثرة لسد الوعاء.</li>
+                            <li><span class="font-bold">السيروتونين:</span> مقبض وعائي.</li>
+                            <li><span class="font-bold">ADP:</span> تجميع الصفيحات.</li>
+                            <li class="bg-white p-2 rounded mt-2 border-r-4 border-rose-500 shadow-sm">
+                                <span class="font-bold text-rose-700">عامل التخثر الصفيحي (PF3):</span>
+                                <br><span class="text-xs">تصويب هام:</span> يوجد على غشاء الصفيحة، وهو ضروري <span class="font-bold underline">لتفعيل بروثرومبين وليس لتشكيل الليفين</span> (تشكيل الليفين مسؤولية العامل 13).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hemostasis" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-6">
+            <div class="flex items-center gap-3 mb-6 pb-3 border-b-2 border-slate-100">
+                <span class="bg-secondary text-white w-10 h-10 flex items-center justify-center rounded-lg text-xl font-bold">4</span>
+                <h2 class="text-2xl font-bold text-dark">الإرقاء (Hemostasis)</h2>
+            </div>
+
+            <!-- Mechanisms -->
+            <div class="mb-8">
+                <h3 class="text-lg font-bold text-primary mb-4 border-b pb-2">أولاً: آليات الإرقاء (وقف النزف)</h3>
+                <div class="space-y-4">
+                    <div class="flex gap-4">
+                        <div class="bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-primary flex-shrink-0 number-font">1</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">تقلص الوعاء الدموي</h4>
+                            <p class="text-sm text-slate-600">استجابة العضلات الملساء للإصابة. الزمن اللازم للتقلص يدعى (زمن النزف).</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-primary flex-shrink-0 number-font">2</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">تقارب طرفي الوعاء المقطوع</h4>
+                            <p class="text-sm text-slate-600">ظاهرة فيزيائية نتيجة تغير الشحنة الكهربائية على الجانبين (تجاذب). مهم في الأوعية الصغيرة.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-primary flex-shrink-0 number-font">3</div>
+                        <div class="w-full">
+                            <h4 class="font-bold text-slate-800 mb-2">تشكيل السدادة الصفيحية</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                                <div class="border border-slate-200 rounded p-3 bg-slate-50">
+                                    <span class="font-bold text-primary block mb-1">أ. الالتصاق (Adhesion):</span>
+                                    بين الصفيحات والكولاجين المكشوف. يبدأ فيزيائياً ثم كيميائياً عبر <span class="font-bold">عامل فون ويلبراند (vWF)</span> كجسر رابط.
+                                </div>
+                                <div class="border border-slate-200 rounded p-3 bg-slate-50">
+                                    <span class="font-bold text-primary block mb-1">ب. التجمع (Aggregation):</span>
+                                    تفرز الصفيحة <span class="number-font">TXA2</span> و <span class="number-font">ADP</span> للصق الصفيحات. <br><span class="text-xs text-green-700 font-bold">ملاحظة:</span> الخلايا السليمة تفرز PGI2 (بروستاسايكلين) وأكسيد الآزوت NO لتثبيط التجمع ومنع امتداد السدادة.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="bg-slate-100 w-8 h-8 rounded-full flex items-center justify-center font-bold text-primary flex-shrink-0 number-font">4</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800">زيادة قوة الانقباض</h4>
+                            <p class="text-sm text-slate-600">بواسطة الأدرينالين والسيروتونين المفرزان من الصفيحات.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coagulation -->
+            <div class="mb-8">
+                <h3 class="text-lg font-bold text-primary mb-4 border-b pb-2">آلية تخثر الدم (Coagulation)</h3>
+                <p class="text-sm mb-3">تتطلب عوامل بلازمية (تصنع بالكبد بوجود فيتامين K للعوامل 2، 7، 9، 10)، شحوم فوسفورية صفيحية، وشوارد كالسيوم.</p>
+                
+                <div class="bg-slate-800 text-slate-100 rounded-xl p-5 overflow-hidden relative">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                        <div>
+                            <h4 class="font-bold text-rose-400 mb-2 border-b border-slate-600 pb-1">الطريق الداخلي (السطح الخشن)</h4>
+                            <ul class="text-sm space-y-2">
+                                <li>← تنشيط عامل التماس هجمان (XII).</li>
+                                <li>← ينشط العامل (XI).</li>
+                                <li>← ينشط العامل الثامن (VIII).</li>
+                                <li>← الثامن + التاسع (IX) + Ca2+ ينشطون العامل العاشر ستيورات (X).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-blue-400 mb-2 border-b border-slate-600 pb-1">الطريق الخارجي (أذية نسيجية)</h4>
+                            <ul class="text-sm space-y-2">
+                                <li>← تحرر ترمبوبلاستين نسيجي (III).</li>
+                                <li>← ينشط طليعة الكونفيرتين (VII).</li>
+                                <li>← العامل (VII) + (III) + Ca2+ ينشطون العامل العاشر (X).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-600 relative z-10 text-center">
+                        <h4 class="font-bold text-green-400 mb-2">الطريق المشترك</h4>
+                        <p class="text-sm text-slate-300">
+                            العامل المنشط (Xa) + PF3 + Ca2+ + العامل الخامس (V) 
+                            <br><span class="text-xl">↓</span><br>
+                            يحول <span class="font-bold text-white">طليعة الخثرين (II)</span> إلى <span class="font-bold text-white">خثرين (Thrombin)</span>
+                            <br><span class="text-xl">↓</span><br>
+                            يحول <span class="font-bold text-white">مولد الليفين (I)</span> المنحل إلى <span class="font-bold text-white">ليفين (Fibrin)</span> غير منحل (تثبته شوارد Ca وعامل XIII).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Anticoagulants -->
+            <div>
+                <h3 class="text-lg font-bold text-primary mb-4 border-b pb-2">ثانياً: الجمل المميعة للدم</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
+                    
+                    <!-- Inside Vessels -->
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-4">
+                        <h4 class="font-bold text-blue-800 mb-3 text-base">1. داخل الأوعية الدموية</h4>
+                        <ul class="space-y-3 text-slate-700">
+                            <li>
+                                <span class="font-bold text-blue-900 block">أ. عامل السطح البطاني:</span>
+                                شحنته سالبة تنفر الصفيحات.
+                                <div class="exam-tip bg-white p-2 mt-1 rounded border border-slate-200">
+                                    <span class="font-bold text-secondary">تصويب:</span> توجد مادة <span class="font-bold">thrombomodulin</span> ترتبط بالخثرين وتنشط بروتين C الذي <span class="font-bold underline">يثبط مفعول العاملين الثامن والخامس</span> (وليس السابع والخامس).
+                                </div>
+                            </li>
+                            <li>
+                                <span class="font-bold text-blue-900 block">ب. مضاد الخثرين:</span>
+                                <span class="font-bold underline text-secondary">يمتز (Adsorb)</span> الخثرين المتشكل على الليفين، والباقي يتحد معه ويبطل مفعوله.
+                            </li>
+                            <li>
+                                <span class="font-bold text-blue-900">ج. الهيبارين:</span> من الأسسات، يثبط الخثرين.
+                            </li>
+                            <li>
+                                <span class="font-bold text-blue-900">د. البلازمين:</span> يحل الليفين. (طبياً يعطى الستربتوكيناز كحالات احتشاء القلب).
+                            </li>
+                            <li class="bg-rose-100 p-2 rounded">
+                                <span class="font-bold text-secondary block">هـ. تثبيط فيتامين K (تصويب مكان):</span>
+                                عقار dicumarol يخفض عوامل التخثر (2، 7، 9، 10) فيطيل زمن التخثر.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Outside Vessels -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                        <h4 class="font-bold text-slate-800 mb-3 text-base">2. خارج الأوعية الدموية</h4>
+                        <ul class="space-y-2 text-slate-700 list-disc list-inside">
+                            <li><span class="font-bold">إزالة شوارد الكالسيوم:</span> بإضافة السترات أو الأوكزالات.</li>
+                            <li><span class="font-bold">حفظ بوعاء سطحه أملس (برافين):</span> يمنع تنشيط عامل التماس (12).</li>
+                            <li><span class="font-bold">التبريد لـ 4 درجات:</span> يخفض الاستقلاب.</li>
+                            <li>
+                                <span class="font-bold">المدة الزمنية للحفظ:</span> لا تزيد عن 20 يوماً. 
+                                <br><span class="text-xs text-slate-500 mr-4">السبب: استنفاد الطاقة ← توقف المضخات ← انحلال الكريات ← نقص pH. الدم القديم يسبب التهاب كلوي حاد!</span>
+                            </li>
+                            <li><span class="font-bold">الأسبرين:</span> يثبط تجمع الصفيحات (إحصار استقلاب البروستاغلاندين).</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="tests" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-6">
+            <div class="flex items-center gap-3 mb-6 pb-3 border-b-2 border-slate-100">
+                <span class="bg-secondary text-white w-10 h-10 flex items-center justify-center rounded-lg text-xl font-bold">5</span>
+                <h2 class="text-2xl font-bold text-dark">بعض اختبارات الدم</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Coagulation Time -->
+                <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-5 rounded-xl border border-slate-200 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-red-100 rounded-bl-full -z-0"></div>
+                    <h3 class="font-bold text-lg mb-2 relative z-10">زمن التخثر الدموي</h3>
+                    <div class="text-3xl font-bold text-secondary mb-3 number-font relative z-10 text-center border-b pb-2">6 - 10 <span class="text-sm text-slate-500 font-sans">دقائق</span></div>
+                    <div class="exam-tip bg-white p-2 text-sm text-slate-700 rounded shadow-sm relative z-10">
+                        <span class="font-bold block mb-1">أسباب التطاول:</span>
+                        - نقص عوامل التخثر.<br>
+                        - الإصابة بمرض الناعورة.<br>
+                        - <span class="font-bold text-red-600">نقص فيتامين K</span> (تصويب صياغة الفقرة).
+                    </div>
+                </div>
+
+                <!-- Bleeding Time -->
+                <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-5 rounded-xl border border-slate-200 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-blue-100 rounded-bl-full -z-0"></div>
+                    <h3 class="font-bold text-lg mb-2 relative z-10">زمن النزف الدموي</h3>
+                    <div class="text-3xl font-bold text-primary mb-3 number-font relative z-10 text-center border-b pb-2">1 - 6 <span class="text-sm text-slate-500 font-sans">دقائق</span></div>
+                    <div class="exam-tip bg-white p-2 text-sm text-slate-700 rounded shadow-sm relative z-10">
+                        <span class="font-bold block mb-1">أسباب التطاول:</span>
+                        - الفرفرية (خلل الأوعية).<br>
+                        - نقص الصفيحات / نقص فيتامين C.<br>
+                        <span class="text-xs text-rose-600 font-bold block mt-1">تنبيه: لا يتأثر هذا الزمن بنقص عوامل التخثر أو الهيبارين.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="golden-summary" class="bg-gradient-to-br from-rose-50 to-orange-50 rounded-2xl shadow-md border border-rose-200 p-6 md:p-8 mt-10">
+            <h2 class="text-2xl font-black text-secondary mb-4 flex items-center gap-2">
+                <span>⭐</span> الخلاصة: نقاط امتحانية ذهبية
+            </h2>
+            <p class="text-sm text-rose-800 font-semibold mb-4">جمعنا لك هنا أهم الأفكار وتصويبات الأرقام التي يتكرر السؤال عنها بصيغة الأتمتة الخداعية:</p>
+            
+            <ul class="space-y-3 text-sm text-slate-800">
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">الـ pH الدموي:</span> القيمة الدقيقة للامتحان هي <span class="number-font font-bold">7.40</span> وتؤخذ من الدم الشرياني.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">تدمير الحمر:</span> يتم بشكل رئيسي في <span class="font-bold underline">الطحال</span> وبشكل أقل في الكبد.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">هرمونات الكريات الحمر:</span> الهرمونات الذكرية (تستوستيرون) <span class="font-bold">منشطة</span>، ولا يوجد تأثير مثبط للهرمونات الأنثوية. والكلية تفرز الأريثروبيويتين مباشرة.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">الـ Thrombomodulin:</span> يثبط العاملين <span class="number-font font-bold">8</span> و <span class="number-font font-bold">5</span> (وليس 7 و 5).</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">معادلة الأكسجين:</span> <span class="number-font" dir="ltr">15 × 1.34 = 20 ml O2</span>. (الخضاب الوسطي 15 غ).</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">عامل التخثر الصفيحي PF3:</span> يفعل الـ Prothrombin ولا يُشكل الليفين (تشكيل الليفين مسؤولية العامل 13).</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">الترومبوبويتين (للصفيحات):</span> يتم تشكيله من <span class="font-bold underline">الكبد</span>.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">الأرقام الدقيقة للاختبارات:</span> زمن النزف (<span class="number-font font-bold">1 - 6</span> د) ، زمن التخثر (<span class="number-font font-bold">6 - 10</span> د).</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">ما لا يؤثر على زمن النزف:</span> نقص عوامل التخثر أو إعطاء الهيبارين <span class="underline">لا يؤثران</span> على زمن النزف الدموي (وإنما يطيلان زمن التخثر).</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">▪</span>
+                    <span><span class="font-bold text-rose-700">تجمع الصفيحات:</span> الأسبرين يمنع تجمعها بتثبيط البروستاغلاندين. الخلايا السليمة تفرز <span class="number-font">NO</span> و <span class="number-font">PGI2</span> لمنع تشكل الخثرة فوقها.</span>
+                </li>
+            </ul>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // Smooth scrolling for sidebar links
+    document.querySelectorAll('aside nav a').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if(targetElement){
+                window.scrollTo({
+                    top: targetElement.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            }
+            
+            // Highlight active state manually
+            document.querySelectorAll('aside nav a').forEach(a => a.classList.remove('text-secondary', 'font-bold'));
+            if(!this.classList.contains('bg-rose-50')) { // don't override the summary button style completely
+                this.classList.add('text-secondary', 'font-bold');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
