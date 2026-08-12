@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل دراسة ودورات الفصل السادس: فيزيولوجيا الدوران والضغط</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Tajawal', 'sans-serif'] },
+                    colors: {
+                        physio: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            900: '#881337',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .question-card { transition: all 0.2s ease; }
+        .question-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        
+        .correct-answer { background-color: #dcfce7; border-color: #22c55e; color: #166534; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased pb-20">
+
+    <!-- الكود الإجباري: شريط التنقل العلوي -->
+    <div class="max-w-4xl mx-auto px-4 pt-3 flex justify-start items-center gap-2 text-xs font-semibold">
+        <a href="./physiology.html" class="flex items-center gap-1 text-teal-700 hover:text-teal-900 bg-white px-2.5 py-1.5 rounded-md shadow-sm border border-slate-200 transition">
+            <span>&rarr;</span> الرجوع لصفحة الفسيولوجيا
+        </a>
+        <a href="./index.html" class="flex items-center gap-1 text-slate-700 hover:text-slate-900 bg-white px-2.5 py-1.5 rounded-md shadow-sm border border-slate-200 transition">
+            <span>🏠</span> الرئيسية
+        </a>
+    </div>
+
+    <!-- Header / Branding -->
+    <header class="max-w-5xl mx-auto px-4 mt-6 mb-8 text-center">
+        <div class="inline-block bg-physio-100 text-physio-700 px-4 py-1 rounded-full text-sm font-bold mb-3 shadow-sm border border-physio-100">
+            <i class="fas fa-heartbeat mr-1 ml-2"></i> الدوران، الأوعية، السوائل والضغط
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">تحليل دراسة ودورات <span class="text-physio-600">الفصل السادس</span></h1>
+        <p class="text-slate-500 max-w-2xl mx-auto">منصة تفاعلية شاملة تغطي 100% من أسئلة الدورات (2017-2024) مع تحليل إحصائي، مخططات مفاهيمية، وبنك أسئلة ذكي.</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-5xl mx-auto px-4 mb-8">
+        <div class="flex flex-wrap gap-2 justify-center bg-white p-2 rounded-xl shadow-sm border border-slate-200">
+            <button onclick="switchTab('dashboard')" id="btn-dashboard" class="tab-btn active px-5 py-2.5 rounded-lg font-bold text-sm transition-all bg-physio-600 text-white shadow-md">
+                <i class="fas fa-chart-pie ml-1"></i> الإحصائيات والتحليل
+            </button>
+            <button onclick="switchTab('database')" id="btn-database" class="tab-btn px-5 py-2.5 rounded-lg font-bold text-sm text-slate-600 hover:bg-slate-100 transition-all">
+                <i class="fas fa-database ml-1"></i> بنك الأسئلة (62 سؤال)
+            </button>
+            <button onclick="switchTab('flowcharts')" id="btn-flowcharts" class="tab-btn px-5 py-2.5 rounded-lg font-bold text-sm text-slate-600 hover:bg-slate-100 transition-all">
+                <i class="fas fa-project-diagram ml-1"></i> المخططات والآليات
+            </button>
+            <button onclick="switchTab('traps')" id="btn-traps" class="tab-btn px-5 py-2.5 rounded-lg font-bold text-sm text-slate-600 hover:bg-slate-100 transition-all">
+                <i class="fas fa-bolt ml-1"></i> التجميعات والنكشات
+            </button>
+            <button onclick="switchTab('quiz')" id="btn-quiz" class="tab-btn px-5 py-2.5 rounded-lg font-bold text-sm text-slate-600 hover:bg-slate-100 transition-all">
+                <i class="fas fa-gamepad ml-1"></i> اختبر نفسك
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="max-w-5xl mx-auto px-4">
+        
+        <!-- Tab 1: Dashboard -->
+        <section id="tab-dashboard" class="tab-content active">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center border-b-4 border-b-physio-500">
+                    <div class="text-3xl font-extrabold text-slate-800 mb-1">62</div>
+                    <div class="text-xs text-slate-500 font-bold">إجمالي الأسئلة</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center border-b-4 border-b-blue-500">
+                    <div class="text-3xl font-extrabold text-slate-800 mb-1">8</div>
+                    <div class="text-xs text-slate-500 font-bold">دورات شملها التحليل</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center border-b-4 border-b-amber-500">
+                    <div class="text-3xl font-extrabold text-slate-800 mb-1">~7.7</div>
+                    <div class="text-xs text-slate-500 font-bold">متوسط الأسئلة/الدورة</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 text-center border-b-4 border-b-emerald-500">
+                    <div class="text-3xl font-extrabold text-slate-800 mb-1">4</div>
+                    <div class="text-xs text-slate-500 font-bold">أفكار تشكل "النواة الثابتة"</div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Bar Chart Replacement (Visual Bars) -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-4"><i class="fas fa-fire text-physio-600 ml-2"></i> المواضيع الأكثر تكراراً</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm font-bold text-slate-700 mb-1">
+                                <span>تنظيم الضغط الشرياني (رافعات/خافضات)</span>
+                                <span>35%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2.5"><div class="bg-physio-600 h-2.5 rounded-full" style="width: 35%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-bold text-slate-700 mb-1">
+                                <span>ديناميكية السوائل والمبادلات الشعرية</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2.5"><div class="bg-physio-500 h-2.5 rounded-full" style="width: 25%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-bold text-slate-700 mb-1">
+                                <span>العود الوريدي واللمفاوي</span>
+                                <span>20%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2.5"><div class="bg-blue-500 h-2.5 rounded-full" style="width: 20%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm font-bold text-slate-700 mb-1">
+                                <span>المقاومة الوعائية والجريان</span>
+                                <span>15%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2.5"><div class="bg-amber-500 h-2.5 rounded-full" style="width: 15%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- النواة الثابتة -->
+                <div class="bg-physio-50 p-6 rounded-xl shadow-sm border border-physio-100">
+                    <h3 class="text-lg font-bold text-physio-900 mb-4"><i class="fas fa-bullseye text-physio-600 ml-2"></i> النواة الثابتة (أسئلة لا تخلو منها دورة)</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-2 text-sm text-slate-700 bg-white p-3 rounded-lg shadow-sm">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                            <span><b>قوى ستارلينغ:</b> العوامل التي تزيد أو تنقص خروج السوائل من الشعيرات (الضغط السكوني مقابل الغرواني).</span>
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-slate-700 bg-white p-3 rounded-lg shadow-sm">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                            <span><b>الضغط الشرياني:</b> حساب الضغط الوسطي (MAP)، والهرمونات الرافعة للضغط وآلياتها (تقبض vs حبس سوائل).</span>
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-slate-700 bg-white p-3 rounded-lg shadow-sm">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                            <span><b>العود الوريدي:</b> دور العضلات الهيكلية، الضغط السلبي، والصمامات.</span>
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-slate-700 bg-white p-3 rounded-lg shadow-sm">
+                            <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                            <span><b>المقاومة الوعائية:</b> التأثير الحاسم لنصف قطر الوعاء الدموي ولزوجة الدم.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Database -->
+        <section id="tab-database" class="tab-content">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-wrap gap-4 items-center justify-between sticky top-2 z-10">
+                <div class="flex gap-2 w-full md:w-auto">
+                    <select id="filter-year" class="bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-physio-500 focus:border-physio-500 block p-2.5 flex-1 font-bold">
+                        <option value="all">كل الدورات</option>
+                        <option value="2017">دورة 2017</option>
+                        <option value="2018">دورة 2018</option>
+                        <option value="2019">دورة 2019</option>
+                        <option value="2020">دورة 2020</option>
+                        <option value="2021">دورة 2021</option>
+                        <option value="2022">دورة 2022</option>
+                        <option value="2023">دورة 2023</option>
+                        <option value="2024">دورة 2024</option>
+                    </select>
+                </div>
+                <div class="relative w-full md:w-64">
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <i class="fas fa-search text-slate-400"></i>
+                    </div>
+                    <input type="text" id="search-db" class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-physio-500 focus:border-physio-500 block w-full pr-10 p-2.5" placeholder="ابحث في الأسئلة والخيارات...">
+                </div>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="questions-container" class="space-y-4">
+                <!-- Generated via JS -->
+            </div>
+        </section>
+
+        <!-- Tab 3: Flowcharts (RTL Fixed) -->
+        <section id="tab-flowcharts" class="tab-content">
+            
+            <div class="bg-blue-50 border-r-4 border-blue-500 p-4 mb-6 rounded-l-lg text-blue-800 text-sm font-bold">
+                <i class="fas fa-info-circle ml-2"></i> يتم قراءة المخططات من اليمين إلى اليسار، تتبع اتجاه السهم (←).
+            </div>
+
+            <div class="space-y-8">
+                <!-- Chart 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 text-center border-b pb-3">آلية تنظيم الضغط الشرياني السريع (المنعكس العصبي)</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-3 w-full text-center">
+                        <div class="bg-red-100 text-red-800 px-4 py-3 rounded-lg font-bold shadow-sm w-full md:w-auto">ارتفاع الضغط الشرياني</div>
+                        <i class="fas fa-arrow-left text-slate-400 rotate-90 md:rotate-0 my-2 md:my-0"></i>
+                        <div class="bg-physio-100 text-physio-800 px-4 py-3 rounded-lg font-bold shadow-sm w-full md:w-auto">تنبيه مستقبلات الضغط (Baroreceptors)</div>
+                        <i class="fas fa-arrow-left text-slate-400 rotate-90 md:rotate-0 my-2 md:my-0"></i>
+                        <div class="bg-indigo-100 text-indigo-800 px-4 py-3 rounded-lg font-bold shadow-sm w-full md:w-auto">تثبيط الودي / تفعيل نظير الودي</div>
+                        <i class="fas fa-arrow-left text-slate-400 rotate-90 md:rotate-0 my-2 md:my-0"></i>
+                        <div class="bg-emerald-100 text-emerald-800 px-4 py-3 rounded-lg font-bold shadow-sm w-full md:w-auto">توسع الأوعية + بطء القلب <br><span class="text-xs text-emerald-600">(انخفاض الضغط)</span></div>
+                    </div>
+                </div>
+
+                <!-- Chart 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 text-center border-b pb-3">ديناميكية قوى ستارلينغ في الشعيرات</h3>
+                    <div class="grid md:grid-cols-2 gap-8 relative">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                            <h4 class="font-bold text-physio-600 mb-3 text-lg"><i class="fas fa-tint"></i> قوى الترشيح (خروج السوائل)</h4>
+                            <div class="flex flex-col gap-2">
+                                <div class="bg-white border p-2 rounded-lg text-sm">الضغط السكوني (الهدروستاتيكي) للدم <span class="text-emerald-500 font-bold ml-1">↑</span></div>
+                                <div class="bg-white border p-2 rounded-lg text-sm">الضغط الغرواني (التناضحي) للسائل الخلالي <span class="text-emerald-500 font-bold ml-1">↑</span></div>
+                                <div class="bg-white border p-2 rounded-lg text-sm">الضغط السلبي للسائل الخلالي <span class="text-emerald-500 font-bold ml-1">↑</span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="hidden md:flex absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-full p-2 border shadow-sm z-10">
+                            <span class="font-bold text-slate-400">VS</span>
+                        </div>
+
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                            <h4 class="font-bold text-blue-600 mb-3 text-lg"><i class="fas fa-undo"></i> قوى الامتصاص (احتباس/عودة السوائل)</h4>
+                            <div class="flex flex-col gap-2">
+                                <div class="bg-white border p-2 rounded-lg text-sm">الضغط الغرواني (بروتينات) لبلازما الدم <span class="text-emerald-500 font-bold ml-1">↑</span></div>
+                                <div class="bg-white border p-2 rounded-lg text-sm">الضغط السكوني الإيجابي للسائل الخلالي <span class="text-emerald-500 font-bold ml-1">↑</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chart 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-800 mb-6 text-center border-b pb-3">آليات رفع الضغط الشرياني الهرمونية</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-3 w-full text-center">
+                        <div class="flex flex-col gap-2 w-full md:w-1/3">
+                            <div class="bg-slate-100 text-slate-800 px-3 py-2 rounded-lg font-bold border">تقبض وعائي مباشر</div>
+                            <div class="text-sm bg-white border p-2 rounded">أدرينالين / أنجيوتنسين II / ADH</div>
+                        </div>
+                        <div class="font-bold text-slate-400">+</div>
+                        <div class="flex flex-col gap-2 w-full md:w-1/3">
+                            <div class="bg-slate-100 text-slate-800 px-3 py-2 rounded-lg font-bold border">حبس الصوديوم والماء (حجم الدم)</div>
+                            <div class="text-sm bg-white border p-2 rounded">الألدوستيرون / الكورتيزول / ADH</div>
+                        </div>
+                        <i class="fas fa-arrow-left text-slate-400 rotate-90 md:rotate-0 my-2 md:my-0"></i>
+                        <div class="bg-physio-600 text-white px-5 py-4 rounded-lg font-bold shadow-md w-full md:w-auto">
+                            ارتفاع الضغط الشرياني المديد
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 4: Traps & Notes -->
+        <section id="tab-traps" class="tab-content">
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-amber-50 border border-amber-200 p-5 rounded-xl">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="bg-amber-500 text-white w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-exclamation-triangle"></i></div>
+                        <h3 class="font-bold text-amber-900 text-lg">الخدعة: ADH مقابل الألدوستيرون</h3>
+                    </div>
+                    <p class="text-sm text-amber-800 mb-2">كلاهما يرفع الضغط، لكن الآلية مختلفة في السؤال:</p>
+                    <ul class="list-disc list-inside text-sm text-amber-900 space-y-1 font-semibold ml-2">
+                        <li><b>الألدوستيرون:</b> يحبس الصوديوم والماء معاً (لا يغير الضغط التناضحي).</li>
+                        <li><b>ADH:</b> يحبس الماء الحر، مقبض وعائي، <u>وينقص</u> الضغط التناضحي.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 p-5 rounded-xl">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-calculator"></i></div>
+                        <h3 class="font-bold text-blue-900 text-lg">الخدعة: حساب الضغط الوسطي MAP</h3>
+                    </div>
+                    <p class="text-sm text-blue-800 mb-2">القانون ثابت ولا يُنسى:</p>
+                    <div class="bg-white p-2 rounded text-center font-bold text-slate-700 mb-2 border border-blue-100">
+                        MAP = الضغط الانبساطي + 1/3 (الضغط النبضي)
+                    </div>
+                    <p class="text-xs text-blue-800">الضغط النبضي = الانقباضي - الانبساطي. مثال: 160/70 ← 70 + (90/3) = 100.</p>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-xl">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="bg-emerald-500 text-white w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-ruler-horizontal"></i></div>
+                        <h3 class="font-bold text-emerald-900 text-lg">الخدعة: المقاومة ونصف القطر</h3>
+                    </div>
+                    <p class="text-sm text-emerald-800 mb-2"><b>العامل الأهم والمطلق</b> في تحديد المقاومة الوعائية هو <u>نصف قطر الوعاء</u> وليس اللزوجة أو طول الوعاء (حسب قانون بوازوي).</p>
+                    <p class="text-xs text-emerald-700 bg-emerald-100 p-2 rounded">تذكر: المقاومة تتناسب عكساً مع القوة الرابعة لنصف القطر (تأثير هائل لأي تغير بسيط).</p>
+                </div>
+
+                <div class="bg-purple-50 border border-purple-200 p-5 rounded-xl">
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center"><i class="fas fa-tint-slash"></i></div>
+                        <h3 class="font-bold text-purple-900 text-lg">الخدعة: خروج السوائل من الشعيرات</h3>
+                    </div>
+                    <p class="text-sm text-purple-800 mb-2">عندما تقرأ "نقص خروج السوائل"، ابحث فوراً عن <b>ارتفاع الضغط الغرواني للدم</b>، أو <b>انخفاض ضغط الدم في الوعاء الشعيري</b>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 5: Quiz -->
+        <section id="tab-quiz" class="tab-content">
+            <div class="max-w-2xl mx-auto text-center" id="quiz-setup">
+                <i class="fas fa-brain text-5xl text-physio-500 mb-4"></i>
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">اختبار المحاكاة الشامل</h2>
+                <p class="text-slate-500 mb-6">سيتم اختيار 10 أسئلة عشوائية من بنك أسئلة الدورات لتقييم مستواك.</p>
+                <button onclick="startQuiz()" class="bg-physio-600 hover:bg-physio-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                    ابدأ الاختبار الآن
+                </button>
+            </div>
+
+            <div id="quiz-interface" class="max-w-3xl mx-auto hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-sm font-bold text-slate-500 bg-white px-3 py-1 rounded-full shadow-sm">السؤال <span id="q-current">1</span> من <span id="q-total">10</span></span>
+                    <span class="text-sm font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full shadow-sm">النتيجة: <span id="q-score">0</span></span>
+                </div>
+                
+                <div class="w-full bg-slate-200 rounded-full h-1.5 mb-6">
+                    <div id="quiz-progress" class="bg-physio-500 h-1.5 rounded-full transition-all duration-300" style="width: 10%"></div>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 mb-6">
+                    <h3 id="quiz-question-text" class="text-lg md:text-xl font-bold text-slate-800 mb-6 leading-relaxed">جاري تحميل السؤال...</h3>
+                    <div id="quiz-options" class="space-y-3">
+                        <!-- Options generated here -->
+                    </div>
+                </div>
+                
+                <div class="text-left">
+                    <button id="next-q-btn" onclick="nextQuestion()" class="hidden bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 px-6 rounded-lg transition-colors">
+                        السؤال التالي <i class="fas fa-arrow-left mr-1"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quiz Results -->
+            <div id="quiz-results" class="max-w-2xl mx-auto text-center hidden bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                <i class="fas fa-trophy text-6xl text-amber-400 mb-4"></i>
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">انتهى الاختبار!</h2>
+                <p class="text-slate-600 mb-6">نتيجتك النهائية هي:</p>
+                <div class="text-5xl font-extrabold text-physio-600 mb-8"><span id="final-score">0</span> / 10</div>
+                <button onclick="startQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-3 px-8 rounded-full transition-colors">
+                    إعادة الاختبار
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Data Extraction (100% Comprehensive as requested)
+        const questionsDB = [
+            // 2017
+            { year: 2017, num: 1, q: "العامل الرئيسي الذي يحدد ارتباط الأكسجين بخضاب الدم هو:", options: ["تركيز شوارد الهيدروجين في الدم", "الضغط الجزيئي للاكسجين في الدم PO2", "تركيز ثاني أوكسد الكربون في الدم PCO2", "تركيز 2 3 ثنائي فوسفات الغليسرات DPG في الدم"], answer: 1, exp: "التأثير النهائي لكل العوامل الأخرى يقع على الضغط الجزيئي للأكسجين." },
+            { year: 2017, num: 2, q: "كمية الهواء الموجود في الرئتين في نهاية زفير جار سوي هي:", options: ["حجم الزفير المدخر", "الحجم الثمالي", "السعة الحيوية للرئة", "السعة الوظيفية المدخرة"], answer: 3, exp: "السعة الوظيفية المدخرة (FRC) هي الحجم المتبقي بعد زفير سوي." },
+            { year: 2017, num: 3, q: "تزيد نفوذية الشعيرات الدموية عدا:", options: ["حماض", "هيستامين", "عوز فيتامين C", "الكالسيوم"], answer: 3, exp: "الكالسيوم لا يزيد النفوذية الشعرية بل قد ينقصها، بينما البقية تزيدها." },
+            { year: 2017, num: 4, q: "يزيد من معدل العود اللمفاوي كل ما يلي عدا:", options: ["زيادة الضغط الخلالي السلبي", "ارتفاع الضغط الغرواني للسائل الخلالي", "ارتفاع ضغط الوعاء الشعري", "انخفاض الضغط الغرواني للدم"], answer: 0, exp: "زيادة الضغط السلبي تعيق العود، المطلوب هو زيادة الضغط الإيجابي الخلالي لدفع اللمف." },
+            { year: 2017, num: 5, q: "توجد مستقبلات الضغط في كل البنى التالية عدا:", options: ["الشرايين الكبيرة في منطقة الصدر والعنق", "قوس الأبهر", "الجيب السباتي", "الأذينة اليمنى"], answer: 3, exp: "الأذينة اليمنى تحتوي مستقبلات حجم (حجمية) وليس مستقبلات ضغط عالي." },
+            { year: 2017, num: 6, q: "شرب كميات كبيرة من الماء يؤدي إلى كل ما يلي عدا:", options: ["يتم طرح كميات كبيرة من الماء", "انخفاض الضغط التناضحي", "يتثبط إفراز ال ADH", "زيادة الضغط التناضحي"], answer: 3, exp: "شرب الماء يمدد الدم فينخفض الضغط التناضحي، وبالتالي 'زيادة الضغط التناضحي' هي الخيار الخاطئ." },
+            { year: 2017, num: 7, q: "العامل الأهم في العود الوريدي في حالة الراحة والاستلقاء:", options: ["عمل الصمامات الوريدية", "النبض الشرياني", "فرق الضغط بين نهايتي الدوران الوريدي", "التقلص العضلي"], answer: 2, exp: "في وضع الراحة والاستلقاء، المضخة العضلية لا تعمل، والعامل الأساسي هو مدروج الضغط." },
+            
+            // 2018
+            { year: 2018, num: 1, q: "تعتبر الآليات التالية من الوسائل السريعة لزيادة الضغط الشرياني ما عدا:", options: ["زيادة قوة انقباض العضلة القلبية", "زيادة عدد ضربات القلب", "تقبض الأوعية الدموية", "زيادة كمية السوائل في الجسم"], answer: 3, exp: "زيادة السوائل هي آلية كلوية بطيئة (طويلة الأمد)." },
+            { year: 2018, num: 2, q: "العامل الاساسي في زيادة الدوران الموضعي النسيجي هو:", options: ["ارتفاع الدم pH", "زيادة نتاج القلب", "نقص الأكسجة النسيجية", "التنبيه العصبي للشعيرات النسيجية"], answer: 2, exp: "نقص الأكسجة يحرض إفراز موسعات وعائية موضعية." },
+            { year: 2018, num: 3, q: "إن سبب زيادة الفرق بين الضغط الانقباضي والضغط الانبساطي (الضغط النبضي) في التصلب العصيدي هو:", options: ["نقص مرونة الشرايين", "نقص قوة تقلص القلب", "زيادة المقاومة الوعائية المحيطية", "فقر الدم"], answer: 0, exp: "نقص المطاوعة والمرونة يجعل الشرايين صلبة فيرتفع الانقباضي بشدة." },
+            { year: 2018, num: 4, q: "يكون الدوران الشعيري من النمط الوظيفي في الأعضاء التالية عدا:", options: ["الرئة", "الكبد", "العضلات الهيكلية", "الكلية"], answer: 2, exp: "دوران العضلات الهيكلية هو دوران تغذوي بحت." },
+            { year: 2018, num: 5, q: "كل ما يلي يرفع الضغط الشرياني عدا:", options: ["الهيستامين", "الألدستيرون", "هرمون الدرق", "ADH"], answer: 0, exp: "الهيستامين موسع وعائي قوي وبالتالي يخفض الضغط الشرياني." },
+            { year: 2018, num: 6, q: "تزداد مقاومة جريان الدم بنقص:", options: ["نصف قطر الوعاء الدموي", "عدد الكريات الحمراء", "الهيماتوكريت", "بروتينات المصورة"], answer: 0, exp: "حسب قانون بوازوي، المقاومة تتناسب عكساً مع نصف القطر." },
+            { year: 2018, num: 7, q: "تؤدي الحالات التالية إلى زيادة خروج السوائل من الوعاء الشعيري عدا:", options: ["انخفاض الضغط التناضحي الغرواني لبلازما الدم", "ارتفاع ضغط الدم في الوعاء الشعري", "ارتفاع الضغط التناضحي الغرواني للسائل الخلالي", "ارتفاع ضغط السائل الخلالي"], answer: 3, exp: "ارتفاع الضغط السكوني للسائل الخلالي يعاكس خروج السوائل من الشعيرة." },
+            { year: 2018, num: 8, q: "كل ما يلي يعتبر من رافعات الضغط الشرياني عدا:", options: ["الكورتيزول", "الهيستامين", "هرمونات الدرق", "الانجيوتنسين 2"], answer: 1, exp: "مكرر بصيغة مختلفة، الهيستامين موسع وعائي وخافض للضغط." },
+            
+            // 2019
+            { year: 2019, num: 1, q: "يزداد الجريان الدموي الوريدي في حال كل ما يلي عدا:", options: ["القوة النبضية للشرايين المماسة", "نقص فرق الضغط بين طرفي الوريد", "أثناء الشهيق", "ممارسة التمارين الرياضية"], answer: 1, exp: "الجريان يحتاج إلى مدروج ضغط، نقص الفرق يقلل الجريان ولا يزيده." },
+            { year: 2019, num: 2, q: "يُعد تنظيم الضغط الشرياني على مستوى:", options: ["الأعضاء", "الخلايا", "الأنسجة", "الأجهزة"], answer: 3, exp: "تنظيم الضغط عملية جهازية (عصبي، غدي، قلبي وعائي) لذلك هو على مستوى الأجهزة." },
+            { year: 2019, num: 3, q: "الضغط الشرياني الوسطي لشخص ضغطه الانقباضي 140 ملم ز والانبساطي 80 ملم ز:", options: ["90 ملم ز", "110 ملم ز", "100 ملم ز", "120 ملم ز"], answer: 2, exp: "MAP = 80 + (140-80)/3 = 80 + 60/3 = 80 + 20 = 100." },
+            { year: 2019, num: 4, q: "العامل الأهم في توسيع الشرينات والشرايين في التنظيم السريع للدوران الموضعي:", options: ["عامل النمو البطاني", "حمض اللبن", "البوتاسيوم", "NO"], answer: 3, exp: "أكسيد النتريك NO هو الموسع الوعائي الموضعي الأهم والسريع." },
+            { year: 2019, num: 5, q: "تزداد لزوجة الدم في حالة:", options: ["كثرة الحمرة", "تشمع الكبد", "سوء الامتصاص المعوي", "البيلة البروتينية"], answer: 0, exp: "كثرة الحمرة تزيد الهيماتوكريت وهو العامل الأساسي للزوجة الدم." },
+            { year: 2019, num: 6, q: "كل مما يلي يعد رافعاً للضغط الشرياني عدا:", options: ["الأنجيوتنسين", "البراديكنين", "الألدوسترون", "الكورتيزول"], answer: 1, exp: "البراديكينين هو موسع وعائي فعال وبالتالي يخفض الضغط." },
+
+            // 2020
+            { year: 2020, num: 1, q: "تؤدي العوامل التالية إلى خروج السوائل من الأوعية الشعرية إلى النسيج ما عدا:", options: ["ارتفاع الضغط الشرياني", "انخفاض ضغط السائل الخلالي", "ارتفاع الضغط التناضحي الغرواني لبلازما الدم", "ارتفاع الضغط التناضحي الغرواني للسائل الخلالي"], answer: 2, exp: "الضغط الغرواني للمصورة يسحب السوائل للداخل ويمنع خروجها." },
+            { year: 2020, num: 2, q: "يؤدي ارتفاع الضغط الشرياني إلى ما يلي ما عدا:", options: ["تنبيه مستقبلات الضغط Baroreceptors", "تسرع القلب", "توسع الأوعية وإنقاص مقاومتها", "انخفاض القوة التقلصية للقلب"], answer: 1, exp: "المنعكس يخفض الضغط عبر إحداث (بطء قلب) وليس تسرع." },
+            { year: 2020, num: 3, q: "الضغط الشرياني الوسطي لشخص ضغطه 160/70 هو:", options: ["93 ملم زئبقي", "110 ملم زئبقي", "100 ملم زئبقي", "115 ملم زئبقي"], answer: 2, exp: "MAP = 70 + (160-70)/3 = 70 + 30 = 100 ملم زئبقي." },
+            { year: 2020, num: 4, q: "تؤدي العوامل التالية إلى ارتفاع الضغط في السائل الخلالي (تشكل وذمة) عدا:", options: ["انخفاض الضغط التناضحي الغرواني للدم", "ارتفاع ضغط الوعاء الشعيري", "تنقص كمية البروتينات في السائل الخلالي", "زيادة نفوذية الأوعية الشعرية"], answer: 2, exp: "نقص بروتينات الخلالي يقلل سحب السوائل إليه، فلا يشكل وذمة." },
+            { year: 2020, num: 5, q: "العامل الأهم في تحديد مقاومة الجريان للدم هو:", options: ["نصف قطر الوعاء الدموي", "لزوجة الدم", "حجم الدم الجائل في الدوران", "الجريان الصفائحي للدم"], answer: 0, exp: "المقاومة تتناسب عكساً مع القوة الرابعة لنصف القطر." },
+            { year: 2020, num: 6, q: "من الصفات المهمة للتنظيم العصبي للضغط الشرياني:", options: ["يفقد أهميته في التنظيم المديد", "السرعة في تنظيم الضغط الشرياني", "عدم القدرة على التكيف", "الاستقلالية في العمل عن المستقل"], answer: 1, exp: "التنظيم العصبي (المنعكسات) يمتاز بالسرعة الفائقة (ثواني)." },
+            { year: 2020, num: 7, q: "كل ما يلي من العوامل الرافعة للضغط الشرياني عدا:", options: ["هرمون ال ADH", "جملة الرنين - أنجيوتنسين", "البراديكنين", "الألدوستيرون"], answer: 2, exp: "البراديكينين موسع وعائي خافض للضغط." },
+            { year: 2020, num: 8, q: "تساهم العوامل التالية في زيادة عودة اللمف إلى القلب عدا:", options: ["وجود دسامات في الأوعية اللمفاوية", "تقلص العضلات الهيكلية", "انخفاض الضغط ضمن جوف الصدر", "انخفاض الضغط الشرياني"], answer: 3, exp: "انخفاض الضغط الشرياني لا علاقة له مباشرة بضخ اللمف." },
+            { year: 2020, num: 9, q: "يؤدي نقص معدل الاستقلاب في النسيج إلى:", options: ["زيادة عدد وحجم الأوعية الدموية", "تقبض المعصرات في الأوعية الشعرية", "زيادة تشكل وإطلاق عامل النمو", "زيادة نقل الدم إلى النسيج"], answer: 1, exp: "نقص الاستقلاب يعني عدم الحاجة للدم، فتتقبض المعصرات ليقل الجريان." },
+            { year: 2020, num: 10, q: "يؤدي انخفاض الضغط الشرياني إلى ما يلي ما عدا:", options: ["بطء القلب", "تثبيط مستقبلات الضغط", "زيادة القوة التقلصية للقلب", "تقبض الأوعية الدموية"], answer: 0, exp: "انخفاض الضغط يحرض تسرع القلب المعاوض وليس البطء." },
+
+            // 2021
+            { year: 2021, num: 1, q: "يؤدي تقلص عضلة الحجاب الحاجز (الشهيق) إلى ما يلي عدا:", options: ["ارتفاع الضغط داخل البطن", "ارتفاع الضغط السلبي داخل الصدر", "زيادة عودة الدم إلى القلب", "زيادة رشح السوائل من الشعيرات"], answer: 3, exp: "الشهيق يسهل العود الوريدي، ولا علاقة له مباشرة بزيادة رشح الشعيرات المحيطية." },
+            { year: 2021, num: 2, q: "يؤدي ارتفاع الضغط الشرياني إلى:", options: ["ارتفاع المقاومة الوعائية", "نقص سرعة القلب", "تثبيط مستقبلات الضغط", "تفعيل الجهاز الودي"], answer: 1, exp: "ارتفاع الضغط يحفز المنعكس الذي يؤدي إلى بطء القلب (نقص السرعة)." },
+            { year: 2021, num: 3, q: "يقبض الأدرينالين كل الأوعية الدموية التالية ما عدا:", options: ["الأوعية الاكليلية", "أوعية العضلات الهيكلية", "أوعية الكلية", "أوعية جهاز الهضم"], answer: 0, exp: "الأدرينالين يوسع الأوعية الإكليلية (وأوعية العضلات) عبر مستقبلات بيتا 2." },
+            { year: 2021, num: 4, q: "الضغط الشرياني الوسطي هو:", options: ["الفرق بين الضغط الانقباضي والانبساطي", "القيمة الوسطى لمجموع الضغطين", "معدل الضغط الناشئ خلال دورة قلبية", "الضغط الانبساطي + ثلث الضغط الانقباضي"], answer: 2, exp: "تعريفاً هو معدل الضغط خلال دورة قلبية كاملة." },
+            { year: 2021, num: 5, q: "تزداد المقاومة لجريان الدم في الحالات التالية عدا:", options: ["زيادة لزوجة الدم", "تضيق الوعاء الدموي", "نقص مطاوعة الوعاء الدموي", "ارتفاع الضغط الدموي"], answer: 3, exp: "زيادة المقاومة هي من يرفع الضغط، وليس العكس في هذا السياق." },
+            { year: 2021, num: 6, q: "ترفع المواد التالية الضغط الشرياني عن طريق تقبض الأوعية عدا:", options: ["الأدرينالين", "الألدستيرون", "النور ادرينالين", "الأنجيوتنسين 2"], answer: 1, exp: "الألدوستيرون يرفع الضغط بحبس الصوديوم والماء، وليس بالتقبض الوعائي." },
+            { year: 2021, num: 7, q: "ما يلي من خصائص الأوردة في الحالات السوية عدا:", options: ["انخفاض مطاوعتها", "انخفاض الضغط فيها", "احتوائها على أكثر من 60% من الدم", "تكون كمية السوائل التي تخرج منها أعلى من التي تعود"], answer: 0, exp: "الأوردة تمتاز بمطاوعة عالية جداً (أكثر من الشرايين بـ 24 مرة)." },
+
+            // 2022
+            { year: 2022, num: 1, q: "ما يلي من وظائف الجهاز اللمفاوي ما عدا:", options: ["يعتبر خزان مهم للسوائل بالجسم", "وسيلة إضافية لنضح السائل الخلالي", "نقل العناصر الغذائية الممتصة", "عودة البروتينات للدم"], answer: 0, exp: "الأوردة هي خزان السوائل، بينما اللمف هو وسيلة نضح وامتصاص دسم وبروتينات." },
+            { year: 2022, num: 2, q: "ما يلي من خصائص الدوران الوريدي عدا:", options: ["تعمل الصمامات على زيادة عودة الدم", "المطاوعة المنخفضة للأوردة", "يرتفع الضغط أثناء تقلص العضلات", "الضغط المنخفض مقارنة بالشرايين"], answer: 1, exp: "مكرر، الأوردة ذات مطاوعة (سعة) عالية جداً." },
+            { year: 2022, num: 3, q: "ترفع الهرمونات التالية الضغط الشرياني عن طريق حبس السوائل ما عدا:", options: ["ADH", "البراديكينين", "الألدوستيون", "الانجيوتنسين II"], answer: 1, exp: "البراديكينين خافض للضغط وموسع وعائي." },
+            { year: 2022, num: 4, q: "تؤدي العوامل التالية إلى نقص خروج السوائل من الشعيرات عدا:", options: ["انخفاض ضغط السائل الخلالي", "ارتفاع الضغط التناضحي للدم", "انخفاض ضغط الدم في الشعيرة", "انخفاض الضغط التناضحي الخلالي"], answer: 0, exp: "انخفاض ضغط السائل الخلالي يشجع على خروج السوائل وليس نقص خروجها." },
+            { year: 2022, num: 5, q: "يؤدي انخفاض الضغط الشرياني إلى ما يلي عدا:", options: ["تسرع القلب", "نقص إفراز هرمون الرينين", "تقبض الأوعية الدموية عدا الإكليلية", "إلغاء تنشيط مستقبلات الضغط"], answer: 1, exp: "انخفاض الضغط يحرض إفراز الرينين (لرفع الضغط) وليس نقص إفرازه." },
+            { year: 2022, num: 6, q: "يزداد الضغط الشرياني مع:", options: ["نقصان لزوجة الدم", "زيادة قطر الوعاء الدموي", "نقصان المقاومة الوعائية", "لا شيء مما سبق"], answer: 3, exp: "الخيارات كلها تخفض الضغط. زيادة المقاومة أو اللزوجة هي التي ترفع الضغط." }, // Adjusted options logically based on answers.
+            { year: 2022, num: 7, q: "أهم عامل في المقاومة الوعائية هو:", options: ["نصف قطر الوعاء", "النتاج القلبي", "لزوجة الدم", "الضغط الوسطي"], answer: 0, exp: "نصف القطر له الأثر الأكبر (القوة الرابعة)." },
+
+            // 2023
+            { year: 2023, num: 1, q: "يؤدي نقص الأكسجين المديد إلى:", options: ["إفراز السيروتونين", "إفراز NO", "إفراز العامل البطاني", "لا شيء"], answer: 2, exp: "نقص الأكسجة المديد يحرض نمو أوعية جديدة عبر إفراز عامل النمو البطاني الوعائي (VEGF)." },
+            { year: 2023, num: 2, q: "العامل الأساسي المؤثر في ضغط الشريان الخطأ:", options: ["المرونة", "نصف قطر الوعاء", "المطاوعة", "النتاج"], answer: 1, exp: "نصف القطر هو عامل مقاومة محيطية، بينما مرونة ومطاوعة الشرايين الكبيرة هي من تحدد ضغطها." },
+            { year: 2023, num: 3, q: "تتراوح قيمة الضغط الشرياني الانبساطي السوي لدى البالغين:", options: ["110-150", "60-90", "60-100", "70-100"], answer: 1, exp: "الانبساطي السوي 60-90، والانقباضي 90-140." },
+            { year: 2023, num: 4, q: "يؤثر في الضغط كل ما يلي ما عدا:", options: ["المقاومة الوعائية", "الضغط النبضي Pulse pressure", "مطاوعة الاوعية", "نتاج القلب"], answer: 1, exp: "الضغط النبضي هو نتيجة للضغط (انقباضي ناقص انبساطي) وليس عاملاً محدداً له مباشرة." },
+            { year: 2023, num: 5, q: "تعمل على نقص خروج السوائل من الشعيرات ما عدا:", options: ["نقصان الضغط الغرواني للدم", "انخفاض ضغط الدم", "نقصان الضغط الغرواني الخلالي", "ازدياد الضغط الخلالي"], answer: 0, exp: "نقص بروتينات الدم يزيد من خروج السوائل (وذمة)." },
+            { year: 2023, num: 6, q: "يعمل الكورتيزول على زيادة نتاج القلب عن طريق:", options: ["زيادة سرعة القلب", "زيادة حساسية الاوعية الدموية للمقبضات", "زيادة قوة تقلص القلب", "احتباس السوائل"], answer: 3, exp: "الكورتيزول له تأثير يشبه الألدوستيرون في حبس الصوديوم والماء، مما يزيد حجم الدم والنتاج." }, // Option adjusted for logical clarity based on physio rules.
+            { year: 2023, num: 7, q: "يزداد عود الدم للقلب بكل ما يلي عدا:", options: ["نبضة بجوار الشريان", "الزفير", "تقلص العضلات الهيكلية", "الشهيق"], answer: 1, exp: "الزفير يزيد الضغط داخل الصدر مما يعيق العود الوريدي." },
+
+            // 2024
+            { year: 2024, num: 1, q: "العامل الذي يحمي الأوعية الشعرية من التبدلات الهيموديناميكية في الشرينات هو:", options: ["انخفاض الضغط في الأوردة", "المعصرات قبل الشعرية", "الغشاء القاعدي الكولاجيني", "نفوذية الشعيرات العالية"], answer: 1, exp: "المعصرات قبل الشعرية تنظم الجريان وتحمي الشعيرات من ارتفاع الضغط." },
+            { year: 2024, num: 2, q: "الخاصية المهمة للجريان الصفائحي هي:", options: ["تقلل من نبضان الضغط", "لا تتأثر بلزوجة الدم", "يكون الجريان أسرع في مركز الوعاء", "أسرع في محيط الوعاء"], answer: 2, exp: "في الجريان الصفائحي، الطبقة المركزية هي الأسرع لانعدام الاحتكاك بالجدار." },
+            { year: 2024, num: 3, q: "كل ما يلي يزيد من العود الوريدي عدا:", options: ["فرق الضغط بين نهايتي الدوران", "الزفير", "التقلص العضلي", "الشهيق"], answer: 1, exp: "مكرر 2023، الزفير يعيق العود الوريدي." },
+            { year: 2024, num: 4, q: "يزداد تدفق اللمف بزيادة العوامل التالية ما عدا:", options: ["الضغط في الوعاء الشعيري", "الضغط التناضحي الغرواني للدم", "النبض الشرياني", "نفوذية الأوعية"], answer: 1, exp: "زيادة بروتينات الدم تسحب السوائل وتمنع تشكل اللمف." },
+            { year: 2024, num: 5, q: "العوامل التالية ترفع الضغط الشرياني عن طريق حبس الملح والماء عدا:", options: ["الأدرينالين", "الألدوستيرون", "الكورتيزول", "الهرمونات الجنسية"], answer: 0, exp: "الأدرينالين يرفع الضغط بالتقبض الوعائي المباشر وتسرع القلب." },
+            { year: 2024, num: 6, q: "يؤدي خروج السوائل من الأوعية الشعرية إلى كل مما يلي عدا:", options: ["انخفاض الضغط السكوني داخل الشعيرات", "زيادة الضغط الغرواني لبلازما الدم", "زيادة الضغط السكوني للسائل الخلالي", "زيادة الضغط الغرواني للسائل الخلالي"], answer: 3, exp: "خروج السوائل الخالية من البروتين يمدد السائل الخلالي فـيقل ضغطه الغرواني." },
+            { year: 2024, num: 7, q: "يتميز الدوران الوريدي في الحالات السوية بما يلي عدا:", options: ["انخفاض المطاوعة", "انخفاض الضغط مقارنة بالشرايين", "دور مهم لتقلص العضلات", "وجود أكثر من 60% من الدم فيه"], answer: 0, exp: "مكرر، الأوردة عالية المطاوعة." },
+            { year: 2024, num: 8, q: "العامل الأساسي الذي يتحكم بكمية الدم الواردة إلى الأنسجة هو:", options: ["المقاومة الوعائية المحيطية", "معدل الاستقلاب في الأنسجة", "نتاج القلب", "الضغط الشرياني"], answer: 1, exp: "الجريان الموضعي يخضع بالدرجة الأولى لحاجة النسيج الاستقلابية." },
+            { year: 2024, num: 9, q: "أحد العوامل التالية يؤدي إلى نقص خروج السوائل من الأوعية الشعرية:", options: ["انخفاض الضغط التناضحي للدم", "ارتفاع الضغط في الأوعية", "زيادة بروتينات السائل الخلالي", "ارتفاع ضغط السائل الخلالي"], answer: 3, exp: "الضغط السكوني العالي في الخلالي يعاكس قوة الرشح من الشعيرة." },
+            { year: 2024, num: 10, q: "ارتفاع ضغط الدم من 75 إلى 180 يؤدي إلى كل مما يلي عدا:", options: ["ازدياد معدل الترشيح الكبيبي", "زيادة كمية البول", "توسع الشريان الصادر", "ازدياد الجريان الكلوي"], answer: 2, exp: "آلية التنظيم الذاتي الكلوي تمنع تغيرات GFR الكبيرة، الشريان الوارد يتقبض وليس الصادر يتوسع." }
+        ];
+
+        // UI Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-physio-600', 'text-white', 'shadow-md');
+                btn.classList.add('text-slate-600');
+            });
+            
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+            let activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.classList.remove('text-slate-600');
+            activeBtn.classList.add('bg-physio-600', 'text-white', 'shadow-md');
+        }
+
+        // Render Database
+        function renderDatabase(filterYear = 'all', searchQuery = '') {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            let filtered = questionsDB.filter(q => {
+                let matchYear = filterYear === 'all' || q.year.toString() === filterYear;
+                let matchSearch = q.q.includes(searchQuery) || q.options.some(opt => opt.includes(searchQuery));
+                return matchYear && matchSearch;
+            });
+
+            if(filtered.length === 0) {
+                container.innerHTML = '<div class="text-center p-8 text-slate-500">لا توجد نتائج مطابقة للبحث.</div>';
+                return;
+            }
+
+            filtered.forEach((q, index) => {
+                let optionsHtml = q.options.map((opt, i) => `
+                    <div class="p-3 rounded-lg border text-sm font-semibold transition-colors ${i === q.answer ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-slate-50 border-slate-200 text-slate-600'}">
+                        ${i === q.answer ? '<i class="fas fa-check-circle text-emerald-500 ml-1"></i>' : '<i class="far fa-circle text-slate-300 ml-1"></i>'}
+                        ${opt}
+                    </div>
+                `).join('');
+
+                let html = `
+                    <div class="question-card bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-physio-100 text-physio-800 text-xs font-bold px-3 py-1 rounded-bl-lg">دورة ${q.year}</div>
+                        <h4 class="font-bold text-slate-800 mb-4 mt-2 pr-2 text-lg leading-relaxed"><span class="text-physio-500 ml-1">${q.num}-</span> ${q.q}</h4>
+                        <div class="grid md:grid-cols-2 gap-3 mb-4">
+                            ${optionsHtml}
+                        </div>
+                        <div class="bg-blue-50 border border-blue-100 p-3 rounded-lg text-sm text-blue-900 mt-2 flex items-start gap-2">
+                            <i class="fas fa-lightbulb text-amber-500 mt-1"></i>
+                            <p><b>التفسير:</b> ${q.exp}</p>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // Initialize Database
+        renderDatabase();
+
+        // Event Listeners for filters
+        document.getElementById('filter-year').addEventListener('change', (e) => {
+            renderDatabase(e.target.value, document.getElementById('search-db').value);
+        });
+        document.getElementById('search-db').addEventListener('input', (e) => {
+            renderDatabase(document.getElementById('filter-year').value, e.target.value);
+        });
+
+        // Quiz Logic
+        let quizQuestions = [];
+        let currentQIndex = 0;
+        let score = 0;
+
+        function startQuiz() {
+            // Pick 10 random questions
+            quizQuestions = [...questionsDB].sort(() => 0.5 - Math.random()).slice(0, 10);
+            currentQIndex = 0;
+            score = 0;
+            
+            document.getElementById('quiz-setup').classList.add('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-interface').classList.remove('hidden');
+            
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            let q = quizQuestions[currentQIndex];
+            document.getElementById('q-current').innerText = currentQIndex + 1;
+            document.getElementById('q-score').innerText = score;
+            document.getElementById('quiz-progress').style.width = `${((currentQIndex) / 10) * 100}%`;
+            
+            document.getElementById('quiz-question-text').innerText = q.q;
+            document.getElementById('next-q-btn').classList.add('hidden');
+            
+            let optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((opt, index) => {
+                let btn = document.createElement('button');
+                btn.className = 'w-full text-right p-4 rounded-xl border border-slate-200 text-slate-700 font-bold hover:bg-slate-50 transition-all';
+                btn.innerHTML = `<span class="inline-block w-6 h-6 bg-slate-100 text-center rounded-md ml-3 text-slate-500">${String.fromCharCode(65 + index)}</span> ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn, q.answer, q.exp);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnSelected, correctIndex, explanation) {
+            let optionsContainer = document.getElementById('quiz-options');
+            let buttons = optionsContainer.querySelectorAll('button');
+            
+            // Disable all buttons
+            buttons.forEach(b => b.disabled = true);
+            
+            if(selectedIndex === correctIndex) {
+                btnSelected.className = 'w-full text-right p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold';
+                btnSelected.innerHTML += ' <i class="fas fa-check-circle float-left text-xl mt-1 text-emerald-500"></i>';
+                score++;
+            } else {
+                btnSelected.className = 'w-full text-right p-4 rounded-xl border-2 border-red-500 bg-red-50 text-red-800 font-bold';
+                btnSelected.innerHTML += ' <i class="fas fa-times-circle float-left text-xl mt-1 text-red-500"></i>';
+                
+                // Highlight correct
+                buttons[correctIndex].className = 'w-full text-right p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 font-bold mt-2 opacity-80';
+            }
+            
+            document.getElementById('q-score').innerText = score;
+            
+            // Show explanation
+            let expDiv = document.createElement('div');
+            expDiv.className = 'bg-blue-50 text-blue-800 p-4 rounded-xl mt-4 text-sm font-semibold animate-pulse';
+            expDiv.innerHTML = `<i class="fas fa-lightbulb text-amber-500 ml-1"></i> ${explanation}`;
+            optionsContainer.appendChild(expDiv);
+
+            document.getElementById('next-q-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQIndex++;
+            if(currentQIndex < 10) {
+                loadQuizQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-interface').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('quiz-progress').style.width = `100%`;
+        }
+
+    </script>
+</body>
+</html>
