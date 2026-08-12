@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحليل دورات الفصل الرابع - فيزيولوجيا طبية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js للمخططات التفاعلية -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        medical: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background-color: #f8fafc; }
+        
+        /* تأثيرات البطاقات القلابة (Flashcards) */
+        .perspective { perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .flashcard-inner { transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); }
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+        
+        /* التمرير المخصص لجداول المقارنة */
+        .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* حركات التبويبات */
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-medical-200 selection:text-medical-900">
+
+    <!-- شريط التنقل (الرجوع والرئيسية) - معدل ليكون أصغر وبجانب بعض -->
+    <div class="max-w-6xl mx-auto px-4 pt-4 flex gap-3 items-center text-xs sm:text-sm font-semibold">
+        <a href="./physiology.html" class="flex items-center gap-1 sm:gap-2 text-medical-700 hover:text-medical-900 hover:bg-medical-50 bg-white px-3 py-1.5 rounded shadow-sm border border-slate-200 transition-all duration-200">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>الرجوع للفسيولوجيا</span>
+        </a>
+        <a href="./index.html" class="flex items-center gap-1 sm:gap-2 text-slate-700 hover:text-slate-900 hover:bg-slate-50 bg-white px-3 py-1.5 rounded shadow-sm border border-slate-200 transition-all duration-200">
+            <i class="fa-solid fa-house"></i>
+            <span>الرئيسية</span>
+        </a>
+    </div>
+
+    <header class="max-w-6xl mx-auto px-4 mt-8 mb-10">
+        <div class="bg-gradient-to-l from-medical-800 to-medical-600 rounded-2xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 opacity-10 pointer-events-none">
+                <i class="fa-solid fa-brain text-9xl -mt-10 -mr-10 transform rotate-12"></i>
+            </div>
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <h1 class="text-3xl sm:text-4xl font-bold mb-3">تحليل الفصل الرابع: الجهاز العصبي المستقل</h1>
+                    <p class="text-medical-100 text-lg opacity-90 max-w-2xl">
+                        خريطة تفاعلية، إحصائيات، ونكشات الدورات (2017 - 2024) مصممة لتسريع الحفظ والاسترجاع.
+                    </p>
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm rounded-xl p-4 text-center min-w-[150px] shadow-lg border border-white/30">
+                    <span class="block text-medical-100 text-sm font-medium mb-1">متوسط أسئلة الدورة</span>
+                    <span class="text-4xl font-extrabold">~7.8</span>
+                    <span class="block text-medical-100 text-xs mt-1">(62 سؤال في 8 دورات)</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 pb-20">
+        <!-- أزرار التبويبات -->
+        <div class="flex overflow-x-auto custom-scrollbar bg-white rounded-xl shadow-sm border border-slate-200 p-2 mb-8 gap-2 sticky top-4 z-50">
+            <button onclick="switchTab('stats')" id="tab-btn-stats" class="tab-btn flex-1 whitespace-nowrap px-4 py-3 rounded-lg font-bold text-sm transition-all bg-medical-50 text-medical-700 shadow-sm border border-medical-100"><i class="fa-solid fa-chart-pie ml-2"></i> إحصائيات وبنية</button>
+            <button onclick="switchTab('mindmap')" id="tab-btn-mindmap" class="tab-btn flex-1 whitespace-nowrap px-4 py-3 rounded-lg font-bold text-sm text-slate-500 hover:bg-slate-50 transition-all"><i class="fa-solid fa-diagram-project ml-2"></i> خريطة المفاهيم</button>
+            <button onclick="switchTab('comparisons')" id="tab-btn-comparisons" class="tab-btn flex-1 whitespace-nowrap px-4 py-3 rounded-lg font-bold text-sm text-slate-500 hover:bg-slate-50 transition-all"><i class="fa-solid fa-scale-balanced ml-2"></i> جداول المقارنة</button>
+            <button onclick="switchTab('tricks')" id="tab-btn-tricks" class="tab-btn flex-1 whitespace-nowrap px-4 py-3 rounded-lg font-bold text-sm text-slate-500 hover:bg-slate-50 transition-all"><i class="fa-solid fa-lightbulb ml-2"></i> نكشات ومكرر</button>
+            <button onclick="switchTab('keywords')" id="tab-btn-keywords" class="tab-btn flex-1 whitespace-nowrap px-4 py-3 rounded-lg font-bold text-sm text-slate-500 hover:bg-slate-50 transition-all"><i class="fa-solid fa-bolt ml-2"></i> حفظ سريع</button>
+        </div>
+
+        <!-- التبويب الأول: إحصائيات -->
+        <div id="tab-stats" class="tab-content active">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- الأهمية والأولويات -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h2 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-orange-500"></i> على ماذا يركزون أكثر؟
+                    </h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center font-bold text-sm border border-red-200">1</span>
+                            <div>
+                                <h3 class="font-bold text-slate-800">النواقل العصبية والمستقبلات <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full ml-2">الأهم!</span></h3>
+                                <p class="text-sm text-slate-600 mt-1">تتكرر في <b>كل دورة</b> بلا استثناء! (من يفرز أستيل كولين، أين توجد المسكارينية والنيكوتينية، ألفا وبيتا).</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-sm border border-orange-200">2</span>
+                            <div>
+                                <h3 class="font-bold text-slate-800">التأثيرات الفيزيولوجية (ودي vs نظير ودي)</h3>
+                                <p class="text-sm text-slate-600 mt-1">تأثيرهما على: القلب، الأمعاء، الحدقة، الغدد، القصبات، الأوعية. (سؤال إلى سؤالين كل دورة).</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center font-bold text-sm border border-yellow-200">3</span>
+                            <div>
+                                <h3 class="font-bold text-slate-800">المقوية المستقلة (Tone) والمراكز العليا</h3>
+                                <p class="text-sm text-slate-600 mt-1">سؤال شبه دائم عن تعريف المقوية أو أمثلة عليها (أوعية=ودي، قلب/أمعاء=لاودي)، ودور الوطاء والبصلة.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold text-sm border border-green-200">4</span>
+                            <div>
+                                <h3 class="font-bold text-slate-800">الفروق بين الجسدي والمستقل / المنعكسات</h3>
+                                <p class="text-sm text-slate-600 mt-1">عصبون واحد مقابل عصبونين، وجود العقد، طبيعة الخلايا الهدف.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- المخططات -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col">
+                    <h2 class="text-xl font-bold text-slate-800 mb-4">توزيع الأسئلة حسب المواضيع (متوقع)</h2>
+                    <div class="flex-1 relative w-full h-64 md:h-auto min-h-[250px]">
+                        <canvas id="topicsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-5">
+                <h3 class="font-bold text-blue-800 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info"></i> استراتيجية الدراسة المثلى للفصل الرابع:
+                </h3>
+                <p class="text-sm text-blue-700 leading-relaxed">
+                    لا تقرأ الفصل بشكل طولي ممل. <strong>ادرس بنظام المقارنات!</strong> ارسم جدولاً ذهنياً للودي مقابل اللاودي. احفظ القاعدة العامة (الودي للطوارئ، اللاودي للراحة) ثم احفظ <b>الاستثناءات</b> (مثل الغدد العرقية التي تعصب بالودي ولكن تفرز أستيل كولين). الاستثناءات هي ما يركزون عليه في الامتحانات.
+                </p>
+            </div>
+        </div>
+
+        <!-- التبويب الثاني: خريطة المفاهيم التفاعلية -->
+        <div id="tab-mindmap" class="tab-content">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-sitemap text-medical-600"></i> خريطة تشريح وظائف المستقل
+                </h2>
+                <p class="text-sm text-slate-500 mb-6">اضغط على الأقسام لفتحها ومعرفة التفاصيل المرتبطة بها والأسئلة الواردة عنها.</p>
+
+                <!-- شجرة تفاعلية -->
+                <div class="space-y-3">
+                    <!-- القسم الجسدي vs المستقل -->
+                    <div class="border border-slate-200 rounded-lg overflow-hidden">
+                        <button onclick="toggleAccordion('acc-1')" class="w-full flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100 transition font-bold text-slate-700">
+                            <span>1. الفروق الأساسية (المستقل vs الجسدي)</span>
+                            <i id="icon-acc-1" class="fa-solid fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div id="acc-1" class="hidden p-4 bg-white border-t border-slate-200 text-sm leading-relaxed">
+                            <ul class="list-disc list-inside space-y-2 text-slate-700">
+                                <li><b>الجسدي:</b> عصبون واحد يمتد من المركز للهدف (العضلة المخططة)، النواقل فقط أستيل كولين، التأثير دائماً مثير. لا يحوي عقد حركية.</li>
+                                <li><b>المستقل:</b> عصبونان (قبل وبعد العقدة)، يوجد عقد، أهداف (عضلة ملساء، قلب، غدد)، النواقل (ACh و NE)، التأثير إما مثير أو مثبط.</li>
+                                <li><span class="text-red-600 font-bold">تكرر في الدورات:</span> "يختلف الحركي المستقل عن الجسدي بـ: عدم وجود أجسام خلايا قبل عقدية في المستقل (خطأ)، وجود عقد حركية في الجسدي (خطأ)، أنماط الخلايا المستهدفة (صح)".</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- المراكز العليا -->
+                    <div class="border border-slate-200 rounded-lg overflow-hidden">
+                        <button onclick="toggleAccordion('acc-2')" class="w-full flex justify-between items-center p-4 bg-slate-50 hover:bg-slate-100 transition font-bold text-slate-700">
+                            <span>2. المراكز العليا والمقوية (Tone)</span>
+                            <i id="icon-acc-2" class="fa-solid fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div id="acc-2" class="hidden p-4 bg-white border-t border-slate-200 text-sm leading-relaxed">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <h4 class="font-bold text-medical-700 mb-2">المراكز العليا:</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                        <li><b>الوطاء (Hypothalamus):</b> المحطة الرئيسية لتكامل وظائف المستقل.</li>
+                                        <li><b>البصلة السيسائية والنخاع:</b> دور أساسي! قطع جذع الدماغ فوق البصلة <i>لا يُحدث</i> تبدلات مهمة (لأن المراكز في البصلة تكفي).</li>
+                                        <li><b>الجهاز الحوفي (Limbic):</b> يؤثر على المستقل استجابة للعواطف.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-medical-700 mb-2">المقوية (Tone):</h4>
+                                    <ul class="list-disc list-inside space-y-1 text-slate-700">
+                                        <li><b>تعريفها:</b> تفريغ قاعدي مستمر يسمح بزيادة أو إنقاص فعالية العضو (مثال: الأوعية مضغوطة بنسبة 50% دائماً).</li>
+                                        <li><b>أمثلة امتحانية:</b> مقوية ودية (الأوعية الدموية). مقوية لاودية (القلب، الأمعاء).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- النواقل والمستقبلات -->
+                    <div class="border border-slate-200 rounded-lg overflow-hidden ring-2 ring-medical-500 ring-opacity-50">
+                        <button onclick="toggleAccordion('acc-3')" class="w-full flex justify-between items-center p-4 bg-medical-50 hover:bg-medical-100 transition font-bold text-medical-800">
+                            <span>3. النواقل العصبية والمستقبلات (قسم الامتحان الذهبي) 🏆</span>
+                            <i id="icon-acc-3" class="fa-solid fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div id="acc-3" class="hidden p-4 bg-white border-t border-slate-200 text-sm">
+                            <p class="mb-3 text-slate-600">احفظ هذه القاعدة كاسمك: <b>جميع العصبونات قبل العقدة (ودية ولاودية) تفرز أستيل كولين.</b></p>
+                            
+                            <div class="space-y-4">
+                                <div class="p-3 bg-red-50 rounded border border-red-100">
+                                    <h4 class="font-bold text-red-700 mb-1">القسم الودي (Sympathetic):</h4>
+                                    <p>قبل العقدة: <span class="font-bold">أستيل كولين</span> -> مستقبل <span class="font-bold">نيكوتيني</span> في العقدة.</p>
+                                    <p>بعد العقدة: <span class="font-bold">نورأدرينالين</span> بشكل رئيسي.</p>
+                                    <p class="text-xs mt-1 font-bold text-red-600 bg-red-100 p-1 inline-block rounded">استثناء هام جداً: بعد العقدة الودي المتجه للغدد العرقية يفرز (أستيل كولين) ويرتبط بمستقبل (مسكاريني).</p>
+                                </div>
+
+                                <div class="p-3 bg-blue-50 rounded border border-blue-100">
+                                    <h4 class="font-bold text-blue-700 mb-1">القسم اللاودي (Parasympathetic):</h4>
+                                    <p>قبل العقدة: <span class="font-bold">أستيل كولين</span> -> مستقبل <span class="font-bold">نيكوتيني</span> في العقدة.</p>
+                                    <p>بعد العقدة: <span class="font-bold">أستيل كولين</span> -> مستقبل <span class="font-bold">مسكاريني</span> في الخلية الهدف.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- التبويب الثالث: جداول المقارنة -->
+        <div id="tab-comparisons" class="tab-content">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 border-b border-slate-200 bg-slate-50">
+                    <h2 class="text-xl font-bold text-slate-800">مقارنات سريعة للحفظ</h2>
+                    <p class="text-sm text-slate-500 mt-1">تأتي معظم أسئلة الخيارات المتعددة بصيغة "كل ما يلي من تأثيرات الودي عدا".</p>
+                </div>
+                
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-sm text-right">
+                        <thead class="bg-slate-100 text-slate-700">
+                            <tr>
+                                <th class="p-4 font-bold w-1/4">العضو / الوظيفة</th>
+                                <th class="p-4 font-bold w-3/8 border-r border-slate-200 bg-red-50 text-red-700">الجهاز الودي (القتال والهرب)</th>
+                                <th class="p-4 font-bold w-3/8 border-r border-slate-200 bg-blue-50 text-blue-700">الجهاز اللاودي (الراحة والهضم)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-4 font-bold">القلب</td>
+                                <td class="p-4 border-r border-slate-200 text-red-600">تسرع ضربات القلب (مستقبلات Beta 1)</td>
+                                <td class="p-4 border-r border-slate-200 text-blue-600">تباطؤ ضربات القلب (مسكارينية)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-4 font-bold">الأوعية الدموية</td>
+                                <td class="p-4 border-r border-slate-200 text-red-600">تقبض معظم الأوعية (الجلد والأحشاء)<br><span class="text-xs text-slate-500">ملاحظة: يوسع أوعية العضلات الهيكلية والإكليلية</span></td>
+                                <td class="p-4 border-r border-slate-200 text-blue-600">ليس له تأثير يذكر (الأوعية تخضع لمقوية ودية فقط)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition bg-yellow-50/30">
+                                <td class="p-4 font-bold">الرئتين (القصبات)</td>
+                                <td class="p-4 border-r border-slate-200 text-red-600 font-bold">توسع القصبات (لتسهيل التنفس)</td>
+                                <td class="p-4 border-r border-slate-200 text-blue-600 font-bold">تقبض القصبات</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-4 font-bold">الجهاز الهضمي</td>
+                                <td class="p-4 border-r border-slate-200 text-red-600">نقص الحركات الحوية، تقلص المعصرات (إيقاف الهضم)</td>
+                                <td class="p-4 border-r border-slate-200 text-blue-600">زيادة الحركية والإفراز، استرخاء المعصرات</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-4 font-bold">العين (الحدقة)</td>
+                                <td class="p-4 border-r border-slate-200 text-red-600">توسع الحدقة (للرؤية في الظلام/الخطر)</td>
+                                <td class="p-4 border-r border-slate-200 text-blue-600">تضيق الحدقة</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition bg-yellow-50/30">
+                                <td class="p-4 font-bold">المثانة البولية</td>
+                                <td class="p-4 border-r border-slate-200 text-red-600">إرخاء الجدار (العضلة الدافعة)، وتقلص المعصرة (حبس البول)</td>
+                                <td class="p-4 border-r border-slate-200 text-blue-600 font-bold">تقلص المثانة (إفراغ)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="p-4 font-bold">الغدد اللعابية</td>
+                                <td class="p-4 border-r border-slate-200 text-slate-700">إفراز لعاب لزج قليل (يجف الريق)</td>
+                                <td class="p-4 border-r border-slate-200 text-slate-700">إفراز لعاب مائي غزير (يتآزران هنا ولكن اللاودي أقوى)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <!-- مقارنة المستقبلات -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="font-bold text-slate-800 mb-4 border-b pb-2">المستقبلات الكولينية (تستجيب للأستيل كولين)</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><b class="text-medical-600">النيكوتينية:</b><br> توجد في <b>العقد</b> المستقلة (ودية ولاودية)، وفي <b>لب الكظر</b>، وفي <b>الوصل العضلي العصبي</b> (عضلات هيكلية). تأثيرها دائمًا سريع ومثير. <i>تُحصر بالكورار</i>.</li>
+                        <hr class="border-slate-100">
+                        <li><b class="text-medical-600">المسكارينية:</b><br> توجد في <b>الخلايا المستهدفة</b> للقسم اللاودي (قلب، أمعاء...) وفي <b>الغدد العرقية</b> (ودي). تأثيرها قد يكون مثير أو مثبط. <i>تُحصر بالأتروبين</i>.</li>
+                    </ul>
+                </div>
+                <!-- مقارنة الحاصرات -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h3 class="font-bold text-slate-800 mb-4 border-b pb-2">الحاصرات (الأدوية) - تكررت كثيراً</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><b class="text-red-600">الحاصرات المباشرة:</b> ترتبط بالمستقبل وتمنع الناقل من العمل (مثل الكورار، الأتروبين).</li>
+                        <hr class="border-slate-100">
+                        <li><b class="text-red-600">الحاصرات غير المباشرة:</b> لا تقرب المستقبل، بل <span class="bg-yellow-100 font-bold px-1 rounded">تنقص فعالية العصبون قبل المشبكي</span> (مثلاً تمنع اصطناع الناقل أو تمنع تحرره). <i>(سؤال 2020، 2022)</i></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- التبويب الرابع: نكشات وأسئلة مكررة -->
+        <div id="tab-tricks" class="tab-content">
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-slate-800 mb-2">نكشات الدورات (الفخوخ الامتحانية)</h2>
+                <p class="text-sm text-slate-500">اضغط على البطاقة لقلبها ومعرفة الإجابة/السر.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- بطاقة 1 -->
+                <div class="perspective h-48 cursor-pointer flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner relative w-full h-full preserve-3d shadow-sm rounded-xl border border-slate-200">
+                        <!-- الوجه الأمامي -->
+                        <div class="absolute w-full h-full backface-hidden bg-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <i class="fa-solid fa-question-circle text-3xl text-medical-300 mb-3"></i>
+                            <h3 class="font-bold text-slate-700">الغدد العرقية</h3>
+                            <p class="text-xs text-slate-500 mt-2">كيف تتعصب وما هو الناقل؟ (سؤال مكرر بشدة)</p>
+                            <span class="text-[10px] text-medical-500 mt-4">اضغط للقلب <i class="fa-solid fa-rotate"></i></span>
+                        </div>
+                        <!-- الوجه الخلفي -->
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-medical-600 text-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <h3 class="font-bold text-lg">الاستثناء الكبير!</h3>
+                            <p class="text-sm mt-2">تعصب بـ <b>الجهاز الودي</b>، لكن الناقل العصبي بعد العقدة هو <b>الأستيل كولين</b>، والمستقبل <b>مسكاريني</b>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقة 2 -->
+                <div class="perspective h-48 cursor-pointer flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner relative w-full h-full preserve-3d shadow-sm rounded-xl border border-slate-200">
+                        <div class="absolute w-full h-full backface-hidden bg-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <i class="fa-solid fa-bolt text-3xl text-yellow-400 mb-3"></i>
+                            <h3 class="font-bold text-slate-700">الكورار vs الأتروبين</h3>
+                            <p class="text-xs text-slate-500 mt-2">ماذا يحصر كل منهما؟</p>
+                            <span class="text-[10px] text-medical-500 mt-4">اضغط للقلب <i class="fa-solid fa-rotate"></i></span>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-yellow-500 text-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <p class="text-sm"><b>الكورار:</b> يحصر المستقبلات النيكوتينية (في العقد والعضلات الهيكلية).</p>
+                            <hr class="w-full border-yellow-300 my-2">
+                            <p class="text-sm"><b>الأتروبين:</b> يحصر المستقبلات المسكارينية (في الأعضاء الهدف لللاودي).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقة 3 -->
+                <div class="perspective h-48 cursor-pointer flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner relative w-full h-full preserve-3d shadow-sm rounded-xl border border-slate-200">
+                        <div class="absolute w-full h-full backface-hidden bg-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <i class="fa-solid fa-eye-slash text-3xl text-blue-400 mb-3"></i>
+                            <h3 class="font-bold text-slate-700">إزالة التعصيب (Denervation)</h3>
+                            <p class="text-xs text-slate-500 mt-2">ماذا يحدث للأحشاء إذا قطعنا أعصابها المستقلة؟</p>
+                            <span class="text-[10px] text-medical-500 mt-4">اضغط للقلب <i class="fa-solid fa-rotate"></i></span>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-blue-600 text-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <h3 class="font-bold text-lg">لا تُشل!</h3>
+                            <p class="text-sm mt-2">استمرارية فعالية الأحشاء مع بعض التعديل. (لأن الأحشاء لها فعالية ذاتية داخلية المنشأ مثل القلب والأمعاء).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقة 4 -->
+                <div class="perspective h-48 cursor-pointer flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner relative w-full h-full preserve-3d shadow-sm rounded-xl border border-slate-200">
+                        <div class="absolute w-full h-full backface-hidden bg-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <i class="fa-solid fa-heart-pulse text-3xl text-red-400 mb-3"></i>
+                            <h3 class="font-bold text-slate-700">التفريغ الودي الجسيم</h3>
+                            <p class="text-xs text-slate-500 mt-2">Mass Discharge - ما هو الشيء الذي (لا) يحدث؟</p>
+                            <span class="text-[10px] text-medical-500 mt-4">اضغط للقلب <i class="fa-solid fa-rotate"></i></span>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-red-600 text-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <p class="text-sm mb-2">يتظاهر بكل علامات الخوف (زيادة نتاج قلب، ارتفاع سكر، جريان دم للعضلات).</p>
+                            <p class="text-sm font-bold bg-white/20 p-1 rounded">الخطأ في الخيارات دائماً: إفراغ المثانة (لأنه يحبس البول)، أو زيادة اللعاب.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- بطاقة 5 -->
+                <div class="perspective h-48 cursor-pointer flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner relative w-full h-full preserve-3d shadow-sm rounded-xl border border-slate-200">
+                        <div class="absolute w-full h-full backface-hidden bg-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <i class="fa-solid fa-link text-3xl text-purple-400 mb-3"></i>
+                            <h3 class="font-bold text-slate-700">التفاعل بين الناقل والمستقبل</h3>
+                            <p class="text-xs text-slate-500 mt-2">أهم خصائصه؟</p>
+                            <span class="text-[10px] text-medical-500 mt-4">اضغط للقلب <i class="fa-solid fa-rotate"></i></span>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-purple-600 text-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <p class="text-sm">يمتاز بـ: الألفة العالية، النوعية، <b>العكوسية</b>.</p>
+                            <p class="text-sm mt-2 font-bold bg-white/20 p-1 rounded">الخطأ في الدورات: قدرته على الارتباط بكمية لا محدودة (خطأ - يتشبع)، أو عدم العكوسية (خطأ).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقة 6 -->
+                <div class="perspective h-48 cursor-pointer flashcard" onclick="this.classList.toggle('flipped')">
+                    <div class="flashcard-inner relative w-full h-full preserve-3d shadow-sm rounded-xl border border-slate-200">
+                        <div class="absolute w-full h-full backface-hidden bg-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <i class="fa-solid fa-user-shield text-3xl text-teal-400 mb-3"></i>
+                            <h3 class="font-bold text-slate-700">أعضاء تعصب بالودي فقط</h3>
+                            <p class="text-xs text-slate-500 mt-2">لا تخضع لتأثير اللاودي أبداً</p>
+                            <span class="text-[10px] text-medical-500 mt-4">اضغط للقلب <i class="fa-solid fa-rotate"></i></span>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-teal-600 text-white rounded-xl p-5 flex flex-col justify-center items-center text-center">
+                            <ul class="text-sm space-y-1 list-disc list-inside text-right">
+                                <li>الأوعية الدموية</li>
+                                <li>الغدد العرقية</li>
+                                <li>العضلة الناصبة للشعرة</li>
+                                <li>لب الكظر</li>
+                            </ul>
+                            <p class="text-xs mt-2 bg-white/20 p-1 rounded">الغدد الدمعية (تعصب باللاودي).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- التبويب الخامس: حفظ سريع -->
+        <div id="tab-keywords" class="tab-content">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-xl font-bold text-slate-800 mb-6">قواعد الحفظ الذهبية</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-medical-300 transition cursor-default group">
+                        <h3 class="font-bold text-medical-700 mb-2 group-hover:text-medical-600"><i class="fa-solid fa-check text-green-500 mr-2 ml-1"></i> مستقبلات ألفا (Alpha)</h3>
+                        <p class="text-sm text-slate-600">تؤدي دائماً تقريباً إلى <span class="font-bold text-red-600 bg-red-50 px-1">التقلص والتقبض</span> (تقبض أوعية، تقلص معصرات الأمعاء). <i>(باستثناء إرخاء عضلات الأمعاء الدقيقة)</i>.</p>
+                    </div>
+                    
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-medical-300 transition cursor-default group">
+                        <h3 class="font-bold text-medical-700 mb-2 group-hover:text-medical-600"><i class="fa-solid fa-check text-green-500 mr-2 ml-1"></i> مستقبلات بيتا (Beta)</h3>
+                        <p class="text-sm text-slate-600">تؤدي غالبًا إلى <span class="font-bold text-blue-600 bg-blue-50 px-1">التوسع والارتخاء</span> (توسع قصبات، تحلل شحوم). <i>ما عدا بيتا-1 في القلب تؤدي للتسرع (تنبيه).</i></p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-medical-300 transition cursor-default group">
+                        <h3 class="font-bold text-medical-700 mb-2 group-hover:text-medical-600"><i class="fa-solid fa-check text-green-500 mr-2 ml-1"></i> الأعصاب القحفية اللاودية</h3>
+                        <p class="text-sm text-slate-600">احفظ الرقم <span class="font-bold text-xl text-medical-600">1973</span> (العصب الثالث، السابع، التاسع، العاشر "المبهم"). الحادي عشر ليس منها!</p>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-lg p-4 hover:border-medical-300 transition cursor-default group">
+                        <h3 class="font-bold text-medical-700 mb-2 group-hover:text-medical-600"><i class="fa-solid fa-check text-green-500 mr-2 ml-1"></i> العصبون قبل العقدة</h3>
+                        <p class="text-sm text-slate-600">أين يوجد جسمه؟ <b>دائماً داخل الجهاز العصبي المركزي</b>. (الودي في القرون الجانبية للنخاع، اللاودي في جذع الدماغ والعجزي).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // دالة تبديل التبويبات
+        function switchTab(tabId) {
+            // إخفاء كل المحتوى
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // إزالة التنسيق النشط من الأزرار
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-medical-50', 'text-medical-700', 'shadow-sm', 'border-medical-100');
+                btn.classList.add('text-slate-500');
+                btn.classList.remove('border');
+            });
+
+            // إظهار المحتوى المطلوب
+            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            // تفعيل الزر المطلوب
+            const activeBtn = document.getElementById('tab-btn-' + tabId);
+            activeBtn.classList.remove('text-slate-500');
+            activeBtn.classList.add('bg-medical-50', 'text-medical-700', 'shadow-sm', 'border', 'border-medical-100');
+        }
+
+        // دالة لفتح وإغلاق الأكورديون (خريطة المفاهيم)
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // تهيئة المخطط البياني (Chart.js) عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const ctx = document.getElementById('topicsChart').getContext('2d');
+            
+            // البيانات مستنبطة من تحليل ملف الـ PDF
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        'النواقل والمستقبلات', 
+                        'التأثيرات الفيزيولوجية (أعضاء)', 
+                        'المقوية والمراكز العليا', 
+                        'فروقات حركي جسدي/مستقل', 
+                        'الحاصرات الدوائية'
+                    ],
+                    datasets: [{
+                        label: 'نسبة تواتر الأسئلة في الدورات',
+                        data: [40, 30, 15, 10, 5], // نسب تقريبية بناء على التحليل
+                        backgroundColor: [
+                            '#0d9488', // النواقل (أكثر أهمية - لون غامق)
+                            '#2dd4bf', 
+                            '#99f6e4',
+                            '#fde047',
+                            '#fca5a5'
+                        ],
+                        borderWidth: 2,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: "'Tajawal', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            titleFont: { family: "'Tajawal', sans-serif" },
+                            bodyFont: { family: "'Tajawal', sans-serif" }
+                        }
+                    },
+                    cutout: '65%' // لجعل الحلقة أرق
+                }
+            });
+        });
+    </script>
+</body>
+</html>
