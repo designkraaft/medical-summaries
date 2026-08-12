@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص فيزيولوجيا القلب - امتحان الأتمتة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js للتفاعلية الخفيفة -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        medical: {
+                            light: '#e0f2fe',
+                            DEFAULT: '#0284c7',
+                            dark: '#075985',
+                            accent: '#ef4444'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-size: 115%; line-height: 1.8; background-color: #f8fafc; color: #1e293b; }
+        .highlight-num { color: #dc2626; font-weight: 800; background-color: #fee2e2; padding: 0 4px; border-radius: 4px; }
+        .term-en { font-family: system-ui, -apple-system, sans-serif; font-size: 0.9em; color: #475569; direction: ltr; display: inline-block; }
+        .exam-alert { border-right: 4px solid #ef4444; background: #fef2f2; }
+        .interactive-box { transition: all 0.3s ease; cursor: pointer; }
+        .interactive-box:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="antialiased pb-20">
+
+    <!-- شريط التنقل (الرجوع والرئيسية) كما طلب المستخدم -->
+    <!-- STREAMING_CHUNK:شريط التنقل -->
+    <div class="max-w-4xl mx-auto px-4 pt-4 flex justify-between items-center text-sm font-semibold mb-6">
+      <a href="./physiology.html" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+        <span>→</span> الرجوع لصفحة الفسيولوجيا
+      </a>
+      <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+        <span>🏠</span> الصفحة الرئيسية
+      </a>
+    </div>
+
+    <!-- STREAMING_CHUNK:الترويسة -->
+    <header class="max-w-4xl mx-auto px-4 mb-10 text-center">
+        <h1 class="text-4xl font-extrabold text-medical-dark mb-3">الفصل الخامس: القلب <span class="term-en">(The Heart)</span></h1>
+        <p class="text-lg text-slate-600">ملخص شامل وموجه لامتحان الأتمتة (السنة التحضيرية)</p>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 space-y-8">
+
+        <!-- أولاً: مراجعة تشريحية ووظيفية -->
+        <!-- STREAMING_CHUNK:القسم الأول المراجعة التشريحية -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-medical-dark text-white p-4">
+                <h2 class="text-2xl font-bold">أولاً: مراجعة تشريحية والتشريح الوظيفي لعضلة القلب</h2>
+            </div>
+            <div class="p-6 space-y-4">
+                <p>يتألف القلب من مضختين متجاورتين: الأيمن (يتلقى دم فقير بـ O<sub>2</sub> ويضخه للرئتين - <strong>دوران رئوي</strong>)، والأيسر (يتلقى دم غني بـ O<sub>2</sub> ويضخه للجسم - <strong>دوران جهازي</strong>).</p>
+                
+                <div class="grid md:grid-cols-2 gap-4 my-4">
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                        <h3 class="font-bold text-medical mb-2">الصمامات الأذينية البطينية (تفتح منفعلاً)</h3>
+                        <ul class="list-disc list-inside space-y-1 text-sm">
+                            <li><strong>الأيمن:</strong> الصمام مثلث الشرف <span class="term-en">Tricuspid</span></li>
+                            <li><strong>الأيسر:</strong> الصمام التاجي/الإكليلي <span class="term-en">Mitral</span></li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                        <h3 class="font-bold text-medical mb-2">الصمامات السينية / الهلالية</h3>
+                        <ul class="list-disc list-inside space-y-1 text-sm">
+                            <li><strong>الأيمن:</strong> الصمام الرئوي</li>
+                            <li><strong>الأيسر:</strong> الصمام الأبهري (<span class="text-medical-accent font-bold">شرفاته أعرض وأكثر ثخانة</span> من الرئوي).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="exam-alert p-4 rounded-lg mt-4">
+                    <h3 class="font-bold text-red-700 flex items-center gap-2">
+                        <span>⚠️</span> البنية النسيجية للقلب (مشروع سؤال أتمتة دسم)
+                    </h3>
+                    <ul class="list-disc list-inside mt-2 space-y-2">
+                        <li>خلايا مخططة، <strong>نواة واحدة</strong>، متفرعة.</li>
+                        <li><strong>الأقراص المقحمة <span class="term-en">Intercalated Disks</span>:</strong> تتألف من عنصرين:
+                            <ol class="list-decimal list-inside pr-6 mt-1 text-sm font-semibold text-slate-800">
+                                <li><strong>الديسموزوم:</strong> ربط الخلايا <span class="text-medical">آلياً</span> (ميكانيكياً).</li>
+                                <li><strong>المواصل الفجوية <span class="term-en">Gap Junctions</span>:</strong> ربط الخلايا <span class="text-medical">كهربائياً</span> (تسمح بانتشار زوال الاستقطاب لتعمل كليف واحد).</li>
+                            </ol>
+                        </li>
+                        <li><span class="highlight-num">1%</span> فقط من الخلايا متخصصة بتوليد كامن الفعل عفوياً (خلايا أصغر، ألياف قلوصة قليلة).</li>
+                        <li>تشغل <strong>المتقدرات</strong> <span class="highlight-num">1/3</span> حجم الليف العضلي (لتلبية الحاجة الطاقية).</li>
+                        <li>تستخلص العضلة <span class="highlight-num">70-80%</span> من الأكسجين دفعة واحدة (نسبة هائلة مقارنة بباقي خلايا الجسم).</li>
+                        <li>تعتمد <strong>جزئياً</strong> على الكالسيوم <span class="underline">خارج الخلوي</span> لبدء التقلص (تشبه العضلات الملساء).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ثانياً: نسيج التوصيل -->
+        <!-- STREAMING_CHUNK:القسم الثاني نسيج التوصيل -->
+        <section x-data="{ step: 1 }" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-medical p-4 text-white flex justify-between items-center">
+                <h2 class="text-2xl font-bold">ثانياً: النسيج العقدي (جهاز التوصيل) - تفاعلي</h2>
+                <span class="text-sm bg-white text-medical px-2 py-1 rounded">اضغط على الخطوات للتتبع</span>
+            </div>
+            <div class="p-6">
+                <p class="mb-4 text-slate-600">هذه الخلايا تمتلك <strong>كامن غشاء غير مستقر</strong> يبدأ بحدود <span class="highlight-num">-60 mV</span> ويتصاعد تلقائياً للعتبة.</p>
+                
+                <!-- مسار تفاعلي -->
+                <div class="flex flex-col md:flex-row gap-2 relative">
+                    <div @click="step = 1" :class="step === 1 ? 'bg-medical text-white' : 'bg-slate-100 text-slate-600'" class="interactive-box flex-1 p-4 rounded-lg text-center font-bold">
+                        1. العقدة الجيبية الأذينية (SA Node)
+                    </div>
+                    <div class="hidden md:flex items-center justify-center text-slate-400">➔</div>
+                    <div @click="step = 2" :class="step === 2 ? 'bg-medical text-white' : 'bg-slate-100 text-slate-600'" class="interactive-box flex-1 p-4 rounded-lg text-center font-bold">
+                        2. العقدة الأذينية البطينية (AV Node)
+                    </div>
+                    <div class="hidden md:flex items-center justify-center text-slate-400">➔</div>
+                    <div @click="step = 3" :class="step === 3 ? 'bg-medical text-white' : 'bg-slate-100 text-slate-600'" class="interactive-box flex-1 p-4 rounded-lg text-center font-bold">
+                        3. حزمة هيس وألياف بوركنج
+                    </div>
+                </div>
+
+                <!-- تفاصيل الخطوات -->
+                <div class="mt-6 p-4 border border-medical-light rounded-lg bg-slate-50 min-h-[120px]">
+                    <div x-show="step === 1" x-transition>
+                        <h3 class="text-lg font-bold text-medical">العقدة الجيبية الأذينية <span class="term-en">SA Node</span></h3>
+                        <p><strong>الموقع:</strong> الجدار الخلفي العلوي للأذينة اليمنى (عند اتصال الأجوف العلوي).</p>
+                        <p><strong>الوظيفة:</strong> هي الناظمة <span class="term-en">Pacemaker</span>. تولد التنبيه كل <span class="highlight-num">0.85 ثانية</span> (حوالي 70 ضربة/دقيقة).</p>
+                    </div>
+                    <div x-show="step === 2" x-transition>
+                        <h3 class="text-lg font-bold text-medical">العقدة الأذينية البطينية <span class="term-en">AV Node</span></h3>
+                        <p><strong>الموقع:</strong> قاعدة الأذينة اليمنى أسفل الحاجز.</p>
+                        <p><strong>الوظيفة:</strong> تؤخر التنبيه (للسماح بتقلص الأذينتين قبل البطينين). إذا توقفت الـ SA، تعمل كناظمة احتياطية بمعدل <span class="highlight-num">40-60</span> ضربة/دقيقة.</p>
+                    </div>
+                    <div x-show="step === 3" x-transition>
+                        <h3 class="text-lg font-bold text-medical">حزمة هيس وشبكة بوركنج</h3>
+                        <p>تنتقل الإشارة عبر حزمة هيس (بالحاجز بين البطينين) ثم تتفرع لشبكة بوركنج <span class="term-en">Purkinje</span> التي تنقل التنبيه بسرعة فائقة للبطينين ليتقلصا معاً ككتلة واحدة.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ثالثاً: الدوران الإكليلي والجهاز المستقل -->
+        <!-- STREAMING_CHUNK:القسم الثالث والرابع الدوران والجهاز المستقل -->
+        <div class="grid md:grid-cols-2 gap-6">
+            
+            <!-- الدوران الإكليلي -->
+            <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-xl font-bold text-medical-dark border-b pb-2 mb-4">ثالثاً: الدوران الإكليلي</h2>
+                <p><strong>تنبيه هام جداً:</strong> تروى الخلايا العضلية القلبية <strong>مباشرة من الدوران الإكليلي</strong> (الشريانين الإكليليين الأيمن والأيسر المتفرعين من الأبهر مباشرة بعد الصمام الأبهري) <span class="text-red-600 font-bold underline">وليس مباشرة من الدم الموجود في حجرات القلب</span>.</p>
+                <p class="mt-2 text-sm">يتأثر الجريان الإكليلي بالانقباض والانبساط القلبي. يعود الدم عبر الجيب الإكليلي للأذينة اليمنى.</p>
+            </section>
+
+            <!-- الجهاز المستقل -->
+            <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6" x-data="{ tab: 'symp' }">
+                <h2 class="text-xl font-bold text-medical-dark border-b pb-2 mb-4">رابعاً: دور الجهاز العصبي المستقل</h2>
+                
+                <div class="flex gap-2 mb-4">
+                    <button @click="tab = 'symp'" :class="tab === 'symp' ? 'bg-red-500 text-white' : 'bg-slate-100'" class="px-3 py-1 rounded font-bold text-sm">الودي (مسرع)</button>
+                    <button @click="tab = 'para'" :class="tab === 'para' ? 'bg-blue-500 text-white' : 'bg-slate-100'" class="px-3 py-1 rounded font-bold text-sm">اللاودي (مبطئ)</button>
+                </div>
+
+                <div x-show="tab === 'symp'" class="text-sm space-y-2">
+                    <p><strong>المركز:</strong> البصلة السيسائية ➔ القطع الشوكية <span class="highlight-num font-bold text-red-600 text-lg">T<sub>1</sub> - T<sub>5</sub></span>.</p>
+                    <p><strong>الناقل والمستقبل:</strong> نورأدرينالين/أدرينالين ➔ مستقبلات <span class="font-bold text-red-600">&beta;<sub>1</sub></span> (المرسال الثاني هو cAMP).</p>
+                    <p><strong>الآلية:</strong> يزيد نفوذية قنوات I<sub>f</sub> وقنوات Ca<sup>2+</sup>. (يسرع زوال الاستقطاب = زيادة معدل الضربات، قوة التقلص، وسرعة النقل).</p>
+                </div>
+                
+                <div x-show="tab === 'para'" class="text-sm space-y-2">
+                    <p><strong>المركز:</strong> البصلة السيسائية (نواة المبهم الظهرية) ➔ العصب المبهم.</p>
+                    <p><strong>الناقل والمستقبل:</strong> أستيل كولين ➔ مستقبلات موسكارينية.</p>
+                    <p><strong>الآلية:</strong> يزيد نفوذية K<sup>+</sup> (يحدث فرط استقطاب) وينقص نفوذية Ca<sup>2+</sup>. يبطئ زوال الاستقطاب. <strong>ملاحظة:</strong> يتوزع أساساً بالأذينتين، لذلك <span class="underline">ينقص السرعة كثيراً بينما ينقص قوة التقلص بشكل خفيف فقط</span>.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- خامساً وسادساً: الخصائص وكامن الفعل (أهم قسم) -->
+        <!-- STREAMING_CHUNK:القسم الخامس والسادس الخصائص وكامن الفعل -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-medical p-4 text-white">
+                <h2 class="text-2xl font-bold">خامساً وسادساً: الخصائص البيولوجية وكامن الفعل (موضع أسئلة)</h2>
+            </div>
+            
+            <div class="p-6">
+                <!-- القنوات العجيبة -->
+                <div class="mb-6 p-4 border border-purple-200 bg-purple-50 rounded-lg">
+                    <h3 class="font-bold text-purple-800 text-lg">💡 قنوات I<sub>f</sub> (القنوات العجيبة - Funny Ion Channels)</h3>
+                    <p class="text-sm mt-1">تتمتع هذه القنوات بخصائص غير عادية؛ <strong>تنفتح</strong> لفترة وجيزة عندما يكون كامن الغشاء <span class="highlight-num">-60 mV</span> <strong>وتغلق</strong> عندما يصل الكامن إلى <span class="highlight-num">-55 mV</span>. خلال هذه الفترة، يتجاوز تيار الصوديوم (Na<sup>+</sup>) الداخل، تيار البوتاسيوم (K<sup>+</sup>) الخارج، مما يمهد لزوال الاستقطاب الذاتي.</p>
+                </div>
+
+                <!-- مقارنة كوامن الفعل -->
+                <h3 class="font-bold text-xl text-slate-800 mb-4 border-b pb-2">مقارنة أطوار كامن الفعل</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- الخلية القلوصة -->
+                    <div class="border rounded-lg p-4 relative shadow-sm hover:shadow-md transition">
+                        <div class="absolute -top-3 -right-3 bg-medical text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">A</div>
+                        <h4 class="font-bold text-lg text-medical-dark text-center mb-3">الخلايا العضلية القلوصة</h4>
+                        <ul class="space-y-3 text-sm">
+                            <li><strong>الطور 4 (الراحة):</strong> مستقر عند <span class="highlight-num">-90 mV</span>.</li>
+                            <li><strong>الطور 0 (زوال الاستقطاب السريع):</strong> دخول سريع لـ Na<sup>+</sup>، يصل لـ +20 mV.</li>
+                            <li><strong>الطور 1 (عودة استقطاب أولية):</strong> إغلاق قنوات Na<sup>+</sup>، خروج قليل لـ K<sup>+</sup>.</li>
+                            <li class="bg-red-50 p-2 rounded border-r-4 border-red-500"><strong>الطور 2 (الهضبة <span class="term-en">Plateau</span>):</strong> <span class="text-red-700 font-bold">الأهم!</span> دخول الكالسيوم Ca<sup>2+</sup> ببطء وتناقص خروج البوتاسيوم. يطيل كامن الفعل إلى <span class="highlight-num">200 ms</span> (مقارنة بـ 1-5 بالعصب). <strong>وظيفته:</strong> يمنع التكزز (Tetanus) ويسمح باسترخاء القلب ليمتلئ.</li>
+                            <li><strong>الطور 3 (عودة الاستقطاب):</strong> إغلاق Ca<sup>2+</sup> وزيادة خروج K<sup>+</sup> للعودة للراحة.</li>
+                        </ul>
+                    </div>
+
+                    <!-- النسيج العقدي -->
+                    <div class="border rounded-lg p-4 relative shadow-sm hover:shadow-md transition">
+                        <div class="absolute -top-3 -right-3 bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">B</div>
+                        <h4 class="font-bold text-lg text-teal-700 text-center mb-3">الخلايا ذاتية النظم (النسيج العقدي)</h4>
+                        <ul class="space-y-3 text-sm">
+                            <li><strong>كامن الناظمة:</strong> غير مستقر يبدأ بـ <span class="highlight-num">-60 mV</span>.</li>
+                            <li><strong>آلية الوصول للعتبة:</strong> تفتح قنوات I<sub>f</sub> (يدخل Na)، ثم تغلق تدريجياً وتفتح قنوات Ca<sup>2+</sup> للوصول للعتبة (<span class="highlight-num">-40 mV</span>).</li>
+                            <li class="bg-teal-50 p-2 rounded border-r-4 border-teal-500"><strong>طور زوال الاستقطاب:</strong> <span class="text-teal-700 font-bold">تنبيه امتحاني:</span> يعتمد على دخول <strong>الكالسيوم Ca<sup>2+</sup></strong> وليس الصوديوم (عكس باقي النسج!).</li>
+                            <li><strong>طور عودة الاستقطاب:</strong> إغلاق Ca<sup>2+</sup> وفتح قنوات K<sup>+</sup> البطيئة.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-4 p-3 bg-gray-100 rounded text-sm">
+                    <strong>خصائص أخرى:</strong> 
+                    <span class="text-medical font-bold">قانون الكل أو العدم:</span> ينطبق على القلب ككل، قوة التقلص تتغير بعوامل أخرى (طول الليف - فرانك ستارلنغ، كالسيوم، أدرينالين).
+                    <span class="text-medical font-bold mx-2">|</span> 
+                    <span class="text-medical font-bold">دور الحران:</span> المطلق (0.2-0.3 ثانية) يعادل معظم فترة كامن الفعل، النسبي (0.05 ثا).
+                </div>
+            </div>
+        </section>
+
+        <!-- سابعاً: التخطيط القلبي -->
+        <!-- STREAMING_CHUNK:القسم السابع التخطيط القلبي -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <h2 class="text-2xl font-bold text-medical-dark mb-4">سابعاً: تخطيط كهربائية القلب <span class="term-en">(ECG)</span></h2>
+            
+            <div class="flex flex-wrap items-center gap-4 mb-6 bg-slate-50 p-3 rounded">
+                <span class="font-bold text-sm text-slate-700">ثوابت الورق:</span>
+                <span class="bg-white px-2 py-1 rounded shadow-sm text-sm border">السرعة = 25 ملم/ثا</span>
+                <span class="bg-white px-2 py-1 rounded shadow-sm text-sm border">المربع الصغير أفقياً = <span class="highlight-num">0.04 ثا</span></span>
+                <span class="bg-white px-2 py-1 rounded shadow-sm text-sm border">1 ميلي فولط عمودياً = 10 مربعات صغيرة</span>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <ul class="space-y-2">
+                    <li class="p-2 border-b"><strong class="text-medical">الموجة P:</strong> زوال استقطاب الأذينتين.</li>
+                    <li class="p-2 border-b"><strong class="text-medical">المركب QRS:</strong> زوال استقطاب البطينين (يحجب عودة استقطاب الأذينتين). أعلى فولطاجاً من P لضخامة البطين.</li>
+                    <li class="p-2 border-b"><strong class="text-medical">الموجة T:</strong> عودة استقطاب البطينين.</li>
+                </ul>
+                <ul class="space-y-2">
+                    <li class="p-2 border-b bg-yellow-50"><strong class="text-medical">الفترة PR (أو PQ):</strong> زمن انتقال التنبيه من SA للبطينين. <span class="highlight-num">0.12 - 0.20 ثا</span>. إذا تجاوزت 0.20 = حصار قلبي درجة أولى.</li>
+                    <li class="p-2 border-b"><strong class="text-medical">الفترة QT:</strong> مدة التقلص البطيني (~ 0.3 ثا).</li>
+                    <li class="p-2 border-b bg-yellow-50"><strong class="text-medical">القطعة S-T:</strong> تمثل الطور الهضبي. اضطرابها = اضطراب الكالسيوم أو أمراض نقص التروية (احتشاء / خناق صدر).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ثامناً وتاسعاً: الدورة والأصوات -->
+        <!-- STREAMING_CHUNK:القسم الثامن والتاسع الدورة والأصوات -->
+        <section class="grid md:grid-cols-2 gap-6">
+            <!-- الدورة القلبية -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-xl font-bold text-medical-dark mb-4">ثامناً: الدورة القلبية والنتاج</h2>
+                <ul class="space-y-3 text-sm">
+                    <li><strong>انقباض أذيني (<span class="highlight-num">0.15 ثا</span>):</strong> الصمامات الأذينية البطينية مفتوحة، السينية مغلقة. يساهم بـ 20% فقط من امتلاء البطينين (تزيد بالجهد).</li>
+                    <li><strong>انقباض بطيني (<span class="highlight-num">0.30 ثا</span>):</strong> السينية مفتوحة، الأذينية البطينية مغلقة. يقذف البطين 2/3 محتواه = <strong class="text-red-600">حجم النفضة <span class="term-en">Stroke Volume</span></strong>. الباقي = حجم نهاية الانقباض.</li>
+                    <li><strong>طور 3 - الاسترخاء الأذيني البطيني (<span class="highlight-num">0.40 ثا</span>):</strong> امتلاء منفعل.</li>
+                </ul>
+                <div class="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
+                    <p class="font-bold mb-1">نتاج القلب <span class="term-en">(Cardiac Output)</span> = حجم النفضة × معدل القلب</p>
+                    <p class="text-sm text-slate-600">وسطياً = 5.25 لتر/دقيقة (لكل بطين). المنسب القلبي = النتاج / مساحة الجسم (~ 3 لتر/د/م² للرجل).</p>
+                </div>
+            </div>
+
+            <!-- الأصوات والنبض -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-xl font-bold text-medical-dark mb-4">تاسعاً: الأصوات والنبض</h2>
+                <div class="exam-alert p-2 text-sm mb-3"><strong>ملاحظة فيزيولوجية:</strong> الصوت ينتج عن اهتزاز الصمامات والدم والجدران <strong>بعد انغلاقها</strong> وتوترها، وليس بسبب اصطدام الوريقات ببعضها.</div>
+                <ul class="space-y-2 text-sm">
+                    <li><strong class="text-medical">الصوت 1:</strong> انقباض البطينين، انغلاق الصمامات الأذينية البطينية (طويل ومنخفض).</li>
+                    <li><strong class="text-medical">الصوت 2:</strong> استرخاء البطينين، انغلاق الصمامات السينية.</li>
+                    <li><strong class="text-medical">الصوت 3:</strong> ثلث الانبساط المتوسط، اهتزاز الدم (تردد منخفض جداً).</li>
+                    <li><strong class="text-medical">الصوت 4:</strong> انقباض أذيني فعال ضد بطين غير مطاوع (مرضي غالباً).</li>
+                </ul>
+                <p class="mt-3 text-sm border-t pt-2"><strong>النبض الشرياني:</strong> موجة ضغط من الأبهر، أفضل مكان لجسه: الشريان الكعبري (المعدل الطبيعي ~ 70).</p>
+            </div>
+        </section>
+
+        <!-- الخلاصة الامتحانية -->
+        <!-- STREAMING_CHUNK:الخلاصة النهائية -->
+        <section class="bg-medical-dark text-white rounded-xl shadow-lg p-6 mb-10">
+            <h2 class="text-2xl font-black mb-4 flex items-center gap-2">
+                <span>🎯</span> الخلاصة: أهم النقاط الامتحانية المتوقعة
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4 text-sm font-medium">
+                <ul class="list-disc list-inside space-y-2">
+                    <li>الناظمة الطبيعية هي الـ <strong>SA Node</strong> لأن لها أسرع معدل زوال استقطاب ذاتي.</li>
+                    <li>زوال الاستقطاب في <span class="text-yellow-300">النسيج العقدي</span> سببه دخول <strong>Ca<sup>2+</sup></strong>، بينما في <span class="text-yellow-300">النسيج القلوص</span> سببه دخول <strong>Na<sup>+</sup></strong> السريع.</li>
+                    <li><strong>طور الهضبة</strong> (الطور 2) سببه دخول Ca<sup>2+</sup> ونقص خروج K<sup>+</sup>، وهو المسؤول عن منع التكزز العضلي في القلب.</li>
+                    <li>التروية القلبية تأتي من الشرايين الإكليلية، وليس من الدم داخل الأجوف.</li>
+                </ul>
+                <ul class="list-disc list-inside space-y-2">
+                    <li>التعصيب الودي للقلب يصدر من القطع الشوكية <span class="text-yellow-300 font-bold">T<sub>1</sub> - T<sub>5</sub></span>.</li>
+                    <li>قنوات <span class="text-yellow-300">I<sub>f</sub></span> تفتح بين -60 و -55 ميلي فولط وتدخل صوديوم أكثر مما تخرج بوتاسيوم.</li>
+                    <li>المركب QRS يمثل زوال استقطاب البطينين، ويغطي على عودة استقطاب الأذينتين.</li>
+                    <li>تطاول فترة <strong>PR</strong> لأكثر من 0.20 ثانية يدل على إحصار قلبي من الدرجة الأولى.</li>
+                    <li>تأثير المبهم (اللاودي) ينقص السرعة بشدة لكنه يقلل قوة التقلص بشكل خفيف جداً لقلة تعصيبه للبطينين.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
+```eof
+
+لقد قمت بإزالة جميع صياغات الـ LaTeX واستبدلتها بوسوم HTML المناسبة للخط المنخفض (`<sub>`) والخط المرتفع (`<sup>`)، مثل:
+*   بدلاً من `$T_1 - T_5$` أصبحت `T<sub>1</sub> - T<sub>5</sub>`.
+*   بدلاً من `$Ca^{2+}$` أصبحت `Ca<sup>2+</sup>`.
+*   بدلاً من `$\beta_1$` أصبحت `&beta;<sub>1</sub>`.
+
+الآن ستظهر جميع الرموز بشكل مثالي وسليم في المتصفح دون أي مشاكل. تفضل بمراجعتها!
