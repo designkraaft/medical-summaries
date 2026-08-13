@@ -1,744 +1,769 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الفصل الثالث: الدم - الموجه التفاعلي الشامل</title>
+    <title>الفيزيولوجيا الطبية | الفصل الثالث: الدم</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Tajawal', 'sans-serif'],
-                        heading: ['Cairo', 'sans-serif'],
+                        sans: ['Cairo', 'sans-serif'],
                     },
                     colors: {
-                        blood: {
-                            50: '#fdf2f2',
-                            100: '#fbe5e5',
-                            500: '#ef4444',
-                            700: '#b91c1c',
-                            800: '#991b1b',
-                            900: '#7f1d1d',
-                        }
+                        primary: '#1e293b',
+                        accent: '#dc2626',
+                        highlight: '#fef08a',
                     }
                 }
             }
         }
     </script>
+
     <style>
-        :root {
-            --anim-speed: 1;
-        }
-        
+        /* Typography & Layout Rules */
         body {
+            font-family: 'Cairo', sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        * {
-            user-select: text !important;
-        }
-
-        /* Test Mode - Layout Stable */
-        .test-mode mark {
-            color: transparent !important;
-            background-color: #cbd5e1 !important;
-            border-radius: 4px;
-            text-shadow: none !important;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-        }
-        .test-mode mark:hover { background-color: #94a3b8 !important; }
-
-        /* Highlight Styles */
-        mark.core { background-color: #fef08a; font-weight: 700; padding: 0 4px; border-radius: 4px; border-bottom: 2px solid #eab308; }
-        mark.term { background-color: #e0f2fe; color: #0369a1; font-weight: 700; padding: 0 4px; border-radius: 4px; }
-        mark.number { background-color: #ffedd5; color: #c2410c; font-weight: 800; padding: 0 4px; border-radius: 4px; border-bottom: 2px solid #f97316; }
-        mark.trap { background-color: #fee2e2; color: #b91c1c; font-weight: 700; padding: 0 4px; border-radius: 4px; border-bottom: 2px dashed #ef4444; }
-        mark.clinic { background-color: #dcfce7; color: #166534; font-weight: 700; padding: 0 4px; border-radius: 4px; border-bottom: 2px solid #22c55e; }
-
-        /* UI Elements */
-        #progress-bar {
-            position: fixed; top: 0; left: 0; height: 4px;
-            background: linear-gradient(to left, #b91c1c, #ef4444);
-            z-index: 1000; width: 0%; transition: width 0.1s ease-out;
-        }
-
-        .hide-tab { display: none; }
-        .active-tab-btn { border-bottom: 3px solid #b91c1c; color: #b91c1c !important; font-weight: 800 !important; background-color: #fef2f2; }
-
-        /* Animations */
-        .pulse-badge { animation: pulse-soft 2s infinite; }
-        @keyframes pulse-soft {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            50% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-        }
-
-        .kinetic-flow { animation: flowRightToLeft calc(3s / var(--local-speed, 1)) linear infinite; }
-        @keyframes flowRightToLeft {
-            0% { transform: translateX(100%); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateX(-100%); opacity: 0; }
-        }
-
-        /* Blood Clumping Animation */
-        .agglutination-active { animation: clump 1s forwards; }
-        @keyframes clump {
-            0% { transform: scale(1); filter: contrast(1); }
-            50% { transform: scale(0.9) rotate(5deg); filter: contrast(1.5) drop-shadow(0 0 5px red); }
-            100% { transform: scale(0.95); filter: contrast(2) sepia(0.5); border-radius: 20%; background-color: #7f1d1d;}
-        }
-
-        /* Custom Range Slider */
-        input[type=range].timeline-slider {
-            -webkit-appearance: none; width: 100%; background: transparent;
-        }
-        input[type=range].timeline-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%;
-            background: #b91c1c; cursor: pointer; margin-top: -10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        input[type=range].timeline-slider::-webkit-slider-runnable-track {
-            width: 100%; height: 6px; cursor: pointer; background: #cbd5e1; border-radius: 4px;
+            user-select: text;
         }
         
-        .prop-chart { display: inline-block; vertical-align: middle; margin: 0 6px; }
-        .interactive-box { transition: all 0.3s ease; cursor: pointer; }
-        .interactive-box:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .text-content {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 2.2 !important; /* زيادة التباعد بين الأسطر لمنع التداخل */
+        }
+
+        .en-term {
+            font-size: 12px;
+            font-weight: 700;
+            background-color: #f1f5f9;
+            color: #475569;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin: 0 2px;
+            display: inline-block;
+            direction: ltr;
+            line-height: 1.4 !important;
+            vertical-align: middle;
+        }
+
+        /* High-Density Highlighting */
+        mark {
+            background-color: #fef08a;
+            color: #b91c1c;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border-bottom: 2px solid #fca5a5;
+            transition: all 0.2s ease;
+            display: inline-block; /* لضمان ضبط الارتفاع وعدم تداخله مع السطر الأعلى */
+            line-height: 1.4 !important;
+            margin: 2px 0;
+        }
+
+        /* Test Mode (Self-Testing) */
+        body.test-mode mark {
+            background-color: #334155 !important;
+            color: #334155 !important;
+            border-bottom: 2px solid #1e293b !important;
+        }
+        body.test-mode mark:hover {
+            background-color: #fef08a !important;
+            color: #b91c1c !important;
+            cursor: help;
+        }
+
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to left, #dc2626, #ef4444);
+            z-index: 100;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* Hover Lift for General Elements */
+        .hover-lift {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 🌟 NEW: Continuous Pulse Hover Effect for Summary Boxes 🌟 */
+        .pulse-hover-box {
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            border: 2px solid #e2e8f0;
+            background-color: #ffffff;
+            position: relative;
+            z-index: 1;
+        }
+        .pulse-hover-box:hover {
+            transform: translateY(-6px);
+            animation: pulse-glow 1.2s infinite cubic-bezier(0.66, 0, 0, 1);
+            border-color: #ef4444; /* Red accent border on hover */
+            background-color: #fffaf0; /* Slight warm tint on hover */
+            z-index: 10;
+        }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Slow Wave for Flows */
+        @keyframes slowWave {
+            0% { border-color: #e2e8f0; box-shadow: none; }
+            50% { border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+            100% { border-color: #e2e8f0; box-shadow: none; }
+        }
+        .animate-wave {
+            animation: slowWave 2s infinite ease-in-out;
+        }
+
+        /* Floating Note Indicator */
+        .pulse-note-icon {
+            animation: notePulse 2s infinite;
+        }
+        @keyframes notePulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Tab Active State */
+        .tab-btn.active {
+            background-color: #1e293b;
+            color: white;
+            border-color: #1e293b;
+        }
+
+        /* SVG Mini Charts */
+        .mini-chart {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 4px;
+        }
+
+        /* Dark Mode */
+        html.dark body { background-color: #0f172a; color: #f1f5f9; }
+        html.dark .bg-white { background-color: #1e293b !important; }
+        html.dark .text-slate-700 { color: #cbd5e1 !important; }
+        html.dark .en-term { background-color: #334155; color: #94a3b8; }
+        html.dark .border-slate-200 { border-color: #334155 !important; }
+        html.dark .pulse-hover-box:hover { background-color: #1e293b; }
     </style>
 </head>
-<body class="font-sans text-[16px] leading-relaxed relative">
+<body class="relative pb-12">
 
+    <!-- Scroll Progress -->
     <div id="progress-bar"></div>
 
-    <div class="max-w-4xl mx-auto px-4 pt-4 flex justify-between items-center text-sm font-semibold mb-4">
-        <a href="./physiology.html" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+    <div class="max-w-4xl mx-auto px-4 pt-4 flex justify-between items-center text-sm font-semibold relative z-10">
+        <a href="./physiology.html" class="flex items-center gap-2 text-teal-700 hover:text-teal-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition dark:bg-slate-800 dark:text-teal-400">
             <span>&larr;</span> الرجوع لصفحة الفسيولوجيا
         </a>
-        <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
-            <span>🏠</span> الصفحة الرئيسية
-        </a>
+        <div class="flex gap-2">
+            <button id="theme-toggle" class="bg-white p-2 rounded-lg shadow-sm border border-slate-200 hover:bg-slate-50 transition">🌓</button>
+            <a href="./index.html" class="flex items-center gap-2 text-slate-700 hover:text-slate-900 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 transition">
+                <span>🏠</span> الصفحة الرئيسية
+            </a>
+        </div>
     </div>
 
-    <!-- Hero Banner -->
-    <div class="max-w-5xl mx-auto px-4 mb-6 relative">
-        <div class="bg-gradient-to-r from-blood-900 to-blood-700 rounded-2xl shadow-xl p-6 text-white relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center">
-            <svg class="absolute left-0 top-0 opacity-10 h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path fill="#ffffff" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.1,-46.3C90.4,-33.5,96,-16.7,95.3,-0.4C94.5,15.9,87.4,31.8,77.3,44.7C67.2,57.6,54.1,67.5,39.6,73.8C25.1,80.1,9.2,82.8,-5.6,81.1C-20.4,79.4,-34.1,73.3,-46.6,64.6C-59.1,55.9,-70.4,44.6,-77.2,31.1C-84.1,17.6,-86.5,1.9,-82.7,-11.9C-78.9,-25.7,-68.9,-37.6,-57.2,-46.8C-45.5,-56,-32.1,-62.5,-18.8,-67.2C-5.5,-71.9,7.7,-74.8,22,-76.5C36.3,-78.2,50.7,-78.6,44.7,-76.4Z" transform="translate(100 100)" />
-            </svg>
-            
-            <div class="relative z-10 w-full md:w-3/4">
-                <div class="mb-3">
-                    <!-- Fixed: Text contrast for the badge -->
-                    <span class="bg-white text-blood-900 px-4 py-1.5 rounded-full text-xs font-black shadow-sm tracking-wide">الفصل الثالث | 2026</span>
+    <main class="max-w-4xl mx-auto px-4 mt-4">
+        
+        <!-- البنر العلوي المدمج -->
+        <header class="bg-gradient-to-l from-red-800 to-red-600 rounded-2xl p-6 shadow-lg text-white relative flex justify-between items-start mb-6">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-white text-red-700 px-3 py-1 rounded-full text-xs font-extrabold tracking-wider">الفصل الثالث</span>
+                    <h1 class="text-2xl font-black">الـدم <span class="en-term !bg-red-900 !text-white text-sm">The Blood</span></h1>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-heading font-black mb-3 text-white">الــــدم (The Blood)</h1>
-                <p class="text-blood-50 max-w-2xl text-sm leading-loose">
-                    فصل حركي بامتياز يغطي البلازما، الكريات الحمر والبيضاء والصفيحات. يشمل آليات المناعة، الزمر الدموية، وشلالات التخثر المعقدة.
-                    <br><span class="text-yellow-300 font-bold bg-black/20 px-2 py-1 rounded inline-block mt-2">⚠️ تم الدمج الشامل والمكثف وتطبيق كافة ملفات التصويب وحذف الملغيات بصمت.</span>
+                <p class="text-red-100 text-sm font-medium leading-relaxed max-w-2xl">
+                    المرجع الشامل المطابق حرفياً للمقرر. يعالج وظائف الدم التسعة، الخصائص الفيزيائية، الخلايا الدموية، وآليات الإرقاء وشلال التخثر.<br>
+                    <span class="text-yellow-300 font-bold">محدث كلياً ومفلتر بصمت وفقاً لملف التصويبات والمحذوفات الرسمي.</span>
                 </p>
             </div>
+            <!-- زر الاختبار الذاتي الثابت -->
+            <button id="test-mode-btn" class="flex flex-col items-center justify-center bg-white/10 hover:bg-white/20 border border-white/30 rounded-xl p-3 transition backdrop-blur-sm shrink-0 w-24">
+                <span class="text-2xl mb-1" id="test-icon">👁️</span>
+                <span class="text-[10px] font-bold text-center leading-tight">وضع الاختبار<br>الذاتي</span>
+            </button>
+        </header>
+
+        <!-- شريط التبويبات -->
+        <nav class="sticky top-0 z-40 bg-[#f8fafc]/95 backdrop-blur-md pt-2 pb-4 mb-6 border-b border-slate-200 flex flex-wrap gap-2 dark:bg-[#0f172a]/95 dark:border-slate-700">
+            <button class="tab-btn active px-4 py-2 rounded-lg font-bold text-sm border border-slate-300 transition" onclick="switchTab('tab1')">📊 معطيات عامة وخصائص</button>
+            <button class="tab-btn px-4 py-2 bg-white text-slate-700 rounded-lg font-bold text-sm border border-slate-300 transition" onclick="switchTab('tab2')">🩸 الخلايا الدموية والزمر</button>
+            <button class="tab-btn px-4 py-2 bg-white text-slate-700 rounded-lg font-bold text-sm border border-slate-300 transition" onclick="switchTab('tab3')">🔗 الإرقاء وشلال التخثر</button>
+            <button class="tab-btn px-4 py-2 bg-white text-slate-700 rounded-lg font-bold text-sm border border-slate-300 transition" onclick="switchTab('tab4')">🎛️ المميعات والاختبارات</button>
+            <button class="tab-btn px-4 py-2 bg-white text-slate-700 rounded-lg font-bold text-sm border border-slate-300 transition" onclick="switchTab('tab5')">🌟 الخلاصة التفاعلية</button>
+        </nav>
+
+        <div id="tab-content-container">
             
-            <!-- Layout-Stable Self-Testing Toggle -->
-            <div class="relative z-10 mt-4 md:mt-0 shrink-0">
-                <button id="test-mode-toggle" class="flex flex-col items-center bg-black/30 hover:bg-black/50 p-3 rounded-xl border border-white/20 transition-all shadow-lg">
-                    <span class="text-3xl mb-1 drop-shadow-md">👁️</span>
-                    <span class="text-xs font-bold text-white">وضع الاختبار الذاتي</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="max-w-5xl mx-auto px-4 mb-6 sticky top-0 z-50">
-        <div class="bg-white rounded-xl shadow-md border border-slate-200 p-2 flex flex-wrap gap-2 justify-center backdrop-blur-md bg-white/95">
-            <button onclick="openTab('tab-stats')" class="tab-btn active-tab-btn px-4 py-2 rounded-lg text-sm font-bold transition hover:bg-slate-50">📚 الشرح النظري الشامل</button>
-            <button onclick="openTab('tab-flow')" class="tab-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-600 transition hover:bg-slate-50">🔗 سلسلة التخثر (الإرقاء)</button>
-            <button onclick="openTab('tab-kinetic')" class="tab-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-600 transition hover:bg-slate-50">🎛️ مخبر المحاكيات الحركية</button>
-            <button onclick="openTab('tab-mcq')" class="tab-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-600 transition hover:bg-slate-50">🗄️ النواة الامتحانية</button>
-            <button onclick="openTab('tab-summary')" class="tab-btn px-4 py-2 rounded-lg text-sm font-bold text-slate-600 transition hover:bg-slate-50">🌟 بنك الأرقام</button>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT CONTAINER -->
-    <div class="max-w-5xl mx-auto px-4 mb-20">
-
-        <div id="tab-stats" class="tab-content">
-            
-            <!-- Tree Map -->
-            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-8 overflow-hidden">
-                <h3 class="text-sm font-bold text-slate-500 mb-3 text-center">🗺️ خريطة الفصل الهيكلية</h3>
-                <div class="flex flex-wrap justify-center items-center gap-2 text-xs font-semibold">
-                    <span class="bg-blood-100 text-blood-800 px-3 py-1 rounded-full border border-blood-200">الدم (5-6 لتر)</span>
-                    <span class="text-slate-400">&larr;</span>
-                    <span class="bg-white border px-3 py-1 rounded-full">البلازما (55%)</span>
-                    <span class="text-slate-400">&larr;</span>
-                    <span class="bg-white border px-3 py-1 rounded-full text-red-600">الكريات الحمر</span>
-                    <span class="text-slate-400">&larr;</span>
-                    <span class="bg-white border px-3 py-1 rounded-full text-slate-600">الكريات البيض (محببة/لامحببة)</span>
-                    <span class="text-slate-400">&larr;</span>
-                    <span class="bg-white border px-3 py-1 rounded-full text-blue-600">الصفيحات</span>
-                </div>
-            </div>
-
-            <!-- Section 1: Physical Properties & Plasma -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-                <h2 class="text-2xl font-heading font-black text-blood-800 border-b-2 border-blood-100 pb-2 mb-4 flex items-center gap-2">
-                    <span>🧪</span> أولاً: الخصائص الفيزيائية والبلازما (Blood Plasma)
-                </h2>
+            <!-- Tab 1: معطيات عامة وخصائص -->
+            <section id="tab1" class="tab-content block animate-fade-in">
                 
-                <p class="mb-4 text-justify">
-                    الدم نسيج ضام يتكون من مادة سائلة صفراء تدعى <mark class="term">البلازما (Plasma)</mark> وعناصر خلوية. يشكل الدم نحو <mark class="number">8%</mark> من وزن الجسم (حوالي 5-6 لترات لشخص يزن 70 كغ).
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><span class="text-blue-500">🌊</span> اللزوجة والسرعة</h4>
-                        <ul class="text-sm space-y-2 list-disc list-inside">
-                            <li><strong>اللزوجة (Viscosity):</strong> تتعلق بـ <mark class="core">عدد الكريات الحمر ونسبة بروتينات البلازما</mark>. قيمتها للإناث (3.5-4.5) وللذكور (4.5-5.5).</li>
-                            <li><strong>سرعة التثفل (ESR):</strong> سرعة ترسب الكريات الحمر للدم الممنوع من التخثر.
-                                <div class="mt-2 flex gap-4 text-xs font-bold text-slate-600 bg-white p-2 rounded border">
-                                    <span class="flex items-center gap-1">ESR ∝ الغلوبولينات/الفيبرينوجين <svg class="w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 19L19 5M19 5H12M19 5V12"/></svg></span>
-                                    <span class="flex items-center gap-1">ESR ∝ 1/الألبومين <svg class="w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5L19 19M19 19V12M19 19H12"/></svg></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+                    <h2 class="text-xl font-bold text-slate-800 border-b-2 border-red-500 pb-2 mb-4 inline-block">معطيات عامة ووظائف الدم</h2>
+                    <p class="text-content mb-4">
+                        الدم شكل من أشكال النسيج الضام، يتكون من مادة سائلة صفراء تدعى <mark>البلازما (Plasma)</mark> وعناصر خلوية هي: <mark>الكريات الحمر (Erythrocytes)</mark>، و<mark>الكريات البيض (Leukocytes)</mark>، و<mark>الصفيحات الدموية (Blood Platelets)</mark>.
+                    </p>
+                    <p class="text-content mb-4">
+                        الدم سائل <mark>أحمر اللون</mark> تفاعله <mark>قلوي</mark>. تتراوح كميته في جسم إنسان يزن نحو 70 كغ، نحو <mark>5 - 6 لترات</mark>، أي نحو <mark>8% من وزن الجسم</mark>.
+                    </p>
                     
-                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                        <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><span class="text-purple-500">⚖️</span> الضغط والـ pH</h4>
-                        <ul class="text-sm space-y-2 list-disc list-inside">
-                            <li><strong>الضغط التناضحي الغرواني:</strong> ناتج عن بروتينات البلازما، وقيمته <mark class="number">28 mmHg</mark> <span class="text-[10px] text-red-500">(مُصوّبة امتحانية، وليست 7.5)</span>. انخفاضه يسبب <mark class="clinic">وذمات (Edema)</mark>.</li>
-                            <li><strong>درجة الحموضة (pH):</strong> قيمة الدم الشرياني السوي هي <mark class="number">7.40</mark> <span class="text-[10px] text-red-500">(مُصوّبة)</span>.
-                                <br><span class="text-xs text-slate-500 ml-4">&larr; القلوية: تهيج الغشاء. الحموضة: تثبط العقدة الجيبية وتبطئ القلب.</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <h3 class="font-bold text-lg text-slate-700 mt-6 mb-3">وظائف الدم التسعة الأساسية:</h3>
+                    <ul class="list-disc list-inside text-content space-y-2 pr-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <li>نقل <mark>الأكسجين</mark> من الرئتين إلى الأنسجة، ونقل <mark>CO2</mark> من الأنسجة إلى الرئتين ليتم طرحه.</li>
+                        <li>نقل <mark>المواد الغذائية</mark> من سوية الأمعاء إلى الكبد، ومنه إلى جميع أنحاء الجسم.</li>
+                        <li>نقل <mark>الفضلات</mark> الناتجة عن الاستقلاب من الأنسجة إلى جهاز الإطراح ليتم طرحها.</li>
+                        <li>تزويد الجسم <mark>بالكريات البيض والأجسام الضدية</mark>، أي الدفاع عن الجسم ضد المواد الغريبة.</li>
+                        <li>المساعدة في تنظيم <mark>درجة حرارة الجسم</mark> بنقل الحرارة من الأنسجة العميقة لسطح الجسم.</li>
+                        <li>يؤمن <mark>الارتباط الخلطي</mark> للجسم بنقل الهرمونات إلى مواقع تأثيرها.</li>
+                        <li>يساعد في المحافظة على <mark>ثبات درجة الحموضة (pH)</mark>.</li>
+                        <li>يساعد في عملية <mark>الإرقاء (تخثر الدم)</mark>.</li>
+                        <li>يساعد في الحفاظ على <mark>التوازن الحلولي</mark> بتأمين توزيع الماء بين الدم والأنسجة.</li>
+                    </ul>
                 </div>
 
-                <div class="mt-6 bg-yellow-50/50 p-4 rounded-xl border border-yellow-100">
-                    <h3 class="font-bold text-yellow-800 mb-3 text-sm">مكونات البلازما (55% من حجم الدم):</h3>
-                    <p class="text-sm mb-2">90-92% ماء، 7% مواد عضوية (بروتينات)، 1% شوارد ومواد نتروجينية.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-                        <div class="bg-white p-3 rounded shadow-sm border border-slate-200">
-                            <strong>1. الألبومين (Albumin):</strong>
-                            <p class="text-xs mt-1 text-slate-600">55% من البروتينات. يصنع بالكبد. ينظم توزيع الماء ناقل للبيليروبين والكالسيوم والبنسلين. نقصه = وذمات.</p>
-                        </div>
-                        <div class="bg-white p-3 rounded shadow-sm border border-slate-200">
-                            <strong>2. الغلوبولينات (Globulins):</strong>
-                            <p class="text-xs mt-1 text-slate-600">38%. تصنع في النسيج الشبكي البطاني. <br>ألفا 1: سكريات.<br>ألفا 2 (هيبتاغلوبولين): ينقل الخضاب.<br>بيتا (ترانسفيرين): حديد.<br>غاما: أضداد (Antibodies).</p>
-                        </div>
-                        <div class="bg-white p-3 rounded shadow-sm border border-slate-200 border-r-4 border-r-red-400">
-                            <strong>3. مولد الليفين (Fibrinogen):</strong>
-                            <p class="text-xs mt-1 text-slate-600">7%. يصنع بالكبد. منحل يتحول لغير منحل (ليفين) بالتخثر. <mark class="trap">غائب في مصل الدم (Serum)</mark>.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 2: RBCs -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-                <h2 class="text-2xl font-heading font-black text-red-700 border-b-2 border-red-100 pb-2 mb-4 flex items-center gap-2">
-                    <span>🔴</span> ثانياً: الكريات الحمر (Erythrocytes)
-                </h2>
-                
-                <p class="text-sm mb-4">
-                    خلايا قرصية مقعرة الوجهين، <strong>مجردة من النواة</strong> عند الثدييات. قطرها <mark class="number">8 ميكرومتر</mark>. مرونتها تسمح لها بالمرور في الأوعية الشعرية وحويجزات الطحال (3 ميكرومتر) دون أن تنفجر لأن غشاءها فضفاض. تحتوي إنزيم <mark class="core">الكربونيك انهيدراز</mark> وإنزيم <mark class="core">الهكسوز أحادي الفوسفات</mark> (لإرجاع الحديد إلى حديدي $Fe^{2+}$).
-                </p>
-
-                <div class="flex flex-col md:flex-row gap-6 mt-4">
-                    <div class="flex-1 bg-red-50 p-4 rounded-xl border border-red-100">
-                        <h4 class="font-bold text-red-900 mb-2">خضاب الدم (Hemoglobin)</h4>
-                        <p class="text-xs mb-2">30% من وزن الكرية. يتألف من <mark class="term">غلوبين</mark> (4 سلاسل ببتيدية ألفا وبيتا) و <mark class="term">هيم (Heme)</mark> (4 حلقات بيرولية + حديدي $Fe^{2+}$). يرتبط الخضاب بـ 4 جزيئات $O_2$ برابطة ضعيفة <strong>عكوسة</strong> (لا تغير تكافؤ الحديد).</p>
-                        
-                        <div class="bg-red-900 text-white p-3 rounded text-center shadow-inner relative mt-3">
-                            <span class="block text-red-200 text-[10px] mb-1">المعادلة المُصوّبة امتحانية للسعة الأكسجينية</span>
-                            <div class="font-mono font-bold tracking-widest text-yellow-300 text-sm md:text-base" dir="ltr">
-                                15 g/dl × 1.34 ml = 20 ml O₂ / 100 ml Blood
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+                    <h2 class="text-xl font-bold text-slate-800 border-b-2 border-blue-500 pb-2 mb-4 inline-block">الخصائص الفيزيائية للدم</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- الخاصية 1 -->
+                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 hover-lift relative">
+                            <h4 class="font-bold text-blue-800 mb-2">1. اللون واللزوجة</h4>
+                            <p class="text-content">
+                                <strong>اللون:</strong> سائل لزج أحمر. يصبح لونه <mark>أحمر قرمزياً</mark> إذا كان مؤكسجاً (شريانياً)، و<mark>أحمر داكناً مائلاً للأزرق</mark> إذا كان غير مؤكسج (وريدياً).
+                            </p>
+                            <p class="text-content mt-2">
+                                <strong>اللزوجة:</strong> مؤثرة في ضغط الدم وتحدد سرعة الجريان.
+                                لزوجة العناصر الخلوية (<mark>3.5 للإناث</mark> - <mark>4.5 للذكور</mark>). لزوجة البلازما (<mark>1.9 للإناث</mark> - <mark>2.2 للذكور</mark>).
+                            </p>
+                            <div class="mt-3 flex flex-col gap-2 bg-white p-3 rounded-lg text-sm font-bold border border-slate-200">
+                                <span><svg class="mini-chart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg> زيادة اللزوجة ⟸ بسبب كثرة الحمر أو ارتفاع بروتينات البلازما ⟸ جريان بطيء، جلطات، ارتفاع ضغط.</span>
+                                <span><svg class="mini-chart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><path d="M3 7l6 6 4-4 8 8"/><path d="M17 17h4v-4"/></svg> انخفاض اللزوجة ⟸ فقر دم، انخفاض بروتينات (إصابات كبدية) ⟸ انخفاض الضغط الدموي.</span>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="flex-1 bg-orange-50 p-4 rounded-xl border border-orange-100">
-                        <h4 class="font-bold text-orange-900 mb-2">الإنتاج والتخريب</h4>
-                        <ul class="text-xs space-y-2 list-disc list-inside text-slate-700">
-                            <li>تنتج بتحفيز <mark class="term">الأريثروبيويتين (Erythropoietin)</mark> المفرز من <strong>الكلية</strong> <span class="text-red-500">(حُذف دور الكبد)</span> إثر نقص الأكسجة.</li>
-                            <li>التستوستيرون منشط، والإستروجين <mark class="trap">ليس مثبطاً عموماً</mark> (تصويب).</li>
-                            <li>تعيش <mark class="number">120 يوماً</mark>.</li>
-                            <li>تتخرب بشكل رئيسي في <mark class="core">الطحال</mark> وبشكل ثانوي في <mark class="core">الكبد</mark> (تصويب).</li>
-                            <li>الحديد يُنقل عبر <mark class="term">الترانسفيرين</mark>، والهيم يتحول لـ <mark class="term">بيليروبين</mark>.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 3: WBCs & Platelets Side-by-Side -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                
-                <!-- WBCs -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                    <h2 class="text-xl font-heading font-black text-slate-700 border-b-2 border-slate-100 pb-2 mb-4">
-                        ⚪ الكريات البيض (Leukocytes)
-                    </h2>
-                    <p class="text-xs mb-3 text-justify">حقيقية النوى، عددها (4000-10000). تغادر الدم عبر حركة متحولية للنسج ولا تعود (باستثناء اللمفاويات). تصنف إلى:</p>
-                    
-                    <div class="space-y-3">
-                        <div class="border border-slate-200 rounded p-3 bg-slate-50">
-                            <h4 class="font-bold text-sm text-slate-800 mb-1">أ. المحببة (Granulocytes):</h4>
-                            <ul class="text-[11px] space-y-1 list-disc list-inside">
-                                <li><strong>العدلات (Neutrophils):</strong> (50-70%). خط دفاع أول، بلعمة في وسط قلوي. نواتها 2-5 فصوص.</li>
-                                <li><strong>الحمضات (Eosinophils):</strong> (1-4%). تهاجم الطفيليات والديدان، تعمل كمضاد هيستامين (حساسية)، تحل الجلطات.</li>
-                                <li><strong>الأسسات (Basophiles):</strong> (0.5-1%). تفرز <mark class="term">الهيبارين</mark> (مانع تخثر) و<mark class="term">الهيستامين</mark> (موسع وعائي). نواة S.</li>
+                        <!-- الخاصية 2 -->
+                        <div class="bg-indigo-50 p-5 rounded-xl border border-indigo-100 hover-lift">
+                            <h4 class="font-bold text-indigo-800 mb-2">2. الضغط الحلولي (التناضحي) <span class="en-term">Osmotic Pressure</span></h4>
+                            <p class="text-content">
+                                ينتج عن وجود الأملاح والبروتينات في البلازما. وقيمته <mark>28 مم زئبقي</mark> (مصححة امتحانياً).
+                                أهميته المحافظة على الأملاح والماء داخل وخارج الخلوي، أي <mark>المحافظة على شكل العناصر الخلوية</mark>.
+                            </p>
+                            <ul class="list-disc list-inside mt-3 text-content text-sm bg-white p-3 rounded-lg border border-slate-200">
+                                <li>ارتفاع الضغط الحلولي ⟸ <mark>انكماش</mark> الكريات الحمر.</li>
+                                <li>انخفاض الضغط الحلولي ⟸ <mark>انتباج وانفجار</mark> الكريات الحمر (تحلل خضابي).</li>
                             </ul>
                         </div>
-                        <div class="border border-slate-200 rounded p-3 bg-slate-50">
-                            <h4 class="font-bold text-sm text-slate-800 mb-1">ب. اللامحببة (Agranulocytes):</h4>
-                            <ul class="text-[11px] space-y-1 list-disc list-inside">
-                                <li><strong>الوحيدات (Monocytes):</strong> (2-8%). تتحول إلى بالعات كبيرة (Macrophage) في النسج. تعمل في وسط حامضي (أمراض مزمنة). نواة كلوية.</li>
-                                <li><strong>اللمفاويات (Lymphocytes):</strong> (20-40%). نواة دائرية. 
-                                    <br><span class="ml-4">- <mark class="core">البائية (B)</mark>: (25%) مناعة خلطية (أضداد). تتحول لخلايا بلازمية.</span>
-                                    <br><span class="ml-4">- <mark class="core">التائية (T)</mark>: (75%) مناعة خلوية ورفض الطعوم (مساعدة، قاتلة، كابتة).</span>
-                                </li>
+
+                        <!-- الخاصية 3 -->
+                        <div class="bg-emerald-50 p-5 rounded-xl border border-emerald-100 hover-lift relative">
+                            <h4 class="font-bold text-emerald-800 mb-2">3. سرعة التثفل <span class="en-term">Sedimentation Rate</span></h4>
+                            <p class="text-content">سرعة ترسب الكريات الحمر لدم ممنوع من التخثر في واحدة الزمن (ساعة).</p>
+                            <p class="text-content mt-2 text-sm font-bold bg-white p-2 border border-slate-200 rounded">
+                                👨 فوق 50 سنة: 2-20 مم/سا | دون 50: 2-10 مم/سا<br>
+                                👩 فوق 50 سنة: 2-30 مم/سا | دون 50: 2-20 مم/سا
+                            </p>
+                            <ul class="text-content text-sm mt-3 space-y-1">
+                                <li>📈 <strong>تزداد عند:</strong> نقص الألبومين، زيادة الكوليسترول، الالتهابات (بسبب ارتفاع الغلوبولينات ومولد الليفين).</li>
+                                <li>📉 <strong>تنقص عند:</strong> زيادة الألبومين، وجود شذوذات في شكل الكريات (فقر الدم المنجلي).</li>
                             </ul>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Platelets -->
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                    <h2 class="text-xl font-heading font-black text-blue-700 border-b-2 border-blue-100 pb-2 mb-4">
-                        🔵 الصفيحات الدموية (Platelets)
-                    </h2>
-                    <p class="text-xs mb-3 text-justify">تتكون من تجزؤ خلايا <mark class="term">النواءات (Megakaryocytes)</mark> بتأثير <mark class="core">الثرومبوبويتين</mark> المُفرز من <strong>الكلية</strong> (تصويب). عددها (150-350 ألف). تعيش 8-10 أيام.</p>
-                    
-                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                        <h4 class="font-bold text-sm text-blue-900 mb-2">محتويات السيتوبلاسما (رغم غياب النواة):</h4>
-                        <ul class="text-xs space-y-2 list-none">
-                            <li class="flex items-start gap-2">
-                                <span class="text-blue-500 mt-0.5">🔹</span> <span><strong>أكتين وميوزين:</strong> لانكماش الخثرة.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-blue-500 mt-0.5">🔹</span> <span><strong>سيروتونين (Serotonin):</strong> مقبض وعائي قوي.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-blue-500 mt-0.5">🔹</span> <span><strong>ADP:</strong> تجميع الصفيحات على الفوهة.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="text-blue-500 mt-0.5">🔹</span> <span><strong>عامل التخثر الصفيحي (PF3):</strong> موجود على الغشاء الخلوي، ضروري لتشكل الليفين (تصويب: ليس مسؤولية العامل 13 هنا).</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mt-4 p-3 bg-red-50 rounded border border-red-100 text-xs text-red-800">
-                        <span class="font-bold">⚠️ الربط السريري:</span> نقصها دون 50 ألف يسبب نزف تحت الجلد (مرض الفرفرية Purpura). دون 20 ألف نزف تلقائي من اللثة.
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div id="tab-flow" class="tab-content hide-tab">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-slate-100 pb-4 mb-6">
-                    <h2 class="text-2xl font-heading font-black text-slate-800 flex items-center gap-2">
-                        <span>⚙️</span> سلسلة الإرقاء والتخثر (Hemostasis)
-                    </h2>
-                    <span class="mt-2 md:mt-0 text-xs font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded-full border border-teal-200">مرر الشريط الزمني لتتبع المراحل &larr;</span>
-                </div>
-
-                <!-- Custom Interactive Timeline Slider -->
-                <div class="mb-10 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-inner relative z-10">
-                    <input type="range" id="hemo-slider" min="1" max="4" value="1" class="timeline-slider mb-4" dir="rtl">
-                    <div class="flex justify-between text-xs font-bold text-slate-400 px-1 absolute w-full left-0 bottom-2 pointer-events-none">
-                        <span class="w-1/4 text-center transition-colors duration-300" id="label-1">1. التقبض الوعائي</span>
-                        <span class="w-1/4 text-center transition-colors duration-300" id="label-2">2. السدادة الصفيحية</span>
-                        <span class="w-1/4 text-center transition-colors duration-300" id="label-3">3. شلال التخثر</span>
-                        <span class="w-1/4 text-center transition-colors duration-300" id="label-4">4. انكماش الخثرة</span>
-                    </div>
-                </div>
-
-                <!-- Step 1: Vasoconstriction -->
-                <div id="step-1" class="hemo-step">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-xl font-black text-red-600 shadow-sm border-2 border-red-200">1</div>
-                        <div>
-                            <h3 class="text-xl font-bold text-slate-800">تقلص الوعاء الدموي (Vascular Spasm)</h3>
-                            <p class="text-xs text-slate-500">زمن النزف (Bleeding Time): <mark class="number">2 - 8 دقائق</mark> (مُصوّب)</p>
-                        </div>
-                    </div>
-                    <p class="text-sm mb-4">آلية فيزيائية وعضلية تبدأ فور الأذية. يتقلص الوعاء لإغلاق مكان الأذية بتأثير الخلايا العضلية الملساء والألياف العصبية، ثم تُدعم بمواد كيميائية مقبضة (سيروتونين وأدرينالين) تفرزها الصفيحات لاحقاً.</p>
-                </div>
-
-                <!-- Step 2: Platelet Plug -->
-                <div id="step-2" class="hemo-step hidden">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-xl font-black text-blue-600 shadow-sm border-2 border-blue-200">2</div>
-                        <h3 class="text-xl font-bold text-slate-800">تشكيل السدادة الصفيحية (Platelet Plug)</h3>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-4">
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                            <strong>أ. الالتصاق (Adhesion):</strong>
-                            <p class="mt-2 text-xs">تلتصق الصفيحات بألياف الكولاجين المكشوفة. يتحول من تجاذب فيزيائي لفيزيولوجي كيميائي بفضل <mark class="core">عامل فون ويلبراند (vWF)</mark> الذي يشكل جسراً بين الصفيحة والكولاجين.</p>
-                        </div>
-                        <div class="bg-cyan-50 p-4 rounded-xl border border-cyan-100">
-                            <strong>ب. التجمع (Aggregation):</strong>
-                            <p class="mt-2 text-xs">إفراز <mark class="core">TXA2</mark> (الترومبوكسان A2) و <mark class="core">ADP</mark> لجذب المزيد من الصفيحات وتكتلها فوق بعضها.</p>
-                        </div>
-                    </div>
-                    <div class="bg-slate-800 text-white p-3 rounded-lg text-xs flex items-start gap-2">
-                        <span class="text-lg">🛡️</span>
-                        <span><strong>لماذا لا تتخثر الأوعية السليمة؟</strong> الخلايا البطانية السليمة المجاورة تفرز <mark class="term">البروستاسايكلين (PGI2)</mark> و <mark class="term">أكسيد الآزوت (NO)</mark> وهما مثبطات قوية لالتصاق الصفيحات وموسعات وعائية.</span>
-                    </div>
-                </div>
-
-                <!-- Step 3: Coagulation Cascade -->
-                <div id="step-3" class="hemo-step hidden">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-xl font-black text-purple-600 shadow-sm border-2 border-purple-200">3</div>
-                        <div>
-                            <h3 class="text-xl font-bold text-slate-800">شلال التخثر (Coagulation Cascade)</h3>
-                            <p class="text-xs text-slate-500">زمن التخثر (Clotting Time): <mark class="number">2 - 10 دقائق</mark> (مُصوّب)</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col md:flex-row gap-4 mb-4">
-                        <div class="flex-1 bg-green-50 p-4 rounded-xl border border-green-200 shadow-sm relative">
-                            <h4 class="font-bold text-green-800 text-center border-b border-green-200 pb-2 mb-3">الطريق الخارجي (Extrinsic)</h4>
-                            <div class="text-xs text-center space-y-2 font-semibold text-slate-700">
-                                <div>نسيج مصاب يحرر عامل <mark class="core">III</mark></div>
-                                <div class="text-green-500">&darr;</div>
-                                <div>يُفعل عامل <mark class="core">VII</mark> (بوجود $Ca^{2+}$)</div>
-                                <div class="text-green-500">&darr;</div>
-                                <div>يُفعل عامل <mark class="core">X</mark></div>
-                            </div>
-                        </div>
-                        <div class="flex-1 bg-indigo-50 p-4 rounded-xl border border-indigo-200 shadow-sm relative">
-                            <h4 class="font-bold text-indigo-800 text-center border-b border-indigo-200 pb-2 mb-3">الطريق الداخلي (Intrinsic)</h4>
-                            <div class="text-xs text-center space-y-2 font-semibold text-slate-700">
-                                <div>سطح خشن يُفعل <mark class="core">XII</mark> (هجمان)</div>
-                                <div class="text-indigo-500">&darr;</div>
-                                <div>يُفعل <mark class="core">XI</mark> &larr; يُفعل <mark class="core">IX</mark></div>
-                                <div class="text-indigo-500">&darr;</div>
-                                <div>بمساعدة العامل الثامن (VIII)، يُفعل <mark class="core">X</mark></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Common Pathway -->
-                    <div class="bg-yellow-100 p-4 rounded-xl border-2 border-yellow-300 text-center relative overflow-hidden shadow-md">
-                        <h4 class="font-black text-yellow-900 mb-3 text-lg">الطريق المشترك (Common Pathway)</h4>
-                        <div class="text-sm font-bold leading-loose text-slate-800">
-                            العامل <span class="bg-white px-2 py-1 rounded shadow-sm">Xa</span> + العامل <span class="bg-white px-2 py-1 rounded shadow-sm">V</span> + <span class="bg-white px-2 py-1 rounded shadow-sm">$Ca^{2+}$</span> + <span class="bg-white px-2 py-1 rounded shadow-sm">PF3</span>
-                            <div class="text-yellow-600 my-1">&darr; المُعقّد المنشط لبروثرومبين &darr;</div>
-                            يحول <span class="text-slate-500">طليعة الخثرين (II)</span> &larr; <mark class="term text-base bg-yellow-200 text-yellow-900 px-3 py-1">خثرين (Thrombin)</mark>
-                            <div class="text-yellow-600 my-1">&darr; الخثرين يحول &darr;</div>
-                            <span class="text-slate-500">مولد الليفين المنحل (I)</span> &larr; <mark class="term text-base bg-yellow-300 text-yellow-900 px-3 py-1">ليفين غير منحل (Fibrin)</mark>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 4: Clot Retraction & Lysis -->
-                <div id="step-4" class="hemo-step hidden">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center text-xl font-black text-slate-600 shadow-sm border-2 border-slate-300">4</div>
-                        <h3 class="text-xl font-bold text-slate-800">تثبيت، انكماش، ثم حل الخثرة</h3>
-                    </div>
-                    <div class="space-y-3 text-sm">
-                        <p><strong>التثبيت:</strong> يعمل العامل <mark class="core">XIII</mark> (المثبت لليفين) على تثبيت شبكة الليفين وتقويتها.</p>
-                        <p><strong>الانكماش:</strong> تتقلص خيوط الأكتين والميوزين داخل الصفيحات لعصر المصل من الخثرة وسحب حواف الجرح.</p>
-                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
-                            <strong>انحلال الخثرة (Fibrinolysis):</strong> الخثرة تفرز مواد تحول طليعة البلازمين إلى <mark class="term">البلازمين (Plasmin)</mark> وهو الإنزيم الحال لألياف الليفين. <span class="text-xs text-red-600 font-bold">دوائياً: تحقن الستربتوكيناز (Streptokinase) كبديل لحل الجلطات القلبية.</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div id="tab-kinetic" class="tab-content hide-tab">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-                <h2 class="text-2xl font-heading font-black text-blood-800 border-b-2 border-blood-100 pb-2 mb-6">
-                    🎛️ مخبر المحاكيات الحركية التفاعلي
-                </h2>
-
-                <!-- Simulator 1: Blood Typing (Fully Interactive) -->
-                <div class="mb-10 border-2 border-slate-200 rounded-xl overflow-hidden">
-                    <div class="bg-slate-100 p-3 border-b border-slate-200 flex justify-between items-center">
-                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2"><span>🩸</span> محاكي فحص الزمر الدموية (ABO & Rh)</h3>
-                        <button id="btn-new-patient" class="bg-blood-700 hover:bg-blood-800 text-white text-xs px-3 py-1.5 rounded shadow transition font-bold">👤 مريض جديد (عشوائي)</button>
-                    </div>
-                    
-                    <div class="p-6 bg-slate-50">
-                        <p class="text-xs text-slate-500 mb-6 text-center">انقر على زجاجات المصل (الأمصال المضادة Antibodies) لإضافة قطرة إلى عينة دم المريض ولاحظ حدوث <mark class="trap">التراص (Agglutination)</mark> من عدمه لتحديد الزمرة.</p>
-                        
-                        <div class="flex flex-col md:flex-row gap-8 justify-center items-center mb-6">
-                            
-                            <!-- Test Slide A -->
-                            <div class="flex flex-col items-center gap-3">
-                                <button class="serum-btn group relative transition transform hover:-translate-y-1" data-serum="A">
-                                    <div class="w-8 h-12 bg-blue-400 rounded-b-xl border-2 border-blue-600 shadow-inner relative overflow-hidden">
-                                        <div class="absolute bottom-0 w-full bg-blue-600 transition-all duration-300" style="height: 70%;"></div>
-                                    </div>
-                                    <span class="block mt-1 text-[11px] font-black text-blue-800">مصل Anti-A</span>
-                                    <div class="opacity-0 group-hover:opacity-100 absolute -bottom-6 w-20 left-1/2 -translate-x-1/2 text-[10px] bg-black text-white px-1 rounded text-center transition">إضافة قطرة</div>
-                                </button>
-                                <div class="text-slate-300 text-xl">&darr;</div>
-                                <div id="slide-a" class="w-20 h-20 rounded-full bg-red-500 border-4 border-red-200 shadow-md flex items-center justify-center transition-all duration-500">
-                                    <span class="text-white/50 text-xs font-bold">عينة دم</span>
-                                </div>
-                                <div id="res-a" class="text-xs font-bold h-4 text-center"></div>
-                            </div>
-
-                            <!-- Test Slide B -->
-                            <div class="flex flex-col items-center gap-3">
-                                <button class="serum-btn group relative transition transform hover:-translate-y-1" data-serum="B">
-                                    <div class="w-8 h-12 bg-yellow-400 rounded-b-xl border-2 border-yellow-600 shadow-inner relative overflow-hidden">
-                                        <div class="absolute bottom-0 w-full bg-yellow-600 transition-all duration-300" style="height: 70%;"></div>
-                                    </div>
-                                    <span class="block mt-1 text-[11px] font-black text-yellow-800">مصل Anti-B</span>
-                                    <div class="opacity-0 group-hover:opacity-100 absolute -bottom-6 w-20 left-1/2 -translate-x-1/2 text-[10px] bg-black text-white px-1 rounded text-center transition">إضافة قطرة</div>
-                                </button>
-                                <div class="text-slate-300 text-xl">&darr;</div>
-                                <div id="slide-b" class="w-20 h-20 rounded-full bg-red-500 border-4 border-red-200 shadow-md flex items-center justify-center transition-all duration-500">
-                                    <span class="text-white/50 text-xs font-bold">عينة دم</span>
-                                </div>
-                                <div id="res-b" class="text-xs font-bold h-4 text-center"></div>
-                            </div>
-
-                            <!-- Test Slide D (Rh) -->
-                            <div class="flex flex-col items-center gap-3">
-                                <button class="serum-btn group relative transition transform hover:-translate-y-1" data-serum="D">
-                                    <div class="w-8 h-12 bg-slate-200 rounded-b-xl border-2 border-slate-400 shadow-inner relative overflow-hidden">
-                                        <div class="absolute bottom-0 w-full bg-slate-400 transition-all duration-300" style="height: 70%;"></div>
-                                    </div>
-                                    <span class="block mt-1 text-[11px] font-black text-slate-700">مصل Anti-D (Rh)</span>
-                                    <div class="opacity-0 group-hover:opacity-100 absolute -bottom-6 w-20 left-1/2 -translate-x-1/2 text-[10px] bg-black text-white px-1 rounded text-center transition">إضافة قطرة</div>
-                                </button>
-                                <div class="text-slate-300 text-xl">&darr;</div>
-                                <div id="slide-d" class="w-20 h-20 rounded-full bg-red-500 border-4 border-red-200 shadow-md flex items-center justify-center transition-all duration-500">
-                                    <span class="text-white/50 text-xs font-bold">عينة دم</span>
-                                </div>
-                                <div id="res-d" class="text-xs font-bold h-4 text-center"></div>
-                            </div>
-                        </div>
-
-                        <!-- Diagnosis Box -->
-                        <div class="bg-white p-4 rounded border-2 border-dashed border-slate-300 text-center max-w-sm mx-auto">
-                            <span class="block text-xs text-slate-500 mb-1">النتيجة والتشخيص:</span>
-                            <div id="final-diagnosis" class="text-xl font-black text-slate-800 h-8 flex items-center justify-center tracking-widest">???</div>
-                            <button id="btn-reveal" class="mt-3 text-[10px] bg-slate-200 hover:bg-slate-300 px-2 py-1 rounded text-slate-700 transition">اظهار الزمرة المخفية</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Simulator 2: Erythropoiesis (Speed Controlled) -->
-                <div class="mb-6 border-2 border-slate-200 rounded-xl overflow-hidden">
-                    <div class="bg-slate-100 p-3 border-b border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-                        <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2"><span>🔄</span> تنظيم إنتاج الكريات الحمر (التلقيم الراجع)</h3>
-                        
-                        <!-- Local Speed Control inside simulator -->
-                        <div class="flex items-center gap-2 bg-white px-2 py-1 rounded shadow-sm border border-slate-200">
-                            <span class="text-[10px] font-bold text-slate-500">سرعة العرض:</span>
-                            <input type="range" id="epo-speed" min="0.25" max="2" step="0.25" value="1" class="w-16 h-1 bg-slate-300 rounded appearance-none" dir="ltr">
-                            <span id="epo-speed-val" class="text-[10px] font-mono w-4">1x</span>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-800 p-6 relative overflow-hidden">
-                        <div class="flex justify-center gap-4 mb-6 relative z-10">
-                            <button id="btn-hypoxia" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-md transition interactive-box border border-red-400">حالة نقص O₂ (Hypoxia)</button>
-                            <button id="btn-normal" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-md transition interactive-box border border-teal-400 ring-2 ring-teal-300">الحالة الطبيعية</button>
-                        </div>
-
-                        <div class="flex justify-between items-center relative z-10 px-2">
-                            <!-- Kidney -->
-                            <div class="text-center w-1/3">
-                                <div class="text-4xl mb-2 drop-shadow-lg">🫘</div>
-                                <div class="text-white text-xs font-bold">الكلية (تصويب)</div>
-                                <div id="epo-flow" class="text-yellow-300 text-[10px] h-4 opacity-0 transition-opacity font-bold mt-1">تفرز الأريثروبيويتين &larr;</div>
-                            </div>
-                            
-                            <!-- Blood Stream -->
-                            <div class="w-1/3 h-12 bg-red-900/40 rounded-full border border-red-700/50 relative overflow-hidden flex items-center justify-center shadow-inner">
-                                <div id="rbc-stream" class="absolute w-full h-full flex items-center px-2 gap-6 kinetic-flow" style="direction: ltr;">
-                                    <div class="w-4 h-4 bg-red-500 rounded-full shadow-md border border-red-700"></div>
-                                    <div class="w-4 h-4 bg-red-500 rounded-full shadow-md border border-red-700"></div>
+                        <!-- الخاصية 4 -->
+                        <div class="bg-orange-50 p-5 rounded-xl border border-orange-100 hover-lift relative">
+                            <div class="absolute -top-3 -left-3 cursor-pointer group pulse-note-icon">
+                                <span class="text-2xl drop-shadow-md">🎯</span>
+                                <div class="absolute w-64 bg-slate-800 text-white text-sm p-3 rounded-xl left-8 top-0 hidden group-hover:block z-50">
+                                    <span class="font-bold text-yellow-300">نواة امتحانية:</span>
+                                    القيم <mark>7.35 - 7.40</mark> هي القيم المعتمدة رسمياً بعد التصويب وتشمل كامل الدم (ليس الشرياني فقط).
                                 </div>
                             </div>
-
-                            <!-- Bone Marrow -->
-                            <div class="text-center w-1/3">
-                                <div class="text-4xl mb-2 drop-shadow-lg">🦴</div>
-                                <div class="text-white text-xs font-bold">نقي العظم</div>
-                                <div id="bm-status" class="text-teal-300 text-[10px] h-4 transition-opacity font-bold mt-1">إنتاج طبيعي</div>
+                            <h4 class="font-bold text-orange-800 mb-2">4. درجة حموضة الدم <span class="en-term">pH</span></h4>
+                            <p class="text-content">
+                                تبلغ <mark>7.35 - 7.40</mark> (مصحح)، وتبقى ثابتة بفضل الآليات الدارئة (البيكربونات والهيموغلوبين) التي تحول دون تغيرات مميتة.
+                            </p>
+                            <div class="mt-3 bg-white p-3 rounded-lg text-sm font-bold border border-slate-200 text-content">
+                                <span class="text-blue-600">القلوية ⟸ تهيج الغشاء الخلوي ⟸ اضطرابات في الجملة العصبية.</span><br><br>
+                                <span class="text-red-600">الحموضة ⟸ تقلل تهيج الغشاء ⟸ تثبيط العقدة الجيبية الأذينية وتباطؤ القلب.</span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </section>
 
-            </div>
-        </div>
-
-        <div id="tab-mcq" class="tab-content hide-tab">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-                <div class="flex justify-between items-center border-b-2 border-blood-100 pb-2 mb-6">
-                    <h2 class="text-2xl font-heading font-black text-blood-800">🗄️ النواة الامتحانية وتصويبات MedHelp</h2>
-                    <button id="trap-filter" class="text-xs bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded font-bold transition">إظهار الخدع فقط</button>
-                </div>
+            <section id="tab2" class="tab-content hidden animate-fade-in">
                 
-                <div class="grid gap-4 mcq-container">
-                    <!-- Trap 1 (Correction) -->
-                    <div class="mcq-card is-trap border-r-4 border-red-500 bg-red-50 p-4 rounded-l-xl">
-                        <div class="flex items-center gap-2 mb-2 relative">
-                            <span class="text-lg absolute -right-2 top-0 pulse-badge bg-white rounded-full p-1">🚨</span>
-                            <h4 class="font-bold text-red-900 mr-6">تصويبات جوهرية للأرقام والمقرات</h4>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+                    <h2 class="text-xl font-bold text-slate-800 border-b-2 border-red-600 pb-2 mb-4 inline-block">الكريات الحمر <span class="en-term">Erythrocytes</span></h2>
+                    
+                    <p class="text-content mb-4">
+                        خلايا قرصية مقعرة الوجهين، حمراء اللون، عديمة الحركة، <mark>مجردة من النواة وغير قادرة على الانقسام</mark> عند الإنسان (عكس الفقاريات الأخرى). 
+                        قطرها <mark>8 ميكرومتر</mark>، ثخانتها عند الحواف <mark>2 ميكرومتر</mark> وبالمركز <mark>أقل من 1</mark>. 
+                        غشاؤها فضفاض يحميها من التشوه عند المرور بالشعيرات الدقيقة.
+                    </p>
+                    <p class="text-content mb-4">
+                        <strong>المحتوى:</strong> <mark>60% ماء</mark>، <mark>30% خضاب (Hemoglobin)</mark>، سكريات، بروتينات، لبيدات (كوليسترول)، أملاح (بوتاسيوم)، وإنزيمات هامة: <mark>كربونيك أنهيدراز</mark> (لحلمهة CO2 وضبط pH)، و<mark>هكسوز أحادي الفوسفات</mark> (لاختزال وإرجاع الحديد إلى حديدي).
+                    </p>
+                    <p class="text-content mb-4">
+                        <strong>العدد:</strong> <mark>4.5 - 5.5 مليون في المم3</mark>. يزداد عند الأطفال (لحاجة النمو للأكسجين)، وسكان المرتفعات (لاختلاف الضغط الجزئي)، والذكور (بسبب التأثير المنشط للتستوستيرون). <mark>ملاحظة مصححة: الهرمونات الأنثوية لا تمتلك تأثيراً مثبطاً عموماً</mark>.
+                    </p>
+
+                    <!-- خضاب الدم -->
+                    <div class="mt-6 border-t-2 border-dashed border-slate-200 pt-6">
+                        <h3 class="font-bold text-lg text-red-700 mb-3">خضاب الدم <span class="en-term">Hemoglobin</span></h3>
+                        <p class="text-content">
+                            يتألف من قسم بروتيني <mark>الغلوبين</mark> (أربع سلاسل ببتيدية: ألفا + بيتا) وصباغ <mark>الهيم (Hema)</mark>. الهيم يتألف من <mark>حديدي (Fe2+)</mark> وأربع حلقات بيرولية بروابط ميتانية. 
+                            كل جزيئة هيموغلوبين تحمل <mark>أربع جزيئات أكسجين</mark> برابط ضعيف عكوس لا يغير القيمة الاتحادية للحديدي، ويدعى <mark>أكسي هيموغلوبين</mark>.
+                        </p>
+                        
+                        <div class="bg-yellow-50 p-4 rounded-xl border border-yellow-200 mt-4 relative">
+                            <span class="absolute -top-3 -right-3 text-2xl animate-bounce">⚡</span>
+                            <p class="text-content font-bold text-slate-800 text-center">
+                                🎯 معادلة السعة الأكسجينية (مصححة ومعتمدة امتحانياً):
+                            </p>
+                            <p class="text-content text-center mt-2 text-xl bg-white py-3 rounded-lg border border-slate-300 shadow-inner">
+                                <mark class="!bg-yellow-300">1.34 مل أكسجين × 15 غ خضاب = 20 مل أكسجين / 100 سم3 دم</mark>
+                            </p>
                         </div>
-                        <ul class="text-sm text-red-800 list-disc list-inside space-y-1 mt-2">
-                            <li><mark class="trap">الضغط التناضحي الغرواني:</mark> 28 mmHg (وليس 7.5).</li>
-                            <li><mark class="trap">pH الدم الشرياني:</mark> 7.40 (وليس 7.35).</li>
-                            <li><mark class="trap">السعة الأكسجينية:</mark> متوسط الخضاب المعتمد لحسابها هو 15 (الناتج = 20 مل أكسجين).</li>
-                            <li><mark class="trap">مكان تدمير الكريات الحمر:</mark> بشكل رئيسي في الطحال، وبشكل ثانوي (قوي) في الكبد.</li>
-                        </ul>
                     </div>
 
-                    <!-- Trap 2 (Correction) -->
-                    <div class="mcq-card is-trap border-r-4 border-orange-500 bg-orange-50 p-4 rounded-l-xl">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-lg">🎯</span>
-                            <h4 class="font-bold text-orange-900">من أين تُفرز الهرمونات الدموية؟ (تصويب)</h4>
+                    <!-- العوامل المؤثرة -->
+                    <div class="mt-6 border-t-2 border-dashed border-slate-200 pt-6">
+                        <h3 class="font-bold text-lg text-red-700 mb-3">العوامل المؤثرة في إنتاج الكريات الحمر:</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <h4 class="font-bold text-slate-800 mb-1">1. سلامة نقي العظم</h4>
+                                <p class="text-content text-sm">أذى النقي بالإشعاع أو الجراثيم يسبب <mark>فقر دم لاتنسجي (Aplastic Anemia)</mark>، الكريات سوية الحجم والصباغ لكن عددها قليل.</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <h4 class="font-bold text-slate-800 mb-1">2. الفيتامينات (B12 وحمض الفوليك)</h4>
+                                <p class="text-content text-sm">لتركيب DNA. النقص يسبب <mark>فقر دم ضخم الأرومات (Megaloblastic)</mark>، كريات كبيرة زائدة الصباغ. (العامل الداخلي بالمعدة يحمي B12).</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <h4 class="font-bold text-slate-800 mb-1">3. الحديد</h4>
+                                <p class="text-content text-sm">يخزن بالكبد كـ <mark>فيرتين</mark>، والفائض بالنقي كـ <mark>هيموسيدرين</mark>. الحموضة وفيتامين C تنشط امتصاصه. النقص يسبب <mark>فقر دم ناقص الصباغ</mark>.</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <h4 class="font-bold text-slate-800 mb-1">4. الهرمونات</h4>
+                                <p class="text-content text-sm">التيروكسين، هرمون النمو، والتستوستيرون منشطات. الهرمون الأساسي هو <mark>الأريثروبيويتين</mark> (يشكل من الكبد وتفرزه الكلية بوجود نقص الأكسجين).</p>
+                            </div>
                         </div>
-                        <p class="text-sm text-orange-800">
-                            - <mark class="term">الأريثروبيويتين (للكريات الحمر):</mark> يُفرز من <strong>الكلية</strong> (تم حذف دور الكبد تماماً).<br>
-                            - <mark class="term">الترومبوبويتين (للصفيحات):</mark> تُشكله <strong>الكلية</strong> (تصويب: ليس الكبد كما كان مكتوباً).
+                    </div>
+
+                    <!-- التخرب -->
+                    <div class="mt-6 border-t-2 border-dashed border-slate-200 pt-6">
+                        <h3 class="font-bold text-lg text-red-700 mb-3">حياة وتخرب الكريات الحمر</h3>
+                        <p class="text-content mb-2">
+                            تعيش <mark>120 يوماً</mark>. بسبب الضغوط الميكانيكية والكيميائية، يتمزق جدارها الهش.
+                            <mark class="!bg-red-200">تصويب هام جداً:</mark> تتحطم الكريات الحمر <mark>في البالعات الكبيرة في الطحال والكبد ونقي العظم إطلاقاً</mark> وليس داخل الدورة الدموية.
+                        </p>
+                        <ul class="list-disc list-inside text-content text-sm bg-red-50 p-3 rounded-lg border border-red-100">
+                            <li><strong>الحديد:</strong> ينقل عبر <mark>الترانسفيرين</mark> للنقي، أو يخزن كـ <mark>فيرتين</mark>.</li>
+                            <li><strong>الهيم:</strong> يتحول إلى <mark>بيليروبين</mark> يطرح عبر الكبد والكلية.</li>
+                            <li><strong>الغلوبين:</strong> يتفكك إلى <mark>حموض أمينية</mark>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- الزمر الدموية -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+                    <h2 class="text-xl font-bold text-slate-800 border-b-2 border-purple-600 pb-2 mb-4 inline-block">الزمر الدموية <span class="en-term">Blood Groups</span></h2>
+                    
+                    <p class="text-content mb-4">
+                        الزمرة تعتمد على وجود <mark>مولد الارتصاص (المستضد - Antigen)</mark> على سطح الكرية الحمراء، ووجود <mark>الراصة (الضد - Antibody)</mark> في البلازما الدموية. تفاعل التراص مناعي يؤدي لانحلال الكريات.
+                    </p>
+                    
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-center border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-800 text-white">
+                                    <th class="p-3 border border-slate-700">الزمرة</th>
+                                    <th class="p-3 border border-slate-700">مولد الارتصاص (على الكرية)</th>
+                                    <th class="p-3 border border-slate-700">الراصة (في المصل)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-content font-bold bg-slate-50">
+                                <tr>
+                                    <td class="p-3 border border-slate-300 text-purple-700">A</td>
+                                    <td class="p-3 border border-slate-300">A</td>
+                                    <td class="p-3 border border-slate-300">Anti B (b)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-slate-300 text-purple-700">B</td>
+                                    <td class="p-3 border border-slate-300">B</td>
+                                    <td class="p-3 border border-slate-300">Anti A (a)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-slate-300 text-purple-700">AB (آخذ عام)</td>
+                                    <td class="p-3 border border-slate-300">A و B</td>
+                                    <td class="p-3 border border-slate-300"><mark>لا يوجد</mark></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 border border-slate-300 text-purple-700">O (معطٍ عام)</td>
+                                    <td class="p-3 border border-slate-300"><mark>لا يوجد</mark></td>
+                                    <td class="p-3 border border-slate-300">Anti A و Anti B</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
+                        <h4 class="font-bold text-purple-800 mb-2">قاعدة النقل الأساسية وزمرة Rh:</h4>
+                        <p class="text-content text-sm mb-2">
+                            القاعدة: <mark>عدم ارتصاص كريات المعطي في مصل المتلقي</mark>. النقل الخاطئ الثاني قاتل لتشكل أضداد وخلايا ذاكرة.
+                        </p>
+                        <p class="text-content text-sm">
+                            <strong>زمرة Rh:</strong> أضداد <mark>Anti-D (طبيعتها IgG)</mark> قادرة على عبور المشيمة. الأم الحامل (Rh-) بجنين (Rh+) قد يشكل خطر انحلال دم الجنين في الحمل الثاني. لتفادي ذلك تُحقن الأم بـ <mark>Anti-D</mark> خلال 24-48 ساعة بعد الولادة لترص كريات الجنين قبل تحسس جهازها المناعي.
                         </p>
                     </div>
+                </div>
 
-                    <!-- Core Concept -->
-                    <div class="mcq-card is-core border-r-4 border-blue-500 bg-blue-50 p-4 rounded-l-xl">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-lg">💡</span>
-                            <h4 class="font-bold text-blue-900">مقارنة مضادات التخثر (Anticoagulants)</h4>
+                <!-- الكريات البيض والصفيحات -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h2 class="text-xl font-bold text-slate-800 border-b-2 border-teal-500 pb-2 mb-4">الكريات البيض <span class="en-term">Leukocytes</span></h2>
+                        <p class="text-content text-sm mb-3">
+                            خلايا حقيقية تحوي نواة، متقدرات، وجهاز كولجي. تبدي نشاطها في <mark>النسيج الضام</mark> والدم مجرد طريق مسلوك. حياتها ضمن الدورة الدموية <mark>لا تتجاوز 10 ساعات</mark> ثم تنسل للنسج ولا تعود (عدا اللمفاويات).
+                        </p>
+                        <p class="text-content text-sm mb-3">
+                            عددها <mark>4,000 - 11,000 كرية/مم3</mark>.
+                        </p>
+                        <ul class="list-disc list-inside text-content text-sm space-y-1">
+                            <li>📈 <strong>تزداد:</strong> بعد الظهر، الجهد العضلي، الشدة النفسية، الإنتانات.</li>
+                            <li>📉 <strong>تنقص:</strong> سوء التغذية، الصيام المديد، فقر الدم اللاتنسجي.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 relative hover-lift">
+                        <div class="absolute -top-3 -right-3 text-2xl pulse-note-icon cursor-pointer group">
+                            ⚠️
+                            <div class="absolute w-64 bg-slate-800 text-white text-sm p-3 rounded-xl right-8 top-0 hidden group-hover:block z-50">
+                                <span class="text-yellow-300 font-bold">تصويب هام:</span>
+                                الثرومبوبويتين يشكله <mark>الكبد</mark> حصراً لتحريض تشكل الصفيحات وليس الكلية.
+                            </div>
                         </div>
-                        <div class="text-sm text-blue-800 space-y-2">
-                            <p><strong>أ. داخل الأوعية:</strong></p>
-                            <ul class="list-disc list-inside text-xs space-y-1">
-                                <li><mark class="core">بروتين C المنشط:</mark> يثبط العاملين (الخامس والثامن). <span class="text-red-500 font-bold">(تصويب: 8 و 5)</span>. ينشط بارتباط الخثرين مع ترمبوموديولين.</li>
-                                <li><mark class="core">الهيبارين:</mark> تفرزه الأسسات، يثبط الخثرين.</li>
-                            </ul>
-                            <p><strong>ب. خارج الأوعية (أنابيب الاختبار):</strong></p>
-                            <ul class="list-disc list-inside text-xs space-y-1">
-                                <li><mark class="core">أوكزالات / سترات:</mark> ترسب أو تزيل الكالسيوم.</li>
-                                <li><mark class="core">أنابيب البرافين (السيليكون):</mark> سطح أملس يمنع تفعيل عوامل التماس (12, 11, 10, 9).</li>
-                            </ul>
+                        <h2 class="text-xl font-bold text-slate-800 border-b-2 border-yellow-500 pb-2 mb-4">الصفيحات الدموية <span class="en-term">Platelets</span></h2>
+                        <p class="text-content text-sm mb-3">
+                            تتكون من <mark>النواءات (Megakaryocytes)</mark> بتأثير محرضات و <mark>الثرومبوبويتين</mark> الذي يشكله <mark>الكبد</mark>. غير قادرة على الانقسام. قطرها 2-3 ميكرون، وعددها <mark>150,000 - 350,000</mark> صفيحة/مم3. تعيش 8-10 أيام.
+                        </p>
+                        <p class="text-content text-sm mb-3"><strong>محتوياتها:</strong> خيوط ميوزين وأكتين، سيروتونين (مقبض وعائي)، ADP، وعامل التخثر الصفيحي <mark>PF3 (على الغشاء الخلوي)</mark>.</p>
+                        <ul class="list-disc list-inside text-content text-sm font-bold bg-yellow-50 p-2 rounded border border-yellow-200 space-y-1">
+                            <li>> 1 مليون: خثرات دموية.</li>
+                            <li>< 50 ألف: فرفرية (نزف كدمات تحت الجلد).</li>
+                            <li>< 20 ألف: نزوفات تلقائية من اللثة.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="tab3" class="tab-content hidden animate-fade-in">
+                
+                <div class="bg-slate-800 text-white p-6 rounded-2xl mb-8 text-center shadow-lg">
+                    <h3 class="text-xl font-bold mb-4 border-b border-slate-600 inline-block pb-2">مراحل الإرقاء لوقف النزف <span class="en-term !bg-slate-600 !text-white">Hemostasis</span></h3>
+                    <div class="flex justify-center items-center gap-2 md:gap-4 text-sm font-semibold flex-wrap mt-2">
+                        <span class="bg-slate-700 px-3 py-2 rounded-lg">1. تقلص الوعاء</span>
+                        <span class="hidden md:inline">&larr;</span>
+                        <span class="bg-slate-700 px-3 py-2 rounded-lg">2. تقارب الطرفين</span>
+                        <span class="hidden md:inline">&larr;</span>
+                        <span class="bg-slate-700 px-3 py-2 rounded-lg">3. السدادة الصفيحية</span>
+                        <span class="hidden md:inline">&larr;</span>
+                        <span class="bg-slate-700 px-3 py-2 rounded-lg">4. التخثر (Coagulation)</span>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-black text-slate-800 mb-6 text-center">آلية تشكيل السدادة الصفيحية وعملية التخثر</h2>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- العامود الأيمن: التدفق العمودي -->
+                    <div class="flex flex-col items-center pt-4">
+                        
+                        <div class="w-full bg-white border-2 border-slate-200 rounded-xl p-4 shadow-sm animate-wave" style="animation-delay: 0s;">
+                            <h4 class="font-bold text-red-700 text-lg mb-2">أ- الالتصاق <span class="en-term">Adhesion</span></h4>
+                            <p class="text-sm font-semibold text-slate-700">تلامس الصفيحات مع <mark>ألياف الكولاجين</mark>. ظاهرة فيزيائية عكوسة (لا تحتاج كالسيوم)، تتحول كيميائية غير عكوسة بإنزيم <mark>Glycosyl Transferases</mark>. (عامل <mark>vWF</mark> يشكل جسراً بين الكولاجين والصفيحة).</p>
+                        </div>
+                        
+                        <div class="text-2xl text-slate-400 my-1 animate-bounce">&darr;</div>
+
+                        <div class="w-full bg-white border-2 border-slate-200 rounded-xl p-4 shadow-sm animate-wave" style="animation-delay: 1.5s;">
+                            <h4 class="font-bold text-red-700 text-lg mb-2">ب- تغير الشكل والإفراز</h4>
+                            <p class="text-sm font-semibold text-slate-700">يتشكل <mark>الترومبوكسان A2 (TXA2)</mark> من حمض الإراشيدونيك ليلصق الصفيحات. تفرز الصفيحة: <mark>سيروتونين</mark>، <mark>أدرينالين</mark> (مقبضات تدعم الوعاء)، <mark>ADP</mark>، و<mark>كالسيوم</mark>.</p>
+                        </div>
+
+                        <div class="text-2xl text-slate-400 my-1 animate-bounce">&darr;</div>
+
+                        <div class="w-full bg-white border-2 border-slate-200 rounded-xl p-4 shadow-sm animate-wave" style="animation-delay: 3s;">
+                            <h4 class="font-bold text-red-700 text-lg mb-2">ج- التجمع <span class="en-term">Aggregation</span></h4>
+                            <p class="text-sm font-semibold text-slate-700">تتجمع الصفيحات بتأثير <mark>ADP</mark> و <mark>الترومبوكسان A2</mark> لتشكل السدادة.</p>
+                        </div>
+
+                    </div>
+
+                    <!-- العامود الأيسر: الشرح والنكشات -->
+                    <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl h-fit">
+                        <h3 class="font-bold text-xl text-slate-800 mb-4 border-b-2 border-indigo-400 pb-2 inline-block">توضيحات ونكشات هامة</h3>
+                        
+                        <div class="mb-4">
+                            <h4 class="font-bold text-indigo-700 mb-1">📌 عامل فون ويلبراند (vWF)</h4>
+                            <p class="text-content text-sm">يفرز من الخلايا البطانية والصفيحات، يشكل جسراً. يجول مرتبطاً بـ <mark>العامل الثامن</mark>. غيابه يسبب نزفاً لمدد طويلة.</p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="font-bold text-indigo-700 mb-1">📌 لماذا لا تمتد السدادة للأوعية السليمة؟</h4>
+                            <p class="text-content text-sm">الخلايا البطانية السليمة المجاورة تفرز <mark>البروستاسايكلين (PGI2)</mark> و <mark>أكسيد الآزوت (NO)</mark> وهما مثبطان قويان لالتصاق الصفيحات وموسعان وعائيان.</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div id="tab-summary" class="tab-content hide-tab">
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-8">
-                <h2 class="text-2xl font-heading font-black text-blood-800 border-b-2 border-blood-100 pb-2 mb-4">
-                    🌟 بنك الأرقام القياسية (وفق التصويبات)
-                </h2>
-                
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-right border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100 border-b-2 border-slate-300">
-                                <th class="p-3">العنصر / المتغير</th>
-                                <th class="p-3 text-center">القيمة (ذكور)</th>
-                                <th class="p-3 text-center">القيمة (إناث)</th>
-                                <th class="p-3">ملاحظات</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-200">
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-bold">حجم الدم</td>
-                                <td colspan="2" class="p-3 text-center">5 - 6 لترات</td>
-                                <td class="p-3 text-xs text-slate-500">8% من وزن الجسم (لشخص 70 كغ)</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-bold">الـ pH الشرياني</td>
-                                <td colspan="2" class="p-3 text-center text-red-600 font-black">7.40</td>
-                                <td class="p-3 text-xs text-slate-500">قيمة مُصوّبة.</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-bold">الضغط التناضحي الغرواني</td>
-                                <td colspan="2" class="p-3 text-center text-red-600 font-black">28 mmHg</td>
-                                <td class="p-3 text-xs text-slate-500">قيمة مُصوّبة.</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-bold">عدد الكريات الحمر (مليون/مم³)</td>
-                                <td class="p-3 text-center font-bold">4.5 - 5.5</td>
-                                <td class="p-3 text-center font-bold">غير مفصلة بوضوح</td>
-                                <td class="p-3 text-xs text-slate-500">الرقم العام 4.5 لـ 5.5.</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50 bg-yellow-50/30">
-                                <td class="p-3 font-bold">كمية الخضاب (g/100ml)</td>
-                                <td class="p-3 text-center">13.5 - 18</td>
-                                <td class="p-3 text-center">12 - 16</td>
-                                <td class="p-3 text-xs text-red-600 font-bold">المتوسط المُعتمد حسابياً 15g.</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-bold">عدد الكريات البيض (مم³)</td>
-                                <td colspan="2" class="p-3 text-center">4000 - 10000</td>
-                                <td class="p-3 text-xs text-slate-500">تزيد عصراً وبعد الجهد.</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50">
-                                <td class="p-3 font-bold">عدد الصفيحات (مم³)</td>
-                                <td colspan="2" class="p-3 text-center">150,000 - 350,000</td>
-                                <td class="p-3 text-xs text-slate-500">نقصها دون 50 ألف يسبب فرفرية.</td>
-                            </tr>
-                            <tr class="hover:bg-slate-50 bg-red-50/50">
-                                <td class="p-3 font-bold">زمن النزف / التخثر</td>
-                                <td colspan="2" class="p-3 text-center font-black text-red-700">النزف: 2-8 د | التخثر: 2-10 د</td>
-                                <td class="p-3 text-xs text-slate-500">قيم مُصوّبة.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- شلال التخثر -->
+                <div class="mt-12 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h2 class="text-xl font-bold text-slate-800 border-b-2 border-red-500 pb-2 mb-6 inline-block">التخثر (السبل النهائية) <span class="en-term">Coagulation Cascade</span></h2>
+                    
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex-1 bg-red-50 p-4 rounded-xl border border-red-100 relative hover-lift">
+                            <h3 class="font-bold text-red-800 text-center mb-4">الطريق الخارجي <span class="en-term">Extrinsic</span></h3>
+                            <p class="text-sm font-bold text-center mb-3">يتفعل عند إصابة النسج والأوعية</p>
+                            <div class="bg-white p-2 rounded text-center shadow-sm text-sm font-bold mb-2">عوامل نسيجية (الترمبوبلاستين النسيجي III)</div>
+                            <div class="text-center text-red-400 mb-2">&darr;</div>
+                            <div class="bg-white p-2 rounded text-center shadow-sm text-sm font-bold"><mark>تنشيط العامل السابع (VII)</mark></div>
+                        </div>
+
+                        <div class="flex-1 bg-blue-50 p-4 rounded-xl border border-blue-100 relative hover-lift">
+                            <h3 class="font-bold text-blue-800 text-center mb-4">الطريق الداخلي <span class="en-term">Intrinsic</span></h3>
+                            <p class="text-sm font-bold text-center mb-3">يبدأ بإصابة البطانة أو تماس السطح الخشن</p>
+                            <div class="bg-white p-2 rounded text-center shadow-sm text-sm font-bold mb-2"><mark>تنشيط عامل هاجمان (XII)</mark></div>
+                            <div class="text-center text-blue-400 mb-2">&darr;</div>
+                            <div class="bg-white p-2 rounded text-center shadow-sm text-sm font-bold leading-relaxed">
+                                يفعل (XI)<br>&darr;<br>بوجود الكالسيوم يفعل (VIII)<br>&darr;<br>يفعل (IX)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-6 bg-slate-800 text-white rounded-xl text-center shadow-inner relative hover-lift border-2 border-slate-600">
+                        <div class="absolute -top-4 -right-4 text-3xl pulse-note-icon">🔥</div>
+                        <h3 class="font-bold text-yellow-300 mb-4">المسار المشترك النهائي للنتيجة الواحدة</h3>
+                        <p class="font-semibold text-lg leading-loose">
+                            يتفعل <mark class="!bg-yellow-400 !text-slate-900">العامل العاشر (Xa)</mark> وينشط <mark class="!bg-yellow-400 !text-slate-900">العامل الخامس (V)</mark> وبوجود <mark class="!bg-yellow-400 !text-slate-900">Ca<sup>2+</sup></mark> و <mark class="!bg-yellow-400 !text-slate-900">PF3</mark>
+                        </p>
+                        <div class="text-2xl text-slate-400 my-2">&darr;</div>
+                        <p class="font-semibold text-lg bg-slate-700 py-2 rounded border border-slate-500">
+                            طليعة الخثرين (II) ⟸ <mark class="!bg-red-500 !text-white">خثرين (Thrombin)</mark>
+                        </p>
+                        <div class="text-2xl text-slate-400 my-2">&darr;</div>
+                        <p class="font-semibold text-lg bg-slate-700 py-2 rounded border border-slate-500">
+                            مولد الليفين المنحل (I) ⟸ <mark class="!bg-green-500 !text-white">ليفين غير منحل (Fibrin)</mark>
+                        </p>
+                        <div class="mt-4 text-sm font-bold text-slate-300">أخيراً، يؤثر مولد الليفين على <mark class="!bg-transparent !text-yellow-300">العامل المثبت لليفين (XIII)</mark> لتثبيت الخثرة.</div>
+                    </div>
                 </div>
-            </div>
+            </section>
+
+            <section id="tab4" class="tab-content hidden animate-fade-in">
+                
+                <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 mb-6 overflow-hidden">
+                    <h2 class="text-xl font-bold text-slate-800 mb-6 text-center">الجمل المميعة للدم (مقارنة تفاعلية)</h2>
+                    
+                    <div class="flex justify-center mb-6 bg-slate-100 p-1 rounded-xl max-w-sm mx-auto">
+                        <button id="btn-invivo" class="flex-1 py-2 rounded-lg font-bold text-sm bg-white shadow-sm text-blue-700 transition" onclick="toggleCoag('invivo')">داخل الأوعية الدموية</button>
+                        <button id="btn-invitro" class="flex-1 py-2 rounded-lg font-bold text-sm text-slate-500 hover:text-slate-700 transition" onclick="toggleCoag('invitro')">خارج الأوعية (المخابر)</button>
+                    </div>
+
+                    <div id="coag-content" class="bg-blue-50 border border-blue-200 rounded-xl p-6 min-h-[350px] transition-colors duration-500">
+                        <!-- Default In-vivo content populated via JS -->
+                    </div>
+                </div>
+
+                <!-- الاختبارات الدموية -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 hover-lift relative">
+                        <h3 class="font-bold text-lg text-slate-800 border-b-2 border-red-500 pb-2 mb-4">زمن التخثر الدموي</h3>
+                        <p class="text-content">الزمن اللازم لتخثر جميع الدم. يُقدر بنحو <mark>6 - 10 دقائق</mark> (مصحح).</p>
+                        <p class="text-content text-sm mt-2">
+                            <strong>يطول عند:</strong> نقص في أحد العوامل البلازمية، أو نقص فيتامين K، كما في مرض <mark>الناعورة</mark> (نزف وراثي).
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 hover-lift relative">
+                        <div class="absolute -top-3 -right-3 cursor-pointer group pulse-note-icon">
+                            <span class="text-2xl drop-shadow-md">💡</span>
+                            <div class="absolute w-64 bg-slate-800 text-white text-sm p-3 rounded-xl right-8 top-0 hidden group-hover:block z-50">
+                                <span class="font-bold text-yellow-300">ملاحظة امتحانية:</span>
+                                زمن النزف <mark>لا يتأثر</mark> بوجود نقص في عوامل التخثر أو المعالجة بالهيبارين.
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 border-b-2 border-blue-500 pb-2 mb-4">زمن النزف الدموي</h3>
+                        <p class="text-content">الزمن اللازم لوقف النزف من وعاء صغير دون تدخل آلية التخثر. يُقدر بنحو <mark>1 - 6 دقائق</mark> (مصحح).</p>
+                        <p class="text-content text-sm mt-2">
+                            <strong>يطول عند:</strong> خلل الأوعية (الفرفرية، نقص فيتامين C)، نقص الصفيحات، فقر الدم وابيضاضه.
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="tab5" class="tab-content hidden animate-fade-in">
+                
+                <h2 class="text-2xl font-black text-center text-slate-800 mb-8 border-b-4 border-red-500 inline-block px-4 pb-2 mx-auto table">الخلاصة التفاعلية الشاملة (مرجع بصري للاختبار)</h2>
+                <p class="text-center text-slate-600 font-bold mb-8 text-sm">مرر مؤشر الماوس فوق أي صندوق لاستعراض الخلاصة المكثفة بشكل تفاعلي</p>
+
+                <!-- قسم 1: أرقام وقيم قياسية -->
+                <h3 class="text-lg font-bold text-red-700 mb-4 px-2">1. أرقام وقيم قياسية جوهرية</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                    <div class="pulse-hover-box p-4 rounded-xl text-center flex flex-col justify-center min-h-[100px]">
+                        <span class="font-bold text-slate-500 text-sm mb-2">كمية الدم ونسبته</span>
+                        <span class="text-content font-black text-slate-800 leading-tight">5-6 لترات <br> <span class="text-red-600 text-sm">8% من وزن الجسم (70كغ)</span></span>
+                    </div>
+                    <div class="pulse-hover-box p-4 rounded-xl text-center flex flex-col justify-center min-h-[100px]">
+                        <span class="font-bold text-slate-500 text-sm mb-2">الضغط الحلولي (التناضحي)</span>
+                        <span class="text-content font-black text-slate-800 leading-tight"><mark class="!bg-transparent !border-0 text-red-600">28</mark> مم زئبقي <br> <span class="text-slate-600 text-xs">يحافظ على شكل الخلايا</span></span>
+                    </div>
+                    <div class="pulse-hover-box p-4 rounded-xl text-center flex flex-col justify-center min-h-[100px]">
+                        <span class="font-bold text-slate-500 text-sm mb-2">درجة حموضة الدم pH</span>
+                        <span class="text-content font-black text-slate-800 leading-tight"><mark class="!bg-transparent !border-0 text-red-600">7.35 - 7.40</mark></span>
+                    </div>
+                    <div class="pulse-hover-box p-4 rounded-xl text-center flex flex-col justify-center min-h-[100px]">
+                        <span class="font-bold text-slate-500 text-sm mb-2">زمن التخثر والنزف (مصحح)</span>
+                        <span class="text-content font-black text-slate-800 leading-tight text-sm">التخثر: <mark class="!bg-transparent !border-0 text-red-600">6 - 10 دقائق</mark><br>النزف: <mark class="!bg-transparent !border-0 text-red-600">1 - 6 دقائق</mark></span>
+                    </div>
+                    <div class="pulse-hover-box p-4 rounded-xl text-center flex flex-col justify-center min-h-[100px]">
+                        <span class="font-bold text-slate-500 text-sm mb-2">معادلة السعة الأكسجينية</span>
+                        <span class="text-content font-black text-slate-800 leading-tight text-sm"><mark class="!bg-transparent !border-0 text-red-600">1.34</mark> مل أكسجين × <mark class="!bg-transparent !border-0 text-red-600">15</mark> غ خضاب<br>= <mark class="!bg-transparent !border-0 text-red-600">20</mark> مل أكسجين</span>
+                    </div>
+                    <div class="pulse-hover-box p-4 rounded-xl text-center flex flex-col justify-center min-h-[100px]">
+                        <span class="font-bold text-slate-500 text-sm mb-2">تعداد الخلايا</span>
+                        <span class="text-content font-black text-slate-800 leading-tight text-sm">حمر: 4.5-5.5 مليون<br>بيض: 4-11 ألف<br>صفيحات: 150-350 ألف</span>
+                    </div>
+                </div>
+
+                <!-- قسم 2: الكريات الحمر والزمر -->
+                <h3 class="text-lg font-bold text-blue-700 mb-4 px-2">2. الكريات الحمر والزمر الدموية</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <div class="pulse-hover-box p-5 rounded-xl">
+                        <ul class="text-sm font-bold text-slate-700 space-y-2">
+                            <li><span class="text-blue-500">▪</span> مقعرة الوجهين، 8 ميكرون، لا نواة ولا تنقسم.</li>
+                            <li><span class="text-blue-500">▪</span> الهرمونات الأنثوية <mark class="!bg-transparent !border-0 !text-red-600">لا تمتلك</mark> تأثيراً مثبطاً لنقي العظم.</li>
+                            <li><span class="text-blue-500">▪</span> نقص الحديد يسبب فقر دم <mark class="!bg-transparent !border-0 !text-red-600">ناقص الصباغ</mark>.</li>
+                            <li><span class="text-blue-500">▪</span> نقص B12/الفوليك يسبب فقر دم <mark class="!bg-transparent !border-0 !text-red-600">ضخم الأرومات</mark>.</li>
+                        </ul>
+                    </div>
+                    <div class="pulse-hover-box p-5 rounded-xl">
+                        <ul class="text-sm font-bold text-slate-700 space-y-2">
+                            <li><span class="text-blue-500">▪</span> تتحطم بعد 120 يوم في البالعات الكبيرة للطحال والكبد والنقي حصراً.</li>
+                            <li><span class="text-blue-500">▪</span> الزمرة O معطٍ عام (لا مولد ارتصاص)، AB آخذ عام (لا راصة).</li>
+                            <li><span class="text-blue-500">▪</span> حقن الـ <mark class="!bg-transparent !border-0 !text-red-600">Anti-D (IgG)</mark> للأم (Rh-) بعد الولادة يمنع انحلال دم الجنين القادم.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- قسم 3: الصفيحات والإرقاء -->
+                <h3 class="text-lg font-bold text-yellow-600 mb-4 px-2">3. الصفيحات وآليات الإرقاء</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <div class="pulse-hover-box p-5 rounded-xl">
+                        <ul class="text-sm font-bold text-slate-700 space-y-2">
+                            <li><span class="text-yellow-500">▪</span> الثرومبوبويتين يُشكل من <mark class="!bg-transparent !border-0 !text-red-600">الكبد</mark> حصراً (مصحح).</li>
+                            <li><span class="text-yellow-500">▪</span> نقصها <50 ألف يسبب فرفرية، <20 ألف نزف تلقائي.</li>
+                            <li><span class="text-yellow-500">▪</span> تحتوي خيوط الأكتين والميوزين، السيروتونين، الـ ADP، وعامل PF3 على الغشاء.</li>
+                        </ul>
+                    </div>
+                    <div class="pulse-hover-box p-5 rounded-xl">
+                        <ul class="text-sm font-bold text-slate-700 space-y-2">
+                            <li><span class="text-yellow-500">▪</span> الالتصاق الأول فيزيائي عكوس، الكيميائي يحتاج <mark class="!bg-transparent !border-0 !text-red-600">Glycosyl Transferases</mark>.</li>
+                            <li><span class="text-yellow-500">▪</span> عامل vWF جسر بين الكولاجين والصفيحة (يجول مع العامل 8).</li>
+                            <li><span class="text-yellow-500">▪</span> المسار المشترك: العامل <mark class="!bg-transparent !border-0 !text-red-600">10</mark> ينشط بوجود 5، Ca، و PF3 لتشكيل الخثرين ثم الليفين.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- قسم 4: الجمل المميعة والاختبارات -->
+                <h3 class="text-lg font-bold text-emerald-700 mb-4 px-2">4. المميعات والملاحظات السريرية</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="pulse-hover-box p-5 rounded-xl">
+                        <ul class="text-sm font-bold text-slate-700 space-y-2">
+                            <li><span class="text-emerald-500">▪</span> <strong>الترمبوموديولين:</strong> ينشط بروتين C الذي يثبط العاملين 5 و 8.</li>
+                            <li><span class="text-emerald-500">▪</span> <strong>مضاد الخثرين:</strong> 90% منه يمتز (Adsorb) على ألياف الليفين.</li>
+                            <li><span class="text-emerald-500">▪</span> <strong>الديكومارول:</strong> يثبط فيتامين K ويخفض العوامل (2, 7, 9, 10).</li>
+                        </ul>
+                    </div>
+                    <div class="pulse-hover-box p-5 rounded-xl">
+                        <ul class="text-sm font-bold text-slate-700 space-y-2">
+                            <li><span class="text-emerald-500">▪</span> في المختبر: تزال شوارد Ca بالسترات/الأوكزالات لتعطيل التخثر.</li>
+                            <li><span class="text-emerald-500">▪</span> الدم لا يحفظ أكثر من 20 يوماً لاستنفاد الطاقة وانحلال الكرية.</li>
+                            <li><span class="text-emerald-500">▪</span> <strong>الأسبرين:</strong> يثبط تجمع الصفيحات بإحصار البروستاغلاندينات.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
         </div>
+    </main>
 
-    </div>
-
-    <footer class="mt-12 bg-slate-900 text-slate-400 py-6 text-center text-sm border-t-4 border-blood-700">
-        <p>🎓 إعداد وتطوير: طالب طب في جامعة إدلب - السنة التحضيرية | 2026 ©</p>
-        <p class="text-[10px] mt-2 opacity-50">تم بناء هذا الدليل وفقاً للمنهج الرسمي مع التعديلات والتصويبات المعتمدة حصراً (MedHelp).</p>
+    <!-- التوقيع الرسمي -->
+    <footer class="max-w-4xl mx-auto px-4 mt-8 mb-4 relative z-10">
+        <div class="bg-slate-800 text-slate-300 text-center py-4 rounded-xl text-sm font-semibold shadow-inner">
+            🎓 إعداد وتطوير: طالب طب في جامعة إدلب - السنة التحضيرية | 2026 ©
+        </div>
     </footer>
 
     <script>
-        // --- Tab Navigation ---
-        function openTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hide-tab'));
-            document.querySelectorAll('.tab-btn').forEach(el => {
-                el.classList.remove('active-tab-btn');
-                el.classList.add('text-slate-600', 'font-bold');
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
             });
-            document.getElementById(tabId).classList.remove('hide-tab');
-            event.currentTarget.classList.add('active-tab-btn');
-            event.currentTarget.classList.remove('text-slate-600');
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active', 'bg-slate-800', 'text-white');
+                el.classList.add('bg-white', 'text-slate-700');
+            });
+            
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('block');
+            
+            event.target.classList.remove('bg-white', 'text-slate-700');
+            event.target.classList.add('active', 'bg-slate-800', 'text-white');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- Test Mode Toggle ---
-        const testBtn = document.getElementById('test-mode-toggle');
+        // Test Mode
+        const testBtn = document.getElementById('test-mode-btn');
+        const testIcon = document.getElementById('test-icon');
         testBtn.addEventListener('click', () => {
             document.body.classList.toggle('test-mode');
             if(document.body.classList.contains('test-mode')) {
-                testBtn.classList.add('bg-white/20', 'border-white', 'ring-2', 'ring-white');
-                testBtn.querySelector('span:first-child').textContent = '🙈';
+                testBtn.classList.add('bg-red-500/50', 'border-red-400');
+                testIcon.textContent = '🧠';
             } else {
-                testBtn.classList.remove('bg-white/20', 'border-white', 'ring-2', 'ring-white');
-                testBtn.querySelector('span:first-child').textContent = '👁️';
+                testBtn.classList.remove('bg-red-500/50', 'border-red-400');
+                testIcon.textContent = '👁️';
             }
         });
 
-        // --- Scroll Progress ---
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Scroll Progress
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -746,187 +771,59 @@
             document.getElementById('progress-bar').style.width = scrolled + '%';
         });
 
-        // --- Hemostasis Timeline ---
-        const hemoSlider = document.getElementById('hemo-slider');
+        // Dynamic Coagulation Content
+        const invivoData = `
+            <ul class="space-y-4 text-content animate-fade-in text-sm font-bold">
+                <li class="flex gap-3"><span class="text-xl">🛡️</span> <div><strong>عامل السطح البطاني:</strong> يحوي <mark>الترمبوموديولين</mark> يرتبط بالخثرين وينشط البروتين C (الذي يثبط العوامل <mark>5 و 8</mark> - مصحح). شحنته سالبة تنفر الصفيحات.</div></li>
+                <li class="flex gap-3"><span class="text-xl">🛑</span> <div><strong>مضاد الخثرين (Antithrombin):</strong> يحيط بالخثرين ويمنع انتشاره. 90% <mark>يمتز (Adsorb - مصحح)</mark> على الليفين والباقي يعطله المضاد.</div></li>
+                <li class="flex gap-3"><span class="text-xl">💉</span> <div><strong>الهيبارين:</strong> تفرزه الأسسات، يثبط الخثرين ويمنع وصوله لمولد الليفين.</div></li>
+                <li class="flex gap-3"><span class="text-xl">💊</span> <div><strong>تثبيط فيتامين K (ديكومارول):</strong> يخفض العوامل (2، 7، 9، 10). نُقل لداخل الأوعية بعد التصويب.</div></li>
+                <li class="flex gap-3"><span class="text-xl">✂️</span> <div><strong>البلازمين:</strong> يحل ألياف الليفين (الخثرة). يُشكل من البلازمينوجين عبر الكاليكرين. (حقن الستربتوكيناز كبديل للقلب).</div></li>
+            </ul>
+        `;
         
-        function updateTimelineUI(stepIndex) {
-            // Update labels
-            for(let i=1; i<=4; i++) {
-                const label = document.getElementById('label-' + i);
-                if(i == stepIndex) {
-                    label.classList.add('text-blood-700', 'font-black');
-                    label.classList.remove('text-slate-400');
-                } else {
-                    label.classList.remove('text-blood-700', 'font-black');
-                    label.classList.add('text-slate-400');
-                }
-            }
-            
-            // Show corresponding step
-            document.querySelectorAll('.hemo-step').forEach((el, index) => {
-                if(index + 1 == stepIndex) {
-                    el.classList.remove('hidden');
-                    // Reset animation trick
-                    el.style.animation = 'none';
-                    el.offsetHeight; 
-                    el.style.animation = 'fadeIn 0.5s ease-out';
-                } else {
-                    el.classList.add('hidden');
-                }
-            });
-        }
+        const invitroData = `
+            <ul class="space-y-4 text-content animate-fade-in text-sm font-bold">
+                <li class="flex gap-3"><span class="text-xl">🧪</span> <div><strong>إزالة الكالسيوم:</strong> بإضافة <mark>السترات أو الأوكزالات</mark> لتشكيل معقدات غير متشردة وتوقيف التخثر.</div></li>
+                <li class="flex gap-3"><span class="text-xl">🧪</span> <div><strong>الأسطح الملساء (البرافين):</strong> يحول دون تنشيط عوامل التماس لسطح خشن (<mark>9, 10, 11, 12</mark>).</div></li>
+                <li class="flex gap-3"><span class="text-xl">❄️</span> <div><strong>التبريد (4 مئوية):</strong> يمنع تشكل بلورات الثلج التي تمزق الكريات، ويخفض الاستقلاب.</div></li>
+                <li class="flex gap-3"><span class="text-xl">⏳</span> <div><strong>المدة الزمنية:</strong> لا يُحفظ لأكثر من <mark>20 يوماً</mark> لاستنفاد الطاقة وتوقف المضخات وانحلال الكرية.</div></li>
+                <li class="flex gap-3"><span class="text-xl">💊</span> <div><strong>الأسبرين:</strong> يثبط تجمع الصفيحات بإحصار استقلاب البروستاغلاندينات.</div></li>
+            </ul>
+        `;
 
-        hemoSlider.addEventListener('input', (e) => {
-            updateTimelineUI(e.target.value);
-        });
-        
-        // Initialize timeline styling
-        updateTimelineUI(1);
+        function toggleCoag(type) {
+            const content = document.getElementById('coag-content');
+            const btnInvivo = document.getElementById('btn-invivo');
+            const btnInvitro = document.getElementById('btn-invitro');
 
-        const styleSheet = document.createElement('style');
-        styleSheet.innerText = `@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }`;
-        document.head.appendChild(styleSheet);
-
-
-        // --- Simulator 1: Blood Typing Lab ---
-        const bloodTypes = ['A', 'B', 'AB', 'O'];
-        const rhTypes = ['+', '-'];
-        let currentPatient = { type: 'A', rh: '+' };
-        let tested = { A: false, B: false, D: false };
-
-        function generatePatient() {
-            currentPatient.type = bloodTypes[Math.floor(Math.random() * bloodTypes.length)];
-            currentPatient.rh = rhTypes[Math.floor(Math.random() * rhTypes.length)];
-            
-            // Reset UI
-            tested = { A: false, B: false, D: false };
-            ['a', 'b', 'd'].forEach(letter => {
-                const slide = document.getElementById(`slide-${letter}`);
-                slide.classList.remove('agglutination-active');
-                slide.innerHTML = `<span class="text-white/50 text-xs font-bold">عينة دم</span>`;
-                document.getElementById(`res-${letter}`).textContent = '';
-                document.getElementById(`res-${letter}`).className = 'text-xs font-bold h-4 text-center mt-2';
-            });
-            document.getElementById('final-diagnosis').textContent = '???';
-        }
-
-        document.getElementById('btn-new-patient').addEventListener('click', generatePatient);
-        
-        document.getElementById('btn-reveal').addEventListener('click', () => {
-            document.getElementById('final-diagnosis').textContent = currentPatient.type + currentPatient.rh;
-        });
-
-        document.querySelectorAll('.serum-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const serum = btn.getAttribute('data-serum'); // A, B, or D
-                if (tested[serum]) return; // Already tested
-                tested[serum] = true;
-
-                const slideId = `slide-${serum.toLowerCase()}`;
-                const resId = `res-${serum.toLowerCase()}`;
-                const slide = document.getElementById(slideId);
-                const res = document.getElementById(resId);
+            if(type === 'invivo') {
+                content.innerHTML = invivoData;
+                content.className = 'bg-blue-50 border border-blue-200 rounded-xl p-6 min-h-[350px] transition-colors duration-500';
                 
-                slide.innerHTML = ''; // clear text
+                btnInvivo.classList.add('bg-white', 'text-blue-700', 'shadow-sm');
+                btnInvivo.classList.remove('text-slate-500', 'bg-transparent');
                 
-                let willClump = false;
-                if (serum === 'A' && currentPatient.type.includes('A')) willClump = true;
-                if (serum === 'B' && currentPatient.type.includes('B')) willClump = true;
-                if (serum === 'D' && currentPatient.rh === '+') willClump = true;
-
-                if (willClump) {
-                    slide.classList.add('agglutination-active');
-                    res.textContent = 'تراص!';
-                    res.classList.add('text-red-600');
-                    slide.innerHTML = `<span class="text-white text-xs font-black drop-shadow-md">تراص</span>`;
-                } else {
-                    res.textContent = 'سلبي (لا تراص)';
-                    res.classList.add('text-green-600');
-                }
-
-                // Check if all 3 are tested to auto-reveal
-                if(tested.A && tested.B && tested.D) {
-                    document.getElementById('final-diagnosis').textContent = currentPatient.type + currentPatient.rh;
-                    document.getElementById('final-diagnosis').classList.add('text-blood-700', 'scale-110');
-                    setTimeout(() => document.getElementById('final-diagnosis').classList.remove('scale-110'), 300);
-                }
-            });
-        });
-
-        // Initialize first patient
-        generatePatient();
-
-
-        // --- Simulator 2: Erythropoiesis (Local Speed) ---
-        const btnHypoxia = document.getElementById('btn-hypoxia');
-        const btnNormal = document.getElementById('btn-normal');
-        const rbcStream = document.getElementById('rbc-stream');
-        const epoFlow = document.getElementById('epo-flow');
-        const bmStatus = document.getElementById('bm-status');
-        const epoSpeedCtrl = document.getElementById('epo-speed');
-        const epoSpeedVal = document.getElementById('epo-speed-val');
-        
-        let currentEpoState = 'normal'; // 'normal' or 'hypoxia'
-
-        function renderRbcStream() {
-            rbcStream.innerHTML = '';
-            const count = currentEpoState === 'hypoxia' ? 8 : 3;
-            for(let i=0; i<count; i++) {
-                rbcStream.innerHTML += `<div class="w-4 h-4 bg-red-500 rounded-full shadow-md border border-red-700 shrink-0"></div>`;
+                btnInvitro.classList.remove('bg-white', 'text-slate-800', 'shadow-sm');
+                btnInvitro.classList.add('text-slate-500', 'bg-transparent');
+            } else {
+                content.innerHTML = invitroData;
+                content.className = 'bg-emerald-50 border border-emerald-200 rounded-xl p-6 min-h-[350px] transition-colors duration-500';
+                
+                btnInvitro.classList.add('bg-white', 'text-emerald-700', 'shadow-sm');
+                btnInvitro.classList.remove('text-slate-500', 'bg-transparent');
+                
+                btnInvivo.classList.remove('bg-white', 'text-blue-700', 'shadow-sm');
+                btnInvivo.classList.add('text-slate-500', 'bg-transparent');
             }
         }
 
-        epoSpeedCtrl.addEventListener('input', (e) => {
-            const speed = e.target.value;
-            epoSpeedVal.textContent = speed + 'x';
-            rbcStream.style.setProperty('--local-speed', speed);
-        });
-
-        btnHypoxia.addEventListener('click', () => {
-            currentEpoState = 'hypoxia';
-            epoFlow.style.opacity = '1';
-            bmStatus.textContent = 'إنتاج كثيف!!';
-            bmStatus.classList.replace('text-teal-300', 'text-red-400');
-            
-            btnHypoxia.classList.add('ring-2', 'ring-red-300');
-            btnNormal.classList.remove('ring-2', 'ring-teal-300');
-            
-            renderRbcStream();
-        });
-
-        btnNormal.addEventListener('click', () => {
-            currentEpoState = 'normal';
-            epoFlow.style.opacity = '0';
-            bmStatus.textContent = 'إنتاج طبيعي';
-            bmStatus.classList.replace('text-red-400', 'text-teal-300');
-            
-            btnNormal.classList.add('ring-2', 'ring-teal-300');
-            btnHypoxia.classList.remove('ring-2', 'ring-red-300');
-            
-            renderRbcStream();
-        });
-        
-        renderRbcStream(); // init
-
-
-        // --- MCQ Filter ---
-        const filterBtn = document.getElementById('trap-filter');
-        let isFiltered = false;
-        filterBtn.addEventListener('click', () => {
-            isFiltered = !isFiltered;
-            document.querySelectorAll('.mcq-card').forEach(card => {
-                if(isFiltered) {
-                    if(!card.classList.contains('is-trap')) card.classList.add('hidden');
-                    filterBtn.textContent = 'عرض الكل';
-                    filterBtn.classList.add('bg-blood-700', 'text-white');
-                } else {
-                    card.classList.remove('hidden');
-                    filterBtn.textContent = 'إظهار الخدع فقط';
-                    filterBtn.classList.remove('bg-blood-700', 'text-white');
-                }
-            });
-        });
-
+        // Initialize Coagulation tab
+        toggleCoag('invivo');
     </script>
+    <style>
+        .animate-fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </body>
 </html>
